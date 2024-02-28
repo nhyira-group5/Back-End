@@ -1,0 +1,9 @@
+
+0
+java:S1220""Move this file to a named package.
+œ
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(û¦ºýÿÿÿÿ
+F
+java:S1172"0Remove this unused method parameter "idUsuario".(ƒìçÐ
+Y
+java:S1172">Remove these unused method parameters "dataInicio", "dataFim".(ç¸µÉýÿÿÿÿ

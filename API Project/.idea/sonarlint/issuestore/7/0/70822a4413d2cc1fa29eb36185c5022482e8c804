@@ -1,0 +1,9 @@
+
+0
+java:S1220""Move this file to a named package.
+U
+java:S1118":Add a private constructor to hide the implicit public one.(¶¨îÊşÿÿÿÿ
+g
+java:S5998"LRefactor this repetition that can lead to a stack overflow for large inputs.(°›Ñúÿÿÿÿ
+W
+java:S6353"<Use concise character class syntax '\\d' instead of '[0-9]'.(õ±¢ßûÿÿÿÿ
