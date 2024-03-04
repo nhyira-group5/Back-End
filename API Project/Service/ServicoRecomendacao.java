@@ -7,6 +7,9 @@ public class ServicoRecomendacao {
 
     private final ServicoAPIExterna servicoAPIExterna;
 
+       @Value("${google.places.api.key}")
+    private String googlePlacesApiKey;
+
     @Autowired
     public ServicoRecomendacao(ServicoAPIExterna servicoAPIExterna) {
         this.servicoAPIExterna = servicoAPIExterna;

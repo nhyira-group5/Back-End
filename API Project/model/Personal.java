@@ -1,26 +1,25 @@
 import org.springframework.http.ResponseEntity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date; 
 
 @Entity
-public class Usuario {
-    
+public class Personal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String nome;
     private String email;
     private String senha;
     private String cpf;
-    private String telefone; 
-    private String endereco; 
-    private int idade;
-    private boolean funcionario;
-    private Date dataNascimento; 
+    private String telefone;
+    private String endereco;
+    private String especialidade;
+
 
     public ResponseEntity<Long> getId() {
         return ResponseEntity.ok(id);
@@ -78,27 +77,11 @@ public class Usuario {
         this.endereco = endereco;
     }
 
-    public ResponseEntity<Integer> getIdade() {
-        return ResponseEntity.ok(idade);
+    public ResponseEntity<String> getEspecialidade() {
+        return ResponseEntity.ok(especialidade);
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
-    }
-
-    public ResponseEntity<Boolean> isFuncionario() {
-        return ResponseEntity.ok(funcionario);
-    }
-
-    public void setFuncionario(boolean funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    public ResponseEntity<Date> getDataNascimento() {
-        return ResponseEntity.ok(dataNascimento);
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
     }
 }

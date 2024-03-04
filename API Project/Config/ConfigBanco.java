@@ -11,9 +11,9 @@ public class ConfigBanco {
     public ResponseEntity<DataSource> dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/salada");
-        dataSource.setUsername("salada");
-        dataSource.setPassword("salada");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/health");
+        dataSource.setUsername("aluno");
+        dataSource.setPassword("aluno");
         return ResponseEntity.ok(dataSource);
     }
 }

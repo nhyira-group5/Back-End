@@ -1,61 +1,63 @@
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
 
 @Service
 public class ServicoCadastro {
 
     @Autowired
-    private ServicoValidacao servicoValidacao;
+    private ServicoValidacaoUsuario servicoValidacaoUsuario;
 
     @Autowired
-    private EmailService emailService;
+    private ServicoValidacaoPersonal servicoValidacaoPersonal;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository; 
+
+    @Autowired
+    private PersonalRepository personalRepository; 
+
+    
     public ResponseEntity<String> cadastrarUsuario(Usuario usuario) {
+        ResponseEntity<String> respostaNome = servicoValidacaoUsuario.validarNome(usuario.getNome());
+        ResponseEntity<String> respostaEmail = servicoValidacaoUsuario.validarEmail(usuario.getEmail());
+        ResponseEntity<String> respostaSenha = servicoValidacaoUsuario.validarSenha(usuario.getSenha());
+        ResponseEntity<String> respostaCPF = servicoValidacaoUsuario.validarCPF(usuario.getCpf());
+        ResponseEntity<String> respostaEndereco = servicoValidacaoUsuario.validarEndereco(usuario.getEndereco());
+        ResponseEntity<String> respostaTelefone = servicoValidacaoUsuario.validarTelefone(usuario.getTelefone());
 
-        
-        ResponseEntity<String> validacaoEmail = servicoValidacao.validarEmail(usuario.getEmail());
-        if (validacaoEmail.getStatusCode() != HttpStatus.OK) {
-            return validacaoEmail;
+        if (respostaNome.getStatusCode().isError() || respostaEmail.getStatusCode().isError() ||
+            respostaSenha.getStatusCode().isError() || respostaCPF.getStatusCode().isError() ||
+            respostaEndereco.getStatusCode().isError() || respostaTelefone.getStatusCode().isError()) {
+            return ResponseEntity.badRequest().body("Falha ao cadastrar usuário: verifique os dados fornecidos");
         }
 
-        ResponseEntity<String> validacaoSenha = servicoValidacao.validarSenha(usuario.getSenha());
-        if (validacaoSenha.getStatusCode() != HttpStatus.OK) {
-            return validacaoSenha;
+       
+        usuarioRepository.save(usuario);
+
+        return ResponseEntity.ok("Usuário cadastrado com sucesso");
+    }
+
+ 
+    public ResponseEntity<String> cadastrarPersonal(Personal personal) {
+        ResponseEntity<String> respostaNome = servicoValidacaoPersonal.validarNome(personal.getNome());
+        ResponseEntity<String> respostaEmail = servicoValidacaoPersonal.validarEmail(personal.getEmail());
+        ResponseEntity<String> respostaSenha = servicoValidacaoPersonal.validarSenha(personal.getSenha());
+        ResponseEntity<String> respostaCPF = servicoValidacaoPersonal.validarCPF(personal.getCpf());
+        ResponseEntity<String> respostaEndereco = servicoValidacaoPersonal.validarEndereco(personal.getEndereco());
+        ResponseEntity<String> respostaTelefone = servicoValidacaoPersonal.validarTelefone(personal.getTelefone());
+        ResponseEntity<String> respostaEspecialidade = servicoValidacaoPersonal.validarEspecialidade(personal.getEspecialidade());
+
+        if (respostaNome.getStatusCode().isError() || respostaEmail.getStatusCode().isError() ||
+            respostaSenha.getStatusCode().isError() || respostaCPF.getStatusCode().isError() ||
+            respostaEndereco.getStatusCode().isError() || respostaTelefone.getStatusCode().isError() ||
+            respostaEspecialidade.getStatusCode().isError()) {
+            return ResponseEntity.badRequest().body("Falha ao cadastrar personal: verifique os dados fornecidos");
         }
 
-        ResponseEntity<String> validacaoCPF = servicoValidacao.validarCPF(usuario.getCpf());
-        if (validacaoCPF.getStatusCode() != HttpStatus.OK) {
-            return validacaoCPF;
-        }
+      
+        personalRepository.save(personal);
 
-        if (usuario.getTelefone() == null || usuario.getTelefone().isEmpty()) {
-            return ResponseEntity.badRequest().body("Telefone não pode estar vazio");
-        }
-
-        if (usuario.getEndereco() == null || usuario.getEndereco().isEmpty()) {
-            return ResponseEntity.badRequest().body("Endereço não pode estar vazio");
-        }
-
-        ResponseEntity<String> tokenResponse = TokenUtil.gerarToken(usuario.getEmail());
-        if (tokenResponse.getStatusCode() != HttpStatus.OK) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao gerar token");
-        }
-        String token = tokenResponse.getBody();
-
-        try {
-            String assunto = "Confirmação de Cadastro";
-            String corpo = "Olá " + usuario.getNome() + ",<br><br>" +
-                    "Obrigado por se cadastrar em nosso sistema! Por favor, clique no link abaixo para confirmar seu e-mail:<br>" +
-                    "<a href=\"https://seusite.com/confirmar?token=" + token + "\">Confirmar E-mail</a>";
-            emailService.enviarEmail(usuario.getEmail(), assunto, corpo);
-        } catch (MessagingException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao enviar e-mail de confirmação");
-        }
-
-        return ResponseEntity.ok("Usuário cadastrado com sucesso! Um e-mail de confirmação foi enviado para " + usuario.getEmail());
+        return ResponseEntity.ok("Personal cadastrado com sucesso");
     }
 }

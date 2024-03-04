@@ -9,8 +9,11 @@ public class ServicoAPIExterna {
 
     private static final String URL_API_GOOGLE_PLACES = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
     
+       @Value("${google.places.api.key}")
+    private String googlePlacesApiKey;
+
     private final RestTemplate restTemplate;
-    private final String googleApiKey;
+ 
 
     public ServicoAPIExterna(RestTemplate restTemplate, @Value("${google.api.key}") String googleApiKey) {
         this.restTemplate = restTemplate;
