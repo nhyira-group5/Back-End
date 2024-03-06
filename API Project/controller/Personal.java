@@ -6,7 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 @RestController
 @RequestMapping("/personais")
@@ -14,6 +17,10 @@ public class PersonalController {
 
     @Autowired
     private PersonalService personalService;
+    
+   
+    private Stack<String> operacoesAtualizacao = new Stack<>();
+    private Queue<String> operacoesExclusao = new LinkedList<>();
 
     @GetMapping("/{id}")
     public ResponseEntity<Personal> obterPersonalPorId(@PathVariable Long id) {
@@ -57,6 +64,8 @@ public class PersonalController {
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             return ResponseEntity.notFound().build();
         }
+       
+        operacoesAtualizacao.push("Personal atualizado: " + id);
         return response;
     }
 
@@ -66,6 +75,8 @@ public class PersonalController {
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             return ResponseEntity.notFound().build();
         }
+       
+        operacoesExclusao.offer("Personal excluído: " + id);
         return response;
     }
 }

@@ -1,0 +1,22 @@
+
+Planilha de Testes para PersonalController:
+| Nome do Teste           | Descrição                                | Parâmetros de Entrada                  | Resultado Esperado        | Resultado Real | Status  |
+|-------------------------|------------------------------------------|----------------------------------------|----------------------------|----------------|---------|
+| TesteObterPersonalPorId | Verificar obtenção de personal por ID    | ID do personal                         | Retorno do personal esperado| -              | Pendente|
+| TesteListarPersonais    | Verificar listagem de personais paginados| Página, Tamanho, Ordem de Classificação | Lista de personais paginados| -              | Pendente|
+| TesteCadastrarPersonal  | Verificar cadastro de personal           | Dados do personal                      | Sucesso no cadastro        | -              | Pendente|
+| TesteAtualizarPersonal  | Verificar atualização de personal       | ID do personal, Dados do personal     | Sucesso na atualização     | -              | Pendente|
+| TesteDeletarPersonal    | Verificar exclusão de personal          | ID do personal                         | Sucesso na exclusão        | -              | Pendente|
+
+
+
+
+Planilha de Testes para UsuarioController:
+
+| Nome do Teste           | Descrição                                | Parâmetros de Entrada                  | Resultado Esperado        | Resultado Real | Status  |
+|-------------------------|------------------------------------------|----------------------------------------|----------------------------|----------------|---------|
+| TesteObterUsuarioPorId | Verificar obtenção de usuário por ID     | ID do usuário                          | Retorno do usuário esperado | -              | Pendente|
+| TesteListarUsuarios     | Verificar listagem de usuários paginados | Página, Tamanho, Ordem de Classificação | Lista de usuários paginados | -              | Pendente|
+| TesteCadastrarUsuario   | Verificar cadastro de usuário            | Dados do usuário                       | Sucesso no cadastro        | -              | Pendente|
+| TesteAtualizarUsuario   | Verificar atualização de usuário         | ID do usuário, Dados do usuário       | Sucesso na atualização     | -              | Pendente|
+| TesteDeletarUsuario     | Verificar exclusão de usuário            | ID do usuário                          | Sucesso na exclusão        | -              | Pendente|

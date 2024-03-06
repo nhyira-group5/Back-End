@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -15,6 +17,10 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+    
+    
+    private Stack<String> operacoesCriacao = new Stack<>();
+    private Queue<String> operacoesExclusao = new LinkedList<>();
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> obterUsuarioPorId(@PathVariable Long id) {
@@ -40,6 +46,8 @@ public class UsuarioController {
         if (response.getStatusCode() == HttpStatus.BAD_REQUEST) {
             return ResponseEntity.badRequest().body(response.getBody());
         }
+       
+        operacoesCriacao.push("Usuário criado: " + usuario.getId());
         return response;
     }
 
@@ -58,6 +66,8 @@ public class UsuarioController {
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             return ResponseEntity.notFound().build();
         }
+        //
+        operacoesExclusao.offer("Usuário excluído: " + id);
         return response;
     }
 }
