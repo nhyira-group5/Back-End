@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
+import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,17 +32,24 @@ public class PersonalController {
 
     // Endpoint para obter todos os personals de diferentes especialidades ordenados por nome
     @GetMapping("/todos")
-    public ResponseEntity<Map<String, List<String>>> obterPersonalsPorEspecialidadeOrdenadosPorNome() {
+    public ResponseEntity<Map<String, List<PersonalModel>>> obterPersonalsPorEspecialidadeOrdenadosPorNome() {
+        // Obtém todos os personals do serviço
         List<PersonalModel> personals = personalService.obterTodosPersonals();
 
-        // Agrupar os personals por especialidade
-        Map<String, List<String>> personalsPorEspecialidade = personals.stream()
-                .collect(Collectors.groupingBy(PersonalModel::getEspecialidade,
-                        Collectors.mapping(PersonalModel::getNome, Collectors.toList())));
+        // Agrupa os personals por especialidade
+        Map<String, List<PersonalModel>> personalsPorEspecialidade = new HashMap<>();
+        for (PersonalModel personal : personals) {
+            String especialidade = personal.getEspecialidade();
+            if (!personalsPorEspecialidade.containsKey(especialidade)) {
+                personalsPorEspecialidade.put(especialidade, new ArrayList<>());
+            }
+            personalsPorEspecialidade.get(especialidade).add(personal);
+        }
 
-        // Ordenar cada lista de personals por nome
-        personalsPorEspecialidade.forEach((especialidade, listaNomes) ->
-                listaNomes.sort(Comparator.naturalOrder()));
+        // Ordena cada lista de personals por nome
+        for (List<PersonalModel> lista : personalsPorEspecialidade.values()) {
+            lista.sort(Comparator.comparing(PersonalModel::getNome));
+        }
 
         return ResponseEntity.ok(personalsPorEspecialidade);
     }

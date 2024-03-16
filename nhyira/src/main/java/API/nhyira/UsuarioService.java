@@ -4,8 +4,8 @@ package API.nhyira;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -127,7 +127,7 @@ public class UsuarioService implements UsuarioInterface {
     }
 
     private boolean validarTelefone(String telefone) {
-        return telefone != null && telefone.matches("\\d{2}?\\d{4,5}-\\d{4}");
+        return telefone != null && telefone.matches("\\d{10,11}");
     }
 
     private boolean validarEndereco(String endereco) {
@@ -149,9 +149,10 @@ public class UsuarioService implements UsuarioInterface {
 
     private boolean validarDataNascimento(String dataNascimento) {
         try {
-            LocalDate data = LocalDate.parse(dataNascimento);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate data = LocalDate.parse(dataNascimento.substring(0, 10), formatter);
             LocalDate dataAtual = LocalDate.now();
-            return data.isBefore(dataAtual);
+            return !data.isAfter(dataAtual);
         } catch (Exception e) {
             return false;
         }
