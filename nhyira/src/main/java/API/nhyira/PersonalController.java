@@ -20,35 +20,32 @@ public class PersonalController {
     private PersonalService personalService;
 
     // Endpoint para criar um novo personal
+
     @PostMapping("/criar")
     public ResponseEntity<?> criarPersonal(@RequestBody PersonalModel personal) {
         try {
-            PersonalModel createdPersonal = personalService.criarPersonal(personal);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdPersonal);
+            personalService.criarPersonal(personal);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Personal criado com sucesso");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Falha ao criar personal: " + e.getMessage());
         }
     }
+
 
     // Endpoint para obter todos os personals de diferentes especialidades ordenados por nome
     @GetMapping("/todos")
     public ResponseEntity<Map<String, List<PersonalModel>>> obterPersonalsPorEspecialidadeOrdenadosPorNome() {
-        // Obtém todos os personals do serviço
-        List<PersonalModel> personals = personalService.obterTodosPersonals();
+        // Obtém todos os personals ordenados por especialidade
+        List<PersonalModel> personalsOrdenados = personalService.obterTodosPersonalsOrdenadosPorEspecialidade();
 
         // Agrupa os personals por especialidade
         Map<String, List<PersonalModel>> personalsPorEspecialidade = new HashMap<>();
-        for (PersonalModel personal : personals) {
+        for (PersonalModel personal : personalsOrdenados) {
             String especialidade = personal.getEspecialidade();
             if (!personalsPorEspecialidade.containsKey(especialidade)) {
                 personalsPorEspecialidade.put(especialidade, new ArrayList<>());
             }
             personalsPorEspecialidade.get(especialidade).add(personal);
-        }
-
-        // Ordena cada lista de personals por nome
-        for (List<PersonalModel> lista : personalsPorEspecialidade.values()) {
-            lista.sort(Comparator.comparing(PersonalModel::getNome));
         }
 
         return ResponseEntity.ok(personalsPorEspecialidade);

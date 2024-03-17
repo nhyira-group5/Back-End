@@ -3,13 +3,10 @@ package API.nhyira;
 import java.util.List;
 
 public interface PersonalInterface {
-    PersonalModel createPersonal(PersonalModel personal) throws Exception;
-
-    PersonalModel updatePersonal(Long id, PersonalModel personalDetails) throws Exception;
-
+    boolean validate(PersonalModel personal);
+    PersonalModel criarPersonal(PersonalModel personal) throws Exception;
+    PersonalModel atualizarPersonal(Long id, PersonalModel personalDetails) throws Exception;
     void deletePersonal(Long id);
-
-    List<PersonalModel> getAllPersonals();
-
-    PersonalModel getPersonalById(Long id);
+    List<PersonalModel> personalsPorEspecialidade();
+    PersonalModel obterPersonalPorId(Long id);
 }

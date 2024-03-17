@@ -1,10 +1,8 @@
 package API.nhyira;
 
-import java.util.Date;
+
 
 public class UsuarioModel {
-
-
     private Long id;
     private String nome;
     private String email;
@@ -14,10 +12,7 @@ public class UsuarioModel {
     private String endereco;
     private int idade;
     private boolean funcionario;
-    private Date dataNascimento;
-
-
-
+    private String meta;
 
     public Long getId() {
         return id;
@@ -91,11 +86,11 @@ public class UsuarioModel {
         this.funcionario = funcionario;
     }
 
-    public Date getDataNascimento() {
-        return dataNascimento;
+    public String getMeta() {
+        return meta;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
+    public void setMeta(String meta) {
+        this.meta = meta;
     }
 }

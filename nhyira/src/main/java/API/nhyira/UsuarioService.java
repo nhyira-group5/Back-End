@@ -1,18 +1,19 @@
 package API.nhyira;
 
-
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService implements UsuarioInterface {
 
-    private final Map<Character, List<UsuarioModel>> usuariosPorLetra = new HashMap<>();
+    private final Map<String, List<UsuarioModel>> usuariosPorMeta = new HashMap<>();
+    private final List<UsuarioModel> usuarios = new ArrayList<>();
 
     @Override
     public void validarUsuario(UsuarioModel usuario) throws Exception {
@@ -31,12 +32,13 @@ public class UsuarioService implements UsuarioInterface {
     }
 
     public void adicionarUsuario(UsuarioModel usuario) {
-        char primeiraLetra = Character.toLowerCase(usuario.getNome().charAt(0));
-        usuariosPorLetra.computeIfAbsent(primeiraLetra, key -> new ArrayList<>()).add(usuario);
+        String meta = usuario.getMeta();
+        usuariosPorMeta.computeIfAbsent(meta, key -> new ArrayList<>()).add(usuario);
+        usuarios.add(usuario);
     }
 
     public UsuarioModel atualizarUsuario(int id, UsuarioModel usuarioDetails) {
-        List<UsuarioModel> usuarios = usuariosPorLetra.values().stream()
+        List<UsuarioModel> usuarios = usuariosPorMeta.values().stream()
                 .flatMap(List::stream)
                 .filter(usuario -> usuario.getId() == id)
                 .collect(Collectors.toList());
@@ -44,7 +46,7 @@ public class UsuarioService implements UsuarioInterface {
         if (!usuarios.isEmpty()) {
             UsuarioModel usuario = usuarios.get(0);
             try {
-                validarUsuario(usuarioDetails); // Validar usuário antes de atualizar
+                validarUsuario(usuarioDetails);
                 usuario.setNome(usuarioDetails.getNome());
                 usuario.setEmail(usuarioDetails.getEmail());
                 usuario.setSenha(usuarioDetails.getSenha());
@@ -53,7 +55,7 @@ public class UsuarioService implements UsuarioInterface {
                 usuario.setEndereco(usuarioDetails.getEndereco());
                 usuario.setIdade(usuarioDetails.getIdade());
                 usuario.setFuncionario(usuarioDetails.isFuncionario());
-                usuario.setDataNascimento(usuarioDetails.getDataNascimento());
+                usuario.setMeta(usuarioDetails.getMeta());
                 return usuario;
             } catch (Exception e) {
                 throw new RuntimeException("Erro ao atualizar usuário: " + e.getMessage());
@@ -63,8 +65,18 @@ public class UsuarioService implements UsuarioInterface {
         }
     }
 
-    public List<UsuarioModel> getUsuariosPorLetra(char letra) {
-        return usuariosPorLetra.getOrDefault(Character.toLowerCase(letra), Collections.emptyList());
+    public Map<String, List<UsuarioModel>> listarUsuariosPorMeta() {
+
+        usuarios.sort(Comparator.comparing(UsuarioModel::getMeta).thenComparing(UsuarioModel::getNome));
+
+        Map<String, List<UsuarioModel>> usuariosPorMeta = new HashMap<>();
+
+        for (UsuarioModel usuario : usuarios) {
+            String meta = usuario.getMeta();
+            usuariosPorMeta.computeIfAbsent(meta, key -> new ArrayList<>()).add(usuario);
+        }
+
+        return usuariosPorMeta;
     }
 
     private Map<String, Predicate<String>> criarValidacoes() {
@@ -77,7 +89,7 @@ public class UsuarioService implements UsuarioInterface {
         validacoes.put("endereco", this::validarEndereco);
         validacoes.put("idade", this::validarIdade);
         validacoes.put("funcionario", this::validarFuncionario);
-        validacoes.put("dataNascimento", this::validarDataNascimento);
+        validacoes.put("meta", this::validarMeta);
         return validacoes;
     }
 
@@ -99,8 +111,8 @@ public class UsuarioService implements UsuarioInterface {
                 return Integer.toString(usuario.getIdade());
             case "funcionario":
                 return Boolean.toString(usuario.isFuncionario());
-            case "dataNascimento":
-                return usuario.getDataNascimento() != null ? usuario.getDataNascimento().toString() : null;
+            case "meta":
+                return usuario.getMeta();
             default:
                 return null;
         }
@@ -127,8 +139,9 @@ public class UsuarioService implements UsuarioInterface {
     }
 
     private boolean validarTelefone(String telefone) {
-        return telefone != null && telefone.matches("\\d{10,11}");
+        return telefone != null && telefone.matches("\\(\\d{2}\\) \\d{5}-\\d{4}");
     }
+
 
     private boolean validarEndereco(String endereco) {
         return !StringUtils.isEmpty(endereco);
@@ -147,14 +160,9 @@ public class UsuarioService implements UsuarioInterface {
         return "true".equalsIgnoreCase(funcionario) || "false".equalsIgnoreCase(funcionario);
     }
 
-    private boolean validarDataNascimento(String dataNascimento) {
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate data = LocalDate.parse(dataNascimento.substring(0, 10), formatter);
-            LocalDate dataAtual = LocalDate.now();
-            return !data.isAfter(dataAtual);
-        } catch (Exception e) {
-            return false;
-        }
+
+    private boolean validarMeta(String meta) {
+        List<String> metasValidas = Arrays.asList("perder peso", "perder gordura", "ganhar massa muscular");
+        return metasValidas.contains(meta.toLowerCase());
     }
 }

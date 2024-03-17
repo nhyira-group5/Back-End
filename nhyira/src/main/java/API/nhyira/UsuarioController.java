@@ -3,8 +3,9 @@ package API.nhyira;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -26,14 +27,23 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/listarPorMeta")
+    public ResponseEntity<Map<String, List<UsuarioModel>>> listarUsuariosPorMeta() {
+        try {
+            Map<String, List<UsuarioModel>> usuariosPorMeta = usuarioService.listarUsuariosPorMeta();
+            return ResponseEntity.ok(usuariosPorMeta);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new HashMap<>());
+        }
+    }
+
     @GetMapping("/buscar/{id}")
     public ResponseEntity<UsuarioModel> buscarUsuario(@PathVariable int id) {
         UsuarioModel usuario = new UsuarioModel();
         return ResponseEntity.ok(usuario);
     }
 
-    // Endpoint para atualizar um usuário
-    // Endpoint para atualizar um usuário
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable int id, @RequestBody UsuarioModel usuario) {
         try {
@@ -49,8 +59,6 @@ public class UsuarioController {
         }
     }
 
-
-
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<String> excluirUsuario(@PathVariable int id) {
         return ResponseEntity.ok("Usuário excluído com sucesso");
@@ -62,4 +70,3 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 }
-

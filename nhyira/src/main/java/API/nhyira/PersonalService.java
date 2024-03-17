@@ -14,6 +14,38 @@ public class PersonalService {
     private final List<PersonalModel> personals = new ArrayList<>();
     private long proximoId = 1;
 
+    public List<PersonalModel> obterTodosPersonalsOrdenadosPorEspecialidade() {
+
+        Map<String, List<PersonalModel>> personalsPorEspecialidade = new HashMap<>();
+
+
+        for (PersonalModel personal : personals) {
+            String especialidade = personal.getEspecialidade();
+            if (!personalsPorEspecialidade.containsKey(especialidade)) {
+                personalsPorEspecialidade.put(especialidade, new ArrayList<>());
+            }
+            personalsPorEspecialidade.get(especialidade).add(personal);
+        }
+
+
+        for (List<PersonalModel> lista : personalsPorEspecialidade.values()) {
+            lista.sort(Comparator.comparing(PersonalModel::getNome));
+        }
+
+
+        List<String> especialidadesOrdenadas = new ArrayList<>(personalsPorEspecialidade.keySet());
+        especialidadesOrdenadas.sort(Comparator.naturalOrder());
+
+
+        List<PersonalModel> personalsOrdenados = new ArrayList<>();
+        for (String especialidade : especialidadesOrdenadas) {
+            personalsOrdenados.addAll(personalsPorEspecialidade.get(especialidade));
+        }
+
+        return personalsOrdenados;
+    }
+
+
     public PersonalModel criarPersonal(PersonalModel personal) {
         try {
             validarPersonal(personal);
@@ -67,7 +99,6 @@ public class PersonalService {
         }
         return null;
     }
-
 
 
     public void validarPersonal(PersonalModel personal) throws Exception {
@@ -138,16 +169,15 @@ public class PersonalService {
     }
 
     private boolean validarTelefone(String telefone) {
-        return telefone != null && telefone.matches("\\d{10,11}");
+        return telefone != null && telefone.matches("\\(\\d{2}\\) \\d{5}-\\d{4}");
     }
-
 
     private boolean validarEndereco(String endereco) {
         return !StringUtils.isEmpty(endereco);
     }
 
     private boolean validarEspecialidade(String especialidade) {
-        List<String> especialidadesValidas = Arrays.asList("Musculação", "Crossfit", "Yoga", "Pilates");
-        return especialidadesValidas.contains(especialidade);
+        List<String> especialidadesValidas = Arrays.asList("musculação", "crossfit", "yoga", "pilates");
+        return especialidadesValidas.contains(especialidade.toLowerCase());
     }
 }
