@@ -8,20 +8,20 @@ import jakarta.persistence.*;
 public class PersonalModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idPersonal")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_personal")
     private Integer idPersonal;
 
     @Column(name = "username", nullable = false, unique = true, length = 20)
     private String username;
 
-    @Column(name = "cpf", nullable = false, length = 11)
+    @Column(name = "cpf", nullable = false, unique = true, length = 14)
     private String cpf;
 
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "dtNasc", nullable = false)
+    @Column(name = "dt_nasc", nullable = false)
     private Date dtNasc;
 
     @Column(name = "genero", length = 3)
@@ -37,7 +37,7 @@ public class PersonalModel {
     private String senha;
 
     @ManyToOne
-    @JoinColumn(name = "fkImagemPersonal")
+    @JoinColumn(name = "fk_imagem_personal")
     private MidiaModel midia;
 
 

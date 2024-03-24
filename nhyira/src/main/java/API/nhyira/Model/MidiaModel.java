@@ -10,10 +10,10 @@ public class MidiaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idMidia")
+    @Column(name = "id_midia")
     private Integer idMidia;
 
-    @Column(name = "nomeArquivo", nullable = false, length = 100)
+    @Column(name = "nome_arquivo", nullable = false, length = 100)
     private String nomeArquivo;
 
     @Lob

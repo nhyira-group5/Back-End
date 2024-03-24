@@ -92,7 +92,7 @@ public class PersonalService {
         validacoes.put("senha", this::validarSenha);
         validacoes.put("cpf", this::validarCPF);
         validacoes.put("genero", this::validarGenero);
-        validacoes.put("dtNascimento", this::validarDtNasc);
+        validacoes.put("dtNasc", this::validarDtNasc);
         return validacoes;
     }
 

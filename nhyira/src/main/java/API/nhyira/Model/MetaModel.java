@@ -8,13 +8,13 @@ public class MetaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idMeta")
+    @Column(name = "id_meta")
     private Integer idMeta;
 
     @Column(name = "meta", nullable = false, length = 100)
     private String meta;
 
-    @Column(name = "qtdFase", nullable = false)
+    @Column(name = "qtd_fase", nullable = false)
     private int qtdFase;
 
     // Getters e Setters

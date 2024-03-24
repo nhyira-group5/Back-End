@@ -3,9 +3,12 @@ package API.nhyira.Service;
 
 import java.util.stream.Collectors;
 
+import API.nhyira.DBA.UsuarioRepository;
 import API.nhyira.Model.UsuarioModel;
 import API.nhyira.UsuarioInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.*;
@@ -14,7 +17,10 @@ import java.util.function.Predicate;
 @Service
 public class UsuarioService implements UsuarioInterface {
 
-    private final Map<Character, List<UsuarioModel>> usuariosPorLetra = new HashMap<>();
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+//    private final Map<Character, List<UsuarioModel>> usuariosPorLetra = new HashMap<>();
 
     @Override
     public void validarUsuario(UsuarioModel usuario) throws Exception {
@@ -32,22 +38,26 @@ public class UsuarioService implements UsuarioInterface {
         adicionarUsuario(usuario);
     }
 
-    public void adicionarUsuario(UsuarioModel usuario) {
-        char primeiraLetra = Character.toLowerCase(usuario.getNome().charAt(0));
-        usuariosPorLetra.computeIfAbsent(primeiraLetra, key -> new ArrayList<>()).add(usuario);
+    public Boolean adicionarUsuario(UsuarioModel usuario) {
+//        char primeiraLetra = Character.toLowerCase(usuario.getNome().charAt(0));
+//        usuariosPorLetra.computeIfAbsent(primeiraLetra, key -> new ArrayList<>()).add(usuario);
+        if (usuario != null) {
+            usuarioRepository.save(usuario);
+            return true;
+        }
+        return false;
     }
 
 
     public UsuarioModel atualizarUsuario(int id, UsuarioModel usuarioDetails) {
         // Procurar o usuário pelo ID na lista de usuários
-        List<UsuarioModel> usuarios = usuariosPorLetra.values().stream()
-                .flatMap(List::stream)
-                .filter(usuario -> usuario.getIdUsuario() == id)
-                .collect(Collectors.toList());
-
-
-        if (!usuarios.isEmpty()) {
-            UsuarioModel usuario = usuarios.get(0);
+//        List<UsuarioModel> usuarios = usuariosPorLetra.values().stream()
+//                .flatMap(List::stream)
+//                .filter(usuario -> usuario.getIdUsuario() == id)
+//                .collect(Collectors.toList());
+        UsuarioModel usuario = null;
+        if (usuarioRepository.existsById(id)) {
+            usuario = usuarioRepository.getReferenceById(id);
             try {
                 validarUsuario(usuarioDetails);
                 usuario.setNome(usuarioDetails.getNome());
@@ -60,18 +70,28 @@ public class UsuarioService implements UsuarioInterface {
                 usuario.setEmail2(usuarioDetails.getEmail2());
                 usuario.setPeso(usuarioDetails.getPeso());
                 usuario.setAltura(usuarioDetails.getAltura());
-                return usuario;
+                adicionarUsuario(usuario);
             } catch (Exception e) {
                 throw new RuntimeException("Erro ao atualizar usuário: " + e.getMessage());
             }
-        } else {
-            throw new NoSuchElementException("Usuário não encontrado");
         }
+        return usuario;
     }
 
+    public Boolean deletarUsuario(int id) {
+        if (usuarioRepository.existsById(id)) {
+            usuarioRepository.deleteById(id);
+            return true;
+        }
+        throw new NoSuchElementException("Usuário não encontrado");
+    }
 
-    public List<UsuarioModel> getUsuariosPorLetra(char letra) {
-        return usuariosPorLetra.getOrDefault(Character.toLowerCase(letra), Collections.emptyList());
+    public List<UsuarioModel> getUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    public Optional<UsuarioModel> getUsuarioPorId(int id) {
+        return usuarioRepository.findById(id);
     }
 
     private String getValue(UsuarioModel usuario, String atributo) {
@@ -127,6 +147,7 @@ public class UsuarioService implements UsuarioInterface {
     private boolean validarCPF(String cpf) {
         return cpf != null && cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
     }
+
     private boolean validarDtNasc(String dtNasc) {
         return dtNasc != null && !dtNasc.isEmpty();
     }
@@ -145,7 +166,7 @@ public class UsuarioService implements UsuarioInterface {
     }
 
     public boolean validarSenha(String senha) {
-        if (senha == null || senha.isEmpty() || senha.length() < 6) {
+        if (senha == null || senha.isEmpty() || senha.length() < 8) {
             return false;
         }
 

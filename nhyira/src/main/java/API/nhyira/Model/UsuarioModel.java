@@ -8,20 +8,20 @@ import java.time.LocalDate;
 public class UsuarioModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idUsuario")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_usuario")
     private Integer idUsuario;
 
     @Column(name = "username", nullable = false, unique = true, length = 20)
     private String username;
 
-    @Column(name = "cpf", nullable = false, length = 11)
+    @Column(name = "cpf", nullable = false, unique = true, length = 14)
     private String cpf;
 
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "dtNasc", nullable = false)
+    @Column(name = "dt_nasc", nullable = false)
     private LocalDate dtNasc;
 
     @Column(name = "genero", length = 3)
@@ -43,11 +43,11 @@ public class UsuarioModel {
     private float altura;
 
     @ManyToOne
-    @JoinColumn(name = "fkImagemUsuario")
+    @JoinColumn(name = "fk_imagem_usuario")
     private MidiaModel midia;
 
     @ManyToOne
-    @JoinColumn(name = "fkMeta")
+    @JoinColumn(name = "fk_meta")
     private MetaModel meta;
 
     public int getIdUsuario() {

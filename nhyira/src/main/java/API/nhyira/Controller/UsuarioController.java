@@ -1,12 +1,15 @@
 package API.nhyira.Controller;
 
+import API.nhyira.DBA.UsuarioRepository;
 import API.nhyira.Model.UsuarioModel;
 import API.nhyira.Service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -17,28 +20,30 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/criar")
+    @PostMapping
     public ResponseEntity<String> criarUsuario(@RequestBody UsuarioModel usuario) {
         try {
             usuarioService.validarUsuario(usuario);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso");
+            return usuarioService.adicionarUsuario(usuario) ? ResponseEntity.status(HttpStatus.CREATED).body("Usuário registado!") : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível registrar o usuário!");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro ao criar usuário: " + e.getMessage());
         }
     }
 
-    @GetMapping("/buscar/{id}")
-    public ResponseEntity<UsuarioModel> buscarUsuario(@PathVariable int id) {
-        UsuarioModel usuario = new UsuarioModel();
-        return ResponseEntity.ok(usuario);
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<UsuarioModel>> buscarUsuario(@PathVariable int id) {
+        Optional<UsuarioModel> usuario = usuarioService.getUsuarioPorId(id);
+
+        return usuario.isEmpty() ? ResponseEntity.status(404).build() : ResponseEntity.status(200).body(usuario);
     }
 
-    @PutMapping("/atualizar/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable int id, @RequestBody UsuarioModel usuario) {
         try {
             usuarioService.validarUsuario(usuario);
             UsuarioModel updatedUsuario = usuarioService.atualizarUsuario(id, usuario);
+
             if (updatedUsuario != null) {
                 return ResponseEntity.ok("Usuário atualizado com sucesso");
             } else {
@@ -49,14 +54,19 @@ public class UsuarioController {
         }
     }
 
-    @DeleteMapping("/excluir/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> excluirUsuario(@PathVariable int id) {
-        return ResponseEntity.ok("Usuário excluído com sucesso");
+        try {
+            usuarioService.deletarUsuario(id);
+            return ResponseEntity.ok("Usuário excluído com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<UsuarioModel>> listarUsuarios() {
-        List<UsuarioModel> usuarios = null;
-        return ResponseEntity.ok(usuarios);
+        List<UsuarioModel> usuariosEncontrados = usuarioService.getUsuarios();
+        return usuariosEncontrados.isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(usuariosEncontrados);
     }
 }

@@ -8,7 +8,7 @@ public class EspecialidadeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idEspecialidade")
+    @Column(name = "id_especialidade")
     private Integer idEspecialidade;
 
     @Column(name = "nome", nullable = false, length = 120)
