@@ -1,6 +1,5 @@
 package API.nhyira;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -14,41 +13,71 @@ public class PersonalService {
     private final List<PersonalModel> personals = new ArrayList<>();
     private long proximoId = 1;
 
-    public List<PersonalModel> obterTodosPersonalsOrdenadosPorEspecialidade() {
-
+    public Map<String, List<PersonalModel>> obterTodosPersonalsOrdenadosPorEspecialidade() {
         Map<String, List<PersonalModel>> personalsPorEspecialidade = new HashMap<>();
+        List<PersonalModel> todosPersonals = obterTodosPersonals();
 
-
-        for (PersonalModel personal : personals) {
+        for (PersonalModel personal : todosPersonals) {
             String especialidade = personal.getEspecialidade();
-            if (!personalsPorEspecialidade.containsKey(especialidade)) {
-                personalsPorEspecialidade.put(especialidade, new ArrayList<>());
-            }
-            personalsPorEspecialidade.get(especialidade).add(personal);
+            personalsPorEspecialidade.computeIfAbsent(especialidade, key -> new ArrayList<>()).add(personal);
         }
 
 
-        for (List<PersonalModel> lista : personalsPorEspecialidade.values()) {
-            lista.sort(Comparator.comparing(PersonalModel::getNome));
+        for (List<PersonalModel> personals : personalsPorEspecialidade.values()) {
+            selectionSort(personals);
         }
 
-
-        List<String> especialidadesOrdenadas = new ArrayList<>(personalsPorEspecialidade.keySet());
-        especialidadesOrdenadas.sort(Comparator.naturalOrder());
-
-
-        List<PersonalModel> personalsOrdenados = new ArrayList<>();
-        for (String especialidade : especialidadesOrdenadas) {
-            personalsOrdenados.addAll(personalsPorEspecialidade.get(especialidade));
-        }
-
-        return personalsOrdenados;
+        return personalsPorEspecialidade;
     }
 
+    private void selectionSort(List<PersonalModel> personals) {
+        int n = personals.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (personals.get(j).getNome().compareTo(personals.get(minIndex).getNome()) < 0) {
+                    minIndex = j;
+                }
+            }
+
+            PersonalModel temp = personals.get(minIndex);
+            personals.set(minIndex, personals.get(i));
+            personals.set(i, temp);
+        }
+    }
 
     public PersonalModel criarPersonal(PersonalModel personal) {
         try {
             validarPersonal(personal);
+
+            // Verifica se o ID foi fornecido pelo cliente
+            if (personal.getId() != null) {
+                throw new IllegalArgumentException("O ID não deve ser fornecido ao criar um novo personal");
+            }
+
+            // Validação adicional para o CPF e email
+            for (PersonalModel p : personals) {
+                if (p.getCpf().equals(personal.getCpf()) && p.getEmail().equals(personal.getEmail())) {
+                    throw new IllegalArgumentException("CPF e email duplicados");
+                }
+            }
+
+            // Validação adicional para o CPF
+            for (PersonalModel p : personals) {
+                if (p.getCpf().equals(personal.getCpf())) {
+                    throw new IllegalArgumentException("CPF duplicado");
+                }
+            }
+
+            // Validação adicional para o email
+            for (PersonalModel p : personals) {
+                if (p.getEmail().equals(personal.getEmail())) {
+                    throw new IllegalArgumentException("Email duplicado");
+                }
+            }
+
+            // Se nenhum CPF ou email duplicado for encontrado, adiciona o personal
             personal.setId(proximoId++);
             personals.add(personal);
             return personal;
@@ -57,25 +86,36 @@ public class PersonalService {
         }
     }
 
-    public PersonalModel atualizarPersonal(Long id, PersonalModel detalhesPersonal) {
-        PersonalModel personalExistente = obterPersonalPorId(id);
-        if (personalExistente != null) {
-            try {
-                validarPersonal(detalhesPersonal);
-                personalExistente.setNome(detalhesPersonal.getNome());
-                personalExistente.setEmail(detalhesPersonal.getEmail());
-                personalExistente.setSenha(detalhesPersonal.getSenha());
-                personalExistente.setCpf(detalhesPersonal.getCpf());
-                personalExistente.setTelefone(detalhesPersonal.getTelefone());
-                personalExistente.setEndereco(detalhesPersonal.getEndereco());
-                personalExistente.setEspecialidade(detalhesPersonal.getEspecialidade());
-                return personalExistente;
-            } catch (Exception e) {
-                throw new IllegalArgumentException("Erro ao atualizar personal: " + e.getMessage());
-            }
-        } else {
-            return null;
+
+
+    public boolean existePersonal(Long id) {
+        PersonalModel personal = obterPersonalPorId(id);
+        return personal != null;
+    }
+
+    public PersonalModel atualizarPersonal(PersonalModel detalhesPersonal) {
+        try {
+            validarPersonal(detalhesPersonal); // Valida os detalhes do personal
+        } catch (Exception e) {
+            // Trate a exceção aqui
+            throw new IllegalArgumentException("Erro ao validar os detalhes do personal: " + e.getMessage());
         }
+
+        PersonalModel personalExistente = obterPersonalPorId(detalhesPersonal.getId()); // Obtém o personal existente pelo ID
+
+        if (personalExistente == null) {
+            throw new NoSuchElementException("Personal não encontrado");
+        }
+
+        personalExistente.setNome(detalhesPersonal.getNome());
+        personalExistente.setEmail(detalhesPersonal.getEmail());
+        personalExistente.setSenha(detalhesPersonal.getSenha());
+        personalExistente.setCpf(detalhesPersonal.getCpf());
+        personalExistente.setTelefone(detalhesPersonal.getTelefone());
+        personalExistente.setEndereco(detalhesPersonal.getEndereco());
+        personalExistente.setEspecialidade(detalhesPersonal.getEspecialidade());
+
+        return personalExistente;
     }
 
     public void excluirPersonal(Long id) {
@@ -99,7 +139,6 @@ public class PersonalService {
         }
         return null;
     }
-
 
     public void validarPersonal(PersonalModel personal) throws Exception {
         Map<String, Predicate<String>> validacoes = criarValidacoes();
@@ -161,7 +200,11 @@ public class PersonalService {
     }
 
     private boolean validarSenha(String senha) {
-        return !StringUtils.isEmpty(senha) && senha.length() >= 6;
+        if (StringUtils.isEmpty(senha) || senha.length() < 6) {
+            return false;
+        }
+
+        return senha.matches("^(?=.*[A-Z])(?=.*\\d).+$");
     }
 
     private boolean validarCPF(String cpf) {

@@ -1,24 +1,25 @@
 package API.nhyira;
 
-
+import java.time.LocalDate;
 
 public class UsuarioModel {
-    private Long id;
+    private long id;
     private String nome;
     private String email;
     private String senha;
     private String cpf;
     private String telefone;
-    private String endereco;
-    private int idade;
+    private LocalDate dataNascimento;
     private boolean funcionario;
+    // Endereço é um campo virtual, não precisa ser armazenado no modelo
+    private String endereco;
     private String meta;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -62,20 +63,12 @@ public class UsuarioModel {
         this.telefone = telefone;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public int getIdade() {
-        return idade;
-    }
-
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public boolean isFuncionario() {
@@ -84,6 +77,15 @@ public class UsuarioModel {
 
     public void setFuncionario(boolean funcionario) {
         this.funcionario = funcionario;
+    }
+
+
+     public String getEndereco() {
+         return endereco;
+     }
+
+     public void setEndereco(String endereco) {
+         this.endereco = endereco;
     }
 
     public String getMeta() {
