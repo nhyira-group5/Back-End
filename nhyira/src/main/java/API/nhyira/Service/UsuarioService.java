@@ -35,7 +35,6 @@ public class UsuarioService implements UsuarioInterface {
                 throw new Exception("Erro de validação para: " + atributo);
             }
         }
-        adicionarUsuario(usuario);
     }
 
     public Boolean adicionarUsuario(UsuarioModel usuario) {
@@ -48,18 +47,13 @@ public class UsuarioService implements UsuarioInterface {
         return false;
     }
 
-
     public UsuarioModel atualizarUsuario(int id, UsuarioModel usuarioDetails) {
-        // Procurar o usuário pelo ID na lista de usuários
-//        List<UsuarioModel> usuarios = usuariosPorLetra.values().stream()
-//                .flatMap(List::stream)
-//                .filter(usuario -> usuario.getIdUsuario() == id)
-//                .collect(Collectors.toList());
-        UsuarioModel usuario = null;
-        if (usuarioRepository.existsById(id)) {
-            usuario = usuarioRepository.getReferenceById(id);
+        Optional<UsuarioModel> usuarioOptional = usuarioRepository.findById(id);
+
+        if (usuarioOptional.isPresent()) {
+            UsuarioModel usuario = usuarioOptional.get();
+
             try {
-                validarUsuario(usuarioDetails);
                 usuario.setNome(usuarioDetails.getNome());
                 usuario.setUsername(usuarioDetails.getUsername());
                 usuario.setEmail(usuarioDetails.getEmail());
@@ -70,12 +64,15 @@ public class UsuarioService implements UsuarioInterface {
                 usuario.setEmail2(usuarioDetails.getEmail2());
                 usuario.setPeso(usuarioDetails.getPeso());
                 usuario.setAltura(usuarioDetails.getAltura());
+
                 adicionarUsuario(usuario);
+                return usuario;
             } catch (Exception e) {
                 throw new RuntimeException("Erro ao atualizar usuário: " + e.getMessage());
             }
+        } else {
+            throw new NoSuchElementException("Usuário não encontrado");
         }
-        return usuario;
     }
 
     public Boolean deletarUsuario(int id) {
