@@ -2,36 +2,27 @@ package API.nhyira.Service;
 
 import API.nhyira.Model.EmailModel;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
+    @Autowired
+    private JavaMailSender emailSender;
 
-    private final JavaMailSender javaMailSender;
+    public void enviarEmail (EmailModel email) {
+        SimpleMailMessage mensagem = new SimpleMailMessage();
+        mensagem.setFrom("contato.nhyira@gmail.com");
+        mensagem.setTo(email.getDestinatario());
 
-    public EmailService(JavaMailSender javaMailSender) {
-        this.javaMailSender = javaMailSender;
-    }
+        mensagem.setSubject(email.getAssunto());
+        mensagem.setText(email.getConteudo());
 
-    public void enviarEmail(EmailModel emailModel) {
-        MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper;
-        try {
-            helper = new MimeMessageHelper(message, true);
-            helper.setTo(emailModel.getDestinatario());
-            helper.setSubject(emailModel.getAssunto());
-            helper.setText(emailModel.getConteudo(), true);
-            javaMailSender.send(message);
-        } catch (jakarta.mail.MessagingException e) {
-            throw new RuntimeException("Erro ao enviar e-mail", e);
-        }
-    }
-
-    // Getters e Setters
-    public JavaMailSender getJavaMailSender() {
-        return javaMailSender;
+        emailSender.send(mensagem);
+        System.out.println("Email enviado com sucesso!");
     }
 }
 
