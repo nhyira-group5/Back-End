@@ -1,15 +1,10 @@
 package API.nhyira.Service;
 
-
-import java.util.stream.Collectors;
-
 import API.nhyira.DBA.UsuarioRepository;
 import API.nhyira.Model.UsuarioModel;
 import API.nhyira.UsuarioInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.*;
 import java.util.function.Predicate;
@@ -20,26 +15,7 @@ public class UsuarioService implements UsuarioInterface {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-//    private final Map<Character, List<UsuarioModel>> usuariosPorLetra = new HashMap<>();
-
-    @Override
-    public void validarUsuario(UsuarioModel usuario) throws Exception {
-        Map<String, Predicate<String>> validacoes = criarValidacoes();
-
-        for (Map.Entry<String, Predicate<String>> entry : validacoes.entrySet()) {
-            String atributo = entry.getKey();
-            Predicate<String> validacao = entry.getValue();
-            String valor = getValue(usuario, atributo);
-
-            if (!validacao.test(valor)) {
-                throw new Exception("Erro de validação para: " + atributo);
-            }
-        }
-    }
-
     public Boolean adicionarUsuario(UsuarioModel usuario) {
-//        char primeiraLetra = Character.toLowerCase(usuario.getNome().charAt(0));
-//        usuariosPorLetra.computeIfAbsent(primeiraLetra, key -> new ArrayList<>()).add(usuario);
         if (usuario != null) {
             usuarioRepository.save(usuario);
             return true;
@@ -91,6 +67,36 @@ public class UsuarioService implements UsuarioInterface {
         return usuarioRepository.findById(id);
     }
 
+    @Override
+    public void validarUsuario(UsuarioModel usuario) throws Exception {
+        Map<String, Predicate<String>> validacoes = criarValidacoes();
+
+        for (Map.Entry<String, Predicate<String>> entry : validacoes.entrySet()) {
+            String atributo = entry.getKey();
+            Predicate<String> validacao = entry.getValue();
+            String valor = getValue(usuario, atributo);
+
+            if (!validacao.test(valor)) {
+                throw new Exception("Erro de validação para: " + atributo);
+            }
+        }
+    }
+
+    private Map<String, Predicate<String>> criarValidacoes() {
+        Map<String, Predicate<String>> validacoes = new HashMap<>();
+        validacoes.put("nome", this::validarNome);
+        validacoes.put("username", this::validarUsername);
+        validacoes.put("cpf", this::validarCPF);
+        validacoes.put("dtNasc", this::validarDtNasc);
+        validacoes.put("genero", this::validarGenero);
+        validacoes.put("email", this::validarEmail);
+        validacoes.put("email2", this::validarEmail2);
+        validacoes.put("senha", this::validarSenha);
+        validacoes.put("peso", this::validarPeso);
+        validacoes.put("altura", this::validarAltura);
+        return validacoes;
+    }
+
     private String getValue(UsuarioModel usuario, String atributo) {
         switch (atributo) {
             case "nome":
@@ -118,21 +124,6 @@ public class UsuarioService implements UsuarioInterface {
         }
     }
 
-    private Map<String, Predicate<String>> criarValidacoes() {
-        Map<String, Predicate<String>> validacoes = new HashMap<>();
-        validacoes.put("nome", this::validarNome);
-        validacoes.put("username", this::validarUsername);
-        validacoes.put("cpf", this::validarCPF);
-        validacoes.put("dtNasc", this::validarDtNasc);
-        validacoes.put("genero", this::validarGenero);
-        validacoes.put("email", this::validarEmail);
-        validacoes.put("email2", this::validarEmail2);
-        validacoes.put("senha", this::validarSenha);
-        validacoes.put("peso", this::validarPeso);
-        validacoes.put("altura", this::validarAltura);
-        return validacoes;
-    }
-
     private boolean validarNome(String nome) {
         return nome != null && !nome.isEmpty();
     }
@@ -157,9 +148,8 @@ public class UsuarioService implements UsuarioInterface {
         return email != null && !email.isEmpty() && email.matches("^(.+)@(.+)$") && email.length() <= 100;
     }
 
-
-    private boolean validarEmail2(String email2) {
-        return true;
+    public boolean validarEmail2(String email2) {
+        return email2 != null && !email2.isEmpty() && email2.matches("^(.+)@(.+)$") && email2.length() <= 100;
     }
 
     public boolean validarSenha(String senha) {
@@ -171,7 +161,6 @@ public class UsuarioService implements UsuarioInterface {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
         return senha.matches(regex);
     }
-
 
     private static final String PATTERN_PESO = "^\\d{1,3}(\\.\\d{1,2})?$";
     private static final String PATTERN_ALTURA = "^\\d{1,3}(\\.\\d{1,2})?$";

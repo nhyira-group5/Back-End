@@ -1,7 +1,9 @@
 package API.nhyira.Controller;
 
 import API.nhyira.Model.PersonalModel;
+import API.nhyira.Model.UsuarioModel;
 import API.nhyira.Service.PersonalService;
+import API.nhyira.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,57 +12,74 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/personal")
+@RequestMapping("/personais")
 public class PersonalController {
+    private final PersonalService personalService;
 
-    @Autowired
-    private PersonalService personalService;
+    public PersonalController(PersonalService personalService) {
+        this.personalService = personalService;
+    }
 
-    // Endpoint para criar um novo personal
-    @PostMapping("/criar")
-    public ResponseEntity<?> criarPersonal(@RequestBody PersonalModel personal) {
+    @PostMapping
+    public ResponseEntity<String> criarPersonal(@RequestBody PersonalModel personal) {
         try {
-            PersonalModel createdPersonal = personalService.criarPersonal(personal);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdPersonal);
+            personalService.validarPersonal(personal);
+            boolean personalAdicionado = personalService.adicionarPersonal(personal);
+            if (personalAdicionado) {
+                return ResponseEntity.status(HttpStatus.CREATED).body("Personal registrado!");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível registrar o personal!");
+            }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Erro ao criar usuário: " + e.getMessage());
         }
     }
 
-    // Endpoint para obter um personal pelo ID
+    @GetMapping
+    public ResponseEntity<List<PersonalModel>> buscarPersonais() {
+        return personalService.getPersonais().isEmpty() ? ResponseEntity.status(204).build() : ResponseEntity.status(200).body(personalService.getPersonais());
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> obterPersonalPorId(@PathVariable("id") Long id) {
-        PersonalModel personal = personalService.obterPersonalPorId(id);
-        if (personal != null) {
-            return ResponseEntity.ok(personal);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity<?> buscarPersonalPorId(@PathVariable int id) {
+        try {
+            Optional<PersonalModel> personal = personalService.getPersonaisPorId(id);
+            return personal.isPresent() ? ResponseEntity.status(HttpStatus.OK).body(personal) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno ao buscar personal");
         }
     }
 
-    // Endpoint para atualizar um personal
-    @PutMapping("/atualizar/{id}")
-    public ResponseEntity<?> atualizarPersonal(@PathVariable("id") Long id, @RequestBody PersonalModel personalDetalhes) {
+    @PutMapping("/{id}")
+    public ResponseEntity<String> atualizarPersonal(@PathVariable int id, @RequestBody PersonalModel personal) {
         try {
-            personalService.validarPersonal(personalDetalhes); // Validar personal antes de atualizar
-            PersonalModel personalAtualizado = personalService.atualizarPersonal(id, personalDetalhes); // Atualizar personal
-            if (personalAtualizado != null) {
-                return ResponseEntity.ok(personalAtualizado);
+            personalService.validarPersonal(personal);
+            PersonalModel updatedPersonal = personalService.atualizarPersonal(id, personal);
+
+            if (updatedPersonal != null) {
+                return ResponseEntity.ok("Personal atualizado com sucesso");
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao atualizar personal: " + e.getMessage());
         }
     }
 
-    // Endpoint para excluir um personal
-    @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<Void> excluirPersonal(@PathVariable("id") Long id) {
-        personalService.excluirPersonal(id); // Excluir personal
-        return ResponseEntity.noContent().build();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> excluirPersonal(@PathVariable int id) {
+        try {
+            personalService.deletarPersonal(id);
+            return ResponseEntity.ok("Personal excluído com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao excluir personal: " + e.getMessage());
+        }
     }
 }
