@@ -1,9 +1,13 @@
-package API.nhyira;
+package API.nhyira.Service;
 
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalService.java
 import org.springframework.http.ResponseEntity;
+=======
+import API.nhyira.Model.PersonalModel;
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Service/PersonalService.java
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 import org.springframework.util.StringUtils;
-
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -13,6 +17,7 @@ public class PersonalService {
     private final List<PersonalModel> personals = new ArrayList<>();
     private long proximoId = 1;
 
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalService.java
     public Map<String, List<PersonalModel>> obterTodosPersonalsOrdenadosPorEspecialidade() {
         Map<String, List<PersonalModel>> personalsPorEspecialidade = new HashMap<>();
         List<PersonalModel> todosPersonals = obterTodosPersonals();
@@ -79,6 +84,12 @@ public class PersonalService {
 
             // Se nenhum CPF ou email duplicado for encontrado, adiciona o personal
             personal.setId(proximoId++);
+=======
+    public PersonalModel criarPersonal(PersonalModel personal) {
+        try {
+            validarPersonal(personal);
+            personal.setIdPersonal((int) proximoId++);
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Service/PersonalService.java
             personals.add(personal);
             return personal;
         } catch (Exception e) {
@@ -87,6 +98,7 @@ public class PersonalService {
     }
 
 
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalService.java
 
     public boolean existePersonal(Long id) {
         PersonalModel personal = obterPersonalPorId(id);
@@ -99,6 +111,27 @@ public class PersonalService {
         } catch (Exception e) {
             // Trate a exceção aqui
             throw new IllegalArgumentException("Erro ao validar os detalhes do personal: " + e.getMessage());
+=======
+    public PersonalModel atualizarPersonal(Long id, PersonalModel detalhesPersonal) {
+        PersonalModel personalExistente = obterPersonalPorId(id);
+        if (personalExistente != null) {
+            try {
+                validarPersonal(detalhesPersonal);
+                personalExistente.setNome(detalhesPersonal.getNome());
+                personalExistente.setUsername(detalhesPersonal.getUsername());
+                personalExistente.setEmail(detalhesPersonal.getEmail());
+                personalExistente.setEmail2(detalhesPersonal.getEmail2());
+                personalExistente.setSenha(detalhesPersonal.getSenha());
+                personalExistente.setCpf(detalhesPersonal.getCpf());
+                personalExistente.setDtNasc(detalhesPersonal.getDtNasc());
+                personalExistente.setGenero(detalhesPersonal.getGenero());
+                return personalExistente;
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Erro ao atualizar personal: " + e.getMessage());
+            }
+        } else {
+            return null;
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Service/PersonalService.java
         }
 
         PersonalModel personalExistente = obterPersonalPorId(detalhesPersonal.getId()); // Obtém o personal existente pelo ID
@@ -133,7 +166,7 @@ public class PersonalService {
 
     public PersonalModel obterPersonalPorId(Long id) {
         for (PersonalModel personal : personals) {
-            if (personal.getId().equals(id)) {
+            if (personal.getIdPersonal() == id.intValue()) {
                 return personal;
             }
         }
@@ -157,12 +190,13 @@ public class PersonalService {
     private Map<String, Predicate<String>> criarValidacoes() {
         Map<String, Predicate<String>> validacoes = new HashMap<>();
         validacoes.put("nome", this::validarNome);
+        validacoes.put("username", this::validarUsername);
         validacoes.put("email", this::validarEmail);
+        validacoes.put("email2", this::validarEmail2);
         validacoes.put("senha", this::validarSenha);
         validacoes.put("cpf", this::validarCPF);
-        validacoes.put("telefone", this::validarTelefone);
-        validacoes.put("endereco", this::validarEndereco);
-        validacoes.put("especialidade", this::validarEspecialidade);
+        validacoes.put("genero", this::validarGenero);
+        validacoes.put("dtNasc", this::validarDtNasc);
         return validacoes;
     }
 
@@ -170,57 +204,83 @@ public class PersonalService {
         switch (atributo) {
             case "nome":
                 return personal.getNome();
+            case "username":
+                return personal.getUsername();
             case "email":
                 return personal.getEmail();
+            case "email2":
+                return personal.getEmail2();
             case "senha":
                 return personal.getSenha();
             case "cpf":
                 return personal.getCpf();
-            case "telefone":
-                return personal.getTelefone();
-            case "endereco":
-                return personal.getEndereco();
-            case "especialidade":
-                return personal.getEspecialidade();
+            case "dtNasc":
+                return String.valueOf(personal.getDtNasc());
+            case "genero":
+                return personal.getGenero();
             default:
                 return null;
         }
     }
 
+
     private boolean validarNome(String nome) {
         return !StringUtils.isEmpty(nome);
     }
 
-    private boolean validarEmail(String email) {
-        if (StringUtils.isEmpty(email)) {
-            return false;
-        }
-        String regex = "^(.+)@(.+)$";
-        return email.matches(regex);
+    public boolean validarUsername(String username) {
+        return username != null && !username.isEmpty() && username.length() <= 20;
     }
 
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalService.java
     private boolean validarSenha(String senha) {
         if (StringUtils.isEmpty(senha) || senha.length() < 6) {
             return false;
         }
 
         return senha.matches("^(?=.*[A-Z])(?=.*\\d).+$");
+=======
+    public boolean validarEmail(String email) {
+        return email != null && !email.isEmpty() && email.matches("^(.+)@(.+)$") && email.length() <= 100;
+    }
+
+    public boolean validarEmail2(String email2) {
+        return email2 == null || email2.isEmpty() || email2.matches("^(.+)@(.+)$") && email2.length() <= 100;
+    }
+
+
+    public boolean validarSenha(String senha) {
+        if (senha == null || senha.isEmpty() || senha.length() < 6) {
+            return false;
+        }
+
+
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
+        return senha.matches(regex);
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Service/PersonalService.java
     }
 
     private boolean validarCPF(String cpf) {
         return cpf != null && cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
     }
 
-    private boolean validarTelefone(String telefone) {
-        return telefone != null && telefone.matches("\\(\\d{2}\\) \\d{5}-\\d{4}");
+    public boolean validarGenero(String genero) {
+        return genero != null && (genero.equals("M") || genero.equals("F") || genero.equals("N/A"));
     }
 
-    private boolean validarEndereco(String endereco) {
-        return !StringUtils.isEmpty(endereco);
-    }
+    private boolean validarDtNasc(String dtNascStr) {
+        if (dtNascStr == null) {
+            return false;
+        }
 
-    private boolean validarEspecialidade(String especialidade) {
-        List<String> especialidadesValidas = Arrays.asList("musculação", "crossfit", "yoga", "pilates");
-        return especialidadesValidas.contains(especialidade.toLowerCase());
+        try {
+            LocalDate dtNasc = LocalDate.parse(dtNascStr);
+
+            LocalDate dataAtual = LocalDate.now();
+
+            return dtNasc.isBefore(dataAtual);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

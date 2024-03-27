@@ -1,11 +1,20 @@
-package API.nhyira;
+package API.nhyira.Controller;
 
+import API.nhyira.Model.PersonalModel;
+import API.nhyira.Service.PersonalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalController.java
 import java.util.*;
+=======
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Controller/PersonalController.java
 
 @RestController
 @RequestMapping("/personal")
@@ -18,6 +27,7 @@ public class PersonalController {
     @PostMapping("/criar")
     public ResponseEntity<?> criarPersonal(@RequestBody PersonalModel personal) {
         try {
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalController.java
             personalService.criarPersonal(personal);
             return ResponseEntity.status(HttpStatus.CREATED).body("Personal criado com sucesso");
         } catch (IllegalArgumentException e) {
@@ -43,6 +53,24 @@ public class PersonalController {
     public ResponseEntity<List<PersonalModel>> obterTodosPersonals() {
         List<PersonalModel> todosPersonals = personalService.obterTodosPersonals();
         return ResponseEntity.ok(todosPersonals);
+=======
+            PersonalModel createdPersonal = personalService.criarPersonal(personal);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdPersonal);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+    // Endpoint para obter um personal pelo ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> obterPersonalPorId(@PathVariable("id") Long id) {
+        PersonalModel personal = personalService.obterPersonalPorId(id);
+        if (personal != null) {
+            return ResponseEntity.ok(personal);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Controller/PersonalController.java
     }
 
     // Endpoint para atualizar um personal
@@ -60,10 +88,15 @@ public class PersonalController {
                     return ResponseEntity.notFound().build();
                 }
             } else {
-                return ResponseEntity.notFound().build();
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
+<<<<<<< HEAD:nhyira/src/main/java/API/nhyira/PersonalController.java
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+=======
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+>>>>>>> fd49bcc327a8e63ede2ddc3dc430ab34102c685c:nhyira/src/main/java/API/nhyira/Controller/PersonalController.java
         }
     }
 
