@@ -21,7 +21,6 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<String> criarUsuario(@RequestBody UsuarioModel usuario) {
         try {
-            usuarioService.validarUsuario(usuario);
             boolean usuarioAdicionado = usuarioService.adicionarUsuario(usuario);
             if (usuarioAdicionado) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Usuário registrado!");
@@ -53,7 +52,6 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarUsuario(@PathVariable int id, @RequestBody UsuarioModel usuario) {
         try {
-            usuarioService.validarUsuario(usuario);
             UsuarioModel updatedUsuario = usuarioService.atualizarUsuario(id, usuario);
 
             if (updatedUsuario != null) {

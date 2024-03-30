@@ -21,7 +21,6 @@ public class PersonalController {
     @PostMapping
     public ResponseEntity<String> criarPersonal(@RequestBody PersonalModel personal) {
         try {
-            personalService.validarPersonal(personal);
             boolean personalAdicionado = personalService.adicionarPersonal(personal);
             if (personalAdicionado) {
                 return ResponseEntity.status(HttpStatus.CREATED).body("Personal registrado!");
@@ -52,9 +51,7 @@ public class PersonalController {
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarPersonal(@PathVariable int id, @RequestBody PersonalModel personal) {
         try {
-            personalService.validarPersonal(personal);
             PersonalModel updatedPersonal = personalService.atualizarPersonal(id, personal);
-
             if (updatedPersonal != null) {
                 return ResponseEntity.ok("Personal atualizado com sucesso");
             } else {

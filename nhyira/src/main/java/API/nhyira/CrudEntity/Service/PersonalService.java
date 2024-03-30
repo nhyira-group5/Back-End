@@ -2,13 +2,14 @@ package API.nhyira.CrudEntity.Service;
 
 import API.nhyira.CrudEntity.DATABASE.PersonalRepository;
 import API.nhyira.CrudEntity.Model.PersonalModel;
+import API.nhyira.CrudEntity.Model.UsuarioModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import org.springframework.util.StringUtils;
-
-import java.util.*;
-import java.util.function.Predicate;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class PersonalService {
@@ -16,8 +17,12 @@ public class PersonalService {
     @Autowired
     private PersonalRepository personalRepository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
     public Boolean adicionarPersonal(PersonalModel personal) {
         if (personal != null) {
+            personal.setSenha(encoder.encode(personal.getSenha()));
             personalRepository.save(personal);
             return true;
         }
@@ -66,91 +71,15 @@ public class PersonalService {
         return personalRepository.findById(id);
     }
 
-    public void validarPersonal(PersonalModel personal) throws Exception {
-        Map<String, Predicate<String>> validacoes = criarValidacoes();
-
-        for (Map.Entry<String, Predicate<String>> entry : validacoes.entrySet()) {
-            String atributo = entry.getKey();
-            Predicate<String> validacao = entry.getValue();
-            String valor = getValue(personal, atributo);
-
-            if (!validacao.test(valor)) {
-                throw new Exception("Erro de validação para: " + atributo);
-            }
-        }
+    public boolean isUsernameUnique(String username) {
+        return personalRepository.findByUsernameIgnoreCase(username).isEmpty();
     }
 
-    private Map<String, Predicate<String>> criarValidacoes() {
-        Map<String, Predicate<String>> validacoes = new HashMap<>();
-        validacoes.put("nome", this::validarNome);
-        validacoes.put("username", this::validarUsername);
-        validacoes.put("email", this::validarEmail);
-        validacoes.put("email2", this::validarEmail2);
-        validacoes.put("senha", this::validarSenha);
-        validacoes.put("cpf", this::validarCPF);
-        validacoes.put("genero", this::validarGenero);
-        validacoes.put("dtNasc", this::validarDtNasc);
-        return validacoes;
+    public boolean isEmailUnique(String email) {
+        return personalRepository.findByEmailIgnoreCase(email).isEmpty();
     }
 
-    private String getValue(PersonalModel personal, String atributo) {
-        switch (atributo) {
-            case "nome":
-                return personal.getNome();
-            case "username":
-                return personal.getUsername();
-            case "email":
-                return personal.getEmail();
-            case "email2":
-                return personal.getEmail2();
-            case "senha":
-                return personal.getSenha();
-            case "cpf":
-                return personal.getCpf();
-            case "dtNasc":
-                return personal.getDtNasc() != null ? personal.getDtNasc().toString() : null;
-            case "genero":
-                return personal.getGenero();
-            default:
-                return null;
-        }
-    }
-
-    private boolean validarNome(String nome) {
-        return !StringUtils.isEmpty(nome);
-    }
-
-    public boolean validarUsername(String username) {
-        return username != null && !username.isEmpty() && username.length() <= 20;
-    }
-
-    public boolean validarEmail(String email) {
-        return email != null && !email.isEmpty() && email.matches("^(.+)@(.+)$") && email.length() <= 100;
-    }
-
-    public boolean validarEmail2(String email2) {
-        return email2 != null && !email2.isEmpty() && email2.matches("^(.+)@(.+)$") && email2.length() <= 100;
-    }
-
-
-    public boolean validarSenha(String senha) {
-        if (senha == null || senha.isEmpty() || senha.length() < 8) {
-            return false;
-        }
-
-        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
-        return senha.matches(regex);
-    }
-
-    private boolean validarCPF(String cpf) {
-        return cpf != null && cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}");
-    }
-
-    public boolean validarGenero(String genero) {
-        return genero != null && (genero.equals("M") || genero.equals("F") || genero.equals("N/A"));
-    }
-
-    private boolean validarDtNasc(String dtNasc) {
-        return dtNasc != null && !dtNasc.isEmpty();
+    public boolean isCpfUnique(String cpf) {
+        return personalRepository.findByCpf(cpf) == null;
     }
 }
