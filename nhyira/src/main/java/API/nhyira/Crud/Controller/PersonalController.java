@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class PersonalController {
     }
 
     @PostMapping
-    public ResponseEntity<String> criarPersonal(@RequestBody PersonalModel personal) {
+    public ResponseEntity<String> criarPersonal(@RequestBody @Valid PersonalModel personal) {
         try {
             boolean personalAdicionado = personalService.adicionarPersonal(personal);
             if (personalAdicionado) {
@@ -49,7 +50,7 @@ public class PersonalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarPersonal(@PathVariable int id, @RequestBody PersonalModel personal) {
+    public ResponseEntity<String> atualizarPersonal(@PathVariable int id, @RequestBody @Valid PersonalModel personal) {
         try {
             PersonalModel updatedPersonal = personalService.atualizarPersonal(id, personal);
             if (updatedPersonal != null) {

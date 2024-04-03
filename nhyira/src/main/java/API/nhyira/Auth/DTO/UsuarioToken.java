@@ -1,9 +1,30 @@
 package API.nhyira.Auth.DTO;
 
+import jakarta.persistence.Column;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class UsuarioToken {
     private Integer id;
+
+    @NotBlank(message = "O nome é obrigatório")
+    @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
+
+    @NotBlank(message = "O email é obrigatório")
+    @Email(message = "Por favor, insira um endereço de email válido")
+    @Pattern(regexp = "^(.+)@(.+)$", message = "Por favor, insira um endereço de email válido")
+    @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
+
+    @Column(name = "username", nullable = false, unique = true, length = 20)
+    @NotBlank(message = "O nome de usuário é obrigatório")
+    @Size(max = 20, message = "O nome de usuário deve ter no máximo 20 caracteres")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "O nome de usuário deve conter pelo menos uma letra maiúscula e um caractere especial")
     private String username;
     private String token;
 

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class UsuarioController {
 
     @PostMapping
 //    @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<String> criarUsuario(@RequestBody UsuarioModel usuario) {
+    public ResponseEntity<String> criarUsuario(@RequestBody @Valid UsuarioModel usuario) {
         try {
             boolean usuarioAdicionado = usuarioService.adicionarUsuario(usuario);
             if (usuarioAdicionado) {
@@ -51,7 +52,7 @@ public class UsuarioController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarUsuario(@PathVariable int id, @RequestBody UsuarioModel usuario) {
+    public ResponseEntity<String> atualizarUsuario(@PathVariable int id, @RequestBody @Valid UsuarioModel usuario) {
         try {
             UsuarioModel updatedUsuario = usuarioService.atualizarUsuario(id, usuario);
 
