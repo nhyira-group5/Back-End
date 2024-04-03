@@ -32,21 +32,9 @@ public class AuthConfig {
     private static final String ORIGENS_PERMITIDAS = "*";
 
     // INSERIR URLS PADRÃO DE ACESSO
-    // REVISAR
     private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
-            new AntPathRequestMatcher("/swagger-ui/**"),
-            new AntPathRequestMatcher("/swagger-ui.html"),
-            new AntPathRequestMatcher("/swagger-resources"),
-            new AntPathRequestMatcher("/swagger-resources/**"),
-            new AntPathRequestMatcher("/configuration/ui"),
-            new AntPathRequestMatcher("/configuration/security"),
-            new AntPathRequestMatcher("/api/public/**"),
-            new AntPathRequestMatcher("/api/public/autenticate"),
-            new AntPathRequestMatcher("/webjars/**"),
-            new AntPathRequestMatcher("/v3/api-docs/**"),
-            new AntPathRequestMatcher("/actuator/*"),
-            new AntPathRequestMatcher("/login/usuario/**"),
-            new AntPathRequestMatcher("/error/**"),
+            new AntPathRequestMatcher("/login/usuario/**")
+//            new AntPathRequestMatcher("/login/personal/**")
     };
 
     @Autowired

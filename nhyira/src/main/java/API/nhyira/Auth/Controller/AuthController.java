@@ -23,7 +23,7 @@ public class AuthController {
     public ResponseEntity<UsuarioToken> loginUser(
             @RequestBody UsuarioLogin usuarioLogin
     ) {
-        UsuarioToken usuarioToken = usuarioService.autenticar(UsuarioLogin);
+        UsuarioToken usuarioToken = usuarioService.autenticar(usuarioLogin);
         return ResponseEntity.status(200).body(usuarioToken);
     }
 }

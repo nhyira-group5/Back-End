@@ -80,8 +80,6 @@ public class UsuarioModel {
     @JoinColumn(name = "fk_meta")
     private MetaModel meta;
 
-    // Getters e Setters omitidos para brevidade
-
 
     public int getIdUsuario() {
         return idUsuario;

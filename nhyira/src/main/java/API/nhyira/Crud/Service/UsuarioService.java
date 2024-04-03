@@ -3,6 +3,7 @@ package API.nhyira.Crud.Service;
 import API.nhyira.Auth.DTO.UsuarioLogin;
 import API.nhyira.Auth.DTO.UsuarioToken;
 import API.nhyira.Auth.Security.JWT.TokenGenJwt;
+import API.nhyira.Crud.Model.UsuarioMapper.UsuarioMapper;
 import API.nhyira.Crud.Repository.UsuarioRepository;
 import API.nhyira.Crud.Model.UsuarioModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class UsuarioService {
         SecurityContextHolder.getContext().setAuthentication(auth);
 
         final String token = tokenGenJwt.generateToken(auth);
-        return usuario, token; // Fazer o Mapper
+        return UsuarioMapper.of(usuario, token);
     }
 
     public Boolean adicionarUsuario(UsuarioModel usuario) {

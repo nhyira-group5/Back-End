@@ -19,6 +19,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+//    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<String> criarUsuario(@RequestBody UsuarioModel usuario) {
         try {
             boolean usuarioAdicionado = usuarioService.adicionarUsuario(usuario);
