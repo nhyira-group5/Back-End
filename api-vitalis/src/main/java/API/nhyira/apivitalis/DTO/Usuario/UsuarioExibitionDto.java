@@ -30,6 +30,8 @@ public class UsuarioExibitionDto {
 
     private Meta meta;
 
+    private double imc;
+
     public String getUsername() {
         return username;
     }
@@ -116,5 +118,9 @@ public class UsuarioExibitionDto {
 
     public void setMeta(Meta meta) {
         this.meta = meta;
+    }
+
+    public double getImc() {
+        return peso * altura;
     }
 }

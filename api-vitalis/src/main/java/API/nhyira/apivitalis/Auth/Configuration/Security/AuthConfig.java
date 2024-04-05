@@ -3,12 +3,15 @@ package API.nhyira.apivitalis.Auth.Configuration.Security;
 import API.nhyira.apivitalis.Auth.Configuration.AuthEntryPoint;
 import API.nhyira.apivitalis.Auth.Usuario.AuthUsuarioService;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioFilter;
+import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -45,7 +48,7 @@ public class AuthConfig {
             new AntPathRequestMatcher("/api/public/**"),
             new AntPathRequestMatcher("/api/public/authenticate"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
-            new AntPathRequestMatcher("/actuator/**"),
+//            new AntPathRequestMatcher("/actuator/**"),
             new AntPathRequestMatcher("/error/**"),
     };
 
@@ -73,6 +76,14 @@ public class AuthConfig {
     @Bean
     public AuthUsuarioFilter jwtAuthenticationFilterBean() {
         return new AuthUsuarioFilter(authUsuarioService, jwtAuthenticationUntilBean());
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+
+        authenticationManagerBuilder.authenticationProvider(new AuthUsuarioProvider(authUsuarioService, passwordEncoder()));
+        return authenticationManagerBuilder.build();
     }
 
     @Bean

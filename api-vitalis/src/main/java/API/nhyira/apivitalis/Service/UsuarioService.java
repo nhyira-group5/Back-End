@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @Service
 public class UsuarioService {
+
     @Autowired
     private UsuarioRepository uRep;
     @Autowired
@@ -37,7 +38,7 @@ public class UsuarioService {
                 usuarioLogin.getLogin(), usuarioLogin.getSenha()
         );
 
-        final Authentication auth = this.authenticationManager.authenticate(credentials);
+        final Authentication auth = authenticationManager.authenticate(credentials);
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
         Optional<Usuario> usuarioByUsername = uRep.findByUsernameIgnoreCase(usuarioLogin.getLogin());

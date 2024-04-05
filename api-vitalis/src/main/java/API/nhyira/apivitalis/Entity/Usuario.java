@@ -4,39 +4,50 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Entity
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private Integer idUsuario;
 
+    @Column(name = "username")
     private String username;
 
-
+    @Column(name = "cpf")
     private String cpf;
 
+    @Column(name = "nome")
     private String nome;
 
+    @Column(name = "dt_nasc")
     private LocalDate dtNasc;
 
+    @Column(name = "genero")
     private String genero;
 
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "email2")
     private String email2;
 
+    @Column(name = "senha")
     private String senha;
 
+    @Column(name = "peso")
     private Float peso;
 
+    @Column(name = "altura")
     private Float altura;
 
-
+    @ManyToOne
+    @JoinColumn(name = "fk_imagem_usuario")
     private Midia midia;
 
+    @ManyToOne
+    @JoinColumn(name = "fk_meta")
     private Meta meta;
-
-    private double imc;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -140,10 +151,6 @@ public class Usuario {
 
     public void setMeta(Meta meta) {
         this.meta = meta;
-    }
-
-    public double getImc() {
-        return peso * altura;
     }
 
 }
