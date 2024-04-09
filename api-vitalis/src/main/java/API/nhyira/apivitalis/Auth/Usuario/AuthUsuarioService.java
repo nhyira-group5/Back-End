@@ -21,6 +21,7 @@ public class AuthUsuarioService implements UserDetailsService {
         Optional<Usuario> usuarioByUsername = uRep.findByUsernameIgnoreCase(login);
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(login);
 
+
         if (usuarioByEmail.isPresent()) {
             return new DetailsUsuario(usuarioByEmail.get());
         } else if (usuarioByUsername.isPresent()) {
@@ -29,4 +30,6 @@ public class AuthUsuarioService implements UserDetailsService {
 
         throw new UsernameNotFoundException("Usuário com a credencial [" + login + "] não encontrado!");
     }
+
+
 }

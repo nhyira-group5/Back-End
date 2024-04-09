@@ -68,7 +68,6 @@ public class UsuarioMapper {
 
     public static UsuarioTokenDto of(Usuario user, String token) {
         UsuarioTokenDto usuario = new UsuarioTokenDto();
-
         usuario.setEmail(user.getEmail());
         usuario.setUsername(user.getUsername());
         usuario.setToken(token);

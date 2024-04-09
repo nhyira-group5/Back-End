@@ -2,6 +2,7 @@ package API.nhyira.apivitalis.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,7 +22,7 @@ public class Personal {
     private String nome;
 
     @Column(name = "dt_nasc")
-    private Date dtNasc;
+    private LocalDate dtNasc;
 
     @Column(name = "genero")
     private String genero;
@@ -79,11 +80,11 @@ public class Personal {
         this.genero = genero;
     }
 
-    public Date getDtNasc() {
+    public LocalDate getDtNasc() {
         return dtNasc;
     }
 
-    public void setDtNasc(Date dtNasc) {
+    public void setDtNasc(LocalDate dtNasc) {
         this.dtNasc = dtNasc;
     }
 

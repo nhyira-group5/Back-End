@@ -1,25 +1,17 @@
-package API.nhyira.apivitalis.Auth.Usuario.DTO;
+package API.nhyira.apivitalis.Auth.Personal.DTO;
 
-import API.nhyira.apivitalis.Entity.Meta;
-import API.nhyira.apivitalis.Entity.Midia;
-import API.nhyira.apivitalis.Entity.Usuario;
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.*;
+import API.nhyira.apivitalis.Entity.Personal;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 
-public class DetailsUsuario implements UserDetails {
+public class DetailsPersonal implements UserDetails {
 
+    private final Personal personal;
 
-
-    private final Usuario usuario;
-
-    public DetailsUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public DetailsPersonal(Personal personal) {
+        this.personal = personal;
     }
 
     @Override
@@ -27,19 +19,17 @@ public class DetailsUsuario implements UserDetails {
         return null;
     }
 
-
     @Override
-    public String getPassword() {
-        return usuario.getSenha();
+    public String getPassword() { return personal.getSenha();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getUsername();
+        return personal.getUsername();
     }
 
-    public String getEmail() {
-        return usuario.getEmail();
+    public String getEmail(){return personal.getEmail();
+
     }
 
     @Override
