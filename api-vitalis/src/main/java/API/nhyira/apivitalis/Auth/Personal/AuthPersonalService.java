@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.Auth.Personal;
 import API.nhyira.apivitalis.Auth.Personal.DTO.DetailsPersonal;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.DetailsUsuario;
 import API.nhyira.apivitalis.Entity.Personal;
+import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Repository.PersonalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,15 +19,16 @@ public class AuthPersonalService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<Personal> personalByUserNome = pRep.findByUsernameIgnoreCase(login);
-        Optional<Personal> personalByEmail = pRep.findByEmailIgnoreCase(login);
+        Optional<Personal> personalByUsername = pRep.findByUsernameIgnoreCase(login);
 
-        if (personalByEmail.isPresent()){
+        if (personalByUsername.isEmpty()) {
+            Optional<Personal> personalByEmail = pRep.findByEmailIgnoreCase(login);
+
+            if (personalByEmail.isEmpty()) {
+                throw new UsernameNotFoundException("Personal com a credencial [" + login + "] não encontrado!");
+            }
             return new DetailsPersonal(personalByEmail.get());
-        } else if (personalByUserNome.isPresent()) {
-            return new DetailsPersonal(personalByUserNome.get());
         }
-
-        throw new UsernameNotFoundException("Personal com a credencial [" + login + "] não encontrado!");
+        return new DetailsPersonal(personalByUsername.get());
     }
 }

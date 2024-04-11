@@ -49,15 +49,15 @@ public class AuthConfig {
             new AntPathRequestMatcher("/api/public/**"),
             new AntPathRequestMatcher("/api/public/authenticate"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
-//            new AntPathRequestMatcher("/actuator/**"),
+            new AntPathRequestMatcher("/actuator/**"),
             new AntPathRequestMatcher("/error/**"),
     };
 
     @Autowired
     private AuthUsuarioService authUsuarioService;
 
-    @Autowired
-    private AuthPersonalService authPersonalService;
+//    @Autowired
+//    private AuthPersonalService authPersonalService;
 
     @Autowired
     private AuthEntryPoint authEntryPoint;

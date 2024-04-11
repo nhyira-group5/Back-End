@@ -19,16 +19,16 @@ public class AuthUsuarioService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Optional<Usuario> usuarioByUsername = uRep.findByUsernameIgnoreCase(login);
-        Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(login);
 
+        if (usuarioByUsername.isEmpty()) {
+            Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(login);
 
-        if (usuarioByEmail.isPresent()) {
+            if (usuarioByEmail.isEmpty()) {
+                throw new UsernameNotFoundException("Usuário com a credencial [" + login + "] não encontrado!");
+            }
             return new DetailsUsuario(usuarioByEmail.get());
-        } else if (usuarioByUsername.isPresent()) {
-            return new DetailsUsuario(usuarioByUsername.get());
         }
-
-        throw new UsernameNotFoundException("Usuário com a credencial [" + login + "] não encontrado!");
+        return new DetailsUsuario(usuarioByUsername.get());
     }
 
 

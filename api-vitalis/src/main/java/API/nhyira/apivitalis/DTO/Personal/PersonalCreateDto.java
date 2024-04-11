@@ -9,9 +9,9 @@ import java.time.LocalDate;
 public class PersonalCreateDto {
 
     @Column(nullable = false, unique = true, length = 20)
-    @NotBlank(message = "O nome do Personal é obrigatorio")
-    @Size(max = 20, message = "O nome do Personal deve ter no máximo 20 caracteres")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "O nome de Personal deve conter pelo menos uma letra maiúscula e um caractere especial")
+    @NotBlank(message = "O nome de usuário é obrigatório")
+    @Size(max = 20, message = "O nome de usuário deve ter no máximo 20 caracteres")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "O nome de usuário deve conter pelo menos uma letra maiúscula e um caractere especial")
     private String username;
 
     @NotBlank(message = "O CPF do Personal é obrigatorio")
@@ -25,7 +25,6 @@ public class PersonalCreateDto {
     private String nome;
 
     @Past
-    @NotBlank(message = "A data de nascimento é obrigatorio")
     @Column(nullable = false)
     private LocalDate dtNasc;
 
@@ -45,10 +44,10 @@ public class PersonalCreateDto {
     @Email(message =  "Por favor, insira um endereço de email válido")
     private String email2;
 
-    @NotBlank(message = "A senha é obrigatorio")
+    @NotBlank(message = "A senha é obrigatória")
+    @Size(min = 6, max = 100, message = "A senha deve ter entre 6 e 100 caracteres")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[@#$%^&+=]).*$",
             message = "A senha deve conter pelo menos um número, uma letra minúscula, um caractere especial")
-    @Size(min = 6, max = 100, message = "A senha deve ter 6 a 100 caracteres")
     @Column(nullable = false, length = 100)
     private String senha;
 

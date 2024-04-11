@@ -54,7 +54,7 @@ public class AuthPersonalFilter extends OncePerRequestFilter {
             try {
                 login = jwtTokenManager.getUsernameFromToken(jwtToken);
             } catch (ExpiredJwtException e) {
-                System.out.println("[Falha na autenticação] - Token Expirado \n" + e.getClaims().getSubject() + e.getMessage());
+                System.out.println("[ Falha na autenticação ] - Token Expirado \n" + e.getClaims().getSubject() + e.getMessage());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
         }

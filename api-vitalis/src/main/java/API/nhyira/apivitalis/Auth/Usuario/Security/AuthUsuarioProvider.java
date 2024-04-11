@@ -28,7 +28,7 @@ public class AuthUsuarioProvider implements AuthenticationProvider {
         if (
                 this.passwordEncoder.matches(password, usuario.getPassword())
         ) {
-            return new UsernamePasswordAuthenticationToken(authUsuarioService, null, usuario.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
         } else {
             throw new BadCredentialsException("Credencial de login ou Senha inválidos!");
         }
