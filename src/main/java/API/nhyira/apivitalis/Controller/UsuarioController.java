@@ -1,14 +1,11 @@
 package API.nhyira.apivitalis.Controller;
 
-import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateDto;
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.Service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +19,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<UsuarioExibitionDto> create(
-            @RequestBody @Valid UsuarioCreateDto newUser
+            @RequestBody @Valid UsuarioCreateEditDto newUser
             ) {
         if (uService.cpfUnique(newUser.getCpf()) || uService.nomeUnique(newUser.getUsername()) || uService.emailUnique(newUser.getEmail())) {
             return ResponseEntity.status(409).build();
@@ -51,7 +48,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioExibitionDto> update(
             @PathVariable int id,
-            @RequestBody @Valid UsuarioCreateDto updtUser
+            @RequestBody @Valid UsuarioCreateEditDto updtUser
     ) {
         if (uService.cpfUnique(updtUser.getCpf()) || uService.nomeUnique(updtUser.getUsername()) || uService.emailUnique(updtUser.getEmail())) {
             return ResponseEntity.status(409).build();

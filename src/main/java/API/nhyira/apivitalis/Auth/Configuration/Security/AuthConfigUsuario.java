@@ -1,7 +1,6 @@
 package API.nhyira.apivitalis.Auth.Configuration.Security;
 
 import API.nhyira.apivitalis.Auth.Configuration.AuthEntryPoint;
-import API.nhyira.apivitalis.Auth.Personal.AuthPersonalService;
 import API.nhyira.apivitalis.Auth.Usuario.AuthUsuarioService;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioFilter;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioProvider;
@@ -33,13 +32,12 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class AuthConfig {
+public class AuthConfigUsuario {
     private static final String ORIGENS_PERMITIDAS = "*";
 
     // INSERIR URLS PADRÃO DE ACESSO
     private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
             new AntPathRequestMatcher("/login/usuario/**"),
-            new AntPathRequestMatcher("/login/personal/**"),
             new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/swagger-ui.html"),
             new AntPathRequestMatcher("/swagger-resources"),
@@ -55,9 +53,6 @@ public class AuthConfig {
 
     @Autowired
     private AuthUsuarioService authUsuarioService;
-
-//    @Autowired
-//    private AuthPersonalService authPersonalService;
 
     @Autowired
     private AuthEntryPoint authEntryPoint;

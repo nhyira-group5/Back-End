@@ -5,7 +5,7 @@ import API.nhyira.apivitalis.Entity.Personal;
 
 public class PersonalMapper {
 
-    public static Personal toDto(PersonalCreateDto dto){
+    public static Personal toDto(PersonalCreateEditDto dto){
         if (dto != null) {
             Personal personal = new Personal();
             personal.setUsername(dto.getUsername());
@@ -41,7 +41,7 @@ public class PersonalMapper {
         return null;
     }
 
-    public static Personal toEditDto(Personal user ,PersonalCreateDto dto ){
+    public static Personal toEditDto(Personal user , PersonalCreateEditDto dto ){
         if (dto != null){
             user.setUsername(dto.getUsername());
             user.setCpf(dto.getCpf());

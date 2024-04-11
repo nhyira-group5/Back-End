@@ -1,9 +1,7 @@
 package API.nhyira.apivitalis.Controller;
 
-import API.nhyira.apivitalis.DTO.Personal.PersonalCreateDto;
+import API.nhyira.apivitalis.DTO.Personal.PersonalCreateEditDto;
 import API.nhyira.apivitalis.DTO.Personal.PersonalExibitionDto;
-import API.nhyira.apivitalis.DTO.Personal.PersonalMapper;
-import API.nhyira.apivitalis.Repository.PersonalRepository;
 import API.nhyira.apivitalis.Service.PersonalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ public class PersonalController {
     private PersonalService pService;
 
     @PostMapping
-    public ResponseEntity<PersonalExibitionDto> create(@RequestBody @Valid PersonalCreateDto newPersonal){
+    public ResponseEntity<PersonalExibitionDto> create(@RequestBody @Valid PersonalCreateEditDto newPersonal){
         if (pService.cpfUnique(newPersonal.getCpf()) || pService.nomeUnique(newPersonal.getUsername()) || pService.emailUnique(newPersonal.getEmail())){
             return ResponseEntity.status(409).build();
         }
@@ -44,7 +42,7 @@ public class PersonalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonalExibitionDto> update(@PathVariable int id, @RequestBody @Valid PersonalCreateDto updtPersonal){
+    public ResponseEntity<PersonalExibitionDto> update(@PathVariable int id, @RequestBody @Valid PersonalCreateEditDto updtPersonal){
         if (pService.cpfUnique(updtPersonal.getCpf()) || pService.nomeUnique(updtPersonal.getUsername()) ||
         pService.emailUnique(updtPersonal.getEmail())){
             return ResponseEntity.status(409).build();

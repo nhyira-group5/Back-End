@@ -5,7 +5,7 @@ import API.nhyira.apivitalis.Entity.Usuario;
 
 public class UsuarioMapper {
 
-    public static Usuario toDto(UsuarioCreateDto dto) {
+    public static Usuario toDto(UsuarioCreateEditDto dto) {
         if (dto != null) {
             Usuario user = new Usuario();
             user.setNome(dto.getNome());
@@ -46,7 +46,7 @@ public class UsuarioMapper {
         return null;
     }
 
-    public static Usuario toEditDto(Usuario user, UsuarioCreateDto dto) {
+    public static Usuario toEditDto(Usuario user, UsuarioCreateEditDto dto) {
         if (dto != null) {
             user.setNome(dto.getNome());
             user.setUsername(dto.getUsername());

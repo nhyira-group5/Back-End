@@ -26,12 +26,12 @@ public class AuthPersonalProvider implements AuthenticationProvider{
         final String login = authentication.getName();
         final String password = authentication.getCredentials().toString();
 
-        UserDetails usuario = authPersonalService.loadUserByUsername(login);
+        UserDetails personal = authPersonalService.loadUserByUsername(login);
 
         if (
-                this.passwordEncoder.matches(password, usuario.getPassword())
+                this.passwordEncoder.matches(password, personal.getPassword())
         ) {
-            return new UsernamePasswordAuthenticationToken(authPersonalService, null, usuario.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(personal, null, personal.getAuthorities());
         } else {
             throw new BadCredentialsException("Credencial de login ou Senha inválidos!");
         }

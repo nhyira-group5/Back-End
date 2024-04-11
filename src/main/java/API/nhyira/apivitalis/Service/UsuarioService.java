@@ -3,7 +3,7 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.Auth.Configuration.Security.TokenGenJwt;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioLoginDto;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
-import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateDto;
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
 import API.nhyira.apivitalis.Entity.Usuario;
@@ -41,7 +41,7 @@ public class UsuarioService {
         final Authentication auth = authenticationManager.authenticate(credentials);
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
-        Optional<Usuario> usuarioByUsername = uRep.findByUsernameIgnoreCase(usuarioLogin.getLogin());
+        Optional<Usuario> usuarioByUsername = uRep.findByUsername(usuarioLogin.getLogin());
 
         final String token = tokenGenJwt.generateToken(auth);
         Usuario user = null;
@@ -58,7 +58,7 @@ public class UsuarioService {
         return UsuarioMapper.of(user, token);
     }
 
-    public UsuarioExibitionDto createUser(UsuarioCreateDto usuario) {
+    public UsuarioExibitionDto createUser(UsuarioCreateEditDto usuario) {
         try {
             if (usuario != null) {
                 Usuario newUser = UsuarioMapper.toDto(usuario);
@@ -98,7 +98,7 @@ public class UsuarioService {
         return null;
     }
 
-    public UsuarioExibitionDto updtUser(int id, UsuarioCreateDto updatedUser) {
+    public UsuarioExibitionDto updtUser(int id, UsuarioCreateEditDto updatedUser) {
         try {
             if (uRep.existsById(id)) {
                 Usuario userSave = UsuarioMapper.toEditDto(uRep.findById(id).get(), updatedUser);
@@ -127,7 +127,7 @@ public class UsuarioService {
     }
 
     public boolean nomeUnique(String username) {
-        return uRep.findByUsernameIgnoreCase(username).isPresent();
+        return uRep.findByUsername(username).isPresent();
     }
 
     public boolean emailUnique(String email) {

@@ -20,7 +20,8 @@ public class DetailsPersonal implements UserDetails {
     }
 
     @Override
-    public String getPassword() { return personal.getSenha();
+    public String getPassword() {
+        return personal.getSenha();
     }
 
     @Override
@@ -28,8 +29,8 @@ public class DetailsPersonal implements UserDetails {
         return personal.getUsername();
     }
 
-    public String getEmail(){return personal.getEmail();
-
+    public String getEmail() {
+        return personal.getEmail();
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class AuthUsuarioProvider implements AuthenticationProvider {
+
     private final AuthUsuarioService authUsuarioService;
     private final PasswordEncoder passwordEncoder;
 

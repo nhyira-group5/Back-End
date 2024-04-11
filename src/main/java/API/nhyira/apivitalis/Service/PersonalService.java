@@ -3,7 +3,7 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.Auth.Configuration.Security.TokenGenJwt;
 import API.nhyira.apivitalis.Auth.Personal.DTO.PersonalLoginDto;
 import API.nhyira.apivitalis.Auth.Personal.DTO.PersonalTokenDto;
-import API.nhyira.apivitalis.DTO.Personal.PersonalCreateDto;
+import API.nhyira.apivitalis.DTO.Personal.PersonalCreateEditDto;
 import API.nhyira.apivitalis.DTO.Personal.PersonalExibitionDto;
 import API.nhyira.apivitalis.DTO.Personal.PersonalMapper;
 import API.nhyira.apivitalis.Entity.Personal;
@@ -25,30 +25,30 @@ public class PersonalService {
 
     @Autowired
     private PersonalRepository pRep;
-
     @Autowired
     private PasswordEncoder encoder;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManagerPersonal;
     @Autowired
     private TokenGenJwt tokenGenJwt;
 
-    public PersonalTokenDto autenticar(PersonalLoginDto personalLogin){
+    public PersonalTokenDto autenticar(PersonalLoginDto personalLogin) {
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(personalLogin.getLogin(), personalLogin.getSenha());
 
-        final Authentication auth = authenticationManager.authenticate(credentials);
+        final Authentication auth = authenticationManagerPersonal.authenticate(credentials);
 
         Optional<Personal> personalByEmail = pRep.findByEmailIgnoreCase(personalLogin.getLogin());
-        Optional<Personal> personalByUsername = pRep.findByUsernameIgnoreCase(personalLogin.getLogin());
+        Optional<Personal> personalByUsername = pRep.findByUsername(personalLogin.getLogin());
 
-        final  String token = tokenGenJwt.generateToken(auth);
+        final String token = tokenGenJwt.generateToken(auth);
         Personal user = null;
-        if (personalByEmail.isPresent()){
+
+        if (personalByEmail.isPresent()) {
             user = personalByEmail.get();
-        }else if (personalByUsername.isPresent()){
+        } else if (personalByUsername.isPresent()) {
             user = personalByUsername.get();
-        }else {
+        } else {
             throw new ResponseStatusException(404, "Credencial de login do personal não cadastrado!", null);
         }
 
@@ -57,47 +57,47 @@ public class PersonalService {
         return PersonalMapper.of(user, token);
     }
 
-    public PersonalExibitionDto createUser(PersonalCreateDto personal){
+    public PersonalExibitionDto createUser(PersonalCreateEditDto personal) {
         try {
-            if (personal != null){
+            if (personal != null) {
                 Personal newpersonal = PersonalMapper.toDto(personal);
                 newpersonal.setSenha(encoder.encode(newpersonal.getSenha()));
                 pRep.save(newpersonal);
 
                 return PersonalMapper.toExibition(newpersonal);
             }
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Erro ao criar o personal: " + e.getMessage());
         }
         return null;
     }
 
-    public List<PersonalExibitionDto> showAllPersonals(){
+    public List<PersonalExibitionDto> showAllPersonals() {
         List<PersonalExibitionDto> allPersonals;
         try {
             allPersonals = pRep.findAll().stream().map(PersonalMapper::toExibition).toList();
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Erro ao buscar os personais: " + e.getMessage());
         }
         return allPersonals;
     }
 
-    public PersonalExibitionDto showUserById(int id){
-        try{
+    public PersonalExibitionDto showUserById(int id) {
+        try {
             Optional<Personal> personal = pRep.findById(id);
 
-            if (personal.isPresent()){
+            if (personal.isPresent()) {
                 return PersonalMapper.toExibition(personal.get());
             }
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Erro ao buscar os personais: " + e.getMessage());
         }
         return null;
     }
 
-    public PersonalExibitionDto updPersonal(int id, PersonalCreateDto updatePersonal){
+    public PersonalExibitionDto updPersonal(int id, PersonalCreateEditDto updatePersonal) {
         try {
-            if (pRep.existsById(id)){
+            if (pRep.existsById(id)) {
                 Personal personalSave = PersonalMapper.toEditDto(pRep.findById(id).get(), updatePersonal);
                 personalSave.setSenha(encoder.encode(personalSave.getSenha()));
 
@@ -105,33 +105,33 @@ public class PersonalService {
                 pRep.save(personalSave);
                 return personal;
             }
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Erro ao atualizar o usuário: " + e.getMessage());
         }
         return null;
     }
 
-    public boolean delPersonal(int id){
+    public boolean delPersonal(int id) {
         try {
-            if (pRep.existsById(id)){
+            if (pRep.existsById(id)) {
                 pRep.deleteById(id);
                 return true;
             }
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new RuntimeException("Erro ao deletar usuário: " + e.getMessage());
         }
         return false;
     }
 
-    public boolean nomeUnique(String username){
-        return pRep.findByUsernameIgnoreCase(username).isPresent();
+    public boolean nomeUnique(String username) {
+        return pRep.findByUsername(username).isPresent();
     }
 
-    public boolean emailUnique(String email){
+    public boolean emailUnique(String email) {
         return pRep.findByEmailIgnoreCase(email).isPresent();
     }
 
-    public boolean cpfUnique(String cpf){
+    public boolean cpfUnique(String cpf) {
         return pRep.findByCpf(cpf).isPresent();
     }
 

@@ -9,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AuthPersonalService implements UserDetailsService {
 
     @Autowired
@@ -19,7 +21,7 @@ public class AuthPersonalService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<Personal> personalByUsername = pRep.findByUsernameIgnoreCase(login);
+        Optional<Personal> personalByUsername = pRep.findByUsername(login);
 
         if (personalByUsername.isEmpty()) {
             Optional<Personal> personalByEmail = pRep.findByEmailIgnoreCase(login);
