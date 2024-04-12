@@ -29,14 +29,15 @@ public class PersonalService {
     private PasswordEncoder encoder;
 
     @Autowired
-    private AuthenticationManager authenticationManagerPersonal;
+    private AuthenticationManager authenticationManagerForPersonal;
+
     @Autowired
     private TokenGenJwt tokenGenJwt;
 
     public PersonalTokenDto autenticar(PersonalLoginDto personalLogin) {
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(personalLogin.getLogin(), personalLogin.getSenha());
 
-        final Authentication auth = authenticationManagerPersonal.authenticate(credentials);
+        final Authentication auth = authenticationManagerForPersonal.authenticate(credentials);
 
         Optional<Personal> personalByEmail = pRep.findByEmailIgnoreCase(personalLogin.getLogin());
         Optional<Personal> personalByUsername = pRep.findByUsername(personalLogin.getLogin());
@@ -53,7 +54,6 @@ public class PersonalService {
         }
 
         SecurityContextHolder.getContext().setAuthentication(auth);
-
         return PersonalMapper.of(user, token);
     }
 

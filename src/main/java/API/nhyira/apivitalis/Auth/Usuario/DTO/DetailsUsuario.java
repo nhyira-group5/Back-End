@@ -17,7 +17,6 @@ public class DetailsUsuario implements UserDetails {
         return null;
     }
 
-
     @Override
     public String getPassword() {
         return usuario.getSenha();

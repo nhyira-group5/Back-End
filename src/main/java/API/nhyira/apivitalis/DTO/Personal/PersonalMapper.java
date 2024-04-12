@@ -59,6 +59,8 @@ public class PersonalMapper {
 
     public static PersonalTokenDto of(Personal user, String token){
         PersonalTokenDto personal = new PersonalTokenDto();
+        personal.setId(user.getIdPersonal());
+        personal.setNome(user.getNome());
         personal.setEmail(user.getEmail());
         personal.setUsername(user.getUsername());
         personal.setToken(token);

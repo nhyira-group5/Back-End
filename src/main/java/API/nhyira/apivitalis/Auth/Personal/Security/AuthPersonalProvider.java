@@ -11,7 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class AuthPersonalProvider implements AuthenticationProvider{
+public class AuthPersonalProvider implements AuthenticationProvider {
 
     private final AuthPersonalService authPersonalService;
     private final PasswordEncoder passwordEncoder;

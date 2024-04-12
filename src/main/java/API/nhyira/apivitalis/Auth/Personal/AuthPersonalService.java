@@ -1,9 +1,7 @@
 package API.nhyira.apivitalis.Auth.Personal;
 
 import API.nhyira.apivitalis.Auth.Personal.DTO.DetailsPersonal;
-import API.nhyira.apivitalis.Auth.Usuario.DTO.DetailsUsuario;
 import API.nhyira.apivitalis.Entity.Personal;
-import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Repository.PersonalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +13,6 @@ import java.util.Optional;
 
 @Service
 public class AuthPersonalService implements UserDetailsService {
-
     @Autowired
     private PersonalRepository pRep;
 

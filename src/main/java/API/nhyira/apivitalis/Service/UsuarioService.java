@@ -29,7 +29,7 @@ public class UsuarioService {
     private PasswordEncoder encoder;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManagerForUsuarios;
     @Autowired
     private TokenGenJwt tokenGenJwt;
 
@@ -38,7 +38,7 @@ public class UsuarioService {
                 usuarioLogin.getLogin(), usuarioLogin.getSenha()
         );
 
-        final Authentication auth = authenticationManager.authenticate(credentials);
+        final Authentication auth = authenticationManagerForUsuarios.authenticate(credentials);
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
         Optional<Usuario> usuarioByUsername = uRep.findByUsername(usuarioLogin.getLogin());

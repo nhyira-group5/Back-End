@@ -1,12 +1,16 @@
 package API.nhyira.apivitalis.Auth.Configuration.Security;
 
 import API.nhyira.apivitalis.Auth.Configuration.AuthEntryPoint;
+import API.nhyira.apivitalis.Auth.Personal.AuthPersonalService;
+import API.nhyira.apivitalis.Auth.Personal.Security.AuthPersonalFilter;
+import API.nhyira.apivitalis.Auth.Personal.Security.AuthPersonalProvider;
 import API.nhyira.apivitalis.Auth.Usuario.AuthUsuarioService;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioFilter;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,12 +36,12 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-public class AuthConfigUsuario {
+public class AuthConfig {
     private static final String ORIGENS_PERMITIDAS = "*";
 
     // INSERIR URLS PADRÃO DE ACESSO
     private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
-            new AntPathRequestMatcher("/login/usuario/**"),
+            new AntPathRequestMatcher("/login/**"),
             new AntPathRequestMatcher("/swagger-ui/**"),
             new AntPathRequestMatcher("/swagger-ui.html"),
             new AntPathRequestMatcher("/swagger-resources"),
@@ -53,6 +57,8 @@ public class AuthConfigUsuario {
 
     @Autowired
     private AuthUsuarioService authUsuarioService;
+    @Autowired
+    private AuthPersonalService authPersonalService;
 
     @Autowired
     private AuthEntryPoint authEntryPoint;
@@ -78,15 +84,27 @@ public class AuthConfigUsuario {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+    public AuthPersonalFilter jwtAuthenticationFilterBeanPersonal() {
+        return new AuthPersonalFilter(authPersonalService, jwtAuthenticationUntilBean());
+    }
 
+    @Primary
+    @Bean
+    public AuthenticationManager authenticationManagerForUsuarios(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(new AuthUsuarioProvider(authUsuarioService, passwordEncoder()));
         return authenticationManagerBuilder.build();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public AuthenticationManager authenticationManagerForPersonal(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(new AuthPersonalProvider(authPersonalService, passwordEncoder()));
+        return authenticationManagerBuilder.build();
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthPersonalService personalService) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
@@ -103,8 +121,10 @@ public class AuthConfigUsuario {
                         manage -> manage.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 );
         http.addFilterBefore(jwtAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilterBeanPersonal(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

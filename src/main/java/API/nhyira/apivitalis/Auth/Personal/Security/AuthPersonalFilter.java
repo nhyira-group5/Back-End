@@ -18,7 +18,6 @@ import java.util.Objects;
 
 public class AuthPersonalFilter extends OncePerRequestFilter {
 
-
     private final AuthPersonalService authService;
     private final TokenGenJwt jwtTokenManager;
 
