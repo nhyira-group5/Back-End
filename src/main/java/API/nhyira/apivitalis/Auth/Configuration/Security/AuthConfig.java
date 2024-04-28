@@ -1,9 +1,6 @@
 package API.nhyira.apivitalis.Auth.Configuration.Security;
 
 import API.nhyira.apivitalis.Auth.Configuration.AuthEntryPoint;
-import API.nhyira.apivitalis.Auth.Personal.AuthPersonalService;
-import API.nhyira.apivitalis.Auth.Personal.Security.AuthPersonalFilter;
-import API.nhyira.apivitalis.Auth.Personal.Security.AuthPersonalProvider;
 import API.nhyira.apivitalis.Auth.Usuario.AuthUsuarioService;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioFilter;
 import API.nhyira.apivitalis.Auth.Usuario.Security.AuthUsuarioProvider;
@@ -20,6 +17,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +35,8 @@ import java.util.List;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class AuthConfig {
+
+
     private static final String ORIGENS_PERMITIDAS = "*";
 
     // INSERIR URLS PADRÃO DE ACESSO
@@ -50,32 +50,62 @@ public class AuthConfig {
             new AntPathRequestMatcher("/configuration/security"),
             new AntPathRequestMatcher("/api/public/**"),
             new AntPathRequestMatcher("/api/public/authenticate"),
+            new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
-            new AntPathRequestMatcher("/actuator/**"),
+            new AntPathRequestMatcher("/actuator/*"),
+            new AntPathRequestMatcher("/usuarios/**", "GET"),
+            new AntPathRequestMatcher("/usuarios/**", "DELETE"),
+            new AntPathRequestMatcher("/usuarios/**", "PUT"),
+            new AntPathRequestMatcher("/usuarios/download", "GET"),
+            new AntPathRequestMatcher("/endereco/adicionar", "POST"),
+            new AntPathRequestMatcher("/endereco/api/academias/proximas", "POST"),
+            new AntPathRequestMatcher("/email", "POST"),
+            new AntPathRequestMatcher("/fichas/**", "POST"),
+            new AntPathRequestMatcher("/fichas/**", "GET"),
+            new AntPathRequestMatcher("/sqlserver/data/insert**"),
+            new AntPathRequestMatcher("/usuarios", "POST"),
+            new AntPathRequestMatcher("/login/usuario", "POST"),
             new AntPathRequestMatcher("/error/**"),
     };
 
     @Autowired
     private AuthUsuarioService authUsuarioService;
-    @Autowired
-    private AuthPersonalService authPersonalService;
 
     @Autowired
     private AuthEntryPoint authEntryPoint;
 
+
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .headers(headers -> headers
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                .cors(Customizer.withDefaults())
+                .csrf(CsrfConfigurer<HttpSecurity>::disable)
+                .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated()
+                )
+                .exceptionHandling(handling -> handling
+                        .authenticationEntryPoint(authEntryPoint))
+                .sessionManagement(management -> management
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.addFilterBefore(jwtAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
     }
 
+    @Bean
+    public AuthenticationManager authenticationManagerForUsuarios(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(new AuthUsuarioProvider(authUsuarioService, passwordEncoder()));
+        return authenticationManagerBuilder.build();
+    }
     @Bean
     public AuthEntryPoint jwtAuthenticationEntryPoint() {
         return new AuthEntryPoint();
-    }
-
-    @Bean
-    public TokenGenJwt jwtAuthenticationUntilBean() {
-        return new TokenGenJwt();
     }
 
     @Bean
@@ -84,47 +114,14 @@ public class AuthConfig {
     }
 
     @Bean
-    public AuthPersonalFilter jwtAuthenticationFilterBeanPersonal() {
-        return new AuthPersonalFilter(authPersonalService, jwtAuthenticationUntilBean());
-    }
-
-    @Primary
-    @Bean
-    public AuthenticationManager authenticationManagerForUsuarios(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(new AuthUsuarioProvider(authUsuarioService, passwordEncoder()));
-        return authenticationManagerBuilder.build();
+    public TokenGenJwt jwtAuthenticationUntilBean() {
+        return new TokenGenJwt();
     }
 
     @Bean
-    public AuthenticationManager authenticationManagerForPersonal(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(new AuthPersonalProvider(authPersonalService, passwordEncoder()));
-        return authenticationManagerBuilder.build();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthPersonalService personalService) throws Exception {
-        http
-                .cors(Customizer.withDefaults())
-                .csrf(CsrfConfigurer<HttpSecurity>::disable)
-                .authorizeHttpRequests(
-                        auth -> auth.requestMatchers(URLS_PERMITIDAS)
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated()
-                )
-                .exceptionHandling(
-                        handling -> handling.authenticationEntryPoint(authEntryPoint)
-                )
-                .sessionManagement(
-                        manage -> manage.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
-        http.addFilterBefore(jwtAuthenticationFilterBean(), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(jwtAuthenticationFilterBeanPersonal(), UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
-
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

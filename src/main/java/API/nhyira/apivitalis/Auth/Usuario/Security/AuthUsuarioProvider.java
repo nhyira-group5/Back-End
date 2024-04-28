@@ -21,19 +21,19 @@ public class AuthUsuarioProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        final String login = authentication.getName();
+        final String username = authentication.getName(); // Aqui obtém o nome de usuário ou email
         final String password = authentication.getCredentials().toString();
 
-        UserDetails usuario = authUsuarioService.loadUserByUsername(login);
+        UserDetails usuario = this.authUsuarioService.loadUserByUsername(username);
 
-        if (
-                this.passwordEncoder.matches(password, usuario.getPassword())
+        if (this.passwordEncoder.matches(password, usuario.getPassword())
         ) {
             return new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
         } else {
             throw new BadCredentialsException("Credencial de login ou Senha inválidos!");
         }
     }
+
 
     @Override
     public boolean supports(Class<?> authentication) {

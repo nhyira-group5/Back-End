@@ -38,12 +38,21 @@ public class UsuarioService {
                 usuarioLogin.getLogin(), usuarioLogin.getSenha()
         );
 
-        final Authentication auth = authenticationManagerForUsuarios.authenticate(credentials);
+        final Authentication auth = this.authenticationManagerForUsuarios.authenticate(credentials);
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
         Optional<Usuario> usuarioByUsername = uRep.findByUsername(usuarioLogin.getLogin());
+//        Optional<Usuario> usuarioByTipo = uRep.findByTipo(usuarioLogin.getLogin());
+        Usuario.TipoUsuario tipo = null;
+        if (usuarioByEmail.isPresent()) {
+            tipo = usuarioByEmail.get().getTipo();
+        } else if (usuarioByUsername.isPresent()) {
+            tipo = usuarioByUsername.get().getTipo();
+        } else {
+            throw new ResponseStatusException(404, "Credencial de login do usuário não cadastrado!", null);
+        }
 
-        final String token = tokenGenJwt.generateToken(auth);
+        final String token = tokenGenJwt.generateToken((auth), tipo);
         Usuario user = null;
 
         if (usuarioByEmail.isPresent()) {
@@ -59,12 +68,12 @@ public class UsuarioService {
     }
 
     public UsuarioExibitionDto createUser(UsuarioCreateEditDto usuario) {
+
         try {
             if (usuario != null) {
                 Usuario newUser = UsuarioMapper.toDto(usuario);
                 newUser.setSenha(encoder.encode(newUser.getSenha()));
                 uRep.save(newUser);
-
                 return UsuarioMapper.toExibition(newUser);
             }
         } catch (RuntimeException e) {
@@ -74,15 +83,21 @@ public class UsuarioService {
     }
 
     public List<UsuarioExibitionDto> showAllUsers() {
-        List<UsuarioExibitionDto> allUsers;
         try {
-            allUsers =
-                    uRep.findAll().stream()
-                            .map(UsuarioMapper::toExibition).toList();
+            List<Usuario> allUsers = uRep.buscarUsuarios();
+            return UsuarioMapper.toExibitionList(allUsers);
         } catch (RuntimeException e) {
             throw new RuntimeException("Erro ao buscar os usuários: " + e.getMessage());
         }
-        return allUsers;
+    }
+
+    public List<UsuarioExibitionDto> showAllUsersPersonal() {
+        try {
+            List<Usuario> allUsers = uRep.buscarPersonal();
+            return UsuarioMapper.toExibitionList(allUsers);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao buscar os Personal: " + e.getMessage());
+        }
     }
 
     public UsuarioExibitionDto showUserById(int id) {
@@ -125,6 +140,9 @@ public class UsuarioService {
         }
         return false;
     }
+
+
+    public List<Usuario> getAllUsers(){return uRep.findAll();}
 
     public boolean nomeUnique(String username) {
         return uRep.findByUsername(username).isPresent();

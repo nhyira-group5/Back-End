@@ -2,34 +2,24 @@ package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Midia;
+import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.time.LocalDate;
 
 public class UsuarioExibitionDto {
     private String username;
-
-
     private String cpf;
-
     private String nome;
-
     private LocalDate dtNasc;
-
     private String genero;
-
     private String email;
-
     private String email2;
-
-    private Float peso;
-
-    private Float altura;
-
 
     private Midia midia;
 
+    private String senha;
+    private Usuario.TipoUsuario tipo; // Alterado para String
     private Meta meta;
-
     private double imc;
 
     public String getUsername() {
@@ -46,6 +36,14 @@ public class UsuarioExibitionDto {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Usuario.TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Usuario.TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 
     public String getNome() {
@@ -88,21 +86,6 @@ public class UsuarioExibitionDto {
         this.email2 = email2;
     }
 
-    public Float getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Float peso) {
-        this.peso = peso;
-    }
-
-    public Float getAltura() {
-        return altura;
-    }
-
-    public void setAltura(Float altura) {
-        this.altura = altura;
-    }
 
     public Midia getMidia() {
         return midia;
@@ -120,7 +103,12 @@ public class UsuarioExibitionDto {
         this.meta = meta;
     }
 
-    public double getImc() {
-        return peso * altura;
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

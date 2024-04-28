@@ -1,14 +1,15 @@
 package API.nhyira.apivitalis.Entity;
 
+import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "usuarios")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
+    @Column(name = "id")
     private Integer idUsuario;
 
     @Column(name = "username")
@@ -20,7 +21,7 @@ public class Usuario {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "dt_nasc")
+    @Column(name = "dtnasc")
     private LocalDate dtNasc;
 
     @Column(name = "genero")
@@ -29,26 +30,23 @@ public class Usuario {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "email2")
+    @Column(name = "emailRecuperacao")
     private String email2;
 
     @Column(name = "senha")
     private String senha;
 
-    @Column(name = "peso")
-    private Float peso;
-
-    @Column(name = "altura")
-    private Float altura;
-
+    @Column(name = "tipo")
+    private TipoUsuario tipo;
     @ManyToOne
-    @JoinColumn(name = "fk_imagem_usuario")
+    @JoinColumn(name = "fkmidia")
     private Midia midia;
 
     @ManyToOne
-    @JoinColumn(name = "fk_meta")
+    @JoinColumn(name = "meta")
     private Meta meta;
 
+    // Getters e Setters
     public Integer getIdUsuario() {
         return idUsuario;
     }
@@ -121,20 +119,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Float getPeso() {
-        return peso;
+    public TipoUsuario getTipo() {
+        return tipo;
     }
 
-    public void setPeso(Float peso) {
-        this.peso = peso;
-    }
-
-    public Float getAltura() {
-        return altura;
-    }
-
-    public void setAltura(Float altura) {
-        this.altura = altura;
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 
     public Midia getMidia() {
@@ -152,5 +142,11 @@ public class Usuario {
     public void setMeta(Meta meta) {
         this.meta = meta;
     }
+
+    public enum TipoUsuario {
+        USUARIO,
+        PERSONAL
+    }
+
 
 }

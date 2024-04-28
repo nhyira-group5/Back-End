@@ -6,10 +6,10 @@ import jakarta.persistence.*;
 public class Midia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_midia")
+    @Column(name = "idmidia")
     private Integer idMidia;
 
-    @Column(name = "nome_arquivo")
+    @Column(name = "nome")
     private String nomeArquivo;
 
     @Column(name = "conteudo")

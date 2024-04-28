@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.Auth.Usuario.DTO;
 
+import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,10 @@ public class UsuarioTokenDto {
     private String username;
 
     private String token;
+
+    private Usuario.TipoUsuario tipo;
+
+
 
     public Integer getId() {
         return id;
@@ -66,5 +71,13 @@ public class UsuarioTokenDto {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public Usuario.TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Usuario.TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 }

@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.Auth.Usuario;
 
 import API.nhyira.apivitalis.Auth.Usuario.DTO.DetailsUsuario;
+import API.nhyira.apivitalis.Auth.Usuario.DTO.UserDetailsUsuario;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +18,13 @@ public class AuthUsuarioService implements UserDetailsService {
     private UsuarioRepository uRep;
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<Usuario> usuarioByUsername = uRep.findByUsername(login);
+    public UserDetailsUsuario loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Usuario> usuarioByTipo = uRep.findByUsername(username);
 
-        if (usuarioByUsername.isEmpty()) {
-            Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(login);
-
-            if (usuarioByEmail.isEmpty()) {
-                throw new UsernameNotFoundException("Usuário com a credencial [" + login + "] não encontrado!");
-            }
-            return new DetailsUsuario(usuarioByEmail.get());
+        if (usuarioByTipo.isEmpty()) {
+            throw new UsernameNotFoundException("Usuário com o tipo [" + username + "] não encontrado!");
         }
-        return new DetailsUsuario(usuarioByUsername.get());
+
+        return new DetailsUsuario(usuarioByTipo.get());
     }
-
-
 }

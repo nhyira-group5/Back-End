@@ -2,10 +2,9 @@ package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Midia;
+import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
-
 
 import java.time.LocalDate;
 
@@ -54,17 +53,10 @@ public class UsuarioCreateEditDto {
     @Column(nullable = false, length = 100)
     private String senha;
 
-    @Column(nullable = false)
-    @DecimalMin(value = "0", inclusive = true, message = "O peso deve ser um número positivo ou zero")
-    private Float peso;
-
-    @Column(nullable = false)
-//    @Pattern(regexp = "^\\d+(\\.\\d+)?$", message = "A altura deve ser um número válido com um ponto decimal opcional")
-    private Float altura;
-
     private Midia midia;
 
     private Meta meta;
+    private Usuario.TipoUsuario tipo;
 
     public String getUsername() {
         return username;
@@ -130,21 +122,6 @@ public class UsuarioCreateEditDto {
         this.senha = senha;
     }
 
-    public Float getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Float peso) {
-        this.peso = peso;
-    }
-
-    public Float getAltura() {
-        return altura;
-    }
-
-    public void setAltura(Float altura) {
-        this.altura = altura;
-    }
 
     public Midia getMidia() {
         return midia;
@@ -154,6 +131,15 @@ public class UsuarioCreateEditDto {
         this.midia = midia;
     }
 
+
+    public Usuario.TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(Usuario.TipoUsuario tipo) {
+        this.tipo = tipo;
+    }
+
     public Meta getMeta() {
         return meta;
     }
@@ -161,4 +147,6 @@ public class UsuarioCreateEditDto {
     public void setMeta(Meta meta) {
         this.meta = meta;
     }
+
+
 }
