@@ -19,8 +19,6 @@ public class UsuarioMapper {
             user.setGenero(dto.getGenero());
             user.setDtNasc(dto.getDtNasc());
             user.setTipo(dto.getTipo() != null ?  Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
-            user.setMeta(dto.getMeta());
-            user.setMidia(dto.getMidia());
 
             return user;
         }
@@ -38,7 +36,6 @@ public class UsuarioMapper {
             user.setGenero(entity.getGenero());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
-            user.setMeta(entity.getMeta());
             user.setMidia(entity.getMidia());
             user.setSenha(entity.getSenha());
 
@@ -58,8 +55,6 @@ public class UsuarioMapper {
             user.setGenero(dto.getGenero());
             user.setDtNasc(dto.getDtNasc());
             user.setTipo(dto.getTipo() != null ? Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
-            user.setMeta(dto.getMeta());
-            user.setMidia(dto.getMidia());
 
             return user;
         }
@@ -87,8 +82,6 @@ public class UsuarioMapper {
         usuario.setSenha(usuarioCriacaoDto.getSenha());
         usuario.setGenero(usuarioCriacaoDto.getGenero());
         usuario.setDtNasc(usuarioCriacaoDto.getDtNasc());
-        usuario.setMeta(usuarioCriacaoDto.getMeta());
-        usuario.setMidia(usuarioCriacaoDto.getMidia());
         usuario.setEmail(usuarioCriacaoDto.getEmail());
         usuario.setNome(usuarioCriacaoDto.getNome());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
