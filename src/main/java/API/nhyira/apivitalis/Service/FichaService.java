@@ -35,55 +35,65 @@ public class FichaService {
                 return FichaMapper.toEntity(ficha);
             }
         } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao criar o usuário: " + e.getMessage());
+            throw new RuntimeException("Erro ao criar ficha: " + e.getMessage());
         }
         return null;
     }
 
     public FichaExibitionDto showFicha(int id){
         try {
-            if (id > 1){
+            if (id >= 1){
                 Optional<Usuario> usuario = usuarioRepository.findById(id);
-                Optional<Ficha> ficha = fichaRepository.findByFkUsuarioIs(usuario.get());
-                if (ficha.isPresent()){
-                    return FichaMapper.toEntity(ficha.get());
+                if (usuario.isPresent()){
+                    Optional<Ficha> ficha = fichaRepository.findByFkUsuarioIs(usuario.get());
+                    if (ficha.isPresent()){
+                        return FichaMapper.toEntity(ficha.get());
+                    }
                 }
+
             }
         }catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao criar o usuário: " + e.getMessage());
+            throw new RuntimeException("Erro a mostrar ficha " + e.getMessage());
         }
         return null;
     }
 
-//    public FichaExibitionDto updtFicha(int id , FichaCreateEditDto dto) {
-//        try {
-//            if (dto != null || id > 1) {
-//                Optional<Ficha> optFicha = fichaRepository.findByFkUsuarioIs(id);
-//                if (optFicha.isPresent()){
-//                    Ficha ficha = FichaMapper.toEdit(optFicha.get() ,dto);
-//                    fichaRepository.save(ficha);
-//                    return FichaMapper.toEntity(ficha);
-//                }
-//
-//            }
-//        } catch (RuntimeException e) {
-//            throw new RuntimeException("Erro ao criar o usuário: " + e.getMessage());
-//        }
-//        return null;
-//    }
-//
-//
-//    public void delUser(int id){
-//        try {
-//            if (id > 1) {
-//                Optional<Ficha> optFicha = fichaRepository.buscarFichaUsuario(id);
-//                optFicha.ifPresent(ficha -> fichaRepository.delete(ficha));
-//            }
-//        }catch (RuntimeException e) {
-//            throw new RuntimeException("Erro ao criar o usuário: " + e.getMessage());
-//        }
-//
-//    }
+    public FichaExibitionDto updtFicha(int id , FichaCreateEditDto dto) {
+        try {
+            if (dto != null || id >= 1) {
+                Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+                if (optUsuario.isPresent()){
+                    Optional<Ficha> optFicha = fichaRepository.findByFkUsuarioIs(optUsuario.get());
+                    if (optFicha.isPresent()){
+                        Ficha ficha = FichaMapper.toEdit(optFicha.get() ,dto);
+                        fichaRepository.save(ficha);
+                        return FichaMapper.toEntity(ficha);
+                    }
+                }
+
+
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro a atualizar ficha: " + e.getMessage());
+        }
+        return null;
+    }
+
+
+    public Boolean delUser(int id){
+        try {
+            Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+            if (optUsuario.isPresent()){
+                Optional<Ficha> optFicha = fichaRepository.findByFkUsuarioIs(optUsuario.get());
+                optFicha.ifPresent(ficha -> fichaRepository.delete(ficha));
+                return true;
+            }
+            return false;
+        }catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao deletar ficha: " + e.getMessage());
+        }
+
+    }
 
 
 }

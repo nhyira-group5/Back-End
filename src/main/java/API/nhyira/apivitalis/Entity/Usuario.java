@@ -42,10 +42,6 @@ public class Usuario {
     @JoinColumn(name = "fkmidia")
     private Midia midia;
 
-    @ManyToOne
-    @JoinColumn(name = "meta")
-    private Meta meta;
-
     // Getters e Setters
     public Integer getIdUsuario() {
         return idUsuario;
@@ -135,13 +131,6 @@ public class Usuario {
         this.midia = midia;
     }
 
-    public Meta getMeta() {
-        return meta;
-    }
-
-    public void setMeta(Meta meta) {
-        this.meta = meta;
-    }
 
     public enum TipoUsuario {
         USUARIO,

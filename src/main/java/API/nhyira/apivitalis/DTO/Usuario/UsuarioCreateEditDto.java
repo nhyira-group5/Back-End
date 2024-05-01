@@ -16,7 +16,7 @@ public class UsuarioCreateEditDto {
     private String username;
 
     @NotBlank(message = "O CPF é obrigatório")
-    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido")
+//    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido")
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
 
@@ -53,9 +53,6 @@ public class UsuarioCreateEditDto {
     @Column(nullable = false, length = 100)
     private String senha;
 
-    private Midia midia;
-
-    private Meta meta;
     private Usuario.TipoUsuario tipo;
 
     public String getUsername() {
@@ -123,14 +120,6 @@ public class UsuarioCreateEditDto {
     }
 
 
-    public Midia getMidia() {
-        return midia;
-    }
-
-    public void setMidia(Midia midia) {
-        this.midia = midia;
-    }
-
 
     public Usuario.TipoUsuario getTipo() {
         return tipo;
@@ -138,14 +127,6 @@ public class UsuarioCreateEditDto {
 
     public void setTipo(Usuario.TipoUsuario tipo) {
         this.tipo = tipo;
-    }
-
-    public Meta getMeta() {
-        return meta;
-    }
-
-    public void setMeta(Meta meta) {
-        this.meta = meta;
     }
 
 

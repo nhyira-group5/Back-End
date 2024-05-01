@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.Controller;
 
 import API.nhyira.apivitalis.DTO.Ficha.FichaCreateEditDto;
 import API.nhyira.apivitalis.DTO.Ficha.FichaExibitionDto;
+import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Service.FichaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,31 @@ public class FichaController {
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<FichaExibitionDto> show(@RequestParam int id){
+    public  ResponseEntity<FichaExibitionDto> show(@PathVariable int id){
         FichaExibitionDto user = fichaService.showFicha(id);
         if (user == null){
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(user);
 
+    }
+
+    @PutMapping("/{id}")
+    public  ResponseEntity<FichaExibitionDto> uptade(@PathVariable int id, @RequestBody @Valid FichaCreateEditDto dto){
+        FichaExibitionDto user = fichaService.updtFicha(id, dto);
+        if (user == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id){
+        Boolean ficha = fichaService.delUser(id);
+        if (ficha){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

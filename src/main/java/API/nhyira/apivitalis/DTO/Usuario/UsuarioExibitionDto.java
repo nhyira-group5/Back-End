@@ -19,7 +19,6 @@ public class UsuarioExibitionDto {
 
     private String senha;
     private Usuario.TipoUsuario tipo; // Alterado para String
-    private Meta meta;
     private double imc;
 
     public String getUsername() {
@@ -95,13 +94,6 @@ public class UsuarioExibitionDto {
         this.midia = midia;
     }
 
-    public Meta getMeta() {
-        return meta;
-    }
-
-    public void setMeta(Meta meta) {
-        this.meta = meta;
-    }
 
 
     public String getSenha() {
