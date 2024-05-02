@@ -1,18 +1,17 @@
 package API.nhyira.apivitalis.GooglePlaces.Service;
 
-import API.nhyira.apivitalis.Entity.EnderecoModel;
-import API.nhyira.apivitalis.Repository.EnderecoRepository;
+import API.nhyira.apivitalis.DTO.Endereco.AcademiaDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.*;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.PlacesApi;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -20,13 +19,7 @@ public class AcademiasProximasService {
 
     private final String API_KEY = "AIzaSyBoSledzM_6LdnLqTwEFxCVbskfjqtZz2c";
 
-    @Autowired
-    private EnderecoRepository enderecoRepository;
-
-    public AcademiasProximasService() {
-    }
-
-    public String buscarAcademiasProximas(String logradouro, String bairro, String cidade, String estado, String cep) {
+    public ResponseEntity<List<AcademiaDto>> buscarAcademiasProximas(String logradouro, String bairro, String cidade, String estado, String cep) {
         try {
             GeoApiContext context = new GeoApiContext.Builder()
                     .apiKey(API_KEY)
@@ -41,135 +34,133 @@ public class AcademiasProximasService {
                     .rankby(RankBy.DISTANCE)
                     .await();
 
-            List<Double> classificacoes = new ArrayList<>();
-            List<PlaceDetails> academias = new ArrayList<>();
-            double totalClassificacao = 0;
-            double totalPreco = 0;
-
-            StringBuilder resultado = new StringBuilder();
+            List<AcademiaDto> academiasDto = new ArrayList<>();
             for (PlacesSearchResult lugar : response.results) {
                 PlaceDetails detalhesLugar = PlacesApi.placeDetails(context, lugar.placeId).await();
                 double classificacao = (detalhesLugar.rating != 0) ? detalhesLugar.rating : -1;
-                classificacoes.add(classificacao);
-                academias.add(detalhesLugar); 
-                totalClassificacao += classificacao;
 
-                if (detalhesLugar.priceLevel != null) {
-                    totalPreco += detalhesLugar.priceLevel.ordinal() + 1;
-                }
+                AcademiaDto academiaDto = new AcademiaDto();
+                academiaDto.setNome(lugar.name);
+                academiaDto.setEndereco(lugar.vicinity);
+                academiaDto.setLatitude(lugar.geometry.location.lat);
+                academiaDto.setLongitude(lugar.geometry.location.lng);
+                academiaDto.setClassificacao(classificacao);
 
-                EnderecoModel endereco = new EnderecoModel();
-                endereco.setLogradouro(logradouro);
-                endereco.setBairro(bairro);
-                endereco.setCidade(cidade);
-                endereco.setEstado(estado);
-                endereco.setCep(cep);
-                enderecoRepository.save(endereco);
-
-                resultado.append("```");
-                resultado.append("\uD83D\uDD25 Nome: **").append(lugar.name).append("**\n");
-                resultado.append("\uD83C\uDFE0 Endereço: *").append(lugar.vicinity).append("*\n");
-                resultado.append("\uD83C\uDF10 Latitude: *").append(lugar.geometry.location.lat).append("*\n");
-                resultado.append("\uD83C\uDF11 Longitude: *").append(lugar.geometry.location.lng).append("*\n");
-                resultado.append("\uD83C\uDF1F Classificação: *").append(classificacao).append("*\n");
-
-                if (detalhesLugar.priceLevel != null) {
-                    resultado.append("💰 Nível de Preço: ");
-                    for (int i = 0; i < detalhesLugar.priceLevel.ordinal() + 1; i++) {
-                        resultado.append("$");
-                    }
-                    resultado.append("\n");
-                }
 
                 if (detalhesLugar.openingHours != null) {
-                    resultado.append("⏰ Horário de Funcionamento: \n");
-                    for (String horarioDia : detalhesLugar.openingHours.weekdayText) {
-                        resultado.append(horarioDia.replace("Monday", "Segunda-feira")
-                                .replace("Tuesday", "Terça-feira")
-                                .replace("Wednesday", "Quarta-feira")
-                                .replace("Thursday", "Quinta-feira")
-                                .replace("Friday", "Sexta-feira")
-                                .replace("Saturday", "Sábado")
-                                .replace("Sunday", "Domingo")).append("\n");
-                    }
+                    academiaDto.setDiasAbertos(List.of(detalhesLugar.openingHours.weekdayText));
                 }
-                resultado.append("```");
-                resultado.append("\n");
+
+                academiasDto.add(academiaDto);
             }
 
+            mergeSort(academiasDto, 0, academiasDto.size() - 1);
 
-
-
-            int posicaoAcademia = pesquisaBinaria(academias, 0, academias.size() - 1, 4.5); 
-
-            quickSort(classificacoes, 0, classificacoes.size() - 1);
-
-            double mediaClassificacao = classificacoes.isEmpty() ? 0 : totalClassificacao / classificacoes.size();
-            double mediaPreco = response.results.length == 0 ? 0 : totalPreco / response.results.length;
-
-            resultado.append("```\n");
-            resultado.append("Total de Academias Encontradas: ").append(response.results.length).append(" \uD83C\uDFEB\n");
-            resultado.append("Classificação Média das Academias: ").append(String.format("%.2f", mediaClassificacao)).append(" \uD83C\uDF1F\n");
-            resultado.append("Preço Médio: ").append(LevelSimbolo(mediaPreco)).append(" \uD83D\uDCB0\n");
-            resultado.append("```");
-
-            return resultado.toString();
+            return ResponseEntity.status(HttpStatus.OK).body(academiasDto);
         } catch (ApiException | InterruptedException | IOException e) {
             e.printStackTrace();
-            return "⚠️ Ocorreu um erro ao buscar academias próximas. Por favor, tente novamente mais tarde.";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
 
-    private void quickSort(List<Double> arr, int baixo, int alto) {
-        if (baixo < alto) {
-            int pi = particionar(arr, baixo, alto);
-            quickSort(arr, baixo, pi - 1);
-            quickSort(arr, pi + 1, alto);
-        }
-    }
 
-    private int particionar(List<Double> arr, int baixo, int alto) {
-        double pivo = arr.get(alto);
-        int i = baixo - 1;
-        for (int j = baixo; j < alto; j++) {
-            if (arr.get(j) < pivo) {
-                i++;
-                trocar(arr, i, j);
-            }
-        }
-        trocar(arr, i + 1, alto);
-        return i + 1;
-    }
-
-    private void trocar(List<Double> arr, int i, int j) {
-        double temp = arr.get(i);
-        arr.set(i, arr.get(j));
-        arr.set(j, temp);
-    }
-
-    private String LevelSimbolo(double mediaPreco) {
-        return (mediaPreco < 1.5) ? "$" : "$$";
-    }
-
-    public int calcularFatorial(int n) {
-        if (n == 0 || n == 1) {
-            return 1;
-        } else {
-            return n * calcularFatorial(n - 1);
-        }
-    }
-
-   
-    private int pesquisaBinaria(List<PlaceDetails> academias, int inicio, int fim, double nota) {
-        if (fim >= inicio) {
+    private void mergeSort(List<AcademiaDto> academias, int inicio, int fim) {
+        if (inicio < fim) {
             int meio = inicio + (fim - inicio) / 2;
 
+            mergeSort(academias, inicio, meio);
+            mergeSort(academias, meio + 1, fim);
 
-            return pesquisaBinaria(academias, inicio, meio - 1, nota);
+            merge(academias, inicio, meio, fim);
+        }
+    }
+
+    private void merge(List<AcademiaDto> academias, int inicio, int meio, int fim) {
+        int tamanhoEsquerda = meio - inicio + 1;
+        int tamanhoDireita = fim - meio;
+
+        List<AcademiaDto> listaEsquerda = new ArrayList<>(tamanhoEsquerda);
+        List<AcademiaDto> listaDireita = new ArrayList<>(tamanhoDireita);
+
+        for (int i = 0; i < tamanhoEsquerda; i++) {
+            listaEsquerda.add(academias.get(inicio + i));
         }
 
-    
+        for (int j = 0; j < tamanhoDireita; j++) {
+            listaDireita.add(academias.get(meio + 1 + j));
+        }
+
+        int i = 0, j = 0;
+        int k = inicio;
+
+        while (i < tamanhoEsquerda && j < tamanhoDireita) {
+            if (listaEsquerda.get(i).getClassificacao() >= listaDireita.get(j).getClassificacao()) {
+                academias.set(k, listaEsquerda.get(i));
+                i++;
+            } else {
+                academias.set(k, listaDireita.get(j));
+                j++;
+            }
+            k++;
+        }
+
+        while (i < tamanhoEsquerda) {
+            academias.set(k, listaEsquerda.get(i));
+            i++;
+            k++;
+        }
+
+        while (j < tamanhoDireita) {
+            academias.set(k, listaDireita.get(j));
+            j++;
+            k++;
+        }
+    }
+
+    private int buscaBinariaPorNome(List<AcademiaDto> academias, String nomeAcademia) {
+        int esquerda = 0;
+        int direita = academias.size() - 1;
+
+        while (esquerda <= direita) {
+            int meio = esquerda + (direita - esquerda) / 2;
+            int comparacao = academias.get(meio).getNome().compareTo(nomeAcademia);
+
+            if (comparacao == 0) {
+                return meio;
+            }
+
+            if (comparacao < 0) {
+                esquerda = meio + 1;
+            } else {
+                direita = meio - 1;
+            }
+        }
+
         return -1;
     }
+
+
+    public List<AcademiaDto> buscarAcademiaPorNome(String nomeAcademia) {
+            List<AcademiaDto> response = buscarAcademiasProximas("logradouro", "bairro", "cidade", "estado", "cep").getBody();
+
+        if (!response.isEmpty()) {
+            List<AcademiaDto> academiasEncontradas = new ArrayList<>();
+
+            for (AcademiaDto academia : response) {
+                if (academia.getNome().equalsIgnoreCase(nomeAcademia)) {
+                    academiasEncontradas.add(academia);
+                }
+            }
+
+            if (!academiasEncontradas.isEmpty()) {
+                return academiasEncontradas;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -7,8 +7,11 @@ import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Service.FichaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/fichas")
@@ -53,5 +56,15 @@ public class FichaController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/ordenadoPorDeficiencias")
+    public ResponseEntity<List<FichaExibitionDto>> listarFichasOrdenadasPorDeficiencias() {
+        List<FichaExibitionDto> fichasOrdenadas = fichaService.ordenarTodasFichasPorDeficiencias();
+        if (fichasOrdenadas == null || fichasOrdenadas.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(fichasOrdenadas);
+    }
+
 
 }
