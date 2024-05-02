@@ -2,6 +2,9 @@ package API.nhyira.apivitalis.DTO.Ficha;
 
 import API.nhyira.apivitalis.Entity.Ficha;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class FichaMapper {
 
     public static Ficha toDto(FichaCreateEditDto dto){
@@ -17,6 +20,11 @@ public class FichaMapper {
         ficha.setDoencasRespiratorias(dto.getDoencasRespiratorias());
         ficha.setProblemasCaridiacos(dto.getProblemasCaridiacos());
         return ficha;
+    }
+    public static List<FichaExibitionDto> toDtoList(List<Ficha> fichas) {
+        return fichas.stream()
+                .map(FichaMapper::toEntity)
+                .collect(Collectors.toList());
     }
 
     public static FichaExibitionDto toEntity(Ficha entity){

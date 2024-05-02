@@ -1,19 +1,23 @@
 package API.nhyira.apivitalis.Controller;
 
 
+import API.nhyira.apivitalis.DTO.Endereco.AcademiaDto;
 import API.nhyira.apivitalis.DTO.Endereco.EnderecoCreateEditDto;
 import API.nhyira.apivitalis.DTO.Endereco.EnderecoProximosGoogleDto;
 import API.nhyira.apivitalis.Entity.EnderecoModel;
 import API.nhyira.apivitalis.GooglePlaces.Service.AcademiasProximasService;
 import API.nhyira.apivitalis.Service.EnderecoService;
+import API.nhyira.apivitalis.utils.ListaUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/endereco")
@@ -26,15 +30,14 @@ public class EnderecoController {
     private AcademiasProximasService academiasProximasService;
 
     @PostMapping("/api/academias/proximas")
-    public ResponseEntity<String> buscarAcademiasProximas( @RequestBody @Valid EnderecoProximosGoogleDto enderecoDto) {
-        String resultado = academiasProximasService.buscarAcademiasProximas(
-                enderecoDto.getLogradouro(),
-                enderecoDto.getBairro(),
-                enderecoDto.getCidade(),
-                enderecoDto.getEstado(),
-                enderecoDto.getCep()
-        );
-        return ResponseEntity.status(HttpStatus.OK).body(resultado);
+    public ResponseEntity<List<AcademiaDto>>  buscarAcademiasProximas(@RequestBody @Valid EnderecoProximosGoogleDto enderecoDto) {
+        String logradouro = enderecoDto.getLogradouro();
+        String bairro = enderecoDto.getBairro();
+        String cidade = enderecoDto.getCidade();
+        String estado = enderecoDto.getEstado();
+        String cep = enderecoDto.getCep();
+
+        return academiasProximasService.buscarAcademiasProximas(logradouro, bairro, cidade, estado, cep);
     }
 
     @PostMapping("/adicionar")
@@ -67,4 +70,18 @@ public class EnderecoController {
         enderecoService.deletarEndereco(id);
         return ResponseEntity.noContent().build();
     }
+
+
+
+
+
+    @GetMapping("/academias/{nome}")
+    public ResponseEntity<List<AcademiaDto>> buscarAcademiasPorNome(@PathVariable String nome) {
+       List<AcademiaDto> academias = academiasProximasService.buscarAcademiaPorNome(nome);
+        return ResponseEntity.ok(academias);
+    }
+
+
+
+
 }

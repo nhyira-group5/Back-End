@@ -7,10 +7,15 @@ import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Repository.FichaRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
+import API.nhyira.apivitalis.utils.ListaUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -95,5 +100,28 @@ public class FichaService {
 
     }
 
+    public List<FichaExibitionDto> ordenarTodasFichasPorDeficiencias() {
+        List<Ficha> fichas = fichaRepository.findAll();
+
+        List<Ficha> fichasComDeficiencias = fichas.stream()
+                .filter(ficha -> {
+                    String deficiencia = ficha.getDeficiencias();
+                    return deficiencia != null && !normalize(deficiencia).equals("nao") && !deficiencia.isEmpty();
+                })
+                .collect(Collectors.toList());
+
+        if (fichasComDeficiencias.isEmpty()) {
+            return null;
+        }
+
+        fichasComDeficiencias.sort(Comparator.comparing(ficha -> normalize(ficha.getDeficiencias())));
+
+        return FichaMapper.toDtoList(fichasComDeficiencias);
+    }
+
+    private String normalize(String input) {
+        return Normalizer.normalize(input.toLowerCase(), Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+    }
 
 }

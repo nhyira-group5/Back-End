@@ -15,4 +15,6 @@ public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     Optional<Ficha> findByFkUsuarioIs(Usuario usuario);
 
 
+
+
 }
