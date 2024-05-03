@@ -58,6 +58,7 @@ public class AuthConfig {
             new AntPathRequestMatcher("/usuarios/**", "PUT"),
             new AntPathRequestMatcher("/usuarios/download", "GET"),
             new AntPathRequestMatcher("/endereco/**"),
+            new AntPathRequestMatcher("/rotinaTreinos/**"),
             new AntPathRequestMatcher("/email", "POST"),
             new AntPathRequestMatcher("/fichas/**"),
             new AntPathRequestMatcher("/sqlserver/data/insert**"),

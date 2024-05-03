@@ -73,12 +73,9 @@ public class EnderecoController {
 
 
 
-
-
-    @GetMapping("/academias/{nome}")
-    public ResponseEntity<List<AcademiaDto>> buscarAcademiasPorNome(@PathVariable String nome) {
-       List<AcademiaDto> academias = academiasProximasService.buscarAcademiaPorNome(nome);
-        return ResponseEntity.ok(academias);
+    @GetMapping("/api/academias/proximas")
+    public ResponseEntity<List<AcademiaDto>> buscarAcademiasProximas(@RequestParam String logradouro, @RequestParam String bairro, @RequestParam String cidade, @RequestParam String estado, @RequestParam String cep) {
+        return academiasProximasService.buscarAcademiasProximas(logradouro, bairro, cidade, estado,cep);
     }
 
 

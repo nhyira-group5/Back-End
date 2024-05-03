@@ -37,6 +37,12 @@ public class AcademiasProximasService {
             List<AcademiaDto> academiasDto = new ArrayList<>();
             for (PlacesSearchResult lugar : response.results) {
                 PlaceDetails detalhesLugar = PlacesApi.placeDetails(context, lugar.placeId).await();
+
+
+                if (detalhesLugar.openingHours == null || detalhesLugar.name == null || detalhesLugar.vicinity == null || detalhesLugar.geometry == null) {
+                    continue;
+                }
+
                 double classificacao = (detalhesLugar.rating != 0) ? detalhesLugar.rating : -1;
 
                 AcademiaDto academiaDto = new AcademiaDto();
@@ -45,11 +51,7 @@ public class AcademiasProximasService {
                 academiaDto.setLatitude(lugar.geometry.location.lat);
                 academiaDto.setLongitude(lugar.geometry.location.lng);
                 academiaDto.setClassificacao(classificacao);
-
-
-                if (detalhesLugar.openingHours != null) {
-                    academiaDto.setDiasAbertos(List.of(detalhesLugar.openingHours.weekdayText));
-                }
+                academiaDto.setDiasAbertos(List.of(detalhesLugar.openingHours.weekdayText));
 
                 academiasDto.add(academiaDto);
             }
@@ -62,7 +64,6 @@ public class AcademiasProximasService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
 
 
     private void mergeSort(List<AcademiaDto> academias, int inicio, int fim) {
@@ -142,9 +143,10 @@ public class AcademiasProximasService {
 
 
     public List<AcademiaDto> buscarAcademiaPorNome(String nomeAcademia) {
-            List<AcademiaDto> response = buscarAcademiasProximas("logradouro", "bairro", "cidade", "estado", "cep").getBody();
+        ResponseEntity<List<AcademiaDto>> responseEntity = buscarAcademiasProximas("logradouro", "bairro", "cidade", "estado", "cep");
 
-        if (!response.isEmpty()) {
+        if (responseEntity != null && responseEntity.getBody() != null && !responseEntity.getBody().isEmpty()) {
+            List<AcademiaDto> response = responseEntity.getBody();
             List<AcademiaDto> academiasEncontradas = new ArrayList<>();
 
             for (AcademiaDto academia : response) {
@@ -155,12 +157,10 @@ public class AcademiasProximasService {
 
             if (!academiasEncontradas.isEmpty()) {
                 return academiasEncontradas;
-            } else {
-                return null;
             }
-        } else {
-            return null;
         }
+
+        return null;
     }
 
 }
