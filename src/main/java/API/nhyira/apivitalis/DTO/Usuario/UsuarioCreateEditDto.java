@@ -5,6 +5,7 @@ import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
@@ -18,6 +19,7 @@ public class UsuarioCreateEditDto {
     @NotBlank(message = "O CPF é obrigatório")
 //    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido")
     @Column(nullable = false, unique = true, length = 14)
+    @CPF
     private String cpf;
 
     @NotBlank(message = "O nome é obrigatório")
