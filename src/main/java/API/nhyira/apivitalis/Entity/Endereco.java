@@ -17,6 +17,9 @@ public class Endereco {
     private String cep;
     private String complemento;
 
+
+    @ManyToOne
+    @JoinColumn(name = "Usuario")
     private Usuario fkPersonal;
 
 
