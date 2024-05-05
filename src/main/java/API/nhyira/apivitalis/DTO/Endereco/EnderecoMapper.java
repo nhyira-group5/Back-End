@@ -1,16 +1,18 @@
 package API.nhyira.apivitalis.DTO.Endereco;
 
-import API.nhyira.apivitalis.Entity.EnderecoModel;
+import API.nhyira.apivitalis.Entity.Endereco;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnderecoMapper {
 
-    public static EnderecoModel toDto(EnderecoCreateEditDto dto) {
+    public static Endereco toDto(Endereco dto) {
         if (dto == null) return null;
 
-        EnderecoModel enderecoModel = new EnderecoModel();
+        Endereco enderecoModel = new Endereco();
         enderecoModel.setLogradouro(dto.getLogradouro());
         enderecoModel.setNumero(dto.getNumero());
-        enderecoModel.setComplemento(dto.getComplemento());
         enderecoModel.setBairro(dto.getBairro());
         enderecoModel.setCidade(dto.getCidade());
         enderecoModel.setEstado(dto.getEstado());
@@ -19,20 +21,43 @@ public class EnderecoMapper {
         return enderecoModel;
     }
 
-    public static EnderecoExibitionDto toEntity(EnderecoModel entity) {
+    public static EnderecoExibitionDto toEntity(Endereco entity) {
         if (entity == null) return null;
 
-        EnderecoExibitionDto enderecoViewDTO = new EnderecoExibitionDto();
-        enderecoViewDTO.setLogradouro(entity.getLogradouro());
-        enderecoViewDTO.setBairro(entity.getBairro());
-        enderecoViewDTO.setCidade(entity.getCidade());
-        enderecoViewDTO.setEstado(entity.getEstado());
-        enderecoViewDTO.setCep(entity.getCep());
-        enderecoViewDTO.setNumero(entity.getNumero());
-        enderecoViewDTO.setComplemento(entity.getComplemento());
+        EnderecoExibitionDto enderecoExibitionDto = new EnderecoExibitionDto();
+        enderecoExibitionDto.setLogradouro(entity.getLogradouro());
+        enderecoExibitionDto.setNumero(entity.getNumero());
+        enderecoExibitionDto.setBairro(entity.getBairro());
+        enderecoExibitionDto.setCidade(entity.getCidade());
+        enderecoExibitionDto.setEstado(entity.getEstado());
+        enderecoExibitionDto.setCep(entity.getCep());
+        enderecoExibitionDto.setFkPersonal(entity.getFkPersonal());
 
-        return enderecoViewDTO;
+        return enderecoExibitionDto;
+    }
 
+    public static Endereco toEditDto(Endereco endereco, Endereco dto) {
+        if (dto != null) {
+            endereco.setLogradouro(dto.getLogradouro());
+            endereco.setNumero(dto.getNumero());
+            endereco.setBairro(dto.getBairro());
+            endereco.setCidade(dto.getCidade());
+            endereco.setEstado(dto.getEstado());
+            endereco.setCep(dto.getCep());
+
+            return endereco;
+        }
+        return null;
+    }
+
+    public static List<EnderecoExibitionDto> toExibitionList(List<Endereco> entities) {
+        List<EnderecoExibitionDto> dtos = new ArrayList<>();
+        for (Endereco entity : entities) {
+            EnderecoExibitionDto dto = toEntity(entity);
+            if (dto != null) {
+                dtos.add(dto);
+            }
+        }
+        return dtos;
     }
 }
-

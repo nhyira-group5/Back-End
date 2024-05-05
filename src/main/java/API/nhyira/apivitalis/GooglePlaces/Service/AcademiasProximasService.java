@@ -1,7 +1,6 @@
 package API.nhyira.apivitalis.GooglePlaces.Service;
 
 import API.nhyira.apivitalis.DTO.Endereco.AcademiaDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,6 +12,8 @@ import com.google.maps.PlacesApi;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 @Service
 public class AcademiasProximasService {
@@ -118,49 +119,4 @@ public class AcademiasProximasService {
             k++;
         }
     }
-
-    private int buscaBinariaPorNome(List<AcademiaDto> academias, String nomeAcademia) {
-        int esquerda = 0;
-        int direita = academias.size() - 1;
-
-        while (esquerda <= direita) {
-            int meio = esquerda + (direita - esquerda) / 2;
-            int comparacao = academias.get(meio).getNome().compareTo(nomeAcademia);
-
-            if (comparacao == 0) {
-                return meio;
-            }
-
-            if (comparacao < 0) {
-                esquerda = meio + 1;
-            } else {
-                direita = meio - 1;
-            }
-        }
-
-        return -1;
-    }
-
-
-    public List<AcademiaDto> buscarAcademiaPorNome(String nomeAcademia) {
-        ResponseEntity<List<AcademiaDto>> responseEntity = buscarAcademiasProximas("logradouro", "bairro", "cidade", "estado", "cep");
-
-        if (responseEntity != null && responseEntity.getBody() != null && !responseEntity.getBody().isEmpty()) {
-            List<AcademiaDto> response = responseEntity.getBody();
-            List<AcademiaDto> academiasEncontradas = new ArrayList<>();
-
-            for (AcademiaDto academia : response) {
-                if (academia.getNome().equalsIgnoreCase(nomeAcademia)) {
-                    academiasEncontradas.add(academia);
-                }
-            }
-
-            if (!academiasEncontradas.isEmpty()) {
-                return academiasEncontradas;
-            }
-        }
-
-        return null;
-    }
-
 }

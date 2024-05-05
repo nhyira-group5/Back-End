@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.DTO.Endereco;
 
+import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 public class EnderecoExibitionDto {
 
 
+    private Integer id;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -14,6 +16,8 @@ public class EnderecoExibitionDto {
     private String cidade;
     private String estado;
     private String cep;
+
+    private Usuario fkPersonal;
 
 
     public String getLogradouro() {
@@ -70,5 +74,21 @@ public class EnderecoExibitionDto {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Usuario getFkPersonal() {
+        return fkPersonal;
+    }
+
+    public void setFkPersonal(Usuario fkPersonal) {
+        this.fkPersonal = fkPersonal;
     }
 }
