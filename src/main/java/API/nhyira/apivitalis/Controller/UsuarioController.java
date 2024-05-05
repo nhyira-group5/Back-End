@@ -88,4 +88,15 @@ public class UsuarioController {
     ) {
         return !uService.delUser(id) ? ResponseEntity.status(404).body("Usuário não encontrado!") : ResponseEntity.status(200).body("Usuário excluido com sucesso!");
     }
+
+    @GetMapping("/por-username")
+    public ResponseEntity<UsuarioExibitionDto> buscarUsuarioPorUsername(@RequestParam String username) {
+        UsuarioExibitionDto usuario = uService.findUserByUsername(username);
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+
+        }
+    }
 }

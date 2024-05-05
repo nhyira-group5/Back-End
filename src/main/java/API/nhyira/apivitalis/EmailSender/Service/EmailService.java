@@ -32,8 +32,27 @@ public class EmailService {
             MimeMessage mensagem = new MimeMessage(session);
             mensagem.setFrom(new InternetAddress(remetente));
             mensagem.addRecipient(Message.RecipientType.TO, new InternetAddress(email.getDestinatario()));
-            mensagem.setSubject(email.getAssunto());
-            mensagem.setText(email.getConteudo());
+            mensagem.setSubject("Bem-vindo à Nhyira!");
+
+
+            String conteudo = "<html>" +
+                    "<head>" +
+                    "<style>" +
+                    "body {font-family: Arial, sans-serif; background-color: #48B75A; margin: 0; padding: 0;}" +
+                    ".container { max-width: 600px; margin: auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);}" +
+                    ".welcome {color: #1A1A1A; font-size: 24px; font-weight: bold; text-align: center;}" +
+                    ".message {color: #1A1A1A; font-size: 18px; text-align: center;}" +
+                    "</style>" +
+                    "</head>" +
+                    "<body>" +
+                    "<div class='container'>" +
+                    "<h1 class='welcome'>Bem-vindo a Nhyira!</h1>" +
+                    "<p class='message'>Ola, voce foi cadastrado com sucesso no sistema da Vitalis. Aproveite para compartilhar com seus colegas.</p>" +
+                    "</div>" +
+                    "</body>" +
+                    "</html>";
+
+            mensagem.setContent(conteudo, "text/html");
 
             Transport.send(mensagem);
             System.out.println("Email enviado com sucesso!");
@@ -45,5 +64,4 @@ public class EmailService {
     public Boolean validarEmail(String email) {
         return email != null && !email.isEmpty() && email.matches("^(.+)@(.+)$") && email.length() <= 100;
     }
-
 }

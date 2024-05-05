@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -154,5 +156,45 @@ public class UsuarioService {
 
     public boolean cpfUnique(String cpf) {
         return uRep.findByCpf(cpf).isPresent();
+    }
+
+
+
+    public UsuarioExibitionDto findUserByUsername(String username) {
+        try {
+            List<Usuario> allUsers = uRep.buscarUsuarios();
+            Collections.sort(allUsers, Comparator.comparing(Usuario::getUsername));
+            int index = binarySearch(allUsers, username);
+            if (index != -1) {
+                Usuario user = allUsers.get(index);
+                return UsuarioMapper.toExibition(user);
+            } else {
+                return null;
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao buscar o usuário: " + e.getMessage());
+        }
+    }
+
+    private int binarySearch(List<Usuario> usuarios, String usernameAlvo) {
+        int esquerda = 0;
+        int direita = usuarios.size() - 1;
+
+        while (esquerda <= direita) {
+            int meio = esquerda + (direita - esquerda) / 2;
+            String usernameAtual = usuarios.get(meio).getUsername();
+
+            int comparacao = usernameAtual.compareTo(usernameAlvo);
+
+            if (comparacao == 0) {
+                return meio;
+            } else if (comparacao < 0) {
+                esquerda = meio + 1;
+            } else {
+                direita = meio - 1;
+            }
+        }
+
+        return -1;
     }
 }

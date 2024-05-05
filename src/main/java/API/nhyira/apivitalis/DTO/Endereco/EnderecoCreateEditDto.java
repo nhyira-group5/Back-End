@@ -29,8 +29,10 @@ public class EnderecoCreateEditDto {
     @NotBlank(message = "O número é obrigatório")
     private String numero;
 
-    @Size(max = 100)
     private String complemento;
+
+    private Integer idPersonal;
+
 
     public String getLogradouro() {
         return logradouro;
@@ -80,11 +82,20 @@ public class EnderecoCreateEditDto {
         this.numero = numero;
     }
 
+
     public String getComplemento() {
         return complemento;
     }
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public Integer getIdPersonal() {
+        return idPersonal;
+    }
+
+    public void setIdPersonal(Integer idPersonal) {
+        this.idPersonal = idPersonal;
     }
 }

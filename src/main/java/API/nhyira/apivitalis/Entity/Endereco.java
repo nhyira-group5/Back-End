@@ -1,27 +1,24 @@
 package API.nhyira.apivitalis.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
-public class EnderecoModel {
+@Table(name = "enderecoAcademia ")
+public class Endereco {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEndereco;
     private String logradouro;
-
     private String numero;
     private String bairro;
     private String cidade;
     private String estado;
     private String cep;
-
-    private Integer fkPersonal;
-
     private String complemento;
+
+    private Usuario fkPersonal;
+
 
     // Getters and Setters
     public Integer getIdEndereco() {
@@ -80,11 +77,12 @@ public class EnderecoModel {
         this.cep = cep;
     }
 
-    public Integer getFkPersonal() {
+
+    public Usuario getFkPersonal() {
         return fkPersonal;
     }
 
-    public void setFkPersonal(Integer fkPersonal) {
+    public void setFkPersonal(Usuario fkPersonal) {
         this.fkPersonal = fkPersonal;
     }
 
