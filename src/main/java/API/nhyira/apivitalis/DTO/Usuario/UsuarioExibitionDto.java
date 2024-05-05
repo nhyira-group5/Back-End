@@ -3,21 +3,23 @@ package API.nhyira.apivitalis.DTO.Usuario;
 import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
 public class UsuarioExibitionDto {
+
+    @Getter
+    private Integer id;
     private String username;
     private String cpf;
     private String nome;
     private LocalDate dtNasc;
     private String genero;
     private String email;
-    private String email2;
 
     private Midia midia;
 
-    private String senha;
     private Usuario.TipoUsuario tipo; // Alterado para String
     private double imc;
 
@@ -77,13 +79,6 @@ public class UsuarioExibitionDto {
         this.email = email;
     }
 
-    public String getEmail2() {
-        return email2;
-    }
-
-    public void setEmail2(String email2) {
-        this.email2 = email2;
-    }
 
 
     public Midia getMidia() {
@@ -94,13 +89,11 @@ public class UsuarioExibitionDto {
         this.midia = midia;
     }
 
-
-
-    public String getSenha() {
-        return senha;
+    public Integer getId() {
+        return id;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

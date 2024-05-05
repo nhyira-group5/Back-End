@@ -14,7 +14,6 @@ public class UsuarioMapper {
             user.setUsername(dto.getUsername());
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
-            user.setEmail2(dto.getEmail2());
             user.setSenha(dto.getSenha());
             user.setGenero(dto.getGenero());
             user.setDtNasc(dto.getDtNasc());
@@ -28,16 +27,16 @@ public class UsuarioMapper {
     public static UsuarioExibitionDto toExibition(Usuario entity) {
         if (entity != null) {
             UsuarioExibitionDto user = new UsuarioExibitionDto();
+
+            user.setId(entity.getIdUsuario());
             user.setNome(entity.getNome());
             user.setUsername(entity.getUsername());
             user.setCpf(entity.getCpf());
             user.setEmail(entity.getEmail());
-            user.setEmail2(entity.getEmail2());
             user.setGenero(entity.getGenero());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
             user.setMidia(entity.getMidia());
-            user.setSenha(entity.getSenha());
 
             return user;
         }
@@ -50,7 +49,6 @@ public class UsuarioMapper {
             user.setUsername(dto.getUsername());
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
-            user.setEmail2(dto.getEmail2());
             user.setSenha(dto.getSenha());
             user.setGenero(dto.getGenero());
             user.setDtNasc(dto.getDtNasc());
@@ -78,7 +76,6 @@ public class UsuarioMapper {
 
         usuario.setUsername(usuarioCriacaoDto.getUsername());
         usuario.setCpf(usuarioCriacaoDto.getCpf());
-        usuario.setEmail2(usuarioCriacaoDto.getEmail2());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
         usuario.setGenero(usuarioCriacaoDto.getGenero());
         usuario.setDtNasc(usuarioCriacaoDto.getDtNasc());

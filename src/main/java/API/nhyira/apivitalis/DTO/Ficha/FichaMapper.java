@@ -31,6 +31,7 @@ public class FichaMapper {
         if (entity == null)return null;
 
         FichaExibitionDto user = new FichaExibitionDto();
+        user.setId(entity.getIdFicha());
         user.setAltura(entity.getAltura());
         user.setBebe(entity.getBebe());
         user.setMeta(entity.getMeta());

@@ -25,7 +25,7 @@ public class Ficha {
 
 
     @ManyToOne
-    @JoinColumn(name = "Usuarios")
+    @JoinColumn(name = "Usuario")
     private Usuario fkUsuario;
 
 

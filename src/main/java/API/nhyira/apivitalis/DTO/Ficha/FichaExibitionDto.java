@@ -4,6 +4,10 @@ import API.nhyira.apivitalis.Entity.Usuario;
 
 public class FichaExibitionDto {
 
+
+    private Integer id;
+
+
     private Integer bebe;
 
     private Integer fuma;
@@ -87,5 +91,13 @@ public class FichaExibitionDto {
 
     public void setUsuarioId(Usuario usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
