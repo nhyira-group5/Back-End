@@ -30,9 +30,6 @@ public class Usuario {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "emailRecuperacao")
-    private String email2;
-
     @Column(name = "senha")
     private String senha;
 
@@ -99,13 +96,6 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getEmail2() {
-        return email2;
-    }
-
-    public void setEmail2(String email2) {
-        this.email2 = email2;
-    }
 
     public String getSenha() {
         return senha;

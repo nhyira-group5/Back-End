@@ -42,10 +42,6 @@ public class UsuarioCreateEditDto {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-    @Email(message = "Por favor, insira um endereço de email válido")
-    @Pattern(regexp = "^(.+)@(.+)$", message = "Por favor, insira um endereço de email válido")
-    @Column(nullable = false, length = 100)
-    private String email2;
 
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "A senha é obrigatória")
@@ -103,14 +99,6 @@ public class UsuarioCreateEditDto {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getEmail2() {
-        return email2;
-    }
-
-    public void setEmail2(String email2) {
-        this.email2 = email2;
     }
 
     public String getSenha() {
