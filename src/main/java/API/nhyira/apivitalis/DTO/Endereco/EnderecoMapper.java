@@ -7,7 +7,7 @@ import java.util.List;
 
 public class EnderecoMapper {
 
-    public static Endereco toDto(Endereco dto) {
+    public static Endereco toDto(EnderecoCreateEditDto dto) {
         if (dto == null) return null;
 
         Endereco enderecoModel = new Endereco();
@@ -17,6 +17,7 @@ public class EnderecoMapper {
         enderecoModel.setCidade(dto.getCidade());
         enderecoModel.setEstado(dto.getEstado());
         enderecoModel.setCep(dto.getCep());
+        enderecoModel.setComplemento(dto.getComplemento());
 
         return enderecoModel;
     }
@@ -25,6 +26,7 @@ public class EnderecoMapper {
         if (entity == null) return null;
 
         EnderecoExibitionDto enderecoExibitionDto = new EnderecoExibitionDto();
+        enderecoExibitionDto.setId(entity.getIdEndereco());
         enderecoExibitionDto.setLogradouro(entity.getLogradouro());
         enderecoExibitionDto.setNumero(entity.getNumero());
         enderecoExibitionDto.setBairro(entity.getBairro());
@@ -32,11 +34,13 @@ public class EnderecoMapper {
         enderecoExibitionDto.setEstado(entity.getEstado());
         enderecoExibitionDto.setCep(entity.getCep());
         enderecoExibitionDto.setFkPersonal(entity.getFkPersonal());
+        enderecoExibitionDto.setComplemento(entity.getComplemento());
+
 
         return enderecoExibitionDto;
     }
 
-    public static Endereco toEditDto(Endereco endereco, Endereco dto) {
+    public static Endereco toEditDto(Endereco endereco, EnderecoCreateEditDto dto) {
         if (dto != null) {
             endereco.setLogradouro(dto.getLogradouro());
             endereco.setNumero(dto.getNumero());
@@ -44,6 +48,7 @@ public class EnderecoMapper {
             endereco.setCidade(dto.getCidade());
             endereco.setEstado(dto.getEstado());
             endereco.setCep(dto.getCep());
+            endereco.setComplemento(dto.getComplemento());
 
             return endereco;
         }
