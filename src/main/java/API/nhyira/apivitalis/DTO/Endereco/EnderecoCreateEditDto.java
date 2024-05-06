@@ -23,7 +23,7 @@ public class EnderecoCreateEditDto {
     private String estado;
 
     @NotBlank(message = "O CEP é obrigatório")
-    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "O CEP deve estar no formato 12345-678")
+//    @Pattern(regexp = "^\\d{5}-\\d{3}$", message = "O CEP deve estar no formato 12345-678")
     private String cep;
 
     @NotBlank(message = "O número é obrigatório")

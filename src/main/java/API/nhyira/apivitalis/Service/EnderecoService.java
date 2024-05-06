@@ -1,55 +1,93 @@
 package API.nhyira.apivitalis.Service;
 
 
-
-
-
+import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.Repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import API.nhyira.apivitalis.DTO.Endereco.EnderecoExibitionDto;
+import API.nhyira.apivitalis.DTO.Endereco.EnderecoMapper;
+import API.nhyira.apivitalis.DTO.Endereco.EnderecoCreateEditDto;
 import java.util.Optional;
 
 @Service
 public class EnderecoService {
 
-    private final EnderecoRepository enderecoRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     @Autowired
-    public EnderecoService(EnderecoRepository enderecoRepository) {
-        this.enderecoRepository = enderecoRepository;
-    }
+    private UsuarioRepository usuarioRepository;
 
-    public Endereco salvarEndereco(Endereco endereco) {
-        return enderecoRepository.save(endereco);
-    }
 
-    public Optional<Endereco> buscarEnderecoPorId(Integer id) {
-        return enderecoRepository.findById(id);
-    }
-
-    public List<Endereco> buscarTodosEnderecos() {
-        return enderecoRepository.findAll();
-    }
-
-    public Endereco atualizarEndereco(Integer id, Endereco novoEndereco) {
-        Optional<Endereco> enderecoOptional = enderecoRepository.findById(id);
-        if (enderecoOptional.isPresent()) {
-            Endereco enderecoExistente = enderecoOptional.get();
-            enderecoExistente.setLogradouro(novoEndereco.getLogradouro());
-            enderecoExistente.setNumero(novoEndereco.getNumero());
-            enderecoExistente.setCidade(novoEndereco.getCidade());
-            enderecoExistente.setEstado(novoEndereco.getEstado());
-            enderecoExistente.setCep(novoEndereco.getCep());
-            return enderecoRepository.save(enderecoExistente);
-        } else {
-            throw new IllegalArgumentException("Endereço não encontrado com o ID: " + id);
+    public EnderecoExibitionDto create(EnderecoCreateEditDto dto) {
+        try {
+            if (dto != null) {
+                Optional<Usuario> optUsuario = usuarioRepository.findById(dto.getIdPersonal());
+                if (optUsuario.isEmpty()) {
+                    return null;
+                }
+                Endereco endereco = EnderecoMapper.toDto(dto);
+                endereco.setFkPersonal(optUsuario.get());
+                enderecoRepository.save(endereco);
+                return EnderecoMapper.toEntity(endereco);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao criar endereço: " + e.getMessage());
         }
+        return null;
     }
 
-    public void deletarEndereco(Integer id) {
-        enderecoRepository.deleteById(id);
+
+    public EnderecoExibitionDto showEndereco(int id) {
+        try {
+            if (id >= 1) {
+                Optional<Usuario> usuario = usuarioRepository.findById(id);
+                if (usuario.isPresent()) {
+                    Optional<Endereco> endereco = enderecoRepository.findByFkPersonalIs(usuario.get());
+                    if (endereco.isPresent()) {
+                        return EnderecoMapper.toEntity(endereco.get());
+                    }
+                }
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao mostrar endereço: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public EnderecoExibitionDto updateEndereco(int id, EnderecoCreateEditDto dto) {
+        try {
+            if (dto != null || id >= 1) {
+                Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+                if (optUsuario.isPresent()) {
+                    Optional<Endereco> optEndereco = enderecoRepository.findByFkPersonalIs(optUsuario.get());
+                    if (optEndereco.isPresent()) {
+                        Endereco endereco = EnderecoMapper.toEditDto(optEndereco.get(), dto);
+                        enderecoRepository.save(endereco);
+                        return EnderecoMapper.toEntity(endereco);
+                    }
+                }
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao atualizar endereço: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public Boolean deleteUser(int id) {
+        try {
+            Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+            if (optUsuario.isPresent()) {
+                Optional<Endereco> optEndereco = enderecoRepository.findByFkPersonalIs(optUsuario.get());
+                optEndereco.ifPresent(endereco -> enderecoRepository.delete(endereco));
+                return true;
+            }
+            return false;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao deletar endereço: " + e.getMessage());
+        }
     }
 }
