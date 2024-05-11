@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface FichaRepository extends JpaRepository<Ficha, Integer> {
 
-    Optional<Ficha> findByFkUsuarioIs(Usuario usuario);
+    Optional<Ficha> findByUsuarioIdIs(Usuario usuario);
 
 
 

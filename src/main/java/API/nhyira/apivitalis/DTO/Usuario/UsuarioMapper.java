@@ -11,11 +11,11 @@ public class UsuarioMapper {
         if (dto != null) {
             Usuario user = new Usuario();
             user.setNome(dto.getNome());
-            user.setUsername(dto.getUsername());
+            user.setNickName(dto.getNickName());
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
             user.setSenha(dto.getSenha());
-            user.setGenero(dto.getGenero());
+            user.setSexo(dto.getSexo());
             user.setDtNasc(dto.getDtNasc());
             user.setTipo(dto.getTipo() != null ?  Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
 
@@ -30,10 +30,10 @@ public class UsuarioMapper {
 
             user.setId(entity.getIdUsuario());
             user.setNome(entity.getNome());
-            user.setUsername(entity.getUsername());
+            user.setNickName(entity.getNickName());
             user.setCpf(entity.getCpf());
             user.setEmail(entity.getEmail());
-            user.setGenero(entity.getGenero());
+            user.setSexo(entity.getSexo());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
             user.setMidia(entity.getMidia());
@@ -46,11 +46,11 @@ public class UsuarioMapper {
     public static Usuario toEditDto(Usuario user, UsuarioCreateEditDto dto) {
         if (dto != null) {
             user.setNome(dto.getNome());
-            user.setUsername(dto.getUsername());
+            user.setNickName(dto.getNickName());
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
             user.setSenha(dto.getSenha());
-            user.setGenero(dto.getGenero());
+            user.setSexo(dto.getSexo());
             user.setDtNasc(dto.getDtNasc());
             user.setTipo(dto.getTipo() != null ? Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
 
@@ -74,15 +74,14 @@ public class UsuarioMapper {
     public static Usuario of(UsuarioCreateEditDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
 
-        usuario.setUsername(usuarioCriacaoDto.getUsername());
+        usuario.setNickName(usuarioCriacaoDto.getNickName());
         usuario.setCpf(usuarioCriacaoDto.getCpf());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
-        usuario.setGenero(usuarioCriacaoDto.getGenero());
+        usuario.setSexo(usuarioCriacaoDto.getSexo());
         usuario.setDtNasc(usuarioCriacaoDto.getDtNasc());
         usuario.setEmail(usuarioCriacaoDto.getEmail());
         usuario.setNome(usuarioCriacaoDto.getNome());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
-        usuario.setUsername(usuarioCriacaoDto.getUsername());
         usuario.setTipo(usuarioCriacaoDto.getTipo());
         return usuario;
     }
@@ -92,7 +91,7 @@ public class UsuarioMapper {
         usuario.setId(user.getIdUsuario());
         usuario.setNome(user.getNome());
         usuario.setEmail(user.getEmail());
-        usuario.setUsername(user.getUsername());
+        usuario.setNickName(user.getNickName());
         usuario.setTipo(user.getTipo());
         usuario.setToken(token);
 

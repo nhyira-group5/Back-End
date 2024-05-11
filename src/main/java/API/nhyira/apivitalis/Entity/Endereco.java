@@ -1,9 +1,12 @@
 package API.nhyira.apivitalis.Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "enderecoAcademia ")
+@Getter
+@Setter
 public class Endereco {
 
     @Id
@@ -19,81 +22,10 @@ public class Endereco {
 
 
     @ManyToOne
-    @JoinColumn(name = "Usuario")
-    private Usuario fkPersonal;
+    @JoinColumn(name = "personal")
+    private Usuario personalId;
 
 
     // Getters and Setters
-    public Integer getIdEndereco() {
-        return idEndereco;
-    }
 
-    public void setIdEndereco(Integer idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-
-    public Usuario getFkPersonal() {
-        return fkPersonal;
-    }
-
-    public void setFkPersonal(Usuario fkPersonal) {
-        this.fkPersonal = fkPersonal;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
 }

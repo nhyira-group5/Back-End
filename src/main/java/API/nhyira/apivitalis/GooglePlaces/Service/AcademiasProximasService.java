@@ -11,8 +11,9 @@ import com.google.maps.GeocodingApi;
 import com.google.maps.PlacesApi;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 
 @Service
@@ -52,7 +53,7 @@ public class AcademiasProximasService {
                 academiaDto.setLatitude(lugar.geometry.location.lat);
                 academiaDto.setLongitude(lugar.geometry.location.lng);
                 academiaDto.setClassificacao(classificacao);
-                academiaDto.setDiasAbertos(List.of(detalhesLugar.openingHours.weekdayText));
+                academiaDto.setDiasAbertos(traduzirDiasParaPortugues(List.of(detalhesLugar.openingHours.weekdayText)));
 
                 academiasDto.add(academiaDto);
             }
@@ -118,5 +119,26 @@ public class AcademiasProximasService {
             j++;
             k++;
         }
+    }
+
+    private List<String> traduzirDiasParaPortugues(List<String> diasEmIngles) {
+        Map<String, String> mapaTraducao = new HashMap<>();
+        mapaTraducao.put("Monday", "Segunda-feira");
+        mapaTraducao.put("Tuesday", "Terça-feira");
+        mapaTraducao.put("Wednesday", "Quarta-feira");
+        mapaTraducao.put("Thursday", "Quinta-feira");
+        mapaTraducao.put("Friday", "Sexta-feira");
+        mapaTraducao.put("Saturday", "Sábado");
+        mapaTraducao.put("Sunday", "Domingo");
+
+        List<String> diasEmPortugues = new ArrayList<>();
+        for (String dia : diasEmIngles) {
+            for (Map.Entry<String, String> entrada : mapaTraducao.entrySet()) {
+                if (dia.contains(entrada.getKey())) {
+                    diasEmPortugues.add(dia.replace(entrada.getKey(), entrada.getValue()));
+                }
+            }
+        }
+        return diasEmPortugues;
     }
 }

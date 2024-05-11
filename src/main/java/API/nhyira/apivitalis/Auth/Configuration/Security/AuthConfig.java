@@ -57,7 +57,7 @@ public class AuthConfig {
             new AntPathRequestMatcher("/usuarios/**", "DELETE"),
             new AntPathRequestMatcher("/usuarios/**", "PUT"),
             new AntPathRequestMatcher("/usuarios/download", "GET"),
-            new AntPathRequestMatcher("/endereco/**"),
+            new AntPathRequestMatcher("/enderecos/**"),
             new AntPathRequestMatcher("/rotinaTreinos/**"),
             new AntPathRequestMatcher("/email", "POST"),
             new AntPathRequestMatcher("/fichas/**"),

@@ -3,11 +3,18 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.Auth.Configuration.Security.TokenGenJwt;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioLoginDto;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
+import API.nhyira.apivitalis.DTO.Ficha.FichaMapper;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
+import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Exception.ConflitoException;
+import API.nhyira.apivitalis.Exception.ErroClienteException;
+import API.nhyira.apivitalis.Exception.NaoEncontradoException;
+import API.nhyira.apivitalis.Exception.SemConteudoException;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,17 +30,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository uRep;
-    @Autowired
-    private PasswordEncoder encoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManagerForUsuarios;
-    @Autowired
-    private TokenGenJwt tokenGenJwt;
+    private final UsuarioRepository uRep;
+
+    private final PasswordEncoder encoder;
+
+
+    private final AuthenticationManager authenticationManagerForUsuarios;
+
+    private final TokenGenJwt tokenGenJwt;
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLogin) {
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
@@ -43,7 +51,7 @@ public class UsuarioService {
         final Authentication auth = this.authenticationManagerForUsuarios.authenticate(credentials);
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
-        Optional<Usuario> usuarioByUsername = uRep.findByUsername(usuarioLogin.getLogin());
+        Optional<Usuario> usuarioByUsername = uRep.findByNickName(usuarioLogin.getLogin());
 //        Optional<Usuario> usuarioByTipo = uRep.findByTipo(usuarioLogin.getLogin());
         Usuario.TipoUsuario tipo = null;
         if (usuarioByEmail.isPresent()) {
@@ -69,85 +77,85 @@ public class UsuarioService {
         return UsuarioMapper.of(user, token);
     }
 
-    public UsuarioExibitionDto createUser(UsuarioCreateEditDto usuario) {
-
-        try {
-            if (usuario != null) {
-                Usuario newUser = UsuarioMapper.toDto(usuario);
-                newUser.setSenha(encoder.encode(newUser.getSenha()));
-                uRep.save(newUser);
-                return UsuarioMapper.toExibition(newUser);
+    public Usuario createUser(Usuario usuario) {
+            if (usuario == null) {
+                throw new ErroClienteException("Usuario");
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao criar o usuário: " + e.getMessage());
-        }
-        return null;
+            if(cpfUnique(usuario.getCpf())){
+                throw new ConflitoException("CPF");
+            }
+            if (nomeUnique(usuario.getNickName())){
+                throw new ConflitoException("UserName");
+            }
+            if (emailUnique(usuario.getEmail())){
+                throw new ConflitoException("Email");
+            }
+
+
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+        uRep.save(usuario);
+        return usuario;
     }
 
-    public List<UsuarioExibitionDto> showAllUsers() {
-        try {
+    public List<Usuario> showAllUsers() {
             List<Usuario> allUsers = uRep.buscarUsuarios();
-            return UsuarioMapper.toExibitionList(allUsers);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao buscar os usuários: " + e.getMessage());
-        }
+            if (allUsers.isEmpty()){
+                throw new SemConteudoException("Usuarios");
+            }
+            return allUsers;
     }
 
-    public List<UsuarioExibitionDto> showAllUsersPersonal() {
-        try {
+    public List<Usuario> showAllUsersPersonal() {
+
             List<Usuario> allUsers = uRep.buscarPersonal();
-            return UsuarioMapper.toExibitionList(allUsers);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao buscar os Personal: " + e.getMessage());
-        }
+            if (allUsers.isEmpty()){
+                throw new SemConteudoException("Personais");
+            }
+            return allUsers;
+
     }
 
-    public UsuarioExibitionDto showUserById(int id) {
-        try {
-            Optional<Usuario> usuario = uRep.findById(id);
-
-            if (usuario.isPresent()) {
-                return UsuarioMapper.toExibition(usuario.get());
-            }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao buscar usuário: " + e.getMessage());
-        }
-        return null;
+    public Usuario showUserById(int id) {
+        Optional<Usuario> usuario = uRep.findById(id);
+        usuario.orElseThrow(() -> new NaoEncontradoException("usuario"));
+        return usuario.get();
     }
 
-    public UsuarioExibitionDto updtUser(int id, UsuarioCreateEditDto updatedUser) {
-        try {
-            if (uRep.existsById(id)) {
-                Usuario userSave = UsuarioMapper.toEditDto(uRep.findById(id).get(), updatedUser);
-                userSave.setSenha(encoder.encode(userSave.getSenha()));
-
-                UsuarioExibitionDto user = UsuarioMapper.toExibition(userSave);
-                uRep.save(userSave);
-                return user;
+    public Usuario updtUser(int id, UsuarioCreateEditDto updatedUser) {
+        if (uRep.existsById(id)) {
+            Optional<Usuario> user = uRep.findById(id);
+            user.orElseThrow(() -> new NaoEncontradoException("usuario"));
+            if(cpfUnique(updatedUser.getCpf())){
+                throw new ConflitoException("CPF");
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao atualizar o usuário: " + e.getMessage());
+            if (nomeUnique(updatedUser.getNickName())){
+                throw new ConflitoException("UserName");
+            }
+            if (emailUnique(updatedUser.getEmail())){
+                throw new ConflitoException("Email");
+            }
+                updatedUser.setSenha(encoder.encode(updatedUser.getSenha()));
+                Usuario usuario = UsuarioMapper.toEditDto(user.get(), updatedUser);
+                uRep.save(usuario);
+                return usuario;
         }
-        return null;
+        throw new NaoEncontradoException("Id");
     }
 
     public boolean delUser(int id) {
-        try {
-            if (uRep.existsById(id)) {
-                uRep.deleteById(id);
-                return true;
+            if (!uRep.existsById(id)) {
+                throw new NaoEncontradoException("Id");
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao deletar usuário: " + e.getMessage());
-        }
-        return false;
+        uRep.deleteById(id);
+        return true;
+
     }
 
 
     public List<Usuario> getAllUsers(){return uRep.findAll();}
 
     public boolean nomeUnique(String username) {
-        return uRep.findByUsername(username).isPresent();
+        return uRep.findByNickName(username).isPresent();
     }
 
     public boolean emailUnique(String email) {
@@ -163,7 +171,7 @@ public class UsuarioService {
     public UsuarioExibitionDto findUserByUsername(String username) {
         try {
             List<Usuario> allUsers = uRep.buscarUsuarios();
-            Collections.sort(allUsers, Comparator.comparing(Usuario::getUsername));
+            Collections.sort(allUsers, Comparator.comparing(Usuario::getNickName));
             int index = binarySearch(allUsers, username);
             if (index != -1) {
                 Usuario user = allUsers.get(index);
@@ -182,7 +190,7 @@ public class UsuarioService {
 
         while (esquerda <= direita) {
             int meio = esquerda + (direita - esquerda) / 2;
-            String usernameAtual = usuarios.get(meio).getUsername();
+            String usernameAtual = usuarios.get(meio).getNickName();
 
             int comparacao = usernameAtual.compareTo(usernameAlvo);
 

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RotinaTreinoMapper {
 
-    public static RotinaTreino toDto(RotinaTreinoCreateEditDto dto){
+    public static RotinaTreino toEntity(RotinaTreinoCreateEditDto dto){
         if (dto == null)return null;
 
         RotinaTreino rotinaTreino = new RotinaTreino();
@@ -15,7 +15,7 @@ public class RotinaTreinoMapper {
         return rotinaTreino;
     }
 
-    public static RotinaTreinoExibitionDto toEntity(RotinaTreino entity){
+    public static RotinaTreinoExibitionDto toDto(RotinaTreino entity){
         if (entity == null)return null;
 
         RotinaTreinoExibitionDto user = new RotinaTreinoExibitionDto();
@@ -24,8 +24,8 @@ public class RotinaTreinoMapper {
         user.setObservacao(entity.getObservacoes());
         return user;
     }
-    public static List<RotinaTreinoExibitionDto> toEntities(List<RotinaTreino> entities){
-        return entities.stream().map(RotinaTreinoMapper::toEntity).toList();
+    public static List<RotinaTreinoExibitionDto> toDto(List<RotinaTreino> entities){
+        return entities.stream().map(RotinaTreinoMapper::toDto).toList();
     }
 
 
