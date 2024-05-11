@@ -1,10 +1,12 @@
 package API.nhyira.apivitalis.Entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
-@Table(name = "ficha")
 public class Ficha {
 
     @Id
@@ -18,94 +20,19 @@ public class Ficha {
     private String deficiencias;
 
     private String problemasCaridiacos;
-    private String doencasRespiratorias;
-    private Float peso;
-    private float altura;
-    private String meta;
 
+    private String doencasRespiratorias;
+
+    private Float peso;
+
+    private float altura;
 
     @ManyToOne
-    @JoinColumn(name = "Usuario")
-    private Usuario fkUsuario;
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuarioId;
 
+    @ManyToOne
+    @JoinColumn(name = "metaId")
+    private Meta metaId;
 
-    public Integer getIdFicha() {
-        return idFicha;
-    }
-
-    public void setIdFicha(Integer idFicha) {
-        this.idFicha = idFicha;
-    }
-
-    public Integer getBebe() {
-        return bebe;
-    }
-
-    public void setBebe(Integer bebe) {
-        this.bebe = bebe;
-    }
-
-    public Integer getFuma() {
-        return fuma;
-    }
-
-    public void setFuma(Integer fuma) {
-        this.fuma = fuma;
-    }
-
-    public String getDeficiencias() {
-        return deficiencias;
-    }
-
-    public void setDeficiencias(String deficiencias) {
-        this.deficiencias = deficiencias;
-    }
-
-    public String getProblemasCaridiacos() {
-        return problemasCaridiacos;
-    }
-
-    public void setProblemasCaridiacos(String problemasCaridiacos) {
-        this.problemasCaridiacos = problemasCaridiacos;
-    }
-
-    public String getDoencasRespiratorias() {
-        return doencasRespiratorias;
-    }
-
-    public void setDoencasRespiratorias(String doencasRespiratorias) {
-        this.doencasRespiratorias = doencasRespiratorias;
-    }
-
-    public Float getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Float peso) {
-        this.peso = peso;
-    }
-
-    public float getAltura() {
-        return altura;
-    }
-
-    public void setAltura(float altura) {
-        this.altura = altura;
-    }
-
-    public String getMeta() {
-        return meta;
-    }
-
-    public void setMeta(String meta) {
-        this.meta = meta;
-    }
-
-    public Usuario getFkUsuario() {
-        return fkUsuario;
-    }
-
-    public void setFkUsuario(Usuario fkUsuario) {
-        this.fkUsuario = fkUsuario;
-    }
 }

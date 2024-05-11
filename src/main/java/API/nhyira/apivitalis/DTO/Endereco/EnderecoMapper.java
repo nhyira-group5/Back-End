@@ -7,7 +7,7 @@ import java.util.List;
 
 public class EnderecoMapper {
 
-    public static Endereco toDto(EnderecoCreateEditDto dto) {
+    public static Endereco toEntity(EnderecoCreateEditDto dto) {
         if (dto == null) return null;
 
         Endereco enderecoModel = new Endereco();
@@ -22,7 +22,7 @@ public class EnderecoMapper {
         return enderecoModel;
     }
 
-    public static EnderecoExibitionDto toEntity(Endereco entity) {
+    public static EnderecoExibitionDto toDto(Endereco entity) {
         if (entity == null) return null;
 
         EnderecoExibitionDto enderecoExibitionDto = new EnderecoExibitionDto();
@@ -33,7 +33,7 @@ public class EnderecoMapper {
         enderecoExibitionDto.setCidade(entity.getCidade());
         enderecoExibitionDto.setEstado(entity.getEstado());
         enderecoExibitionDto.setCep(entity.getCep());
-        enderecoExibitionDto.setFkPersonal(entity.getFkPersonal());
+        enderecoExibitionDto.setPersonalId(entity.getPersonalId());
         enderecoExibitionDto.setComplemento(entity.getComplemento());
 
 
@@ -58,7 +58,7 @@ public class EnderecoMapper {
     public static List<EnderecoExibitionDto> toExibitionList(List<Endereco> entities) {
         List<EnderecoExibitionDto> dtos = new ArrayList<>();
         for (Endereco entity : entities) {
-            EnderecoExibitionDto dto = toEntity(entity);
+            EnderecoExibitionDto dto = toDto(entity);
             if (dto != null) {
                 dtos.add(dto);
             }

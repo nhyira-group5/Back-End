@@ -2,9 +2,14 @@ package API.nhyira.apivitalis.Entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 @Entity
-@Table(name = "rotinaTreino")
+//@Table(name = "rotinaTreino")
 public class RotinaTreino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,27 +19,4 @@ public class RotinaTreino {
 
     private String observacoes;
 
-    public Integer getIdRotinaTreino() {
-        return idRotinaTreino;
-    }
-
-    public void setIdRotinaTreino(Integer idRotinaTreino) {
-        this.idRotinaTreino = idRotinaTreino;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
 }

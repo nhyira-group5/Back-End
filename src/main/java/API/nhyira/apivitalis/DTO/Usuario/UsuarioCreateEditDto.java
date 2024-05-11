@@ -5,16 +5,21 @@ import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
 public class UsuarioCreateEditDto {
     @Column(nullable = false, unique = true, length = 20)
     @NotBlank(message = "O nome de usuário é obrigatório")
     @Size(max = 20, message = "O nome de usuário deve ter no máximo 20 caracteres")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "O nome de usuário deve conter pelo menos uma letra maiúscula e um caractere especial")
-    private String username;
+    private String nickName;
 
     @NotBlank(message = "O CPF é obrigatório")
 //    @Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF inválido")
@@ -34,7 +39,7 @@ public class UsuarioCreateEditDto {
 
     @Column(length = 1)
     @Pattern(regexp = "[M|F|N/A]", message = "O gênero deve ser 'M' para masculino, 'F' para feminino")
-    private String genero;
+    private String sexo;
 
     @NotBlank(message = "O email é obrigatório")
     @Email(message = "Por favor, insira um endereço de email válido")
@@ -52,72 +57,6 @@ public class UsuarioCreateEditDto {
     private String senha;
 
     private Usuario.TipoUsuario tipo;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public LocalDate getDtNasc() {
-        return dtNasc;
-    }
-
-    public void setDtNasc(LocalDate dtNasc) {
-        this.dtNasc = dtNasc;
-    }
-
-    public String getGenero() {
-        return genero;
-    }
-
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-
-
-    public Usuario.TipoUsuario getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Usuario.TipoUsuario tipo) {
-        this.tipo = tipo;
-    }
 
 
 }

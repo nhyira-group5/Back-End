@@ -4,11 +4,18 @@ import API.nhyira.apivitalis.DTO.Ficha.FichaCreateEditDto;
 import API.nhyira.apivitalis.DTO.Ficha.FichaExibitionDto;
 import API.nhyira.apivitalis.DTO.Ficha.FichaMapper;
 import API.nhyira.apivitalis.Entity.Ficha;
+import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Exception.ErroClienteException;
+import API.nhyira.apivitalis.Exception.NaoEncontradoException;
+import API.nhyira.apivitalis.Exception.SemConteudoException;
 import API.nhyira.apivitalis.Repository.FichaRepository;
+import API.nhyira.apivitalis.Repository.MetaRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import API.nhyira.apivitalis.utils.ListaUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
@@ -19,85 +26,66 @@ import java.util.stream.Collectors;
 
 
 @Service
+@RequiredArgsConstructor
 public class FichaService {
 
-    @Autowired
-    private FichaRepository fichaRepository;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final FichaRepository fichaRepository;
 
-    public FichaExibitionDto create(FichaCreateEditDto dto) {
-        try {
-            if (dto != null) {
-                Optional<Usuario> optUsuario = usuarioRepository.findById(dto.getUsuarioId());
-                if (optUsuario.isEmpty()){
-                    return null;
-                }
-                Ficha ficha = FichaMapper.toDto(dto);
-                ficha.setFkUsuario(optUsuario.get());
-                fichaRepository.save(ficha);
-                return FichaMapper.toEntity(ficha);
-            }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao criar ficha: " + e.getMessage());
-        }
-        return null;
+    private final UsuarioRepository usuarioRepository;
+
+    private final MetaRepository metaRepository;
+
+    public Ficha create(Ficha dto, int idUsuario, int idMeta) {
+        if (dto == null)throw new ErroClienteException("Ficha");
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(idUsuario);
+        optUsuario.orElseThrow(() -> new  NaoEncontradoException("Usuario"));
+        dto.setUsuarioId(optUsuario.get());
+
+        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
+        optionalMeta.orElseThrow(() -> new  NaoEncontradoException("Meta"));
+        dto.setMetaId(optionalMeta.get());
+
+        fichaRepository.save(dto);
+        return dto;
     }
 
-    public FichaExibitionDto showFicha(int id){
-        try {
-            if (id >= 1){
-                Optional<Usuario> usuario = usuarioRepository.findById(id);
-                if (usuario.isPresent()){
-                    Optional<Ficha> ficha = fichaRepository.findByFkUsuarioIs(usuario.get());
-                    if (ficha.isPresent()){
-                        return FichaMapper.toEntity(ficha.get());
-                    }
-                }
-
-            }
-        }catch (RuntimeException e) {
-            throw new RuntimeException("Erro a mostrar ficha " + e.getMessage());
+    public Ficha showFicha(int id){
+        if (id < 1){
+            throw new ErroClienteException("ID");
         }
-        return null;
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        usuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+        Optional<Ficha> ficha = fichaRepository.findByUsuarioIdIs(usuario.get());
+        ficha.orElseThrow(() -> new NaoEncontradoException("Ficha"));
+        return ficha.get();
     }
 
-    public FichaExibitionDto updtFicha(int id , FichaCreateEditDto dto) {
-        try {
-            if (dto != null || id >= 1) {
-                Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-                if (optUsuario.isPresent()){
-                    Optional<Ficha> optFicha = fichaRepository.findByFkUsuarioIs(optUsuario.get());
-                    if (optFicha.isPresent()){
-                        Ficha ficha = FichaMapper.toEdit(optFicha.get() ,dto);
-                        fichaRepository.save(ficha);
-                        return FichaMapper.toEntity(ficha);
-                    }
-                }
-
-
+    public Ficha updtFicha(int id , FichaCreateEditDto dto) {
+            if (dto == null || id < 1) {
+               throw new ErroClienteException("ID");
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Erro a atualizar ficha: " + e.getMessage());
-        }
-        return null;
+
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+            optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+            Optional<Ficha> optFicha = fichaRepository.findByUsuarioIdIs(optUsuario.get());
+        optFicha.orElseThrow(() -> new NaoEncontradoException("Ficha"));
+        Ficha uptFicha = FichaMapper.toEdit(optFicha.get(), dto);
+        fichaRepository.save(uptFicha);
+        return uptFicha;
+
     }
 
 
     public Boolean delUser(int id){
-        try {
-            Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-            if (optUsuario.isPresent()){
-                Optional<Ficha> optFicha = fichaRepository.findByFkUsuarioIs(optUsuario.get());
-                optFicha.ifPresent(ficha -> fichaRepository.delete(ficha));
-                return true;
-            }
-            return false;
-        }catch (RuntimeException e) {
-            throw new RuntimeException("Erro ao deletar ficha: " + e.getMessage());
-        }
-
+        if (id < 1)throw new ErroClienteException("ID");
+        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+        Optional<Ficha> optFicha = fichaRepository.findByUsuarioIdIs(optUsuario.get());
+        optFicha.orElseThrow(() -> new NaoEncontradoException("Ficha"));
+        fichaRepository.delete(optFicha.get());
+        return true;
     }
 
     public List<FichaExibitionDto> ordenarTodasFichasPorDeficiencias() {
