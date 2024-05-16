@@ -1,6 +1,8 @@
 package API.nhyira.apivitalis.DTO.Ficha;
 
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
 import API.nhyira.apivitalis.Entity.Ficha;
+import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,10 +16,14 @@ public class FichaMapper {
         ficha.setAltura(dto.getAltura());
         ficha.setBebe(dto.getBebe());
         ficha.setPeso(dto.getPeso());
-        ficha.setDeficiencias(dto.getDeficiencias());
+        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
+        ficha.setDorPeitoAtividade(dto.getDorPeitoAtividade());
+        ficha.setDorPeitoUltimoMes(dto.getDorPeitoUltimoMes());
+        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
         ficha.setFuma(dto.getFuma());
-        ficha.setDoencasRespiratorias(dto.getDoencasRespiratorias());
-        ficha.setProblemasCaridiacos(dto.getProblemasCaridiacos());
+        ficha.setMedicamentoPressaoCoracao(dto.getMedicamentoPressaoCoracao());
+        ficha.setImpedimentoAtividade(dto.getImpedimentoAtividade());
+        ficha.setProblemaOsseoArticular(ficha.getProblemaOsseoArticular());
         return ficha;
     }
     public static List<FichaExibitionDto> toDtoList(List<Ficha> fichas) {
@@ -33,14 +39,33 @@ public class FichaMapper {
         user.setId(entity.getIdFicha());
         user.setAltura(entity.getAltura());
         user.setBebe(entity.getBebe());
-        user.setMetaId(entity.getMetaId());
-        user.setDeficiencias(entity.getDeficiencias());
+        user.setProblemasCardiacos(entity.getProblemasCardiacos());
+        user.setDorPeitoAtividade(entity.getDorPeitoAtividade());
         user.setPeso(entity.getPeso());
         user.setFuma(entity.getFuma());
-        user.setDoencasRespiratorias(entity.getDoencasRespiratorias());
-        user.setProblemasCaridiacos(entity.getProblemasCaridiacos());
-        user.setUsuarioId(entity.getUsuarioId());
+        user.setDorPeitoUltimoMes(entity.getDorPeitoUltimoMes());
+        user.setPerdaConsiencia(user.getPerdaConsiencia());
+        user.setProblemaOsseoArticular(entity.getProblemaOsseoArticular());
+        user.setMedicamentoPressaoCoracao(entity.getMedicamentoPressaoCoracao());
+        user.setImpedimentoAtividade(entity.getImpedimentoAtividade());
+        user.setUsuarioId(usuarioDto(entity.getUsuarioId()));
         return user;
+    }
+
+
+    public static UsuarioDto usuarioDto(Usuario usuario){
+        if (usuario == null)return null;
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        usuarioDto.setCpf(usuario.getCpf());
+        usuarioDto.setNome(usuario.getNome());
+        usuarioDto.setSexo(usuario.getSexo());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setTipo(usuario.getTipo());
+        usuarioDto.setNickName(usuario.getNickName());
+        usuarioDto.setDtNasc(usuario.getDtNasc());
+        usuarioDto.setIdUsuario(usuario.getIdUsuario());
+        return usuarioDto;
     }
 
     public static Ficha toEdit(Ficha ficha,FichaCreateEditDto dto){
@@ -49,10 +74,14 @@ public class FichaMapper {
         ficha.setAltura(dto.getAltura());
         ficha.setBebe(dto.getBebe());
         ficha.setPeso(dto.getPeso());
-        ficha.setDeficiencias(dto.getDeficiencias());
+        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
+        ficha.setDorPeitoAtividade(dto.getDorPeitoAtividade());
+        ficha.setDorPeitoUltimoMes(dto.getDorPeitoUltimoMes());
+        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
         ficha.setFuma(dto.getFuma());
-        ficha.setDoencasRespiratorias(dto.getDoencasRespiratorias());
-        ficha.setProblemasCaridiacos(dto.getProblemasCaridiacos());
+        ficha.setMedicamentoPressaoCoracao(dto.getMedicamentoPressaoCoracao());
+        ficha.setImpedimentoAtividade(dto.getImpedimentoAtividade());
+        ficha.setProblemaOsseoArticular(ficha.getProblemaOsseoArticular());
         return ficha;
     }
 }

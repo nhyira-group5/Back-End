@@ -1,25 +1,27 @@
 package API.nhyira.apivitalis.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 public class Midia {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idmidia")
     private Integer idMidia;
 
-    @Column(name = "nome")
-    private String nomeArquivo;
 
-    @Column(name = "conteudo")
-    private byte[] conteudo;
+    private String nome;
 
-    @Column(name = "extensao")
+
+    private String caminho;
+
     private String extensao;
-
 }

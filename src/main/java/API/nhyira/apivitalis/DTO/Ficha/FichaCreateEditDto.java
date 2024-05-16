@@ -17,24 +17,34 @@ public class FichaCreateEditDto {
     @NotNull
     private Integer fuma;
 
-    @Size(max = 100, message = "Maximo de caracteres atingidos")
-    private String deficiencias;
+    @NotNull
+    private Integer problemasCardiacos;
 
-    @Size(max = 100, message = "Maximo de caracteres atingidos")
-    private String problemasCaridiacos;
+    @NotNull
+    private Integer dorPeitoAtividade;
 
-    @Size(max = 100, message = "Maximo de caracteres atingidos")
-    private String doencasRespiratorias;
-    @DecimalMin(value = "0", inclusive = true, message = "O peso deve ser um número positivo ou zero")
-    private Float peso;
+    @NotNull
+    private Integer dorPeitoUltimoMes;
 
-    @DecimalMin(value = "0", inclusive = true, message = "O altura deve ser um número positivo ou zero")
+    @NotNull
+    private Integer perdaConsiencia;
+
+    @NotNull
+    private Integer problemaOsseoArticular;
+
+    @NotNull
+    private Integer medicamentoPressaoCoracao;
+
+    @NotNull
+    private Integer impedimentoAtividade;
+
+    @DecimalMin(value = "0.00", inclusive = true, message = "O altura deve ser um número positivo ou zero")
     private float altura;
 
-    @NotNull
-    private Integer metaId;
+    @DecimalMin(value = "0.00")
+    private float peso;
 
     @NotNull
-    private Integer usuarioId;
+    private int usuarioId;
 
 }

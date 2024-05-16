@@ -17,11 +17,19 @@ public class Ficha {
 
     private Integer fuma;
 
-    private String deficiencias;
+    private Integer problemasCardiacos;
 
-    private String problemasCaridiacos;
+    private Integer dorPeitoAtividade;
 
-    private String doencasRespiratorias;
+    private Integer dorPeitoUltimoMes;
+
+    private Integer perdaConsiencia;
+
+    private Integer problemaOsseoArticular;
+
+    private Integer medicamentoPressaoCoracao;
+
+    private Integer impedimentoAtividade;
 
     private Float peso;
 

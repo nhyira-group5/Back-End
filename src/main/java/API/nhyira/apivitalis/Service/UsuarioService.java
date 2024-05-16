@@ -85,7 +85,7 @@ public class UsuarioService {
                 throw new ConflitoException("CPF");
             }
             if (nomeUnique(usuario.getNickName())){
-                throw new ConflitoException("UserName");
+                throw new ConflitoException("NickName");
             }
             if (emailUnique(usuario.getEmail())){
                 throw new ConflitoException("Email");

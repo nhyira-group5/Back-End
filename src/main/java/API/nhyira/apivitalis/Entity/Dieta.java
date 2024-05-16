@@ -1,10 +1,7 @@
 package API.nhyira.apivitalis.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +16,10 @@ public class Dieta {
     private String nome;
 
     private String descricao;
+
+
+    @ManyToOne
+    @JoinColumn(name = "metaId")
+    private Meta metaId;
 
 }

@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.DTO.Dieta;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,8 @@ public class DietaCreateEditDto {
     @NotBlank(message = "Descrição obrigatorio")
     @Size(max = 250)
     private String descricao;
+
+    @NotNull
+    private Integer metaId;
 
 }

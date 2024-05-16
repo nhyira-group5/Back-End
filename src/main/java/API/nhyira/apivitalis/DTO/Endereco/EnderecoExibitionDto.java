@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.DTO.Endereco;
 
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
 import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -20,5 +21,5 @@ public class EnderecoExibitionDto {
     private String cidade;
     private String estado;
     private String cep;
-    private Usuario personalId;
+    private UsuarioDto personalId;
 }

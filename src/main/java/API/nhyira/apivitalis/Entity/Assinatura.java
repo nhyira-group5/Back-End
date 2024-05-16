@@ -2,21 +2,20 @@ package API.nhyira.apivitalis.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-//@Table(name = "rotinaTreino")
-public class RotinaTreino {
+public class Assinatura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRotinaTreino;
+    private Integer id;
 
     private String nome;
 
-    private String observacoes;
-
+    private Float valor;
 }
