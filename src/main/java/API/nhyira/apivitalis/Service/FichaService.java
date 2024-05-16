@@ -36,16 +36,12 @@ public class FichaService {
 
     private final MetaRepository metaRepository;
 
-    public Ficha create(Ficha dto, int idUsuario, int idMeta) {
+    public Ficha create(Ficha dto, int idUsuario) {
         if (dto == null)throw new ErroClienteException("Ficha");
 
         Optional<Usuario> optUsuario = usuarioRepository.findById(idUsuario);
         optUsuario.orElseThrow(() -> new  NaoEncontradoException("Usuario"));
         dto.setUsuarioId(optUsuario.get());
-
-        Optional<Meta> optionalMeta = metaRepository.findById(idMeta);
-        optionalMeta.orElseThrow(() -> new  NaoEncontradoException("Meta"));
-        dto.setMetaId(optionalMeta.get());
 
         fichaRepository.save(dto);
         return dto;
@@ -88,24 +84,24 @@ public class FichaService {
         return true;
     }
 
-    public List<FichaExibitionDto> ordenarTodasFichasPorDeficiencias() {
-        List<Ficha> fichas = fichaRepository.findAll();
-
-        List<Ficha> fichasComDeficiencias = fichas.stream()
-                .filter(ficha -> {
-                    String deficiencia = ficha.getDeficiencias();
-                    return deficiencia != null && !normalize(deficiencia).equals("nao") && !deficiencia.isEmpty();
-                })
-                .collect(Collectors.toList());
-
-        if (fichasComDeficiencias.isEmpty()) {
-            return null;
-        }
-
-        fichasComDeficiencias.sort(Comparator.comparing(ficha -> normalize(ficha.getDeficiencias())));
-
-        return FichaMapper.toDtoList(fichasComDeficiencias);
-    }
+//    public List<FichaExibitionDto> ordenarTodasFichasPorDeficiencias() {
+//        List<Ficha> fichas = fichaRepository.findAll();
+//
+//        List<Ficha> fichasComDeficiencias = fichas.stream()
+//                .filter(ficha -> {
+//                    String deficiencia = ficha.getDeficiencias();
+//                    return deficiencia != null && !normalize(deficiencia).equals("nao") && !deficiencia.isEmpty();
+//                })
+//                .collect(Collectors.toList());
+//
+//        if (fichasComDeficiencias.isEmpty()) {
+//            return null;
+//        }
+//
+//        fichasComDeficiencias.sort(Comparator.comparing(ficha -> normalize(ficha.getDeficiencias())));
+//
+//        return FichaMapper.toDtoList(fichasComDeficiencias);
+//    }
 
     private String normalize(String input) {
         return Normalizer.normalize(input.toLowerCase(), Normalizer.Form.NFD)

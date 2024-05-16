@@ -1,6 +1,8 @@
 package API.nhyira.apivitalis.DTO.Endereco;
 
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
 import API.nhyira.apivitalis.Entity.Endereco;
+import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +35,26 @@ public class EnderecoMapper {
         enderecoExibitionDto.setCidade(entity.getCidade());
         enderecoExibitionDto.setEstado(entity.getEstado());
         enderecoExibitionDto.setCep(entity.getCep());
-        enderecoExibitionDto.setPersonalId(entity.getPersonalId());
+        enderecoExibitionDto.setPersonalId(usuarioDto(entity.getPersonalId()));
         enderecoExibitionDto.setComplemento(entity.getComplemento());
 
 
         return enderecoExibitionDto;
+    }
+
+    public static UsuarioDto usuarioDto(Usuario usuario){
+        if (usuario == null)return null;
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        usuarioDto.setCpf(usuario.getCpf());
+        usuarioDto.setNome(usuario.getNome());
+        usuarioDto.setSexo(usuario.getSexo());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setTipo(usuario.getTipo());
+        usuarioDto.setNickName(usuario.getNickName());
+        usuarioDto.setDtNasc(usuario.getDtNasc());
+        usuarioDto.setIdUsuario(usuario.getIdUsuario());
+        return usuarioDto;
     }
 
     public static Endereco toEditDto(Endereco endereco, EnderecoCreateEditDto dto) {

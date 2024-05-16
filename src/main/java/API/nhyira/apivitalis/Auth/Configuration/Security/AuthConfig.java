@@ -58,12 +58,21 @@ public class AuthConfig {
             new AntPathRequestMatcher("/usuarios/**", "PUT"),
             new AntPathRequestMatcher("/usuarios/download", "GET"),
             new AntPathRequestMatcher("/enderecos/**"),
+            new AntPathRequestMatcher("/especialidades/**"),
+            new AntPathRequestMatcher("/especialidadesPersonais/**"),
+            new AntPathRequestMatcher("/cartoes/**"),
+            new AntPathRequestMatcher("/assinaturas/**"),
+            new AntPathRequestMatcher("/pagamentos/**"),
             new AntPathRequestMatcher("/rotinaTreinos/**"),
             new AntPathRequestMatcher("/email", "POST"),
             new AntPathRequestMatcher("/fichas/**"),
+            new AntPathRequestMatcher("/midias/**"),
+            new AntPathRequestMatcher("/especialidadesPorMetas/**"),
+            new AntPathRequestMatcher("/rotinaUsuarios/**"),
             new AntPathRequestMatcher("/sqlserver/data/insert**"),
             new AntPathRequestMatcher("/usuarios", "POST"),
             new AntPathRequestMatcher("/login/usuario", "POST"),
+
             new AntPathRequestMatcher("/error/**"),
     };
 

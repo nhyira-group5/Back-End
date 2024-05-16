@@ -1,4 +1,4 @@
-package API.nhyira.apivitalis.DTO.RotinaTreino;
+package API.nhyira.apivitalis.DTO.RotinaUsuario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

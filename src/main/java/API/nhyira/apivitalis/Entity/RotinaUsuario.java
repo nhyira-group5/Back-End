@@ -1,10 +1,7 @@
 package API.nhyira.apivitalis.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,14 +16,14 @@ public class RotinaUsuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRotinaUsuario;
 
-    private String usuarioReferente;
 
-    private String meta;
+    @OneToOne
+    @JoinColumn(name = "usuarioId")
+    private Usuario usuarioId;
 
-    private LocalDate dtRotina;
+    @ManyToOne
+    @JoinColumn(name = "metaId")
+    private Meta metaId;
 
-//    private RotinaTreino fkRotinaTreino;
-
-    private Time horaLembrete;
 
 }

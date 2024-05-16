@@ -25,7 +25,7 @@ public class FichaController {
     @PostMapping
     public ResponseEntity<FichaExibitionDto> create(@RequestBody @Valid FichaCreateEditDto createEditDto){
         Ficha ficha = FichaMapper.toEntity(createEditDto);
-        Ficha user = fichaService.create(ficha, createEditDto.getUsuarioId(), createEditDto.getMetaId());
+        Ficha user = fichaService.create(ficha, createEditDto.getUsuarioId());
         URI uri = URI.create("/fichas/"+user.getIdFicha());
         FichaExibitionDto exibitionDto = FichaMapper.toDto(user);
         return ResponseEntity.created(uri).body(exibitionDto);
@@ -54,14 +54,14 @@ public class FichaController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/ordenadoPorDeficiencias")
-    public ResponseEntity<List<FichaExibitionDto>> listarFichasOrdenadasPorDeficiencias() {
-        List<FichaExibitionDto> fichasOrdenadas = fichaService.ordenarTodasFichasPorDeficiencias();
-        if (fichasOrdenadas == null || fichasOrdenadas.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(fichasOrdenadas);
-    }
+//    @GetMapping("/ordenadoPorDeficiencias")
+//    public ResponseEntity<List<FichaExibitionDto>> listarFichasOrdenadasPorDeficiencias() {
+//        List<FichaExibitionDto> fichasOrdenadas = fichaService.ordenarTodasFichasPorDeficiencias();
+//        if (fichasOrdenadas == null || fichasOrdenadas.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(fichasOrdenadas);
+//    }
 
 
 }
