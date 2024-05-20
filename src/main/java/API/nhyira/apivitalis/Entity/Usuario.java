@@ -15,7 +15,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
 
-    private String nickName;
+    private String nickname;
 
     private String cpf;
 
@@ -31,15 +31,17 @@ public class Usuario {
 
     private TipoUsuario tipo;
     @ManyToOne
-    @JoinColumn(name = "fkmidia")
-    private Midia midia;
+    @JoinColumn(name = "midiaId")
+    private Midia midiaId;
 
     // Getters e Setters
 
 
     public enum TipoUsuario {
         USUARIO,
-        PERSONAL
+        PERSONAL,
+
+
     }
 
 

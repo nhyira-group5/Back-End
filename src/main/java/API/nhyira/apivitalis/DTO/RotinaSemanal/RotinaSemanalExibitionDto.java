@@ -1,22 +1,24 @@
 package API.nhyira.apivitalis.DTO.RotinaSemanal;
 
+
 import API.nhyira.apivitalis.DTO.RotinaMensal.RotinaMensalExibitionDto;
 import API.nhyira.apivitalis.Entity.RotinaMensal;
+import API.nhyira.apivitalis.Repository.RotinaMensalRepository;
 import lombok.Data;
-import org.hibernate.type.descriptor.jdbc.TinyIntJdbcType;
+
+import java.util.List;
 
 @Data
 public class RotinaSemanalExibitionDto {
-    private int id;
 
-    private RotinaMensalDto rotinaMensalId;
-
-    private TinyIntJdbcType concluido;
-
+    private Integer id;
+    private RotinaMensalExibitionDto rotinaMensalId;
+    private Integer concluido;
 
 
     @Data
-    public static class RotinaMensalDto{
+    public static class RotinaMensalExibitionDto{
+
         private int id;
 
         private String mes;

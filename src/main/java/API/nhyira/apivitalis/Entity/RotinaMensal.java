@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -20,4 +22,7 @@ public class RotinaMensal {
     private String mes;
 
     private int Ano;
+
+    @OneToMany(mappedBy = "rotinaMensalId")
+    private List<RotinaSemanal> rotinaSemanals;
 }

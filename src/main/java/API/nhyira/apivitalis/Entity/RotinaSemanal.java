@@ -1,13 +1,14 @@
 package API.nhyira.apivitalis.Entity;
 
-
+import jakarta.annotation.security.DenyAll;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.type.descriptor.jdbc.TinyIntJdbcType;
 
-@Getter
+import java.util.List;
+
 @Setter
+@Getter
 @Entity
 public class RotinaSemanal {
 
@@ -15,10 +16,9 @@ public class RotinaSemanal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRotinaSemanal;
 
-
     @ManyToOne
     @JoinColumn(name = "rotinaMensalId")
     private RotinaMensal rotinaMensalId;
 
-    private TinyIntJdbcType concluida;
+    private Integer concluido;
 }

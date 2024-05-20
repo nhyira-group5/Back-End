@@ -48,7 +48,7 @@ public class EspecialidadePorPersonalMapper {
         usuarioDto.setSexo(usuario.getSexo());
         usuarioDto.setEmail(usuario.getEmail());
         usuarioDto.setTipo(usuario.getTipo());
-        usuarioDto.setNickName(usuario.getNickName());
+        usuarioDto.setNickname(usuario.getNickname());
         usuarioDto.setDtNasc(usuario.getDtNasc());
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         return usuarioDto;

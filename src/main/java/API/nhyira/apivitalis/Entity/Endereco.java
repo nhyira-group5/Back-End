@@ -22,7 +22,7 @@ public class Endereco {
 
 
     @ManyToOne
-    @JoinColumn(name = "personal")
+    @JoinColumn(name = "personalId")
     private Usuario personalId;
 
 
