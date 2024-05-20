@@ -15,7 +15,7 @@ public class UsuarioExibitionDto {
 
     @Getter
     private Integer id;
-    private String nickName;
+    private String nickname;
     private String cpf;
     private String nome;
     private LocalDate dtNasc;

@@ -14,7 +14,7 @@ public class DetailsUsuario implements UserDetailsUsuario {
     private final Usuario.TipoUsuario tipo;
 
     public DetailsUsuario(Usuario usuario) {
-        this.userName = usuario.getNickName();
+        this.userName = usuario.getNickname();
         this.email = usuario.getEmail();
         this.senha = usuario.getSenha();
         this.tipo = usuario.getTipo();

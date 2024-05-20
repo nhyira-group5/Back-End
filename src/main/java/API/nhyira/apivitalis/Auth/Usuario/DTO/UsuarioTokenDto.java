@@ -30,7 +30,7 @@ public class UsuarioTokenDto {
     @NotBlank(message = "O nome de usuário é obrigatório")
     @Size(max = 20, message = "O nome de usuário deve ter no máximo 20 caracteres")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[@#$%^&+=]).*$", message = "O nome de usuário deve conter pelo menos uma letra maiúscula e um caractere especial")
-    private String nickName;
+    private String nickname;
 
     private String token;
 

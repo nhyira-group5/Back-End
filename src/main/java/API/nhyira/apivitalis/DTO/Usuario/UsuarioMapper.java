@@ -11,7 +11,7 @@ public class UsuarioMapper {
         if (dto != null) {
             Usuario user = new Usuario();
             user.setNome(dto.getNome());
-            user.setNickName(dto.getNickName());
+            user.setNickname(dto.getNickname());
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
             user.setSenha(dto.getSenha());
@@ -30,13 +30,13 @@ public class UsuarioMapper {
 
             user.setId(entity.getIdUsuario());
             user.setNome(entity.getNome());
-            user.setNickName(entity.getNickName());
+            user.setNickname(entity.getNickname());
             user.setCpf(entity.getCpf());
             user.setEmail(entity.getEmail());
             user.setSexo(entity.getSexo());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
-            user.setMidia(entity.getMidia());
+            user.setMidia(entity.getMidiaId());
 
             return user;
         }
@@ -46,7 +46,7 @@ public class UsuarioMapper {
     public static Usuario toEditDto(Usuario user, UsuarioCreateEditDto dto) {
         if (dto != null) {
             user.setNome(dto.getNome());
-            user.setNickName(dto.getNickName());
+            user.setNickname(dto.getNickname());
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
             user.setSenha(dto.getSenha());
@@ -74,7 +74,7 @@ public class UsuarioMapper {
     public static Usuario of(UsuarioCreateEditDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
 
-        usuario.setNickName(usuarioCriacaoDto.getNickName());
+        usuario.setNickname(usuarioCriacaoDto.getNickname());
         usuario.setCpf(usuarioCriacaoDto.getCpf());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
         usuario.setSexo(usuarioCriacaoDto.getSexo());
@@ -91,7 +91,7 @@ public class UsuarioMapper {
         usuario.setId(user.getIdUsuario());
         usuario.setNome(user.getNome());
         usuario.setEmail(user.getEmail());
-        usuario.setNickName(user.getNickName());
+        usuario.setNickname(user.getNickname());
         usuario.setTipo(user.getTipo());
         usuario.setToken(token);
 

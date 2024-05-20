@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/metas")
+@RequestMapping("/dietas")
 @RestController
 @RequiredArgsConstructor
 public class DietaController {
