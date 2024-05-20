@@ -19,7 +19,7 @@ public class AuthUsuarioService implements UserDetailsService {
 
     @Override
     public UserDetailsUsuario loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Usuario> usuarioByTipo = uRep.findByNickName(username);
+        Optional<Usuario> usuarioByTipo = uRep.findByNickname(username);
 
         if (usuarioByTipo.isEmpty()) {
             throw new UsernameNotFoundException("Usuário com o tipo [" + username + "] não encontrado!");

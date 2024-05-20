@@ -51,7 +51,7 @@ public class UsuarioService {
         final Authentication auth = this.authenticationManagerForUsuarios.authenticate(credentials);
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
-        Optional<Usuario> usuarioByUsername = uRep.findByNickName(usuarioLogin.getLogin());
+        Optional<Usuario> usuarioByUsername = uRep.findByNickname(usuarioLogin.getLogin());
 //        Optional<Usuario> usuarioByTipo = uRep.findByTipo(usuarioLogin.getLogin());
         Usuario.TipoUsuario tipo = null;
         if (usuarioByEmail.isPresent()) {
@@ -84,8 +84,8 @@ public class UsuarioService {
             if(cpfUnique(usuario.getCpf())){
                 throw new ConflitoException("CPF");
             }
-            if (nomeUnique(usuario.getNickName())){
-                throw new ConflitoException("NickName");
+            if (nomeUnique(usuario.getNickname())){
+                throw new ConflitoException("Nickname");
             }
             if (emailUnique(usuario.getEmail())){
                 throw new ConflitoException("Email");
@@ -128,7 +128,7 @@ public class UsuarioService {
             if(cpfUnique(updatedUser.getCpf())){
                 throw new ConflitoException("CPF");
             }
-            if (nomeUnique(updatedUser.getNickName())){
+            if (nomeUnique(updatedUser.getNickname())){
                 throw new ConflitoException("UserName");
             }
             if (emailUnique(updatedUser.getEmail())){
@@ -155,7 +155,7 @@ public class UsuarioService {
     public List<Usuario> getAllUsers(){return uRep.findAll();}
 
     public boolean nomeUnique(String username) {
-        return uRep.findByNickName(username).isPresent();
+        return uRep.findByNickname(username).isPresent();
     }
 
     public boolean emailUnique(String email) {
@@ -171,7 +171,7 @@ public class UsuarioService {
     public UsuarioExibitionDto findUserByUsername(String username) {
         try {
             List<Usuario> allUsers = uRep.buscarUsuarios();
-            Collections.sort(allUsers, Comparator.comparing(Usuario::getNickName));
+            Collections.sort(allUsers, Comparator.comparing(Usuario::getNickname));
             int index = binarySearch(allUsers, username);
             if (index != -1) {
                 Usuario user = allUsers.get(index);
@@ -190,7 +190,7 @@ public class UsuarioService {
 
         while (esquerda <= direita) {
             int meio = esquerda + (direita - esquerda) / 2;
-            String usernameAtual = usuarios.get(meio).getNickName();
+            String usernameAtual = usuarios.get(meio).getNickname();
 
             int comparacao = usernameAtual.compareTo(usernameAlvo);
 

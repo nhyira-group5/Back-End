@@ -15,7 +15,7 @@ public class UsuarioDto {
 
     private Integer idUsuario;
 
-    private String nickName;
+    private String nickname;
 
     private String cpf;
 
