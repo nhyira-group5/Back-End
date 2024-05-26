@@ -12,10 +12,6 @@ import lombok.Setter;
 @Setter
 public class FichaCreateEditDto {
 
-    @NotNull
-    private Integer bebe;
-    @NotNull
-    private Integer fuma;
 
     @NotNull
     private Integer problemasCardiacos;
@@ -26,8 +22,6 @@ public class FichaCreateEditDto {
     @NotNull
     private Integer dorPeitoUltimoMes;
 
-    @NotNull
-    private Integer perdaConsiencia;
 
     @NotNull
     private Integer problemaOsseoArticular;

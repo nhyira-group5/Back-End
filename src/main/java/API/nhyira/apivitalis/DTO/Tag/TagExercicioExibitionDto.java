@@ -2,7 +2,6 @@ package API.nhyira.apivitalis.DTO.Tag;
 
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
 import API.nhyira.apivitalis.Entity.Tag;
-import API.nhyira.apivitalis.Entity.Exercicio;
 import lombok.*;
 
 @Data

@@ -11,9 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExercicioExibitionDto {
-    private Integer idTreino;
-    private String midiaUrl;
+
+    private Integer idExercicio;
     private String nome;
     private String descricao;
+    private String midiaNome;     // Nome da midia
+    private String midiaCaminho;  // Caminho da midia
+    private String midiaExtensao; // Extensão da midia
 
 }

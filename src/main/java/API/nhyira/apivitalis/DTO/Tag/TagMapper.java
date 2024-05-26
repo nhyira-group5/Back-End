@@ -6,7 +6,7 @@ import API.nhyira.apivitalis.Entity.Tag;
 import API.nhyira.apivitalis.Entity.TagExercicio;
 
 public class TagMapper {
-    public static TagExibitionDto toDTO(Tag tag) {
+    public TagExibitionDto toDTO(Tag tag) {
         TagExibitionDto dto = new TagExibitionDto();
         dto.setIdTag(tag.getIdTag());
         dto.setNome(tag.getNome());
@@ -19,7 +19,7 @@ public class TagMapper {
         return tag;
     }
 
-    public static TagExercicioExibitionDto toDTO(TagExercicio tagExercicio) {
+    public TagExercicioExibitionDto toDTO(TagExercicio tagExercicio) {
         TagExercicioExibitionDto dto = new TagExercicioExibitionDto();
         dto.setIdTagExercicio(tagExercicio.getIdTagExercicio());
         dto.setTag(tagExercicio.getTag());
@@ -30,7 +30,7 @@ public class TagMapper {
     public static ExercicioExibitionDto exibitionDto(Exercicio exercicio){
         if (exercicio == null)return null;
         ExercicioExibitionDto exibitionDto = new ExercicioExibitionDto();
-        exibitionDto.setIdTreino(exercicio.getIdExercicio());
+        exibitionDto.setIdExercicio(exercicio.getIdExercicio());
         exibitionDto.setNome(exercicio.getNome());
         exibitionDto.setDescricao(exercicio.getDescricao());
         return exibitionDto;

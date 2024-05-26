@@ -11,11 +11,8 @@ import lombok.*;
 public class  ExercicioCreateEditDto {
 
     @NotNull
-    private Integer idTreino;
-
-    @NotNull
     @Size(max = 255)
-    private String midiaUrl;
+    private Integer midiaid;
 
     @NotNull
     @Size(max = 100)

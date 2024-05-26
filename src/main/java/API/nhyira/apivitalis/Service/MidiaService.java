@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,30 +29,9 @@ public class MidiaService {
                 .collect(Collectors.toList());
     }
 
-    public MidiaExibitionDto getMidiaById(Integer id) {
-        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new RuntimeException("Midia not found"));
-        return MidiaMapper.toDTO(midia);
+    public Optional<Midia> findById(Integer id) {
+        return midiaRepository.findById(id);
     }
-
-    public MidiaExibitionDto createMidia(MidiaCreateEditDto midiaDTO) {
-        Midia midia = MidiaMapper.toEntity(midiaDTO);
-        midia = midiaRepository.save(midia);
-        return MidiaMapper.toDTO(midia);
-    }
-
-    public MidiaExibitionDto updateMidia(Integer id, MidiaCreateEditDto midiaDTO) {
-        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new RuntimeException("Midia not found"));
-        midia.setNome(midiaDTO.getNome());
-        midia.setCaminho(midiaDTO.getCaminho());
-        midia.setExtensao(midiaDTO.getExtensao());
-        midia = midiaRepository.save(midia);
-        return MidiaMapper.toDTO(midia);
-    }
-
-    public void deleteMidia(Integer id) {
-        midiaRepository.deleteById(id);
-    }
-
 
     private Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
             "cloud_name", "dpzjmq6x5",
@@ -74,5 +54,29 @@ public class MidiaService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public MidiaExibitionDto getMidiaById(Integer id) {
+        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new RuntimeException("Mídia não encontrada com o id: " + id));
+        return MidiaMapper.toDTO(midia);
+    }
+
+    public MidiaExibitionDto createMidia(MidiaCreateEditDto midiaDTO) {
+        Midia midia = MidiaMapper.toEntity(midiaDTO);
+        midia = midiaRepository.save(midia);
+        return MidiaMapper.toDTO(midia);
+    }
+
+    public MidiaExibitionDto updateMidia(Integer id, MidiaCreateEditDto midiaDTO) {
+        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new RuntimeException("Mídia não encontrada com o id: " + id));
+        midia.setNome(midiaDTO.getNome());
+        midia.setCaminho(midiaDTO.getCaminho());
+        midia.setExtensao(midiaDTO.getExtensao());
+        midia = midiaRepository.save(midia);
+        return MidiaMapper.toDTO(midia);
+    }
+
+    public void deleteMidia(Integer id) {
+        midiaRepository.deleteById(id);
     }
 }

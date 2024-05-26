@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.DTO.RotinaSemanal;
 
 import API.nhyira.apivitalis.DTO.RotinaMensal.RotinaMensalExibitionDto;
+import API.nhyira.apivitalis.Entity.RotinaDiaria;
 import API.nhyira.apivitalis.Entity.RotinaMensal;
 import API.nhyira.apivitalis.Entity.RotinaSemanal;
 
@@ -14,6 +15,7 @@ public class RotinaSemanalMapper {
         rotinaSemanalExibitionDto.setId(rotinaSemanal.getIdRotinaSemanal());
         rotinaSemanalExibitionDto.setConcluido(rotinaSemanal.getConcluido());
         rotinaSemanalExibitionDto.setRotinaMensalId(rotinaMensalDto(rotinaSemanal.getRotinaMensalId()));
+        rotinaSemanalExibitionDto.setRotinaDiariaDtos(rotinaDiariaDto(rotinaSemanal.getRotinaDiariaId()));
         return rotinaSemanalExibitionDto;
     }
 
@@ -24,6 +26,15 @@ public class RotinaSemanalMapper {
             rotinaSemanalExibitionDto.setAno(rotinaMensal.getAno());
             rotinaSemanalExibitionDto.setMes(rotinaMensal.getMes());
             return rotinaSemanalExibitionDto;
+    }
+
+    public static List<RotinaSemanalExibitionDto.RotinaDiariaDto> rotinaDiariaDto(List<RotinaDiaria> rotinaDiarias){
+        return rotinaDiarias.stream().map(rd -> {
+            RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto = new RotinaSemanalExibitionDto.RotinaDiariaDto();
+            rotinaDiariaDto.setIdRotinaDiaria(rd.getIdRotinaDiaria());
+            rotinaDiariaDto.setConcluido(rd.getConcluido());
+            return rotinaDiariaDto;
+        }).toList();
     }
 
 

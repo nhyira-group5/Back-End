@@ -14,13 +14,12 @@ public class FichaMapper {
 
         Ficha ficha = new Ficha();
         ficha.setAltura(dto.getAltura());
-        ficha.setBebe(dto.getBebe());
         ficha.setPeso(dto.getPeso());
         ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
         ficha.setDorPeitoAtividade(dto.getDorPeitoAtividade());
         ficha.setDorPeitoUltimoMes(dto.getDorPeitoUltimoMes());
         ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
-        ficha.setFuma(dto.getFuma());
+
         ficha.setMedicamentoPressaoCoracao(dto.getMedicamentoPressaoCoracao());
         ficha.setImpedimentoAtividade(dto.getImpedimentoAtividade());
         ficha.setProblemaOsseoArticular(ficha.getProblemaOsseoArticular());
@@ -38,13 +37,10 @@ public class FichaMapper {
         FichaExibitionDto user = new FichaExibitionDto();
         user.setId(entity.getIdFicha());
         user.setAltura(entity.getAltura());
-        user.setBebe(entity.getBebe());
         user.setProblemasCardiacos(entity.getProblemasCardiacos());
         user.setDorPeitoAtividade(entity.getDorPeitoAtividade());
         user.setPeso(entity.getPeso());
-        user.setFuma(entity.getFuma());
         user.setDorPeitoUltimoMes(entity.getDorPeitoUltimoMes());
-        user.setPerdaConsiencia(user.getPerdaConsiencia());
         user.setProblemaOsseoArticular(entity.getProblemaOsseoArticular());
         user.setMedicamentoPressaoCoracao(entity.getMedicamentoPressaoCoracao());
         user.setImpedimentoAtividade(entity.getImpedimentoAtividade());
@@ -72,13 +68,11 @@ public class FichaMapper {
         if (dto == null || ficha == null)return null;
 
         ficha.setAltura(dto.getAltura());
-        ficha.setBebe(dto.getBebe());
         ficha.setPeso(dto.getPeso());
         ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
         ficha.setDorPeitoAtividade(dto.getDorPeitoAtividade());
         ficha.setDorPeitoUltimoMes(dto.getDorPeitoUltimoMes());
         ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
-        ficha.setFuma(dto.getFuma());
         ficha.setMedicamentoPressaoCoracao(dto.getMedicamentoPressaoCoracao());
         ficha.setImpedimentoAtividade(dto.getImpedimentoAtividade());
         ficha.setProblemaOsseoArticular(ficha.getProblemaOsseoArticular());

@@ -20,5 +20,11 @@ public class RotinaSemanal {
     @JoinColumn(name = "rotinaMensalId")
     private RotinaMensal rotinaMensalId;
 
+    @OneToMany(mappedBy = "rotinaSemanalId")
+    private List<RotinaDiaria> rotinaDiariaId;
+
+
+
+
     private Integer concluido;
 }

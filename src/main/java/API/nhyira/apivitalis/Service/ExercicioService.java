@@ -1,7 +1,5 @@
 package API.nhyira.apivitalis.Service;
 
-import API.nhyira.apivitalis.DTO.Exercicio.ExercicioCreateEditDto;
-import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioMapper;
 import API.nhyira.apivitalis.Entity.Exercicio;
@@ -25,6 +23,9 @@ public class ExercicioService {
 
     @Autowired
     private ExercicioMapper exercicioMapper;
+
+    @Autowired
+    private MidiaService midiaService;
 
 
     private Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
@@ -60,24 +61,5 @@ public class ExercicioService {
     public ExercicioExibitionDto getExercicioById(Integer id) {
         Exercicio exercicio = exercicioRepository.findById(id).orElseThrow();
         return exercicioMapper.toDTO(exercicio);
-    }
-
-    public ExercicioExibitionDto createExercicio(ExercicioCreateEditDto exercicioDTO) {
-        Exercicio exercicio = exercicioMapper.toEntity(exercicioDTO);
-        exercicio = exercicioRepository.save(exercicio);
-        return exercicioMapper.toDTO(exercicio);
-    }
-
-    public ExercicioExibitionDto updateExercicio(Integer id, ExercicioCreateEditDto exercicioDTO) {
-        Exercicio exercicio = exercicioRepository.findById(id).orElseThrow();
-        exercicio.setMidiaUrl(exercicioDTO.getMidiaUrl());
-        exercicio.setNome(exercicioDTO.getNome());
-        exercicio.setDescricao(exercicioDTO.getDescricao());
-        exercicio = exercicioRepository.save(exercicio);
-        return exercicioMapper.toDTO(exercicio);
-    }
-
-    public void deleteExercicio(Integer id) {
-        exercicioRepository.deleteById(id);
     }
 }
