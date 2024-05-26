@@ -7,15 +7,16 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class RotinaDiario {
+public class RotinaDiaria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTreinoDiario;
+    private Integer idRotinaDiaria;
 
 
     @ManyToOne
@@ -26,6 +27,13 @@ public class RotinaDiario {
     @ManyToOne
     @JoinColumn(name = "rotinaSemanalId")
     private RotinaSemanal rotinaSemanalId;
+
+    @OneToMany(mappedBy = "rotinaDiariaId")
+    private List<Treino> treinoId;
+
+
+    @OneToMany(mappedBy = "rotinaDiariaId")
+    private List<RefeicaoDiaria> refeicaoDiariaId;
 
     private Integer concluido;
 

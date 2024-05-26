@@ -13,17 +13,11 @@ public class Ficha {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFicha;
 
-    private Integer bebe;
-
-    private Integer fuma;
-
     private Integer problemasCardiacos;
 
     private Integer dorPeitoAtividade;
 
     private Integer dorPeitoUltimoMes;
-
-    private Integer perdaConsiencia;
 
     private Integer problemaOsseoArticular;
 
@@ -38,9 +32,5 @@ public class Ficha {
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuarioId;
-
-    @ManyToOne
-    @JoinColumn(name = "metaId")
-    private Meta metaId;
 
 }

@@ -41,19 +41,4 @@ public class ExercicioController {
         return ResponseEntity.ok(exercicioService.getExercicioById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<ExercicioExibitionDto> createExercicio(@RequestBody ExercicioCreateEditDto exercicioDTO) {
-        return ResponseEntity.ok(exercicioService.createExercicio(exercicioDTO));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ExercicioExibitionDto> updateExercicio(@PathVariable Integer id, @RequestBody ExercicioCreateEditDto exercicioDTO) {
-        return ResponseEntity.ok(exercicioService.updateExercicio(id, exercicioDTO));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteExercicio(@PathVariable Integer id) {
-        exercicioService.deleteExercicio(id);
-        return ResponseEntity.noContent().build();
-    }
 }

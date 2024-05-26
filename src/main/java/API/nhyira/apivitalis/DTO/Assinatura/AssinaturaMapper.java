@@ -10,7 +10,7 @@ public class AssinaturaMapper {
 
     public AssinaturaExibitionDto toExibitionDto(Assinatura assinatura) {
         AssinaturaExibitionDto dto = new AssinaturaExibitionDto();
-        dto.setId(assinatura.getId());
+        dto.setId(assinatura.getIdAssinatura());
         dto.setNome(assinatura.getNome());
         dto.setValor(assinatura.getValor().doubleValue());
         return dto;

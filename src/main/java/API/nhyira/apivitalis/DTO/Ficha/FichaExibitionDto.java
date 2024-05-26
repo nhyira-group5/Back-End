@@ -14,18 +14,12 @@ public class FichaExibitionDto {
 
     private Integer id;
 
-    private Integer bebe;
-
-    private Integer fuma;
-
 
     private Integer problemasCardiacos;
 
     private Integer dorPeitoAtividade;
 
     private Integer dorPeitoUltimoMes;
-
-    private Integer perdaConsiencia;
 
     private Integer problemaOsseoArticular;
 

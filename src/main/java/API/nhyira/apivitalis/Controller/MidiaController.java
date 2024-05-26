@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/midias")
 public class MidiaController {
-
     @Autowired
     private MidiaService midiaService;
 
@@ -25,20 +24,8 @@ public class MidiaController {
     @GetMapping("/{id}")
     public ResponseEntity<MidiaExibitionDto> getMidiaById(@PathVariable Integer id) {
         return ResponseEntity.ok(midiaService.getMidiaById(id));
+
     }
-
-
-    @PutMapping("/{id}")
-    public ResponseEntity<MidiaExibitionDto> updateMidia(@PathVariable Integer id, @RequestBody MidiaCreateEditDto midiaDTO) {
-        return ResponseEntity.ok(midiaService.updateMidia(id, midiaDTO));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMidia(@PathVariable Integer id) {
-        midiaService.deleteMidia(id);
-        return ResponseEntity.ok().build();
-    }
-
 
     @PostMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
@@ -55,5 +42,16 @@ public class MidiaController {
     @PostMapping("/salvarMidia")
     public ResponseEntity<MidiaExibitionDto> createMidia(@RequestBody MidiaCreateEditDto midiaDTO) {
         return ResponseEntity.ok(midiaService.createMidia(midiaDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MidiaExibitionDto> updateMidia(@PathVariable Integer id, @RequestBody MidiaCreateEditDto midiaDTO) {
+        return ResponseEntity.ok(midiaService.updateMidia(id, midiaDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMidia(@PathVariable Integer id) {
+        midiaService.deleteMidia(id);
+        return ResponseEntity.ok().build();
     }
 }
