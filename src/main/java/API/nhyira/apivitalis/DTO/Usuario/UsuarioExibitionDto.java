@@ -1,19 +1,13 @@
 package API.nhyira.apivitalis.DTO.Usuario;
 
-import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDate;
 
-
-@Getter
-@Setter
+@Data
 public class UsuarioExibitionDto {
-
-    @Getter
     private Integer id;
     private String nickname;
     private String cpf;
@@ -21,10 +15,7 @@ public class UsuarioExibitionDto {
     private LocalDate dtNasc;
     private String sexo;
     private String email;
-
     private Midia midia;
-
     private Usuario.TipoUsuario tipo; // Alterado para String
     private double imc;
-
 }

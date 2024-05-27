@@ -6,13 +6,13 @@ import lombok.Data;
 
 @Data
 public class RefeicaoPorDietaExibitionDto {
-    private Integer idRefeicaoPorDieta;
+    private Integer idRefeicaoDieta;
     private DietaDto dieta;
     private RefeicaoDto refeicao;
 
     @Data
     public static class RefeicaoDto {
-        private Integer idRefeicao;
+        private Integer id;
         private String nome;
         private String preparo;
         private Midia midia;
@@ -20,7 +20,7 @@ public class RefeicaoPorDietaExibitionDto {
 
     @Data
     public static class DietaDto {
-        private Integer idDieta;
+        private Integer id;
         private String nome;
         private String descricao;
         private Meta meta;

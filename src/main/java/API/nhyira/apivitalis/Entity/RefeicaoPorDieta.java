@@ -10,11 +10,13 @@ import lombok.Setter;
 public class RefeicaoPorDieta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRefeicaoPorDieta;
+    private Integer idRefeicaoDieta;
 
     @ManyToOne
-    private Dieta dieta;
+    @JoinColumn(name = "dietaId")
+    private Dieta dietaId;
 
     @ManyToOne
-    private Refeicao refeicao;
+    @JoinColumn(name = "refeicaoId")
+    private Refeicao refeicaoId;
 }

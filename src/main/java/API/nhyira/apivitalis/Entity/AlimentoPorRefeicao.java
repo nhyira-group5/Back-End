@@ -1,7 +1,9 @@
 package API.nhyira.apivitalis.Entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -10,15 +12,18 @@ import lombok.Setter;
 public class AlimentoPorRefeicao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idAlimentoPorRefeicao;
+    private Integer idAlimentoRefeicao;
     private int qtdAlimento;
 
     @ManyToOne
-    private Alimento alimento;
+    @JoinColumn(name = "alimentoId")
+    private Alimento alimentoId;
 
     @ManyToOne
-    private Refeicao refeicao;
+    @JoinColumn(name = "refeicaoId")
+    private Refeicao refeicaoId;
 
     @ManyToOne
-    private Metrica metrica;
+    @JoinColumn(name = "metricaId")
+    private Metrica metricaId;
 }

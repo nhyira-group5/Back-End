@@ -9,8 +9,6 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Alimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +19,6 @@ public class Alimento {
     private Double gordura;
 
     @ManyToOne
-    private Midia midia;
+    @JoinColumn(name = "midiaId")
+    private Midia midiaId;
 }
