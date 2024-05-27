@@ -2,7 +2,6 @@ package API.nhyira.apivitalis.Controller;
 
 import API.nhyira.apivitalis.DTO.RefeicaoPorDieta.RefeicaoPorDietaExibitionDto;
 import API.nhyira.apivitalis.DTO.RefeicaoPorDieta.RefeicaoPorDietaMapper;
-import API.nhyira.apivitalis.Entity.RefeicaoPorDieta;
 import API.nhyira.apivitalis.Service.RefeicaoPorDietaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

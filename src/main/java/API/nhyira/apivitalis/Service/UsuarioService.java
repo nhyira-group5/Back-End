@@ -90,8 +90,6 @@ public class UsuarioService {
             if (emailUnique(usuario.getEmail())){
                 throw new ConflitoException("Email");
             }
-
-
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         uRep.save(usuario);
         return usuario;
@@ -106,13 +104,11 @@ public class UsuarioService {
     }
 
     public List<Usuario> showAllUsersPersonal() {
-
             List<Usuario> allUsers = uRep.buscarPersonal();
             if (allUsers.isEmpty()){
                 throw new SemConteudoException("Personais");
             }
             return allUsers;
-
     }
 
     public Usuario showUserById(int id) {
