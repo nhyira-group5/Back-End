@@ -16,9 +16,9 @@ public class AlimentoPorRefeicaoMapper {
     public static AlimentoPorRefeicaoExibitionDto toDto(AlimentoPorRefeicao entity) {
         AlimentoPorRefeicaoExibitionDto aliPorRef = new AlimentoPorRefeicaoExibitionDto();
         aliPorRef.setQtdAlimento(entity.getQtdAlimento());
-        aliPorRef.setAlimento(toAlimentoDto(entity.getAlimento()));
-        aliPorRef.setRefeicao(toRefeicaoDto(entity.getRefeicao()));
-        aliPorRef.setMetrica(toMetricaDto(entity.getMetrica()));
+        aliPorRef.setAlimento(toAlimentoDto(entity.getAlimentoId()));
+        aliPorRef.setRefeicao(toRefeicaoDto(entity.getRefeicaoId()));
+        aliPorRef.setMetrica(toMetricaDto(entity.getMetricaId()));
 
         return aliPorRef;
     }

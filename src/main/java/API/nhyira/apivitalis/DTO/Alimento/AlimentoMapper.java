@@ -3,6 +3,9 @@ package API.nhyira.apivitalis.DTO.Alimento;
 import API.nhyira.apivitalis.Entity.Alimento;
 import API.nhyira.apivitalis.Entity.Midia;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AlimentoMapper {
     public static Alimento toEntity (AlimentoCreateDto dto) {
         if (dto == null) return null;
@@ -27,6 +30,12 @@ public class AlimentoMapper {
         dto.setGordura(entity.getGordura());
         dto.setMidia(toMidiaDto(entity.getMidia()));
         return dto;
+    }
+
+    public static List<AlimentoExibitionDto> toDto (List<Alimento> entities) {
+        if (entities == null) return null;
+        List<Alimento> dtos = new ArrayList<Alimento>();
+        return dtos.stream().map(AlimentoMapper::toDto).toList();
     }
 
     public static AlimentoExibitionDto.MidiaDto toMidiaDto (Midia midia) {

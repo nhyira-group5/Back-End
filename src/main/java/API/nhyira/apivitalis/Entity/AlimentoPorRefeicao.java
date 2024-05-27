@@ -14,11 +14,11 @@ public class AlimentoPorRefeicao {
     private int qtdAlimento;
 
     @ManyToOne
-    private Alimento alimento;
+    private Alimento alimentoId;
 
     @ManyToOne
-    private Refeicao refeicao;
+    private Refeicao refeicaoId;
 
     @ManyToOne
-    private Metrica metrica;
+    private Metrica metricaId;
 }

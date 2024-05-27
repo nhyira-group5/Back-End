@@ -13,8 +13,8 @@ public class RefeicaoPorDieta {
     private Integer idRefeicaoPorDieta;
 
     @ManyToOne
-    private Dieta dieta;
+    private Dieta dietaId;
 
     @ManyToOne
-    private Refeicao refeicao;
+    private Refeicao refeicaoId;
 }

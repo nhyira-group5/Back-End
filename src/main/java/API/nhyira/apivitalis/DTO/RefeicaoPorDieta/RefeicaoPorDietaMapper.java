@@ -12,8 +12,8 @@ public class RefeicaoPorDietaMapper {
 
     public static RefeicaoPorDietaExibitionDto toDto(RefeicaoPorDieta entity) {
         RefeicaoPorDietaExibitionDto refPorDietaDto = new RefeicaoPorDietaExibitionDto();
-        refPorDietaDto.setRefeicao(toRefeicaoDto(entity.getRefeicao()));
-        refPorDietaDto.setDieta(toDietaDto(entity.getDieta()));
+        refPorDietaDto.setRefeicao(toRefeicaoDto(entity.getRefeicaoId()));
+        refPorDietaDto.setDieta(toDietaDto(entity.getDietaId()));
 
         return refPorDietaDto;
     }
