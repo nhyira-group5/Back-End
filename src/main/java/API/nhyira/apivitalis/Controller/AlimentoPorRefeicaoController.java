@@ -32,5 +32,4 @@ public class AlimentoPorRefeicaoController {
         List<AlimentoPorRefeicaoExibitionDto> alimentosPorRefeicoes = AlimentoPorRefeicaoMapper.toDto(aprSrv.getAllAlimentoPorRefeicao());
         return alimentosPorRefeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(alimentosPorRefeicoes);
     }
-
 }

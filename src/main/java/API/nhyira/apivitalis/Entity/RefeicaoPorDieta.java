@@ -13,8 +13,10 @@ public class RefeicaoPorDieta {
     private Integer idRefeicaoDieta;
 
     @ManyToOne
+    @JoinColumn(name = "dietaId")
     private Dieta dietaId;
 
     @ManyToOne
+    @JoinColumn(name = "refeicaoId")
     private Refeicao refeicaoId;
 }
