@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Entity;
 
-import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,15 +33,8 @@ public class Usuario {
     @JoinColumn(name = "midiaId")
     private Midia midiaId;
 
-    // Getters e Setters
-
-
     public enum TipoUsuario {
         USUARIO,
         PERSONAL,
-
-
     }
-
-
 }

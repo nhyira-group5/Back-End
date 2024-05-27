@@ -10,7 +10,7 @@ import lombok.Setter;
 public class RefeicaoPorDieta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRefeicaoPorDieta;
+    private Integer idRefeicaoDieta;
 
     @ManyToOne
     private Dieta dietaId;

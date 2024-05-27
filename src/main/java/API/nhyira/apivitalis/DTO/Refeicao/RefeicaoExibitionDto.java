@@ -18,7 +18,7 @@ public class RefeicaoExibitionDto {
 
     @Data
     public static class MidiaDto {
-        private Integer idMidia;
+        private Integer id;
         private String nome;
         private String caminho;
         private String extensao;

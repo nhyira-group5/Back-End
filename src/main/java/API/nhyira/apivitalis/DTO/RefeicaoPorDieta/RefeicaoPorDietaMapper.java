@@ -12,6 +12,7 @@ public class RefeicaoPorDietaMapper {
 
     public static RefeicaoPorDietaExibitionDto toDto(RefeicaoPorDieta entity) {
         RefeicaoPorDietaExibitionDto refPorDietaDto = new RefeicaoPorDietaExibitionDto();
+        refPorDietaDto.setIdRefeicaoDieta(entity.getIdRefeicaoDieta());
         refPorDietaDto.setRefeicao(toRefeicaoDto(entity.getRefeicaoId()));
         refPorDietaDto.setDieta(toDietaDto(entity.getDietaId()));
 
@@ -20,17 +21,17 @@ public class RefeicaoPorDietaMapper {
 
     public static RefeicaoPorDietaExibitionDto.RefeicaoDto toRefeicaoDto(Refeicao entity) {
         RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto = new RefeicaoPorDietaExibitionDto.RefeicaoDto();
-        refeicaoDto.setIdRefeicao(entity.getIdRefeicao());
+        refeicaoDto.setId(entity.getIdRefeicao());
         refeicaoDto.setNome(entity.getNome());
         refeicaoDto.setPreparo(entity.getPreparo());
-        refeicaoDto.setMidia(entity.getMidia());
+        refeicaoDto.setMidia(entity.getMidiaId());
 
         return refeicaoDto;
     }
 
     public static RefeicaoPorDietaExibitionDto.DietaDto toDietaDto(Dieta entity) {
         RefeicaoPorDietaExibitionDto.DietaDto dietaDto = new RefeicaoPorDietaExibitionDto.DietaDto();
-        dietaDto.setIdDieta(entity.getIdDieta());
+        dietaDto.setId(entity.getIdDieta());
         dietaDto.setNome(entity.getNome());
         dietaDto.setMeta(entity.getMetaId());
 

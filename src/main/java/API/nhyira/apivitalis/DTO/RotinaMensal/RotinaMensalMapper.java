@@ -1,7 +1,5 @@
 package API.nhyira.apivitalis.DTO.RotinaMensal;
 
-import API.nhyira.apivitalis.DTO.RotinaUsuario.RotinaUsuarioExibitionDto;
-import API.nhyira.apivitalis.DTO.RotinaUsuario.RotinaUsuarioMapper;
 import API.nhyira.apivitalis.Entity.RotinaMensal;
 import API.nhyira.apivitalis.Entity.RotinaSemanal;
 import API.nhyira.apivitalis.Entity.RotinaUsuario;

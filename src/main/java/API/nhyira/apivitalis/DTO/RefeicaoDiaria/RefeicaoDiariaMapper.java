@@ -34,7 +34,7 @@ public class RefeicaoDiariaMapper {
 
         RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto = new RefeicaoPorDietaExibitionDto.RefeicaoDto();
 
-        refeicaoDto.setIdRefeicao(refeicao.getIdRefeicao());
+        refeicaoDto.setId(refeicao.getIdRefeicao());
         refeicaoDto.setNome(refeicao.getNome());
         refeicaoDto.setPreparo(refeicao.getPreparo());
         return refeicaoDto;
