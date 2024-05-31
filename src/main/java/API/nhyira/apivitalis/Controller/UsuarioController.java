@@ -29,7 +29,7 @@ public class UsuarioController {
         Usuario user = UsuarioMapper.toDto(newUser);
         Usuario userNovo = this.uService.createUser(user);
         UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(userNovo);
-        URI uri = URI.create("/usuarios/" + exibitionDto);
+        URI uri = URI.create("/usuarios/" + exibitionDto.getId());
         return ResponseEntity.created(uri).body(exibitionDto);
     }
 

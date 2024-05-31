@@ -8,6 +8,7 @@ import API.nhyira.apivitalis.Chat.Entity.Mensagem;
 import API.nhyira.apivitalis.Chat.Repository.ChatRepository;
 import API.nhyira.apivitalis.Chat.Repository.MensagemRepository;
 import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Exception.ForbiddenException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import lombok.RequiredArgsConstructor;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -31,6 +32,7 @@ public class MensagemService {
 
     public Mensagem saveMensagem(MensagemCreateEditDto mensagemDto, int chatId, Usuario remetente, Usuario destinatario) {
         Chat chat = chatRepository.findById(chatId).orElseThrow(() -> new NaoEncontradoException("Chat"));
+        if (!chat.isAtivo()) throw new ForbiddenException("Usuario");
         Mensagem mensagem = MensagemMapper.toEntity(mensagemDto);
         mensagem.setChatId(chat);
         mensagem.setRemetenteId(remetente);
