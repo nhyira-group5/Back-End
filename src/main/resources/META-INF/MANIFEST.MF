@@ -1,0 +1,80 @@
+Manifest-Version: 1.0
+Main-Class: 
+Class-Path: guice-5.1.0.jar plexus-archiver-4.9.0.jar jackson-module-par
+ ameter-names-2.15.4.jar spring-boot-starter-tomcat-3.2.4.jar micrometer
+ -commons-1.12.4.jar maven-reporting-api-3.1.1.jar plexus-velocity-1.2.j
+ ar doxia-site-renderer-1.11.1.jar jackson-databind-2.15.4.jar spring-se
+ curity-web-6.2.3.jar plexus-xml-3.0.0.jar swagger-ui-5.13.0.jar tomcat-
+ embed-core-10.1.19.jar spring-jcl-6.1.5.jar maven-model-builder-3.9.6.j
+ ar annotations-13.0.jar spring-messaging-6.1.5.jar hibernate-validator-
+ 8.0.1.Final.jar maven-builder-support-3.9.6.jar HikariCP-5.0.1.jar stom
+ p-websocket-2.3.3.jar spring-expression-6.1.5.jar zstd-jni-1.5.5-10.jar
+  jaxb-runtime-4.0.5.jar wagon-provider-api-2.4.jar kotlin-stdlib-jdk8-1
+ .9.23.jar spring-orm-6.1.5.jar doxia-sink-api-1.11.1.jar spring-securit
+ y-core-6.2.3.jar cloudinary-core-1.28.1.jar spring-boot-starter-actuato
+ r-3.0.5.jar maven-shared-utils-3.4.2.jar maven-invoker-3.2.0.jar org.ec
+ lipse.sisu.plexus-0.9.0.M2.jar commons-text-1.11.0.jar classgraph-4.8.6
+ 9.jar commons-codec-1.16.1.jar antlr4-runtime-4.13.0.jar commons-digest
+ er3-3.2.jar xz-1.9.jar spring-boot-starter-web-3.2.4.jar jaxb-core-4.0.
+ 5.jar guava-32.0.1-jre.jar spring-boot-starter-mail-3.2.4.jar micromete
+ r-observation-1.12.4.jar javax.annotation-api-1.2.jar spring-boot-actua
+ tor-autoconfigure-3.2.4.jar jjwt-jackson-0.11.1.jar logback-core-1.4.14
+ .jar spring-test-6.1.5.jar swagger-annotations-jakarta-2.2.21.jar txw2-
+ 4.0.5.jar spring-boot-starter-security-3.2.4.jar istack-commons-runtime
+ -4.1.2.jar plexus-i18n-1.0-beta-10.jar velocity-engine-core-2.3.jar spr
+ ingdoc-openapi-starter-webmvc-ui-2.5.0.jar spring-data-commons-3.2.4.ja
+ r maven-resolver-impl-1.9.18.jar maven-archiver-3.6.1.jar plexus-cipher
+ -2.0.jar maven-resolver-named-locks-1.9.18.jar byte-buddy-1.14.12.jar s
+ pring-web-6.1.5.jar aether-api-0.9.0.M2.jar aether-util-0.9.0.M2.jar sp
+ ring-aspects-6.1.5.jar spring-boot-starter-3.2.4.jar jakarta.validation
+ -api-3.0.2.jar sockjs-client-1.5.1.jar httpcore-4.4.16.jar tomcat-embed
+ -el-10.1.19.jar spring-security-test-6.2.3.jar doxia-decoration-model-1
+ .11.1.jar kotlin-stdlib-jdk7-1.9.23.jar doxia-logging-api-1.11.1.jar va
+ lidation-api-2.0.1.Final.jar jackson-core-2.15.4.jar okio-3.6.0.jar com
+ mons-io-2.11.0.jar jakarta.mail-2.0.3.jar okio-jvm-3.6.0.jar plexus-jav
+ a-1.2.0.jar spring-aop-6.1.5.jar jackson-dataformat-yaml-2.15.4.jar mav
+ en-resolver-util-1.9.18.jar hibernate-commons-annotations-6.0.6.Final.j
+ ar jackson-datatype-jsr310-2.15.4.jar spring-security-crypto-6.2.3.jar 
+ swagger-models-jakarta-2.2.21.jar okhttp-4.12.0.jar LatencyUtils-2.0.3.
+ jar swagger-core-jakarta-2.2.21.jar httpclient-4.5.13.jar mysql-connect
+ or-java-8.0.23.jar spring-boot-starter-validation-3.2.4.jar maven-core-
+ 3.9.6.jar spring-boot-starter-jdbc-3.2.4.jar classmate-1.6.0.jar maven-
+ javadoc-plugin-3.6.3.jar hibernate-core-6.4.4.Final.jar spring-security
+ -config-6.2.3.jar maven-resolver-provider-3.9.6.jar plexus-interpolatio
+ n-1.26.jar logback-classic-1.4.14.jar spring-jdbc-6.1.5.jar springdoc-o
+ penapi-starter-webmvc-api-2.5.0.jar commons-beanutils-1.9.4.jar spring-
+ boot-starter-aop-3.2.4.jar jakarta.persistence-api-3.1.0.jar snappy-0.4
+ .jar aspectjweaver-1.9.21.jar plexus-classworlds-2.7.0.jar hamcrest-2.2
+ .jar doxia-core-1.11.1.jar spring-webmvc-6.1.5.jar jakarta.activation-a
+ pi-2.1.3.jar jackson-datatype-jdk8-2.15.4.jar slf4j-api-2.0.12.jar gson
+ -2.10.1.jar maven-settings-builder-3.9.6.jar httpmime-4.4.jar grpc-cont
+ ext-1.25.0.jar commons-logging-1.2.jar commons-lang-2.6.jar mssql-jdbc-
+ 12.4.2.jre11.jar spring-boot-starter-json-3.2.4.jar plexus-container-de
+ fault-1.0-alpha-30.jar webjars-locator-core-0.45.jar jackson-annotation
+ s-2.15.4.jar spring-boot-actuator-3.2.4.jar maven-resolver-spi-1.9.18.j
+ ar commons-collections-3.2.2.jar spring-websocket-6.1.5.jar protobuf-ja
+ va-3.11.4.jar kotlin-stdlib-1.9.23.jar commons-compress-1.24.0.jar doxi
+ a-skin-model-1.11.1.jar log4j-to-slf4j-2.21.1.jar plexus-component-anno
+ tations-2.1.0.jar maven-plugin-api-3.9.6.jar opencensus-api-0.25.0.jar 
+ jul-to-slf4j-2.0.12.jar hamcrest-core-2.2.jar doxia-module-xhtml5-1.11.
+ 1.jar plexus-utils-4.0.0.jar log4j-api-2.21.1.jar maven-resolver-api-1.
+ 9.18.jar snakeyaml-2.2.jar jakarta.inject-api-2.0.1.jar spring-core-6.1
+ .5.jar cloudinary-http44-1.28.1.jar aopalliance-1.0.jar qdox-2.0.3.jar 
+ jakarta.annotation-api-2.1.1.jar spring-context-support-6.1.5.jar jakar
+ ta.xml.bind-api-4.0.2.jar maven-settings-3.9.6.jar spring-data-jpa-3.2.
+ 4.jar springdoc-openapi-starter-common-2.5.0.jar commons-csv-1.8.jar fa
+ ilureaccess-1.0.1.jar HdrHistogram-2.1.12.jar jandex-3.1.2.jar junit-4.
+ 13.2.jar javax.inject-1.jar spring-context-6.1.5.jar maven-repository-m
+ etadata-3.9.6.jar spring-boot-starter-websocket-3.2.4.jar maven-model-3
+ .9.6.jar spring-tx-6.1.5.jar kotlin-stdlib-common-1.9.23.jar org.eclips
+ e.sisu.inject-0.9.0.M2.jar jjwt-impl-0.11.2.jar commons-lang3-3.13.0.ja
+ r spring-boot-3.2.4.jar micrometer-core-1.12.4.jar spring-boot-starter-
+ logging-3.2.4.jar maven-common-artifact-filters-3.2.0.jar jjwt-api-0.11
+ .5.jar velocity-tools-generic-3.1.jar spring-beans-6.1.5.jar jakarta.tr
+ ansaction-api-2.0.1.jar json-simple-3.0.2.jar maven-artifact-3.9.6.jar 
+ sdk-java-2.1.23.jar tomcat-embed-websocket-10.1.19.jar spring-boot-auto
+ configure-3.2.4.jar jboss-logging-3.5.3.Final.jar plexus-io-3.4.1.jar p
+ lexus-interactivity-api-1.1.jar asm-9.3.jar google-maps-services-0.15.0
+ .jar doxia-module-xhtml-1.11.1.jar plexus-sec-dispatcher-2.0.jar spring
+ -boot-starter-data-jpa-3.2.4.jar angus-activation-2.0.2.jar
+
