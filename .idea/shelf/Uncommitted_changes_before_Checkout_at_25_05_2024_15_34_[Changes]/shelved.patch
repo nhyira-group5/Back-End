@@ -1,0 +1,879 @@
+Index: src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>spring.application.name=api-vitalis\r\n\r\n#spring.datasource.url= jdbc:sqlserver://localhost:1434;encrypt=true;trustServerCertificate=true;databaseName=vitalis\r\n#spring.datasource.username= sa\r\n#spring.datasource.password= 58214213\r\n#spring.jpa.defer-datasource-initialization=true\r\n#\r\n#spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.SQLServerDialect\r\n#spring.jpa.hibernate.ddl-auto= update\r\n\r\n# MySql\r\nspring.datasource.url= jdbc:mysql://localhost:3306/vitalisDB\r\nspring.datasource.username= root\r\nspring.datasource.password= 01231153\r\nspring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver\r\nspring.jpa.defer-datasource-initialization=true\r\nspring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect\r\nspring.jpa.show-sql=true\r\n#spring.jpa.hibernate.ddl-auto= update\r\n\r\n\r\n\r\n# Exibe mensagens de erro valores inválidos (400)\r\nserver.error.include-message=always\r\nserver.error.include-binding-errors=always\r\n\r\n# Email sender\r\n#spring.mail.username=contato.nhyira@gmail.com\r\n#spring.mail.properties.mail.smtp.starttls.required=true\r\n#spring.mail.host=smtp.gmail.com\r\n#spring.mail.port=587\r\n#spring.mail.password=disfbjxxqtxffujb\r\n#spring.mail.properties.mail.smtp.auth=true\r\n#spring.mail.properties.mail.transport.protocol=smtp\r\n#spring.mail.properties.mail.smtp.starttls.enable=true\r\n\r\njwt.expiration=3600000\r\njwt.secret=RXhpc3RlIHVtYSB0ZW9yaWEgcXVlIGRpeiBxdWUsIHNlIHVtIGRpYSBhbGd16W0gZGVzY29icmlyIGV4YXRhbWVudGUgcGFyYSBxdWUgc2VydmUgbyBVbml2ZXJzbyBlIHBvciBxdWUgZWxlIGVzdOEgYXF1aSwgZWxlIGRlc2FwYXJlY2Vy4SBpbnN0YW50YW5lYW1lbnRlIGUgc2Vy4SBzdWJzdGl0de1kbyBwb3IgYWxnbyBhaW5kYSBtYWlzIGVzdHJhbmhvIGUgaW5leHBsaWPhdmVsLiBFeGlzdGUgdW1hIHNlZ3VuZGEgdGVvcmlhIHF1ZSBkaXogcXVlIGlzc28gauEgYWNvbnRlY2V1Li4u\r\n\r\nspring.main.allow-bean-definition-overriding=true\r\n\r\n\r\n\r\n---------------pag seguro------------------------\r\npaypal.client.id=AbUI1pKq9fQ02hZRHomR5Xwpp4FySt0voxZcQRejfx4uFys0Y7j7nn9iNxBxQnVXb-YU3y4ILCqj9Qp8\r\npaypal.client.secret=EIr1aIAUafsa6cteAxgk555X8fmnVgIfOHeaUJddRvZi4mvcgj6GaE5RtvTELT1wQ71UIyHFXQMm0So1\r\npaypal.mode=sandbox
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+--- a/src/main/resources/application.properties	
++++ b/src/main/resources/application.properties	
+@@ -1,47 +1,57 @@
++
+ spring.application.name=api-vitalis
+ 
+-#spring.datasource.url= jdbc:sqlserver://localhost:1434;encrypt=true;trustServerCertificate=true;databaseName=vitalis
+-#spring.datasource.username= sa
+-#spring.datasource.password= 58214213
+-#spring.jpa.defer-datasource-initialization=true
+-#
+-#spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.SQLServerDialect
+-#spring.jpa.hibernate.ddl-auto= update
+-
+-# MySql
++# Configuração do datasource MySQL (comentada)
+ spring.datasource.url= jdbc:mysql://localhost:3306/vitalisDB
+ spring.datasource.username= root
+-spring.datasource.password= 01231153
++spring.datasource.password= 58214213
+ spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+ spring.jpa.defer-datasource-initialization=true
+ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+ spring.jpa.show-sql=true
+ #spring.jpa.hibernate.ddl-auto= update
+ 
++# Dados do banco de dados
++# spring.datasource.url=jdbc:sqlserver://Vitalis-sql-server.database.windows.net:1433;database=Vitalis;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
++# spring.datasource.username=Aluno
++# spring.datasource.password=Aluno
++
++# Outras propriedades do datasource
++# spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
++# spring.jpa.hibernate.ddl-auto=update
++# # spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServer2012Dialect
+ 
+ 
+-# Exibe mensagens de erro valores inválidos (400)
++
++# Exibe mensagens de erro para valores inválidos (400)
+ server.error.include-message=always
+ server.error.include-binding-errors=always
+ 
+-# Email sender
+-#spring.mail.username=contato.nhyira@gmail.com
+-#spring.mail.properties.mail.smtp.starttls.required=true
+-#spring.mail.host=smtp.gmail.com
+-#spring.mail.port=587
+-#spring.mail.password=disfbjxxqtxffujb
+-#spring.mail.properties.mail.smtp.auth=true
+-#spring.mail.properties.mail.transport.protocol=smtp
+-#spring.mail.properties.mail.smtp.starttls.enable=true
++# Configuração de envio de email (comentada)
++spring.mail.username=contato.nhyira@gmail.com
++spring.mail.properties.mail.smtp.starttls.required=true
++spring.mail.host=smtp.gmail.com
++spring.mail.port=587
++spring.mail.password=disfbjxxqtxffujb
++spring.mail.properties.mail.smtp.auth=true
++spring.mail.properties.mail.transport.protocol=smtp
++spring.mail.properties.mail.smtp.starttls.enable=true
+ 
+ jwt.expiration=3600000
+ jwt.secret=RXhpc3RlIHVtYSB0ZW9yaWEgcXVlIGRpeiBxdWUsIHNlIHVtIGRpYSBhbGd16W0gZGVzY29icmlyIGV4YXRhbWVudGUgcGFyYSBxdWUgc2VydmUgbyBVbml2ZXJzbyBlIHBvciBxdWUgZWxlIGVzdOEgYXF1aSwgZWxlIGRlc2FwYXJlY2Vy4SBpbnN0YW50YW5lYW1lbnRlIGUgc2Vy4SBzdWJzdGl0de1kbyBwb3IgYWxnbyBhaW5kYSBtYWlzIGVzdHJhbmhvIGUgaW5leHBsaWPhdmVsLiBFeGlzdGUgdW1hIHNlZ3VuZGEgdGVvcmlhIHF1ZSBkaXogcXVlIGlzc28gauEgYWNvbnRlY2V1Li4u
+ 
+ spring.main.allow-bean-definition-overriding=true
+ 
++logging.level.org.springframework.security=DEBUG
+ 
++# Mercado Pago
++mercado_pago_access_token=TEST-2402055305243400-052012-42c24774c9f1dd395438459d044cc170-1722687388
+ 
+----------------pag seguro------------------------
+-paypal.client.id=AbUI1pKq9fQ02hZRHomR5Xwpp4FySt0voxZcQRejfx4uFys0Y7j7nn9iNxBxQnVXb-YU3y4ILCqj9Qp8
+-paypal.client.secret=EIr1aIAUafsa6cteAxgk555X8fmnVgIfOHeaUJddRvZi4mvcgj6GaE5RtvTELT1wQ71UIyHFXQMm0So1
+-paypal.mode=sandbox
+\ No newline at end of file
++# Cloudinary
++cloudinary.cloud-name=vitalis
++cloudinary.api-key=679425973318895
++cloudinary.api-secret=R-uaJBcdZUfUGu5TuYmiHodqBl4
++
++# Configurações de upload de arquivo
++spring.servlet.multipart.max-file-size=200MB
++spring.servlet.multipart.max-request-size=200MB
+\ No newline at end of file
+Index: src/main/java/API/nhyira/apivitalis/Entity/RefeicaoDiaria.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Entity;public class RefeicaoDiaria {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Entity/RefeicaoDiaria.java b/src/main/java/API/nhyira/apivitalis/Entity/RefeicaoDiaria.java
+--- a/src/main/java/API/nhyira/apivitalis/Entity/RefeicaoDiaria.java	
++++ b/src/main/java/API/nhyira/apivitalis/Entity/RefeicaoDiaria.java	
+@@ -1,2 +1,28 @@
+-package API.nhyira.apivitalis.Entity;public class RefeicaoDiaria {
++package API.nhyira.apivitalis.Entity;
++
++
++import jakarta.persistence.*;
++import lombok.Getter;
++import lombok.Setter;
++
++@Entity
++@Setter
++@Getter
++public class RefeicaoDiaria {
++
++        @Id
++        @GeneratedValue(strategy = GenerationType.IDENTITY)
++        private Integer idRefeicaoDiaria;
++
++
++        @ManyToOne
++        @JoinColumn(name = "refeicaoId")
++        private Refeicao refeicaoId;
++
++        @ManyToOne
++        @JoinColumn(name = "rotinaDiariaId")
++        private RotinaDiaria rotinaDiariaId;
++
++        private Integer concluido;
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaExibitionDto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.DTO.RefeicaoDiaria;public class RefeicaoDiariaExibitionDto {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaExibitionDto.java b/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaExibitionDto.java
+--- a/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaExibitionDto.java	
++++ b/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaExibitionDto.java	
+@@ -1,2 +1,23 @@
+-package API.nhyira.apivitalis.DTO.RefeicaoDiaria;public class RefeicaoDiariaExibitionDto {
++package API.nhyira.apivitalis.DTO.RefeicaoDiaria;
++
++import API.nhyira.apivitalis.DTO.RefeicaoPorDieta.RefeicaoPorDietaExibitionDto;
++import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
++import API.nhyira.apivitalis.DTO.Treino.TreinoExibitionDto;
++import API.nhyira.apivitalis.Entity.Refeicao;
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
++import lombok.Data;
++
++@Data
++public class RefeicaoDiariaExibitionDto {
++
++
++    private Integer idRefeicaoDiaria;
++
++    private RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoId;
++
++    private TreinoExibitionDto.RotinaDiarioDto rotinaDiariaId;
++
++    private Integer concluido;
++
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.DTO.RotinaDiario;\r\n\r\nimport API.nhyira.apivitalis.DTO.RotinaMensal.RotinaMensalExibitionDto;\r\nimport API.nhyira.apivitalis.Entity.RotinaSemanal;\r\nimport API.nhyira.apivitalis.Entity.RotinaDiaria;\r\n\r\npublic class RotinaDiarioMapper {\r\n\r\n    public static RotinaDiarioExibitionDto toDto(RotinaDiaria rotinaDiaria){\r\n        RotinaDiarioExibitionDto rotinaDiarioExibitionDto = new RotinaDiarioExibitionDto();\r\n\r\n        rotinaDiarioExibitionDto.setIdTreinoDiario(rotinaDiaria.getIdTreinoDiario());\r\n        rotinaDiarioExibitionDto.setConcluido(rotinaDiaria.getConcluido());\r\n        rotinaDiarioExibitionDto.setRotinaSemanalId(rotinaSemanalDto(rotinaDiaria.getRotinaSemanalId()));\r\n        return rotinaDiarioExibitionDto;\r\n    }\r\n\r\n\r\n    public static RotinaMensalExibitionDto.RotinaSemanalDto rotinaSemanalDto(RotinaSemanal rotinaSemanal){\r\n        if (rotinaSemanal == null)return null;\r\n        RotinaMensalExibitionDto.RotinaSemanalDto rotinaSemanalDto = new RotinaMensalExibitionDto.RotinaSemanalDto();\r\n        rotinaSemanalDto.setId(rotinaSemanal.getIdRotinaSemanal());\r\n        rotinaSemanalDto.setConcluido(rotinaSemanal.getConcluido());\r\n        return rotinaSemanalDto;\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java b/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java
+--- a/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java	
++++ b/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java	
+@@ -1,18 +1,24 @@
+-package API.nhyira.apivitalis.DTO.RotinaDiario;
++package API.nhyira.apivitalis.DTO.RotinaDiaria;
+ 
+ import API.nhyira.apivitalis.DTO.RotinaMensal.RotinaMensalExibitionDto;
++import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
+ import API.nhyira.apivitalis.Entity.RotinaSemanal;
+ import API.nhyira.apivitalis.Entity.RotinaDiaria;
++import API.nhyira.apivitalis.Entity.Treino;
+ 
+-public class RotinaDiarioMapper {
++import java.util.List;
+ 
+-    public static RotinaDiarioExibitionDto toDto(RotinaDiaria rotinaDiaria){
+-        RotinaDiarioExibitionDto rotinaDiarioExibitionDto = new RotinaDiarioExibitionDto();
++public class RotinaDiariaMapper {
+ 
+-        rotinaDiarioExibitionDto.setIdTreinoDiario(rotinaDiaria.getIdTreinoDiario());
+-        rotinaDiarioExibitionDto.setConcluido(rotinaDiaria.getConcluido());
+-        rotinaDiarioExibitionDto.setRotinaSemanalId(rotinaSemanalDto(rotinaDiaria.getRotinaSemanalId()));
+-        return rotinaDiarioExibitionDto;
++    public static RotinaDiariaExibitionDto toDto(RotinaDiaria rotinaDiaria){
++        RotinaDiariaExibitionDto rotinaDiariaExibitionDto = new RotinaDiariaExibitionDto();
++
++        rotinaDiariaExibitionDto.setIdRotinaDiaria(rotinaDiaria.getIdRotinaDiaria());
++        rotinaDiariaExibitionDto.setConcluido(rotinaDiaria.getConcluido());
++        rotinaDiariaExibitionDto.setRotinaSemanalId(rotinaSemanalDto(rotinaDiaria.getRotinaSemanalId()));
++        rotinaDiariaExibitionDto.setTreinoDtos(treinoDto(rotinaDiaria.getTreinos()));
++        rotinaDiariaExibitionDto.setRefeicaoDiariaDtos(refeicaoDiariaDto(rotinaDiaria.getRefeicaoDiarias()));
++        return rotinaDiariaExibitionDto;
+     }
+ 
+ 
+@@ -23,4 +29,33 @@
+         rotinaSemanalDto.setConcluido(rotinaSemanal.getConcluido());
+         return rotinaSemanalDto;
+     }
++
++
++
++    public static List<RotinaDiariaExibitionDto.TreinoDto> treinoDto(List<Treino> treinos){
++        return treinos.stream().map(t -> {
++            RotinaDiariaExibitionDto.TreinoDto treinoDto = new RotinaDiariaExibitionDto.TreinoDto();
++
++            treinoDto.setIdTreino(t.getIdTreino());
++            treinoDto.setTime(t.getTempo());
++            treinoDto.setSerie(t.getSerie());
++            treinoDto.setRepeticao(t.getRepeticao());
++            treinoDto.setConcluido(t.getConcluido());
++            return treinoDto;
++        }).toList();
++    }
++
++
++    public static List<RotinaDiariaExibitionDto.RefeicaoDiariaDto> refeicaoDiariaDto (List<RefeicaoDiaria> refeicaoDiarias){
++        return refeicaoDiarias.stream().map(rd -> {
++
++            RotinaDiariaExibitionDto.RefeicaoDiariaDto refeicaoDiariaDto = new RotinaDiariaExibitionDto.RefeicaoDiariaDto();
++            refeicaoDiariaDto.setIdRefeicaoDiaria(rd.getIdRefeicaoDiaria());
++            refeicaoDiariaDto.setConcluido(rd.getConcluido());
++            return refeicaoDiariaDto;
++        }).toList();
++
++
++    }
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.DTO.RotinaDiario;\r\n\r\nimport API.nhyira.apivitalis.DTO.RotinaMensal.RotinaMensalExibitionDto;\r\nimport API.nhyira.apivitalis.Entity.Midia;\r\nimport lombok.Data;\r\n\r\nimport java.sql.Time;\r\nimport java.time.LocalDate;\r\n\r\n@Data\r\npublic class RotinaDiarioExibitionDto {\r\n\r\n    private Integer idTreinoDiario;\r\n\r\n    private RotinaMensalExibitionDto.RotinaSemanalDto rotinaSemanalId;\r\n\r\n    private Integer concluido;\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java b/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java
+--- a/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java	
++++ b/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java	
+@@ -1,23 +1,55 @@
+-package API.nhyira.apivitalis.DTO.RotinaDiario;
++package API.nhyira.apivitalis.DTO.RotinaDiaria;
+ 
++import API.nhyira.apivitalis.DTO.RefeicaoPorDieta.RefeicaoPorDietaExibitionDto;
+ import API.nhyira.apivitalis.DTO.RotinaMensal.RotinaMensalExibitionDto;
+-import API.nhyira.apivitalis.Entity.Midia;
++import API.nhyira.apivitalis.DTO.Treino.TreinoExibitionDto;
++import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
++import API.nhyira.apivitalis.Entity.Treino;
+ import lombok.Data;
+ 
+-import java.sql.Time;
+-import java.time.LocalDate;
++import java.time.LocalTime;
++import java.util.List;
+ 
+ @Data
+-public class RotinaDiarioExibitionDto {
++public class RotinaDiariaExibitionDto {
+ 
+-    private Integer idTreinoDiario;
++    private Integer idRotinaDiaria;
+ 
+     private RotinaMensalExibitionDto.RotinaSemanalDto rotinaSemanalId;
+ 
+     private Integer concluido;
++
++    private List<TreinoDto> treinoDtos;
++    private List<RefeicaoDiariaDto> refeicaoDiariaDtos;
++
++
++
++    @Data
++    public static class TreinoDto{
++        private Integer idTreino;
++
++        private TreinoExibitionDto.ExercicioDto exercicioId;
++
++        private Integer serie;
++
++        private Integer repeticao;
++
++        private LocalTime time;
++
++        private Integer concluido;
++
++    }
++
++    @Data
++    public static class RefeicaoDiariaDto{
++        private Integer idRefeicaoDiaria;
++
++        private RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoId;
++
++        private Integer concluido;
+ 
+ 
+-
++    }
+ 
+ 
+ }
+Index: src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Entity;\r\n\r\n\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.Setter;\r\n\r\nimport java.sql.Time;\r\nimport java.time.LocalDate;\r\n\r\n@Getter\r\n@Setter\r\n@Entity\r\npublic class RotinaDiario {\r\n\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Integer idTreinoDiario;\r\n\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"exercicioId\")\r\n    private Exercicio exercicioId;\r\n\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"rotinaSemanalId\")\r\n    private RotinaSemanal rotinaSemanalId;\r\n\r\n    private Integer concluido;\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java b/src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java
+--- a/src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java	
++++ b/src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java	
+@@ -5,22 +5,23 @@
+ import lombok.Getter;
+ import lombok.Setter;
+ 
+-import java.sql.Time;
+-import java.time.LocalDate;
++import java.util.List;
+ 
+ @Getter
+ @Setter
+ @Entity
+-public class RotinaDiario {
++public class RotinaDiaria {
+ 
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+-    private Integer idTreinoDiario;
++    private Integer idRotinaDiaria;
+ 
+ 
+-    @ManyToOne
+-    @JoinColumn(name = "exercicioId")
+-    private Exercicio exercicioId;
++    @OneToMany(mappedBy = "rotinaDiariaId")
++    private List<Treino> treinos;
++
++    @OneToMany(mappedBy = "rotinaDiariaId")
++    private List<RefeicaoDiaria> refeicaoDiarias;
+ 
+ 
+     @ManyToOne
+Index: src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Entity;\r\n\r\nimport jakarta.persistence.*;\r\nimport lombok.Getter;\r\nimport lombok.Setter;\r\n\r\n@Entity\r\n@Getter\r\n@Setter\r\npublic class Refeicao {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private Integer idRefeicao;\r\n    private String nome;\r\n    private String preparo;\r\n\r\n    @ManyToOne\r\n    private Midia midia;\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java b/src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java
+--- a/src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java	
++++ b/src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java	
+@@ -15,5 +15,6 @@
+     private String preparo;
+ 
+     @ManyToOne
++    @JoinColumn(name = "midiaId")
+     private Midia midia;
+ }
+Index: src/main/java/API/nhyira/apivitalis/Controller/RefeicaoDiariaController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Controller;public class RefeicaoDiariaController {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoDiariaController.java b/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoDiariaController.java
+--- a/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoDiariaController.java	
++++ b/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoDiariaController.java	
+@@ -1,2 +1,28 @@
+-package API.nhyira.apivitalis.Controller;public class RefeicaoDiariaController {
++package API.nhyira.apivitalis.Controller;
++
++
++import API.nhyira.apivitalis.DTO.RefeicaoDiaria.RefeicaoDiariaExibitionDto;
++import API.nhyira.apivitalis.DTO.RefeicaoDiaria.RefeicaoDiariaMapper;
++import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
++import API.nhyira.apivitalis.Service.RefeicaoDiariaService;
++import lombok.RequiredArgsConstructor;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.PathVariable;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++@RestController
++@RequiredArgsConstructor
++@RequestMapping("/refeicaoDiarias")
++public class RefeicaoDiariaController {
++
++
++    private final RefeicaoDiariaService diariaService;
++
++    @GetMapping("/{id}")
++    public ResponseEntity<RefeicaoDiariaExibitionDto> show(@PathVariable int id){
++        RefeicaoDiaria diaria = diariaService.show(id);
++        return ResponseEntity.ok(RefeicaoDiariaMapper.toDto(diaria));
++    }
+ }
+Index: src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Repository;public class TreinoRepository {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java b/src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java
+--- a/src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java	
++++ b/src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java	
+@@ -1,2 +1,16 @@
+-package API.nhyira.apivitalis.Repository;public class TreinoRepository {
++package API.nhyira.apivitalis.Repository;
++
++
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
++import API.nhyira.apivitalis.Entity.Treino;
++import org.springframework.data.jpa.repository.JpaRepository;
++import org.springframework.stereotype.Repository;
++
++import java.util.Optional;
++
++@Repository
++public interface TreinoRepository extends JpaRepository<Treino, Integer> {
++
++    Optional<Treino> findByRotinaDiariaIdIs(RotinaDiaria rotinaDiaria);
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Controller;public class TreinoController {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java b/src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java
+--- a/src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java	
++++ b/src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java	
+@@ -1,2 +1,28 @@
+-package API.nhyira.apivitalis.Controller;public class TreinoController {
++package API.nhyira.apivitalis.Controller;
++
++
++import API.nhyira.apivitalis.DTO.Treino.TreinoExibitionDto;
++import API.nhyira.apivitalis.DTO.Treino.TreinoMapper;
++import API.nhyira.apivitalis.Entity.Treino;
++import API.nhyira.apivitalis.Service.TreinoService;
++import lombok.RequiredArgsConstructor;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.PathVariable;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++@RestController
++@RequiredArgsConstructor
++@RequestMapping("/treinos")
++public class TreinoController {
++
++    private final TreinoService treinoService;
++
++    @GetMapping("/{id}")
++    public ResponseEntity<TreinoExibitionDto> show(@PathVariable int id){
++        Treino treino = treinoService.show(id);
++        return ResponseEntity.ok(TreinoMapper.toDto(treino));
++    }
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/Service/RefeicaoDiariaService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Service;public class RefeicaoDiaria {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Service/RefeicaoDiariaService.java b/src/main/java/API/nhyira/apivitalis/Service/RefeicaoDiariaService.java
+--- a/src/main/java/API/nhyira/apivitalis/Service/RefeicaoDiariaService.java	
++++ b/src/main/java/API/nhyira/apivitalis/Service/RefeicaoDiariaService.java	
+@@ -1,2 +1,26 @@
+-package API.nhyira.apivitalis.Service;public class RefeicaoDiaria {
++package API.nhyira.apivitalis.Service;
++
++
++import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
++import API.nhyira.apivitalis.Exception.NaoEncontradoException;
++import API.nhyira.apivitalis.Repository.RefeicaoDiariaRepository;
++import lombok.RequiredArgsConstructor;
++import org.springframework.stereotype.Service;
++
++import java.util.Optional;
++
++@Service
++@RequiredArgsConstructor
++public class RefeicaoDiariaService {
++
++
++    private final RefeicaoDiariaRepository diariaRepository;
++
++    public RefeicaoDiaria show(int id){
++        Optional<RefeicaoDiaria> optRefeicao = diariaRepository.findById(id);
++        optRefeicao.orElseThrow(() -> new NaoEncontradoException("Refeicao diaria"));
++        return optRefeicao.get();
++    }
++
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/Repository/RefeicaoDiariaRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Repository;public class RefeicaoDiariaRepository {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoDiariaRepository.java b/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoDiariaRepository.java
+--- a/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoDiariaRepository.java	
++++ b/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoDiariaRepository.java	
+@@ -1,2 +1,10 @@
+-package API.nhyira.apivitalis.Repository;public class RefeicaoDiariaRepository {
++package API.nhyira.apivitalis.Repository;
++
++
++import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
++import org.springframework.data.jpa.repository.JpaRepository;
++import org.springframework.stereotype.Repository;
++
++@Repository
++public interface RefeicaoDiariaRepository extends JpaRepository<RefeicaoDiaria, Integer> {
+ }
+Index: src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.DTO.RefeicaoDiaria;public class RefeicaoDiariaMapper {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaMapper.java b/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaMapper.java
+--- a/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaMapper.java	
++++ b/src/main/java/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaMapper.java	
+@@ -1,2 +1,46 @@
+-package API.nhyira.apivitalis.DTO.RefeicaoDiaria;public class RefeicaoDiariaMapper {
++package API.nhyira.apivitalis.DTO.RefeicaoDiaria;
++
++import API.nhyira.apivitalis.DTO.RefeicaoPorDieta.RefeicaoPorDietaExibitionDto;
++import API.nhyira.apivitalis.DTO.RotinaDiaria.RotinaDiariaExibitionDto;
++import API.nhyira.apivitalis.DTO.Treino.TreinoExibitionDto;
++import API.nhyira.apivitalis.Entity.Refeicao;
++import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
++
++public class RefeicaoDiariaMapper {
++
++    public static RefeicaoDiariaExibitionDto toDto(RefeicaoDiaria refeicaoDiaria){
++        if (refeicaoDiaria == null)return null;
++        RefeicaoDiariaExibitionDto refeicaoDiariaExibitionDto = new RefeicaoDiariaExibitionDto();
++
++        refeicaoDiariaExibitionDto.setIdRefeicaoDiaria(refeicaoDiaria.getIdRefeicaoDiaria());
++        refeicaoDiariaExibitionDto.setConcluido(refeicaoDiaria.getConcluido());
++        refeicaoDiariaExibitionDto.setRefeicaoId(toRefeicaoDto(refeicaoDiaria.getRefeicaoId()));
++        refeicaoDiariaExibitionDto.setRotinaDiariaId(rotinaDiarioDto(refeicaoDiaria.getRotinaDiariaId()));
++        return refeicaoDiariaExibitionDto;
++    }
++
++    public static TreinoExibitionDto.RotinaDiarioDto rotinaDiarioDto(RotinaDiaria rotinaDiaria){
++        if (rotinaDiaria == null)return null;
++
++        TreinoExibitionDto.RotinaDiarioDto rotinaDiarioDto = new TreinoExibitionDto.RotinaDiarioDto();
++        rotinaDiarioDto.setIdRotinaDiario(rotinaDiaria.getIdRotinaDiaria());
++        rotinaDiarioDto.setConcluido(rotinaDiaria.getConcluido());
++        return rotinaDiarioDto;
++    }
++
++
++    public static RefeicaoPorDietaExibitionDto.RefeicaoDto toRefeicaoDto(Refeicao entity) {
++        RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto = new RefeicaoPorDietaExibitionDto.RefeicaoDto();
++        refeicaoDto.setIdRefeicao(entity.getIdRefeicao());
++        refeicaoDto.setNome(entity.getNome());
++        refeicaoDto.setPreparo(entity.getPreparo());
++        refeicaoDto.setMidia(entity.getMidia());
++
++        return refeicaoDto;
++    }
++
++
++
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Repository;\r\n\r\nimport API.nhyira.apivitalis.Entity.RotinaDiario;\r\nimport API.nhyira.apivitalis.Entity.RotinaSemanal;\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.util.Optional;\r\n\r\n@Repository\r\npublic interface RotinaDiarioRepository extends JpaRepository<RotinaDiario, Integer> {\r\n\r\n    Optional<RotinaDiario> findByRotinaSemanalIdIs(RotinaSemanal rotinaSemanal);\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java b/src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java
+--- a/src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java	
++++ b/src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java	
+@@ -1,6 +1,6 @@
+ package API.nhyira.apivitalis.Repository;
+ 
+-import API.nhyira.apivitalis.Entity.RotinaDiario;
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
+ import API.nhyira.apivitalis.Entity.RotinaSemanal;
+ import org.springframework.data.jpa.repository.JpaRepository;
+ import org.springframework.stereotype.Repository;
+@@ -8,8 +8,8 @@
+ import java.util.Optional;
+ 
+ @Repository
+-public interface RotinaDiarioRepository extends JpaRepository<RotinaDiario, Integer> {
++public interface RotinaDiariaRepository extends JpaRepository<RotinaDiaria, Integer> {
+ 
+-    Optional<RotinaDiario> findByRotinaSemanalIdIs(RotinaSemanal rotinaSemanal);
++    Optional<RotinaDiaria> findByRotinaSemanalIdIs(RotinaSemanal rotinaSemanal);
+ 
+ }
+Index: src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Service;\r\n\r\n\r\nimport API.nhyira.apivitalis.Entity.RotinaDiario;\r\nimport API.nhyira.apivitalis.Entity.RotinaSemanal;\r\nimport API.nhyira.apivitalis.Exception.NaoEncontradoException;\r\nimport API.nhyira.apivitalis.Repository.RotinaSemanalRepository;\r\nimport API.nhyira.apivitalis.Repository.RotinaDiarioRepository;\r\nimport lombok.RequiredArgsConstructor;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.Optional;\r\n\r\n@Service\r\n@RequiredArgsConstructor\r\npublic class RotinaDiarioService {\r\n\r\n\r\n    private final RotinaDiarioRepository diarioRepository;\r\n\r\n    private final RotinaSemanalRepository semanalRepository;\r\n\r\n    public RotinaDiario show(int id) {\r\n        Optional<RotinaSemanal> optRotinaSemanal = semanalRepository.findById(id);\r\n        optRotinaSemanal.orElseThrow(() -> new NaoEncontradoException(\"Rotina Semanal\"));\r\n        Optional<RotinaDiario> rotinaDiario = diarioRepository.findByRotinaSemanalIdIs(optRotinaSemanal.get());\r\n        rotinaDiario.orElseThrow(() -> new NaoEncontradoException(\"Rotina Diario\"));\r\n        return rotinaDiario.get();\r\n    }\r\n\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java b/src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java
+--- a/src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java	
++++ b/src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java	
+@@ -1,11 +1,11 @@
+ package API.nhyira.apivitalis.Service;
+ 
+ 
+-import API.nhyira.apivitalis.Entity.RotinaDiario;
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
+ import API.nhyira.apivitalis.Entity.RotinaSemanal;
+ import API.nhyira.apivitalis.Exception.NaoEncontradoException;
+ import API.nhyira.apivitalis.Repository.RotinaSemanalRepository;
+-import API.nhyira.apivitalis.Repository.RotinaDiarioRepository;
++import API.nhyira.apivitalis.Repository.RotinaDiariaRepository;
+ import lombok.RequiredArgsConstructor;
+ import org.springframework.stereotype.Service;
+ 
+@@ -13,17 +13,15 @@
+ 
+ @Service
+ @RequiredArgsConstructor
+-public class RotinaDiarioService {
++public class RotinaDiariaService {
+ 
+ 
+-    private final RotinaDiarioRepository diarioRepository;
++    private final RotinaDiariaRepository diarioRepository;
+ 
+     private final RotinaSemanalRepository semanalRepository;
+ 
+-    public RotinaDiario show(int id) {
+-        Optional<RotinaSemanal> optRotinaSemanal = semanalRepository.findById(id);
+-        optRotinaSemanal.orElseThrow(() -> new NaoEncontradoException("Rotina Semanal"));
+-        Optional<RotinaDiario> rotinaDiario = diarioRepository.findByRotinaSemanalIdIs(optRotinaSemanal.get());
++    public RotinaDiaria show(int id) {
++        Optional<RotinaDiaria> rotinaDiario = diarioRepository.findById(id);
+         rotinaDiario.orElseThrow(() -> new NaoEncontradoException("Rotina Diario"));
+         return rotinaDiario.get();
+     }
+Index: src/main/java/API/nhyira/apivitalis/Controller/RotinaDiarioController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Controller;public class RotinaDiarioController {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Controller/RotinaDiarioController.java b/src/main/java/API/nhyira/apivitalis/Controller/RotinaDiarioController.java
+--- a/src/main/java/API/nhyira/apivitalis/Controller/RotinaDiarioController.java	
++++ b/src/main/java/API/nhyira/apivitalis/Controller/RotinaDiarioController.java	
+@@ -1,2 +1,28 @@
+-package API.nhyira.apivitalis.Controller;public class RotinaDiarioController {
++package API.nhyira.apivitalis.Controller;
++
++
++import API.nhyira.apivitalis.DTO.RotinaDiaria.RotinaDiariaExibitionDto;
++import API.nhyira.apivitalis.DTO.RotinaDiaria.RotinaDiariaMapper;
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
++import API.nhyira.apivitalis.Service.RotinaDiariaService;
++import lombok.RequiredArgsConstructor;
++import org.springframework.http.ResponseEntity;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.PathVariable;
++import org.springframework.web.bind.annotation.RequestMapping;
++import org.springframework.web.bind.annotation.RestController;
++
++@RestController
++@RequestMapping("/rotinaDiarias")
++@RequiredArgsConstructor
++public class RotinaDiarioController {
++
++    private final RotinaDiariaService diarioService;
++
++    @GetMapping("/{id}")
++    public ResponseEntity<RotinaDiariaExibitionDto> show(@PathVariable int id){
++        RotinaDiaria rotinaDiaria = diarioService.show(id);
++        return ResponseEntity.ok(RotinaDiariaMapper.toDto(rotinaDiaria));
++    }
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/Entity/Treino.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Entity;public class Treino {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Entity/Treino.java b/src/main/java/API/nhyira/apivitalis/Entity/Treino.java
+--- a/src/main/java/API/nhyira/apivitalis/Entity/Treino.java	
++++ b/src/main/java/API/nhyira/apivitalis/Entity/Treino.java	
+@@ -1,2 +1,35 @@
+-package API.nhyira.apivitalis.Entity;public class Treino {
++package API.nhyira.apivitalis.Entity;
++
++
++import jakarta.persistence.*;
++import lombok.Getter;
++import lombok.Setter;
++
++import java.time.LocalTime;
++
++@Entity
++@Getter
++@Setter
++public class Treino {
++    @Id
++    @GeneratedValue(strategy = GenerationType.IDENTITY)
++    private Integer idTreino;
++
++
++    @ManyToOne
++    @JoinColumn(name = "exercicioId")
++    private Exercicio exercicioId;
++
++    @ManyToOne
++    @JoinColumn(name = "rotinaDiariaId")
++    private RotinaDiaria rotinaDiariaId;
++
++    private Integer serie;
++
++    private Integer repeticao;
++
++    private LocalTime tempo;
++
++    private Integer concluido;
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.DTO.Treino;public class TreinoMapper {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java b/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java
+--- a/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java	
++++ b/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java	
+@@ -1,2 +1,46 @@
+-package API.nhyira.apivitalis.DTO.Treino;public class TreinoMapper {
++package API.nhyira.apivitalis.DTO.Treino;
++
++import API.nhyira.apivitalis.Entity.Exercicio;
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
++import API.nhyira.apivitalis.Entity.Treino;
++
++public class TreinoMapper {
++
++    public static TreinoExibitionDto toDto(Treino treino){
++        if (treino == null)return null;
++
++        TreinoExibitionDto treinoExibitionDto = new TreinoExibitionDto();
++
++        treinoExibitionDto.setIdTreino(treino.getIdTreino());
++        treinoExibitionDto.setConcluido(treino.getConcluido());
++        treinoExibitionDto.setSerie(treino.getSerie());
++        treinoExibitionDto.setTempo(treino.getTempo());
++        treinoExibitionDto.setRepeticao(treino.getRepeticao());
++        treinoExibitionDto.setExercicioId(exercicioDto(treino.getExercicioId()));
++        treinoExibitionDto.setRotinaDiarioId(rotinaDiarioDto(treino.getRotinaDiariaId()));
++        return treinoExibitionDto;
++    }
++
++
++    public static TreinoExibitionDto.ExercicioDto exercicioDto(Exercicio exercicio){
++        if (exercicio == null)return null;
++
++        TreinoExibitionDto.ExercicioDto exercicioDto = new TreinoExibitionDto.ExercicioDto();
++
++        exercicioDto.setIdTreino(exercicio.getIdExercicio());
++        exercicioDto.setNome(exercicio.getNome());
++        exercicioDto.setDescricao(exercicio.getDescricao());
++        exercicioDto.setDescricao(exercicio.getDescricao());
++        return exercicioDto;
++    }
++
++
++    public static TreinoExibitionDto.RotinaDiarioDto rotinaDiarioDto(RotinaDiaria rotinaDiaria){
++        if (rotinaDiaria == null)return null;
++
++        TreinoExibitionDto.RotinaDiarioDto rotinaDiarioDto = new TreinoExibitionDto.RotinaDiarioDto();
++        rotinaDiarioDto.setIdRotinaDiario(rotinaDiaria.getIdRotinaDiaria());
++        rotinaDiarioDto.setConcluido(rotinaDiaria.getConcluido());
++        return rotinaDiarioDto;
++    }
+ }
+Index: src/main/java/API/nhyira/apivitalis/Service/TreinoService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.Service;public class TreinoService {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/Service/TreinoService.java b/src/main/java/API/nhyira/apivitalis/Service/TreinoService.java
+--- a/src/main/java/API/nhyira/apivitalis/Service/TreinoService.java	
++++ b/src/main/java/API/nhyira/apivitalis/Service/TreinoService.java	
+@@ -1,2 +1,27 @@
+-package API.nhyira.apivitalis.Service;public class TreinoService {
++package API.nhyira.apivitalis.Service;
++
++
++import API.nhyira.apivitalis.Entity.RotinaDiaria;
++import API.nhyira.apivitalis.Entity.Treino;
++import API.nhyira.apivitalis.Exception.NaoEncontradoException;
++import API.nhyira.apivitalis.Repository.RotinaDiariaRepository;
++import API.nhyira.apivitalis.Repository.TreinoRepository;
++import lombok.RequiredArgsConstructor;
++import org.springframework.stereotype.Service;
++
++import java.util.Optional;
++
++@Service
++@RequiredArgsConstructor
++public class TreinoService {
++
++    private final TreinoRepository treinoRepository;
++    private final RotinaDiariaRepository diarioRepository;
++
++    public Treino show(int id){
++        Optional<Treino> treino = treinoRepository.findById(id);
++        treino.orElseThrow(() -> new NaoEncontradoException("Rotina diario"));
++        return treino.get();
++    }
++
+ }
+Index: src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionDto.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package API.nhyira.apivitalis.DTO.Treino;public class TreinoExibitionDto {\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionDto.java b/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionDto.java
+--- a/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionDto.java	
++++ b/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionDto.java	
+@@ -1,2 +1,43 @@
+-package API.nhyira.apivitalis.DTO.Treino;public class TreinoExibitionDto {
++package API.nhyira.apivitalis.DTO.Treino;
++
++
++import API.nhyira.apivitalis.Entity.Midia;
++import lombok.Data;
++
++import java.time.LocalTime;
++
++@Data
++public class TreinoExibitionDto {
++
++    private Integer idTreino;
++
++    private ExercicioDto exercicioId;
++
++    private RotinaDiarioDto rotinaDiarioId;
++
++    private Integer serie;
++
++    private Integer repeticao;
++
++    private LocalTime tempo;
++
++    private Integer concluido;
++
++
++    @Data
++    public static class ExercicioDto{
++        private Integer idTreino;
++        private Midia midia;
++        private String nome;
++        private String descricao;
++
++    }
++
++
++    @Data
++    public static class  RotinaDiarioDto{
++        private Integer idRotinaDiario;
++        private Integer concluido;
++
++    }
+ }
