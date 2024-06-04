@@ -24,7 +24,5 @@ public class RotinaSemanal {
     private List<RotinaDiaria> rotinaDiariaId;
 
 
-
-
     private Integer concluido;
 }

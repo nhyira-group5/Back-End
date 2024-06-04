@@ -15,7 +15,7 @@ public class RotinaMensalExibitionDto {
 
     private RotinaUsuarioDto rotinaUsuarioId;
 
-    private String mes;
+    private int mes;
 
     private int ano;
 

@@ -19,7 +19,7 @@ public class RotinaMensal {
     @JoinColumn(name = "rotinaUsuarioId")
     private RotinaUsuario rotinaUsuarioId;
 
-    private String mes;
+    private int mes;
 
     private int Ano;
 

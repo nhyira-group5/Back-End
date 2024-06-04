@@ -16,7 +16,7 @@ import java.util.Optional;
 public class RotinaMensalService {
     private final RotinaMensalRepository rotinaMensalRepository;
     private final RotinaUsuarioRepository rotinaUsuarioRepository;
-    public RotinaMensal show(int id, String mes){
+    public RotinaMensal show(int id, int mes){
         Optional<RotinaUsuario> optRotinaUsuairo = rotinaUsuarioRepository.findById(id);
         optRotinaUsuairo.orElseThrow(() -> new NaoEncontradoException("Rotina usuario"));
         RotinaMensal rotinaMensal = rotinaMensalRepository.buscarMes(optRotinaUsuairo.get(), mes);

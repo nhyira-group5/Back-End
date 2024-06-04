@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface RotinaMensalRepository extends JpaRepository<RotinaMensal, Integer> {
 
     @Query("SELECT r FROM RotinaMensal r WHERE r.rotinaUsuarioId = :usuario AND r.mes = :mes")
-    RotinaMensal buscarMes(RotinaUsuario usuario, String mes);
+    RotinaMensal buscarMes(RotinaUsuario usuario, int mes);
 }
