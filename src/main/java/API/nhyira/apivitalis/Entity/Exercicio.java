@@ -24,9 +24,9 @@ public class Exercicio {
     private String nome;
 
     private String descricao;
+//
+//    @OneToMany(mappedBy = "exercicioId")
+//    private List<Treino> treinoList;
 
-
-    @OneToMany(mappedBy = "exercicioId")
-    private List<Treino> treinoList;
 
 }

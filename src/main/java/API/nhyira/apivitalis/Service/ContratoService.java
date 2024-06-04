@@ -48,8 +48,8 @@ public class ContratoService {
         chatCreateEditDto.setAtivo(false);
         chatService.saveChat(chatCreateEditDto ,optUsuario.get(), optPersonal.get());
 
-        contratoRepository.save(contrato);
-        return contrato;
+        Contrato contratoSalvo = contratoRepository.save(contrato);
+        return contratoSalvo;
     }
 
     public Contrato show(int id){

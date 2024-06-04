@@ -8,9 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/pagamentos")
+@RequestMapping("/pagamento")
 public class PagamentoController {
 
     @Autowired
@@ -25,5 +26,12 @@ public class PagamentoController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "Erro ao criar o pagamento: " + e.getMessage()));
         }
+    }
+    @GetMapping("/buscar")
+    public ResponseEntity<Map<String, Object>> buscarPagamentos(
+            @RequestParam Optional<String> status,
+            @RequestParam Optional<String> sort,
+            @RequestParam Optional<String> criteria) {
+        return mercadoPagoService.buscarPagamentos(status, sort, criteria);
     }
 }

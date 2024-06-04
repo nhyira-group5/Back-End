@@ -26,7 +26,7 @@ public class RotinaSemanalExibitionDto {
 
         private int id;
 
-        private String mes;
+        private int mes;
 
         private int ano;
     }

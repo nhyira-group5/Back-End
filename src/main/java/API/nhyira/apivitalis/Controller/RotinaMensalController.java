@@ -16,7 +16,7 @@ public class RotinaMensalController {
     private final RotinaMensalService service;
 
     @GetMapping("/{id}/mes")
-    public ResponseEntity<RotinaMensalExibitionDto> show(@PathVariable int id, @RequestParam String mes){
+    public ResponseEntity<RotinaMensalExibitionDto> show(@PathVariable int id, @RequestParam int mes){
         RotinaMensal rotinaMensal = service.show(id, mes);
         RotinaMensalExibitionDto exibitionDto = RotinaMensalMapper.toDto(rotinaMensal);
         return ResponseEntity.ok(exibitionDto);

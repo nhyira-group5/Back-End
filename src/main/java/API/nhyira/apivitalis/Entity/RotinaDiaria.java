@@ -20,11 +20,6 @@ public class RotinaDiaria {
 
 
     @ManyToOne
-    @JoinColumn(name = "exercicioId")
-    private Exercicio exercicioId;
-
-
-    @ManyToOne
     @JoinColumn(name = "rotinaSemanalId")
     private RotinaSemanal rotinaSemanalId;
 

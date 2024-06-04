@@ -2,14 +2,15 @@ package API.nhyira.apivitalis.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Contrato {
 
     @Id
@@ -30,5 +31,6 @@ public class Contrato {
     private LocalDate fimContrato;
 
     private Integer afiliacao;
+
 
 }

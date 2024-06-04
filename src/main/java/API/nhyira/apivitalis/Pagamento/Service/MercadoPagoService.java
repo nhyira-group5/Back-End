@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Pagamento.Service;
 
-
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Pagamento.DTO.PagamentoMapper;
 import API.nhyira.apivitalis.Pagamento.Entity.Pagamento;
@@ -18,12 +17,11 @@ import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.server.ResponseStatusException;
-import java.math.BigDecimal;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
-
-import static com.mercadopago.MercadoPagoConfig.getAccessToken;
 
 @Service
 public class MercadoPagoService {
@@ -45,18 +43,62 @@ public class MercadoPagoService {
     @Value("${mercado_pago_access_token}")
     private String accessToken;
 
-    public ResponseEntity<String> buscarPagamentos() {
+
+    public ResponseEntity<Map<String, Object>> buscarPagamentos(Optional<String> status, Optional<String> sort, Optional<String> criteria) {
         String url = "https://api.mercadopago.com/v1/payments/search";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
 
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+        status.ifPresent(s -> uriBuilder.queryParam("status", s));
+        sort.ifPresent(s -> uriBuilder.queryParam("sort", s));
+        criteria.ifPresent(c -> uriBuilder.queryParam("criteria", c));
+
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        return response;
+
+        try {
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<Map<String, Object>>() {});
+            Map<String, Object> responseBody = response.getBody();
+
+            if (responseBody != null && responseBody.containsKey("results")) {
+                List<Map<String, Object>> results = (List<Map<String, Object>>) responseBody.get("results");
+                List<Map<String, Object>> filteredResults = new ArrayList<>();
+
+                for (Map<String, Object> result : results) {
+                    Map<String, Object> filteredResult = new HashMap<>();
+                    filteredResult.put("id", result.get("id"));
+                    filteredResult.put("transaction_amount", result.get("transaction_amount"));
+                    filteredResult.put("description", result.get("description"));
+                    filteredResult.put("date_created", result.get("date_created"));
+                    filteredResult.put("payment_method_id", result.get("payment_method_id"));
+                    filteredResult.put("payment_type_id", result.get("payment_type_id"));
+                    filteredResult.put("status", result.get("status"));
+                    filteredResult.put("currency_id", result.get("currency_id"));
+
+
+                    filteredResults.add(filteredResult);
+                }
+
+                Map<String, Object> filteredResponse = new HashMap<>();
+                filteredResponse.put("results", filteredResults);
+                filteredResponse.put("paging", responseBody.get("paging"));
+
+                return ResponseEntity.ok(filteredResponse);
+            } else {
+                return ResponseEntity.ok(Collections.emptyMap());
+            }
+        } catch (HttpClientErrorException e) {
+            logger.error("Erro ao buscar pagamentos: " + e.getResponseBodyAsString(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar pagamentos", e);
+        } catch (Exception e) {
+            logger.error("Erro ao buscar pagamentos: ", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno ao buscar pagamentos", e);
+        }
     }
+
 
 
     public Map<String, Object> criarPagamento(PagamentoCreateEditDto dto) {
@@ -105,8 +147,12 @@ public class MercadoPagoService {
         String url = "https://api.mercadopago.com/v1/payments";
 
         try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, entity, new ParameterizedTypeReference<Map<String, Object>>() {});
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.POST, entity, new ParameterizedTypeReference<Map<String, Object>>() {
+            });
             Map<String, Object> paymentResponse = response.getBody();
+
+
+            paymentResponse.put("user_id", dto.getUsuarioId());
 
             pagamento.setDataPagamento(LocalDateTime.now());
             pagamentoRepository.save(pagamento);
@@ -120,5 +166,4 @@ public class MercadoPagoService {
             throw new RuntimeException("Erro ao criar pagamento", e);
         }
     }
-
 }
