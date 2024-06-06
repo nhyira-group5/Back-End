@@ -3,11 +3,11 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.Auth.Configuration.Security.TokenGenJwt;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioLoginDto;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
-import API.nhyira.apivitalis.DTO.Ficha.FichaMapper;
+import API.nhyira.apivitalis.EmailSender.Service.EmailService;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
+import API.nhyira.apivitalis.EmailSender.Model.EmailModel;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
-import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
@@ -15,7 +15,6 @@ import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Exception.SemConteudoException;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,24 +23,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
 
-
     private final UsuarioRepository uRep;
 
     private final PasswordEncoder encoder;
 
+    private final EmailService emailService;
 
     private final AuthenticationManager authenticationManagerForUsuarios;
-
     private final TokenGenJwt tokenGenJwt;
+
+    private final Set<String> emailsEnviados = new HashSet<>();
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLogin) {
         final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
@@ -52,30 +49,50 @@ public class UsuarioService {
 
         Optional<Usuario> usuarioByEmail = uRep.findByEmailIgnoreCase(usuarioLogin.getLogin());
         Optional<Usuario> usuarioByUsername = uRep.findByNickname(usuarioLogin.getLogin());
-//        Optional<Usuario> usuarioByTipo = uRep.findByTipo(usuarioLogin.getLogin());
-        Usuario.TipoUsuario tipo = null;
-        if (usuarioByEmail.isPresent()) {
-            tipo = usuarioByEmail.get().getTipo();
-        } else if (usuarioByUsername.isPresent()) {
-            tipo = usuarioByUsername.get().getTipo();
-        } else {
-            throw new ResponseStatusException(404, "Credencial de login do usuário não cadastrado!", null);
-        }
 
-        final String token = tokenGenJwt.generateToken((auth), tipo);
+        Usuario.TipoUsuario tipo = null;
         Usuario user = null;
 
         if (usuarioByEmail.isPresent()) {
+            tipo = usuarioByEmail.get().getTipo();
             user = usuarioByEmail.get();
         } else if (usuarioByUsername.isPresent()) {
+            tipo = usuarioByUsername.get().getTipo();
             user = usuarioByUsername.get();
         } else {
             throw new ResponseStatusException(404, "Credencial de login do usuário não cadastrado!", null);
         }
 
+        final String token = tokenGenJwt.generateToken(auth, tipo);
+
+        String emailDoUsuario = user.getEmail();
+
+
+        if (!emailsEnviados.contains(emailDoUsuario)) {
+            enviarEmailDeBoasVindas(emailDoUsuario);
+            emailsEnviados.add(emailDoUsuario);
+        }
+
         SecurityContextHolder.getContext().setAuthentication(auth);
         return UsuarioMapper.of(user, token);
     }
+
+
+    private void enviarEmailDeBoasVindas(String destinatario) {
+        String assunto = "Bem-vindo à Aplicação";
+        String conteudo = gerarConteudoEmailDeBoasVindas(destinatario);
+        emailService.enviarEmail(new EmailModel(destinatario, assunto, conteudo));
+    }
+
+
+    private String gerarConteudoEmailDeBoasVindas(String destinatario) {
+        return "Olá " + destinatario + ",\n\n" +
+                "Obrigado por se cadastrar na aplicação! Aproveite para explorar nossos recursos e funcionalidades.\n\n" +
+                "Atenciosamente,\nSua Equipe de Suporte Daniel Santos";
+    }
+
+
+
 
     public Usuario createUser(Usuario usuario) {
             if (usuario == null) {

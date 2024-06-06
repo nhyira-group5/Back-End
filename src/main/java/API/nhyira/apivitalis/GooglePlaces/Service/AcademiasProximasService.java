@@ -9,12 +9,9 @@ import com.google.maps.model.*;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
 import com.google.maps.PlacesApi;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class AcademiasProximasService {
@@ -38,10 +35,19 @@ public class AcademiasProximasService {
 
             List<AcademiaDto> academiasDto = new ArrayList<>();
             for (PlacesSearchResult lugar : response.results) {
+                if (academiasDto.size() >= 7) break;
+
                 PlaceDetails detalhesLugar = PlacesApi.placeDetails(context, lugar.placeId).await();
 
-
                 if (detalhesLugar.openingHours == null || detalhesLugar.name == null || detalhesLugar.vicinity == null || detalhesLugar.geometry == null) {
+                    continue;
+                }
+
+                List<String> horariosTraduzidos = traduzirDiasParaPortugues(Arrays.asList(detalhesLugar.openingHours.weekdayText));
+                Map<String, String> horariosFormatados = formatarHorarios(horariosTraduzidos);
+
+
+                if (horariosFormatados.get("semana").isEmpty()) {
                     continue;
                 }
 
@@ -53,7 +59,8 @@ public class AcademiasProximasService {
                 academiaDto.setLatitude(lugar.geometry.location.lat);
                 academiaDto.setLongitude(lugar.geometry.location.lng);
                 academiaDto.setClassificacao(classificacao);
-                academiaDto.setDiasAbertos(traduzirDiasParaPortugues(List.of(detalhesLugar.openingHours.weekdayText)));
+                academiaDto.setHorariosSemana(horariosFormatados.get("semana"));
+                academiaDto.setHorariosFimDeSemana(horariosFormatados.get("fimDeSemana"));
 
                 academiasDto.add(academiaDto);
             }
@@ -66,7 +73,6 @@ public class AcademiasProximasService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
 
     private void mergeSort(List<AcademiaDto> academias, int inicio, int fim) {
         if (inicio < fim) {
@@ -119,6 +125,26 @@ public class AcademiasProximasService {
             j++;
             k++;
         }
+    }
+
+    private Map<String, String> formatarHorarios(List<String> horarios) {
+        StringBuilder semana = new StringBuilder();
+        StringBuilder fimDeSemana = new StringBuilder();
+
+        for (String horario : horarios) {
+            if (horario.contains("Segunda-feira") || horario.contains("Terça-feira") || horario.contains("Quarta-feira") ||
+                    horario.contains("Quinta-feira") || horario.contains("Sexta-feira")) {
+                semana.append(horario).append(" ");
+            } else if (horario.contains("Sábado") || horario.contains("Domingo")) {
+                fimDeSemana.append(horario).append(" ");
+            }
+        }
+
+        Map<String, String> horariosFormatados = new HashMap<>();
+        horariosFormatados.put("semana", semana.toString().trim());
+        horariosFormatados.put("fimDeSemana", fimDeSemana.toString().trim());
+
+        return horariosFormatados;
     }
 
     private List<String> traduzirDiasParaPortugues(List<String> diasEmIngles) {

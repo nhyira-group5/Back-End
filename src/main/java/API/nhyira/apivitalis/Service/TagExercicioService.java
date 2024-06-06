@@ -42,7 +42,7 @@ public class TagExercicioService {
         TagExercicio existingTagExercicio = tagExercicioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("TagExercicio não encontrado com o id: " + id));
         existingTagExercicio.setTag(tagExercicioCreateEditDTO.getTag());
-        existingTagExercicio.setExercicio(tagExercicioCreateEditDTO.getExercicio());
+        existingTagExercicio.setExercicioId(tagExercicioCreateEditDTO.getExercicio());
         TagExercicio updatedTagExercicio = tagExercicioRepository.save(existingTagExercicio);
         return tagMapper.toDTO(updatedTagExercicio);
     }
