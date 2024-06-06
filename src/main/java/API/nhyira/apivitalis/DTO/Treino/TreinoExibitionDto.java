@@ -1,17 +1,21 @@
 package API.nhyira.apivitalis.DTO.Treino;
 
 
+import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
+import API.nhyira.apivitalis.DTO.Exercicio.TagExercicioDto;
 import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
+import API.nhyira.apivitalis.Entity.TagExercicio;
 import lombok.Data;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 public class TreinoExibitionDto {
 
     private Integer idTreino;
 
-    private ExercicioDto exercicioId;
+    private ExercicioExibition exercicioId;
 
     private RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaId;
 
@@ -23,12 +27,6 @@ public class TreinoExibitionDto {
 
     private Integer concluido;
 
-    @Data
-    public static class ExercicioDto{
-        private Integer idExercicio;
-        private String nome;
-        private String descricao;
-    }
 
 
 }

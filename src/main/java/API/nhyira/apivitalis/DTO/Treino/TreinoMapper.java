@@ -1,10 +1,14 @@
 package API.nhyira.apivitalis.DTO.Treino;
 
 
+import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
 import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
 import API.nhyira.apivitalis.Entity.Exercicio;
 import API.nhyira.apivitalis.Entity.RotinaDiaria;
+import API.nhyira.apivitalis.Entity.TagExercicio;
 import API.nhyira.apivitalis.Entity.Treino;
+
+import java.util.List;
 
 public class TreinoMapper {
 
@@ -22,16 +26,28 @@ public class TreinoMapper {
         return treinoExibitionDto;
     }
 
-    public static TreinoExibitionDto.ExercicioDto exercicioDto(Exercicio exercicio){
+    public static ExercicioExibition exercicioDto(Exercicio exercicio){
         if(exercicio == null)return null;
 
-        TreinoExibitionDto.ExercicioDto exercicioDto = new TreinoExibitionDto.ExercicioDto();
+        ExercicioExibition exercicioDto = new ExercicioExibition();
         exercicioDto.setIdExercicio(exercicio.getIdExercicio());
         exercicioDto.setNome(exercicio.getNome());
         exercicioDto.setDescricao(exercicio.getDescricao());
+        exercicioDto.setTagExercicioDtos(tagExibitionDto(exercicio.getTagExercicios()));
         return exercicioDto;
-
     }
+
+
+    public static List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){
+        return tagExercicioList.stream().map(te -> {
+            ExercicioExibition.TagExibitionDto tagExibitionDto = new ExercicioExibition.TagExibitionDto();
+
+            tagExibitionDto.setIdTagExercicio(te.getIdTagExercicio());
+            tagExibitionDto.setTagId(te.getTag());
+            return tagExibitionDto;
+        }).toList();
+    }
+
 
     public static RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto(RotinaDiaria rotinaDiaria){
         if (rotinaDiaria == null)return null;

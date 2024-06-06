@@ -21,8 +21,8 @@ public class TagExercicio {
     private Tag tag;
 
     @ManyToOne
-    @JoinColumn(name = "exercicio_id")
-    private Exercicio exercicio;
+    @JoinColumn(name = "exercicioId")
+    private Exercicio exercicioId;
 
 
 }

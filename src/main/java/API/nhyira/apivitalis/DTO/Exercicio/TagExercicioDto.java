@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.DTO.Exercicio;
 
+import API.nhyira.apivitalis.Entity.TagExercicio;
 import lombok.*;
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class TagExercicioDto {
 
     @NotNull
-    private Integer idTagExercicio;
+    private TagExercicio idTagExercicio;
 
     @NotNull
     private Integer tagId;

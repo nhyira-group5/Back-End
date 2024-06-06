@@ -23,7 +23,7 @@ public class TagMapper {
         TagExercicioExibitionDto dto = new TagExercicioExibitionDto();
         dto.setIdTagExercicio(tagExercicio.getIdTagExercicio());
         dto.setTag(tagExercicio.getTag());
-        dto.setExercicio(exibitionDto(tagExercicio.getExercicio()));
+        dto.setExercicio(exibitionDto(tagExercicio.getExercicioId()));
         return dto;
     }
 
@@ -40,7 +40,7 @@ public class TagMapper {
     public static TagExercicio toEntity(TagExercicioCreateEditDto tagExercicioDTO) {
         TagExercicio tagExercicio = new TagExercicio();
         tagExercicio.setTag(tagExercicioDTO.getTag());
-        tagExercicio.setExercicio(tagExercicioDTO.getExercicio());
+        tagExercicio.setExercicioId(tagExercicioDTO.getExercicio());
         return tagExercicio;
     }
 

@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.Entity;
 
 
+import API.nhyira.apivitalis.DTO.Exercicio.TagExercicioDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,9 +25,9 @@ public class Exercicio {
     private String nome;
 
     private String descricao;
-//
-//    @OneToMany(mappedBy = "exercicioId")
-//    private List<Treino> treinoList;
+
+    @OneToMany(mappedBy = "exercicioId")
+    private List<TagExercicio> tagExercicios;
 
 
 }

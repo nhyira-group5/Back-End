@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioMapper;
 import API.nhyira.apivitalis.Entity.Exercicio;
+import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Repository.ExercicioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class ExercicioService {
     }
 
     public ExercicioExibitionDto getExercicioById(Integer id) {
-        Exercicio exercicio = exercicioRepository.findById(id).orElseThrow();
+        Exercicio exercicio = exercicioRepository.findById(id).orElseThrow(() -> new  NaoEncontradoException("Exercicio"));
         return exercicioMapper.toDTO(exercicio);
     }
 }

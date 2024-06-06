@@ -34,7 +34,6 @@ public class FichaService {
 
     private final UsuarioRepository usuarioRepository;
 
-    private final MetaRepository metaRepository;
 
     public Ficha create(Ficha dto, int idUsuario) {
         if (dto == null)throw new ErroClienteException("Ficha");

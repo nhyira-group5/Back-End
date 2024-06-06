@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
 @Setter
 public class AcademiaDto {
@@ -14,7 +13,6 @@ public class AcademiaDto {
     private double latitude;
     private double longitude;
     private double classificacao;
-    private List<String> diasAbertos;
-
-
+    private String horariosSemana;
+    private String horariosFimDeSemana;
 }
