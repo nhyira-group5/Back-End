@@ -7,17 +7,13 @@
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Ficha/FichaCreateEditDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Ficha/FichaCreateEditDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Ficha.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Ficha.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/RotinaDiaria.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/FichaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/FichaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/ContratoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/ContratoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/UsuarioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/ContratoServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/ContratoServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/FichaServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/FichaServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Ficha.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Ficha.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/FichaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/FichaService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/API/nhyira/apivitalis/Service/FichaServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/API/nhyira/apivitalis/Service/FichaServiceTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +100,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiVitalisApplication">
+  <component name="RunManager" selected="JUnit.ContratoServiceTest">
     <configuration name="ApiVitalisApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.ApiVitalisApplication" />
       <module name="api-vitalis" />
@@ -174,10 +170,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ContratoServiceTest" />
         <item itemvalue="Application.ApiVitalisApplication" />
         <item itemvalue="JUnit.Service in api-vitalis" />
         <item itemvalue="JUnit.FichaServiceTest" />
-        <item itemvalue="JUnit.ContratoServiceTest" />
         <item itemvalue="JUnit.FichaServiceTest.cenarioErradoBuscarPorId" />
       </list>
     </recent_temporary>

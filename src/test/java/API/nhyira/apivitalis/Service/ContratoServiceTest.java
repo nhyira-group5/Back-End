@@ -33,6 +33,9 @@ class ContratoServiceTest {
     private ContratoRepository contratoRepository;
 
     @Mock
+    private UsuarioService usuarioService;
+
+    @Mock
     private UsuarioRepository  usuarioRepository;
 
     @Mock
@@ -47,8 +50,8 @@ class ContratoServiceTest {
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
         LocalDate dataNascPersoanl = LocalDate.parse("1999-09-14");
 
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null);
-        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
+        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null, null);
         ChatCreateEditDto chat = new ChatCreateEditDto();
 
         LocalDate dataInicio = LocalDate.parse("2024-08-13");
@@ -95,17 +98,13 @@ class ContratoServiceTest {
         when(contratoRepository.save(contratoAtualizada)).thenReturn(contratoAtualizacao);
 
         Contrato contratoResposta = contratoService.updtUser(idInformado, contrato);
-
+        usuarioService.afiliacao(contratoAtualizada.getUsuarioId(), contratoAtualizada.getPersonalId());
         assertNotNull(contratoResposta.getIdContrato());
         assertEquals(contratoResposta.getAfiliacao(), contratoAtualizacao.getAfiliacao());
 
         verify(contratoRepository, times(1)).findById(idInformado);
         verify(contratoRepository, times(0)).existsById(idInformado);
     }
-
-
-
-
 
     @Test
     @DisplayName("Dado que, vou buscar um contrato por id e retorne o objeto desejado")
@@ -202,8 +201,8 @@ class ContratoServiceTest {
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
         LocalDate dataNascPersoanl = LocalDate.parse("1999-09-14");
 
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null);
-        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
+        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null, null);
         LocalDate dataInicio = LocalDate.parse("2024-08-13");
 
         Contrato contratoParaSalvar = new Contrato(null, usuario, personal, dataInicio , null, 0);

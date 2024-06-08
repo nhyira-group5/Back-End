@@ -27,6 +27,7 @@ public class ContratoService {
 
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
     private final ChatService chatService;
 
     public Contrato create(Contrato contrato, int id, int idPersonal){
@@ -64,6 +65,7 @@ public class ContratoService {
         Contrato contratoUpd = ContratoMapper.toEdit(optContrato.get(), contrato);
         contratoUpd.setAfiliacao(1);
         contratoRepository.save(contratoUpd);
+        usuarioService.afiliacao(contratoUpd.getUsuarioId(), contratoUpd.getPersonalId());
         return optContrato.get();
     }
 

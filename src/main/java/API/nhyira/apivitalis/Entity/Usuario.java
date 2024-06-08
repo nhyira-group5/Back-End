@@ -30,6 +30,10 @@ public class Usuario {
     @JoinColumn(name = "midiaId")
     private Midia midiaId;
 
+    @ManyToOne
+    @JoinColumn(name = "personalId")
+    private Usuario personalId;
+
     public enum TipoUsuario {
         USUARIO,
         PERSONAL,

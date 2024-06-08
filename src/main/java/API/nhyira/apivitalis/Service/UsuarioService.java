@@ -155,6 +155,13 @@ public class UsuarioService {
         throw new NaoEncontradoException("Id");
     }
 
+
+    public Usuario afiliacao(Usuario usuario, Usuario personal){
+        usuario.setPersonalId(personal);
+        uRep.save(usuario);
+        return usuario;
+    }
+
     public boolean delUser(int id) {
             if (!uRep.existsById(id)) {
                 throw new NaoEncontradoException("Id");
@@ -196,6 +203,7 @@ public class UsuarioService {
             throw new RuntimeException("Erro ao buscar o usuário: " + e.getMessage());
         }
     }
+
 
     private int binarySearch(List<Usuario> usuarios, String usernameAlvo) {
         int esquerda = 0;
