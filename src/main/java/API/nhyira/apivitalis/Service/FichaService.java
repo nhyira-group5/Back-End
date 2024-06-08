@@ -13,6 +13,8 @@ import API.nhyira.apivitalis.Repository.FichaRepository;
 import API.nhyira.apivitalis.Repository.MetaRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import API.nhyira.apivitalis.utils.ListaUtils;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,15 +37,15 @@ public class FichaService {
     private final UsuarioRepository usuarioRepository;
 
 
+
     public Ficha create(Ficha dto, int idUsuario) {
         if (dto == null)throw new ErroClienteException("Ficha");
 
         Optional<Usuario> optUsuario = usuarioRepository.findById(idUsuario);
         optUsuario.orElseThrow(() -> new  NaoEncontradoException("Usuario"));
         dto.setUsuarioId(optUsuario.get());
-
-        fichaRepository.save(dto);
-        return dto;
+        Ficha ficha = fichaRepository.save(dto);
+        return ficha;
     }
 
     public Ficha showFicha(int id){

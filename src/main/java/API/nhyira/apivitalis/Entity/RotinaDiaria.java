@@ -26,6 +26,7 @@ public class RotinaDiaria {
     @OneToMany(mappedBy = "rotinaDiariaId")
     private List<Treino> treinoId;
 
+    private Integer dia;
 
     @OneToMany(mappedBy = "rotinaDiariaId")
     private List<RefeicaoDiaria> refeicaoDiariaId;

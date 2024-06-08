@@ -19,6 +19,7 @@ public class RotinaDiariaMapper {
         rotinaDiariaExibitionDto.setRotinaSemanalId(rotinaSemanalDto(rotinaDiaria.getRotinaSemanalId()));
         rotinaDiariaExibitionDto.setTreinoDto(treinoDtos(rotinaDiaria.getTreinoId()));
         rotinaDiariaExibitionDto.setRefeicaoDiariaDtos(refeicaoDiariaDtos(rotinaDiaria.getRefeicaoDiariaId()));
+        rotinaDiariaExibitionDto.setDia(rotinaDiaria.getDia());
         return rotinaDiariaExibitionDto;
     }
 
