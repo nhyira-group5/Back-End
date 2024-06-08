@@ -14,6 +14,7 @@ public class RotinaDiariaExibitionDto {
     private RotinaMensalExibitionDto.RotinaSemanalDto rotinaSemanalId;
 
     private Integer concluido;
+    private Integer dia;
 
     private List<TreinoDto> treinoDto;
 

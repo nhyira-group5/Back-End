@@ -54,12 +54,14 @@ class ContratoServiceTest {
         LocalDate dataInicio = LocalDate.parse("2024-08-13");
 
 
-        Contrato contratoParaSalvar = new Contrato(null, usuario, personal, dataInicio , null, 0);
+        Contrato contratoParaSalvar = new Contrato(null, null, null, dataInicio , null, 0);
         Contrato contratoSalvo = new Contrato(1, usuario, personal, dataInicio , null, 0);
 
-        when(contratoRepository.save(contratoParaSalvar)).thenReturn(contratoSalvo);
         when(usuarioRepository.findById(usuario.getIdUsuario())).thenReturn(Optional.of(usuario));
         when(usuarioRepository.findById(personal.getIdUsuario())).thenReturn(Optional.of(personal));
+        contratoParaSalvar.setUsuarioId(usuario);
+        contratoParaSalvar.setPersonalId(personal);
+        when(contratoRepository.save(contratoParaSalvar)).thenReturn(contratoSalvo);
 
 
         chat.setAtivo(false);
