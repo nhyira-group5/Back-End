@@ -17,5 +17,6 @@ public class UsuarioExibitionDto {
     private String email;
     private Midia midia;
     private Usuario.TipoUsuario tipo; // Alterado para String
+    private UsuarioDto personalId;
     private double imc;
 }

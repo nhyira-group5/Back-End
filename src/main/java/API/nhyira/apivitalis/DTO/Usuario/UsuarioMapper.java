@@ -37,7 +37,7 @@ public class UsuarioMapper {
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
             user.setMidia(entity.getMidiaId());
-
+            user.setPersonalId(usuarioDto(entity.getPersonalId()));
             return user;
         }
         return null;
@@ -96,5 +96,18 @@ public class UsuarioMapper {
         usuario.setToken(token);
 
         return usuario;
+    }
+
+
+    public static UsuarioDto usuarioDto(Usuario usuario){
+        if (usuario == null)return null;
+        UsuarioDto usuarioDto = new UsuarioDto();
+
+        usuarioDto.setNome(usuario.getNome());
+        usuarioDto.setSexo(usuario.getSexo());
+        usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setTipo(usuario.getTipo());
+        usuarioDto.setNickname(usuario.getNickname());
+        return usuarioDto;
     }
 }
