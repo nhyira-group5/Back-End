@@ -31,7 +31,7 @@ public class ExercicioMapper {
     }
 
 
-    public ExercicioExibition toDto(Exercicio exercicio) {
+    public static ExercicioExibition toDto(Exercicio exercicio) {
         ExercicioExibition dto = new ExercicioExibition();
         dto.setIdExercicio(exercicio.getIdExercicio());
         dto.setNome(exercicio.getNome());
@@ -46,7 +46,7 @@ public class ExercicioMapper {
         return dto;
     }
 
-    public List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){
+    public static List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){
         return tagExercicioList.stream().map(te -> {
             ExercicioExibition.TagExibitionDto tagExibitionDto = new ExercicioExibition.TagExibitionDto();
 
@@ -59,7 +59,7 @@ public class ExercicioMapper {
 
 
 
-    public Exercicio toEntity(ExercicioCreateEditDto exercicioDTO) {
+    public  Exercicio toEntity(ExercicioCreateEditDto exercicioDTO) {
         Exercicio exercicio = new Exercicio();
         exercicio.setNome(exercicioDTO.getNome());
         exercicio.setDescricao(exercicioDTO.getDescricao());

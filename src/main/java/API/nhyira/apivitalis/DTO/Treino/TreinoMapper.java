@@ -26,6 +26,11 @@ public class TreinoMapper {
         return treinoExibitionDto;
     }
 
+
+    public static List<TreinoExibitionDto> toDto(List<Treino> treinos){
+        return treinos.stream().map(TreinoMapper::toDto).toList();
+    }
+
     public static ExercicioExibition exercicioDto(Exercicio exercicio){
         if(exercicio == null)return null;
 

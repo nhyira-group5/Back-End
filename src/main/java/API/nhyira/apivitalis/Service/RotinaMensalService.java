@@ -16,10 +16,19 @@ import java.util.Optional;
 public class RotinaMensalService {
     private final RotinaMensalRepository rotinaMensalRepository;
     private final RotinaUsuarioRepository rotinaUsuarioRepository;
+    private final RotinaUsuarioService usuarioService;
     public RotinaMensal show(int id, int mes){
         Optional<RotinaUsuario> optRotinaUsuairo = rotinaUsuarioRepository.findById(id);
         optRotinaUsuairo.orElseThrow(() -> new NaoEncontradoException("Rotina usuario"));
         RotinaMensal rotinaMensal = rotinaMensalRepository.buscarMes(optRotinaUsuairo.get(), mes);
+        if (rotinaMensal == null)throw new NaoEncontradoException("Rotina do mes");
+        return rotinaMensal;
+    }
+
+
+    public RotinaMensal showPorUsuario(int id, int mes){
+        RotinaUsuario rotinaUsuario = usuarioService.show(id);
+        RotinaMensal rotinaMensal = rotinaMensalRepository.buscarMes(rotinaUsuario, mes);
         if (rotinaMensal == null)throw new NaoEncontradoException("Rotina do mes");
         return rotinaMensal;
     }

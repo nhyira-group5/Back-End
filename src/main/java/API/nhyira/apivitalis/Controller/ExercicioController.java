@@ -1,7 +1,11 @@
 package API.nhyira.apivitalis.Controller;
 
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioCreateEditDto;
+import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
+import API.nhyira.apivitalis.DTO.Exercicio.ExercicioMapper;
+import API.nhyira.apivitalis.DTO.Treino.TreinoMapper;
+import API.nhyira.apivitalis.Entity.Exercicio;
 import API.nhyira.apivitalis.Service.ExercicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +41,14 @@ public class ExercicioController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExercicioExibitionDto> getExercicioById(@PathVariable Integer id) {
+    public ResponseEntity<ExercicioExibition> getExercicioById(@PathVariable Integer id) {
         return ResponseEntity.ok(exercicioService.getExercicioById(id));
+    }
+
+    @GetMapping("buscarPorTreino/{id}")
+    public ResponseEntity<ExercicioExibition> buscarPorTreino(@PathVariable Integer id) {
+        Exercicio exercicio = exercicioService.showPorRotina(id);
+        return ResponseEntity.ok(ExercicioMapper.toDto(exercicio));
     }
 
 }

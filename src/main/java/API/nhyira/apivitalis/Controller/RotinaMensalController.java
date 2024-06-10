@@ -22,4 +22,12 @@ public class RotinaMensalController {
         return ResponseEntity.ok(exibitionDto);
     }
 
+
+    @GetMapping("buscarIdUsuario/{id}/mes")
+    public ResponseEntity<RotinaMensalExibitionDto> buscarIdUsuario(@PathVariable int id, @RequestParam int mes){
+        RotinaMensal rotinaMensal = service.showPorUsuario(id, mes);
+        RotinaMensalExibitionDto exibitionDto = RotinaMensalMapper.toDto(rotinaMensal);
+        return ResponseEntity.ok(exibitionDto);
+    }
+
 }

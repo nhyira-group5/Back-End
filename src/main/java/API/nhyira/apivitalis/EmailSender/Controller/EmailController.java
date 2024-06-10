@@ -33,4 +33,21 @@ public class EmailController {
                     .body("Falha ao enviar e-mail: " + e.getMessage());
         }
     }
+    @PostMapping("/enviarPagamento")
+    public ResponseEntity<String> enviarEmailPagamento(
+            @RequestBody EmailModel emailRequest
+    ) {
+        if (!emailService.validarEmail(emailRequest.getDestinatario())) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email Inválido!");
+        }
+
+        try {
+            emailService.enviarEmailPagamento(emailRequest.getDestinatario(), emailRequest.getAssunto(), emailRequest.getDestinatario());
+            return ResponseEntity.ok("E-mail de pagamento enviado com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Falha ao enviar e-mail de pagamento: " + e.getMessage());
+        }
+    }
+
 }

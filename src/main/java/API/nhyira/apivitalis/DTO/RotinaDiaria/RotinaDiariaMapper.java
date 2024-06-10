@@ -23,6 +23,10 @@ public class RotinaDiariaMapper {
         return rotinaDiariaExibitionDto;
     }
 
+    public static List<RotinaDiariaExibitionDto> toDtos(List<RotinaDiaria> rotinaDiarias) {
+        return rotinaDiarias.stream().map(RotinaDiariaMapper::toDto).toList();
+    }
+
 
     public static RotinaMensalExibitionDto.RotinaSemanalDto rotinaSemanalDto(RotinaSemanal rotinaSemanal){
         if (rotinaSemanal == null)return null;

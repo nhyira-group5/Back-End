@@ -7,6 +7,7 @@ import API.nhyira.apivitalis.Pagamento.DTO.PagamentoCreateEditDto;
 import API.nhyira.apivitalis.Pagamento.Repository.PagamentoRepository;
 import API.nhyira.apivitalis.Repository.AssinaturaRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
+import API.nhyira.apivitalis.EmailSender.Service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -36,6 +37,9 @@ public class MercadoPagoService {
 
     @Autowired
     private AssinaturaRepository assinaturaRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private PagamentoMapper pagamentoMapper;
@@ -157,7 +161,16 @@ public class MercadoPagoService {
             pagamento.setDataPagamento(LocalDateTime.now());
             pagamentoRepository.save(pagamento);
 
+            String status = (String) paymentResponse.get("status");
+            if ("approved".equals(status)) {
+                emailService.enviarEmailPagamento(usuario.getEmail(), "Pagamento Aprovado", usuario.getNome());
+            } else {
+                logger.warn("Status do pagamento não aprovado: {}", status);
+            }
+
+
             return paymentResponse;
+
         } catch (HttpClientErrorException e) {
             logger.error("Erro ao criar pagamento: " + e.getResponseBodyAsString(), e);
             throw new RuntimeException("Erro ao criar pagamento", e);

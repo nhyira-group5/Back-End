@@ -9,6 +9,7 @@ import API.nhyira.apivitalis.Repository.RotinaDiarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,12 +19,18 @@ public class RotinaDiariaService {
 
     private final RotinaDiarioRepository diarioRepository;
 
-    private final RotinaSemanalRepository semanalRepository;
+    private final RotinaSemanalService semanalService;
 
     public RotinaDiaria show(int id) {
         Optional<RotinaDiaria> rotinaDiario = diarioRepository.findById(id);
         rotinaDiario.orElseThrow(() -> new NaoEncontradoException("Rotina Diario"));
         return rotinaDiario.get();
+    }
+
+    public List<RotinaDiaria> showPorSemanal(int id) {
+        RotinaSemanal rotinaSemanal = semanalService.show(id);
+        List<RotinaDiaria> rotinaDiaria = diarioRepository.findByRotinaSemanalIdIs(rotinaSemanal);
+        return rotinaDiaria;
     }
 
 }

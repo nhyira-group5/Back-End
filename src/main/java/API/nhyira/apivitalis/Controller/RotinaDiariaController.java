@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rotinaDiarias")
 @RequiredArgsConstructor
@@ -20,7 +22,14 @@ public class RotinaDiariaController {
     private final RotinaDiariaService rotinaDiariaService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<RotinaDiariaExibitionDto> show(@PathVariable int id){
+    public ResponseEntity<List<RotinaDiariaExibitionDto>> show(@PathVariable int id){
+        List<RotinaDiaria> rotinaDiaria = rotinaDiariaService.showPorSemanal(id);
+        if (rotinaDiaria.isEmpty())return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(RotinaDiariaMapper.toDtos(rotinaDiaria));
+    }
+
+    @GetMapping("buscarIdDiario/{id}")
+    public ResponseEntity<RotinaDiariaExibitionDto> showPorIdDiario(@PathVariable int id){
         RotinaDiaria rotinaDiaria = rotinaDiariaService.show(id);
         return ResponseEntity.ok(RotinaDiariaMapper.toDto(rotinaDiaria));
     }

@@ -20,6 +20,21 @@ public class RotinaSemanalMapper {
     }
 
 
+    public static RotinaSemanalListExibitionDto toDtoList(RotinaSemanal rotinaSemanal){
+        if (rotinaSemanal == null)return null;
+        RotinaSemanalListExibitionDto rotinaSemanalExibitionDto = new RotinaSemanalListExibitionDto();
+        rotinaSemanalExibitionDto.setId(rotinaSemanal.getIdRotinaSemanal());
+        rotinaSemanalExibitionDto.setConcluido(rotinaSemanal.getConcluido());
+        rotinaSemanalExibitionDto.setRotinaMensalId(rotinaMensalDto(rotinaSemanal.getRotinaMensalId()));
+        return rotinaSemanalExibitionDto;
+    }
+
+
+    public static List<RotinaSemanalListExibitionDto> toDtos(List<RotinaSemanal> rotinaSemanals){
+        return rotinaSemanals.stream().map(RotinaSemanalMapper::toDtoList).toList();
+    }
+
+
     public static RotinaSemanalExibitionDto.RotinaMensalExibitionDto rotinaMensalDto(RotinaMensal rotinaMensal){
             RotinaSemanalExibitionDto.RotinaMensalExibitionDto rotinaSemanalExibitionDto = new RotinaSemanalExibitionDto.RotinaMensalExibitionDto();
             rotinaSemanalExibitionDto.setId(rotinaMensal.getIdRotinaMensal());
