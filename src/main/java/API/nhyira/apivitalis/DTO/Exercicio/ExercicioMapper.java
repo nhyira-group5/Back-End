@@ -11,8 +11,6 @@ import java.util.List;
 
 @Component
 public class ExercicioMapper {
-
-
     @Autowired
     private MidiaService midiaService;
 
@@ -26,10 +24,8 @@ public class ExercicioMapper {
         dto.setMidiaNome(midia.getNome());
         dto.setMidiaCaminho(midia.getCaminho());
         dto.setMidiaExtensao(midia.getExtensao());
-
         return dto;
     }
-
 
     public static ExercicioExibition toDto(Exercicio exercicio) {
         ExercicioExibition dto = new ExercicioExibition();
@@ -42,7 +38,6 @@ public class ExercicioMapper {
         dto.setMidiaNome(midia.getNome());
         dto.setMidiaCaminho(midia.getCaminho());
         dto.setMidiaExtensao(midia.getExtensao());
-
         return dto;
     }
 
@@ -56,16 +51,12 @@ public class ExercicioMapper {
         }).toList();
     }
 
-
-
-
     public  Exercicio toEntity(ExercicioCreateEditDto exercicioDTO) {
         Exercicio exercicio = new Exercicio();
         exercicio.setNome(exercicioDTO.getNome());
         exercicio.setDescricao(exercicioDTO.getDescricao());
 
-        Midia midia = midiaService.findById(exercicioDTO.getMidiaid())
-                .orElseThrow(() -> new RuntimeException("Midia não encontrada com o id: " + exercicioDTO.getMidiaid()));
+        Midia midia = midiaService.findById(exercicioDTO.getMidiaid());
         exercicio.setMidia(midia);
 
         return exercicio;

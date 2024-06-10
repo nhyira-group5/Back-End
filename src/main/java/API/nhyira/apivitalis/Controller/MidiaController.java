@@ -4,9 +4,11 @@ import API.nhyira.apivitalis.DTO.Midia.MidiaCreateEditDto;
 import API.nhyira.apivitalis.DTO.Midia.MidiaExibitionDto;
 import API.nhyira.apivitalis.Service.MidiaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -23,8 +25,8 @@ public class MidiaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MidiaExibitionDto> getMidiaById(@PathVariable Integer id) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(midiaService.getMidiaById(id));
-
     }
 
     @PostMapping("/uploadImage")
@@ -41,16 +43,18 @@ public class MidiaController {
 
     @PostMapping("/salvarMidia")
     public ResponseEntity<MidiaExibitionDto> createMidia(@RequestBody MidiaCreateEditDto midiaDTO) {
-        return ResponseEntity.ok(midiaService.createMidia(midiaDTO));
+        return ResponseEntity.status(201).body(midiaService.createMidia(midiaDTO));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MidiaExibitionDto> updateMidia(@PathVariable Integer id, @RequestBody MidiaCreateEditDto midiaDTO) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(midiaService.updateMidia(id, midiaDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMidia(@PathVariable Integer id) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         midiaService.deleteMidia(id);
         return ResponseEntity.ok().build();
     }
