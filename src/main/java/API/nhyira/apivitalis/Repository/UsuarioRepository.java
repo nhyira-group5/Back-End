@@ -16,11 +16,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByCpf(String cpf);
 
-    @Query("SELECT u FROM Usuario u WHERE u.tipo =1")
+    @Query("SELECT u FROM Usuario u WHERE u.tipo = 1")
     List<Usuario> buscarPersonal();
 
     @Query("SELECT u FROM Usuario u WHERE u.tipo = 0")
     List<Usuario> buscarUsuarios();
-
-
 }

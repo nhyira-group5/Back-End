@@ -28,16 +28,11 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
-
     private final UsuarioRepository uRep;
-
     private final PasswordEncoder encoder;
-
     private final EmailService emailService;
-
     private final AuthenticationManager authenticationManagerForUsuarios;
     private final TokenGenJwt tokenGenJwt;
-
     private final Set<String> emailsEnviados = new HashSet<>();
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLogin) {
@@ -64,9 +59,7 @@ public class UsuarioService {
         }
 
         final String token = tokenGenJwt.generateToken(auth, tipo);
-
         String emailDoUsuario = user.getEmail();
-
 
         if (!emailsEnviados.contains(emailDoUsuario)) {
             enviarEmailDeBoasVindas(emailDoUsuario);
@@ -77,22 +70,17 @@ public class UsuarioService {
         return UsuarioMapper.of(user, token);
     }
 
-
     private void enviarEmailDeBoasVindas(String destinatario) {
         String assunto = "Bem-vindo à Aplicação";
         String conteudo = gerarConteudoEmailDeBoasVindas(destinatario);
         emailService.enviarEmail(new EmailModel(destinatario, assunto, conteudo));
     }
 
-
     private String gerarConteudoEmailDeBoasVindas(String destinatario) {
         return "Olá " + destinatario + ",\n\n" +
                 "Obrigado por se cadastrar na aplicação! Aproveite para explorar nossos recursos e funcionalidades.\n\n" +
                 "Atenciosamente,\nSua Equipe de Suporte Daniel Santos";
     }
-
-
-
 
     public Usuario createUser(Usuario usuario) {
             if (usuario == null) {
@@ -155,7 +143,6 @@ public class UsuarioService {
         throw new NaoEncontradoException("Id");
     }
 
-
     public Usuario afiliacao(Usuario usuario, Usuario personal){
         usuario.setPersonalId(personal);
         uRep.save(usuario);
@@ -171,7 +158,6 @@ public class UsuarioService {
 
     }
 
-
     public List<Usuario> getAllUsers(){return uRep.findAll();}
 
     public boolean nomeUnique(String username) {
@@ -185,8 +171,6 @@ public class UsuarioService {
     public boolean cpfUnique(String cpf) {
         return uRep.findByCpf(cpf).isPresent();
     }
-
-
 
     public UsuarioExibitionDto findUserByUsername(String username) {
         try {
@@ -203,7 +187,6 @@ public class UsuarioService {
             throw new RuntimeException("Erro ao buscar o usuário: " + e.getMessage());
         }
     }
-
 
     private int binarySearch(List<Usuario> usuarios, String usernameAlvo) {
         int esquerda = 0;
@@ -223,7 +206,6 @@ public class UsuarioService {
                 direita = meio - 1;
             }
         }
-
         return -1;
     }
 }
