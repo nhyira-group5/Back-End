@@ -53,9 +53,14 @@ public class AuthConfig {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/*"),
+            new AntPathRequestMatcher("/usuarios/por-username", "GET"),
+            new AntPathRequestMatcher("/usuarios", "GET"),
+            new AntPathRequestMatcher("/usuarios", "POST"),
+            new AntPathRequestMatcher("/login/usuario", "POST"),
             new AntPathRequestMatcher("/usuarios/**", "GET"),
             new AntPathRequestMatcher("/usuarios/**", "DELETE"),
             new AntPathRequestMatcher("/usuarios/**", "PUT"),
+            new AntPathRequestMatcher("/usuarios/**", "POST"),
             new AntPathRequestMatcher("/usuarios/download", "GET"),
             new AntPathRequestMatcher("/enderecos/**"),
             new AntPathRequestMatcher("/especialidades/**"),
@@ -67,6 +72,8 @@ public class AuthConfig {
             new AntPathRequestMatcher("/email", "POST"),
             new AntPathRequestMatcher("/fichas/**"),
             new AntPathRequestMatcher("/midias/**"),
+            new AntPathRequestMatcher("/midias/uploadImage", "POST"),
+            new AntPathRequestMatcher("/midias/uploadVideo", "POST"),
             new AntPathRequestMatcher("/especialidadesPorMetas/**"),
             new AntPathRequestMatcher("/rotinaUsuarios/**"),
             new AntPathRequestMatcher("/rotinaMensais/**"),
@@ -85,8 +92,6 @@ public class AuthConfig {
             new AntPathRequestMatcher("/alimentos-por-refeicoes/**"),
             new AntPathRequestMatcher("/refeicoes-por-dietas/**"),
             new AntPathRequestMatcher("/sqlserver/data/insert**"),
-            new AntPathRequestMatcher("/usuarios", "POST"),
-            new AntPathRequestMatcher("/login/usuario", "POST"),
             new AntPathRequestMatcher("/error/**"),
     };
 
@@ -125,6 +130,7 @@ public class AuthConfig {
         authenticationManagerBuilder.authenticationProvider(new AuthUsuarioProvider(authUsuarioService, passwordEncoder()));
         return authenticationManagerBuilder.build();
     }
+
     @Bean
     public AuthEntryPoint jwtAuthenticationEntryPoint() {
         return new AuthEntryPoint();
@@ -150,7 +156,7 @@ public class AuthConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.applyPermitDefaultValues();
         corsConfiguration.setAllowedMethods(
-                Arrays.asList (
+                Arrays.asList(
                         HttpMethod.GET.name(),
                         HttpMethod.POST.name(),
                         HttpMethod.PUT.name(),

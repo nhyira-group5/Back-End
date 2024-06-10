@@ -8,8 +8,10 @@ import API.nhyira.apivitalis.Repository.MidiaRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +21,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class MidiaService {
-
     @Autowired
     private MidiaRepository midiaRepository;
 
@@ -29,8 +30,8 @@ public class MidiaService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Midia> findById(Integer id) {
-        return midiaRepository.findById(id);
+    public Midia findById(int id) {
+        return midiaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     private Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
@@ -57,7 +58,7 @@ public class MidiaService {
     }
 
     public MidiaExibitionDto getMidiaById(Integer id) {
-        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new RuntimeException("Mídia não encontrada com o id: " + id));
+        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return MidiaMapper.toDTO(midia);
     }
 
@@ -68,7 +69,7 @@ public class MidiaService {
     }
 
     public MidiaExibitionDto updateMidia(Integer id, MidiaCreateEditDto midiaDTO) {
-        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new RuntimeException("Mídia não encontrada com o id: " + id));
+        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         midia.setNome(midiaDTO.getNome());
         midia.setCaminho(midiaDTO.getCaminho());
         midia.setExtensao(midiaDTO.getExtensao());
@@ -77,6 +78,7 @@ public class MidiaService {
     }
 
     public void deleteMidia(Integer id) {
-        midiaRepository.deleteById(id);
+        Midia midia = midiaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        midiaRepository.delete(midia);
     }
 }

@@ -14,6 +14,9 @@ import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Exception.SemConteudoException;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,15 +35,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
-
-
     private final UsuarioRepository uRep;
-
     private final PasswordEncoder encoder;
-
-
     private final AuthenticationManager authenticationManagerForUsuarios;
-
     private final TokenGenJwt tokenGenJwt;
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLogin) {
@@ -78,37 +75,37 @@ public class UsuarioService {
     }
 
     public Usuario createUser(Usuario usuario) {
-            if (usuario == null) {
-                throw new ErroClienteException("Usuario");
-            }
-            if(cpfUnique(usuario.getCpf())){
-                throw new ConflitoException("CPF");
-            }
-            if (nomeUnique(usuario.getNickname())){
-                throw new ConflitoException("Nickname");
-            }
-            if (emailUnique(usuario.getEmail())){
-                throw new ConflitoException("Email");
-            }
+        if (usuario == null) {
+            throw new ErroClienteException("Usuario");
+        }
+        if (cpfUnique(usuario.getCpf())) {
+            throw new ConflitoException("CPF");
+        }
+        if (nomeUnique(usuario.getNickname())) {
+            throw new ConflitoException("Nickname");
+        }
+        if (emailUnique(usuario.getEmail())) {
+            throw new ConflitoException("Email");
+        }
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         uRep.save(usuario);
         return usuario;
     }
 
     public List<Usuario> showAllUsers() {
-            List<Usuario> allUsers = uRep.buscarUsuarios();
-            if (allUsers.isEmpty()){
-                throw new SemConteudoException("Usuarios");
-            }
-            return allUsers;
+        List<Usuario> allUsers = uRep.buscarUsuarios();
+        if (allUsers.isEmpty()) {
+            throw new SemConteudoException("Usuarios");
+        }
+        return allUsers;
     }
 
     public List<Usuario> showAllUsersPersonal() {
-            List<Usuario> allUsers = uRep.buscarPersonal();
-            if (allUsers.isEmpty()){
-                throw new SemConteudoException("Personais");
-            }
-            return allUsers;
+        List<Usuario> allUsers = uRep.buscarPersonal();
+        if (allUsers.isEmpty()) {
+            throw new SemConteudoException("Personais");
+        }
+        return allUsers;
     }
 
     public Usuario showUserById(int id) {
@@ -121,34 +118,35 @@ public class UsuarioService {
         if (uRep.existsById(id)) {
             Optional<Usuario> user = uRep.findById(id);
             user.orElseThrow(() -> new NaoEncontradoException("usuario"));
-            if(cpfUnique(updatedUser.getCpf())){
+            if (cpfUnique(updatedUser.getCpf())) {
                 throw new ConflitoException("CPF");
             }
-            if (nomeUnique(updatedUser.getNickname())){
+            if (nomeUnique(updatedUser.getNickname())) {
                 throw new ConflitoException("UserName");
             }
-            if (emailUnique(updatedUser.getEmail())){
+            if (emailUnique(updatedUser.getEmail())) {
                 throw new ConflitoException("Email");
             }
-                updatedUser.setSenha(encoder.encode(updatedUser.getSenha()));
-                Usuario usuario = UsuarioMapper.toEditDto(user.get(), updatedUser);
-                uRep.save(usuario);
-                return usuario;
+            updatedUser.setSenha(encoder.encode(updatedUser.getSenha()));
+            Usuario usuario = UsuarioMapper.toEditDto(user.get(), updatedUser);
+            uRep.save(usuario);
+            return usuario;
         }
         throw new NaoEncontradoException("Id");
     }
 
     public boolean delUser(int id) {
-            if (!uRep.existsById(id)) {
-                throw new NaoEncontradoException("Id");
-            }
+        if (!uRep.existsById(id)) {
+            throw new NaoEncontradoException("Id");
+        }
         uRep.deleteById(id);
         return true;
 
     }
 
-
-    public List<Usuario> getAllUsers(){return uRep.findAll();}
+    public List<Usuario> getAllUsers() {
+        return uRep.findAll();
+    }
 
     public boolean nomeUnique(String username) {
         return uRep.findByNickname(username).isPresent();
@@ -161,8 +159,6 @@ public class UsuarioService {
     public boolean cpfUnique(String cpf) {
         return uRep.findByCpf(cpf).isPresent();
     }
-
-
 
     public UsuarioExibitionDto findUserByUsername(String username) {
         try {
@@ -198,7 +194,6 @@ public class UsuarioService {
                 direita = meio - 1;
             }
         }
-
         return -1;
     }
 }

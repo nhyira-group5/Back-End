@@ -32,8 +32,7 @@ public class ExercicioMapper {
         exercicio.setNome(exercicioDTO.getNome());
         exercicio.setDescricao(exercicioDTO.getDescricao());
 
-        Midia midia = midiaService.findById(exercicioDTO.getMidiaid())
-                .orElseThrow(() -> new RuntimeException("Midia não encontrada com o id: " + exercicioDTO.getMidiaid()));
+        Midia midia = midiaService.findById(exercicioDTO.getMidiaid());
         exercicio.setMidia(midia);
 
         return exercicio;

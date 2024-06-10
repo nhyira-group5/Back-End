@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.Controller;
 
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
 import API.nhyira.apivitalis.Entity.Usuario;
@@ -8,8 +9,10 @@ import API.nhyira.apivitalis.Service.CsvService;
 import API.nhyira.apivitalis.Service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.util.List;
@@ -17,7 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
-
     @Autowired
     private UsuarioService uService;
 
@@ -53,21 +55,21 @@ public class UsuarioController {
             csvService.exportUsersToCsv();
             return ResponseEntity.status(200).body("Arquivo CSV gerado com sucesso.");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Erro ao gerar o arquivo CSV.");
+            return ResponseEntity.status(500).body("Erro ao gerar o arquivo CSV: " + e.getMessage());
         }
     }
 
-
-
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioExibitionDto> showUser (@PathVariable int id) {
+    public ResponseEntity<UsuarioExibitionDto> showUser(@PathVariable int id) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         Usuario user = uService.showUserById(id);
         UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(user);
         return ResponseEntity.ok(exibitionDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioExibitionDto> update(@PathVariable int id,@RequestBody @Valid UsuarioCreateEditDto updtUser ) {
+    public ResponseEntity<UsuarioExibitionDto> update(@PathVariable int id, @RequestBody @Valid UsuarioCreateEditDto updtUser) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         Usuario updatedUser = uService.updtUser(id, updtUser);
         UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(updatedUser);
         return ResponseEntity.status(200).body(exibitionDto);
@@ -75,13 +77,16 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         boolean user = uService.delUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/por-username")
-    public ResponseEntity<UsuarioExibitionDto> buscarUsuarioPorUsername(@RequestParam String username) {
-        UsuarioExibitionDto usuario = uService.findUserByUsername(username);
+    public ResponseEntity<UsuarioExibitionDto> buscarUsuarioPorUsername(
+            @RequestBody @Valid UsuarioDto user
+    ) {
+        UsuarioExibitionDto usuario = uService.findUserByUsername(user.getNickname());
         if (usuario != null) {
             return ResponseEntity.ok(usuario);
         } else {

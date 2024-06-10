@@ -6,12 +6,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class MidiaCreateEditDto {
-
     @NotNull
     @Size(max = 100)
     private String nome;
@@ -23,5 +22,4 @@ public class MidiaCreateEditDto {
     @NotNull
     @Size(max = 10)
     private String extensao;
-
 }
