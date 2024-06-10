@@ -14,8 +14,7 @@ import java.util.List;
 public class Exercicio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private Integer IdExercicio;
+    private Integer idExercicio;
 
 
     @ManyToOne

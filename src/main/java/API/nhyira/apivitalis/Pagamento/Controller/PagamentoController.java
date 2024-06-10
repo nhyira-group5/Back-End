@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/pagamento")
+@RequestMapping("/pagamentos")
 public class PagamentoController {
 
     @Autowired

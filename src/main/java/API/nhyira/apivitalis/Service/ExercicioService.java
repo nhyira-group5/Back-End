@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.Service;
 
+import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioMapper;
 import API.nhyira.apivitalis.Entity.Exercicio;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,8 +61,13 @@ public class ExercicioService {
                 .collect(Collectors.toList());
     }
 
-    public ExercicioExibitionDto getExercicioById(Integer id) {
+    public ExercicioExibition getExercicioById(Integer id) {
         Exercicio exercicio = exercicioRepository.findById(id).orElseThrow(() -> new  NaoEncontradoException("Exercicio"));
-        return exercicioMapper.toDTO(exercicio);
+        return exercicioMapper.toDto(exercicio);
+    }
+
+    public Exercicio showPorRotina(Integer id) {
+        Exercicio exercicio = exercicioRepository.buscarPorTreino(id);
+        return exercicio;
     }
 }
