@@ -17,8 +17,6 @@ public class EspecialidadePorPersonal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEspecialidade;
 
-    private LocalDate dtFormacao;
-
     @ManyToOne
     @JoinColumn(name = "personalId")
     private Usuario personalId;

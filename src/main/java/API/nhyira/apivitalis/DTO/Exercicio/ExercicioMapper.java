@@ -41,6 +41,11 @@ public class ExercicioMapper {
         return dto;
     }
 
+    public static List<ExercicioExibition> toDto(List<Exercicio> exercicios){
+        return exercicios.stream().map(ExercicioMapper::toDto).toList();
+
+    }
+
     public static List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){
         return tagExercicioList.stream().map(te -> {
             ExercicioExibition.TagExibitionDto tagExibitionDto = new ExercicioExibition.TagExibitionDto();

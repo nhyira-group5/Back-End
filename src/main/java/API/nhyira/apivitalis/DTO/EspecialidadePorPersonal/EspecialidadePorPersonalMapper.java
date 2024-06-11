@@ -15,7 +15,6 @@ public class EspecialidadePorPersonalMapper {
         if (dto == null)return null;
 
         EspecialidadePorPersonal especialidadePorPersonal = new EspecialidadePorPersonal();
-        especialidadePorPersonal.setDtFormacao(dto.getDtFormacao());
         return especialidadePorPersonal;
 
     }
@@ -25,7 +24,6 @@ public class EspecialidadePorPersonalMapper {
 
         EspecialidadePorPersonalExibitonDto exibitonDto = new EspecialidadePorPersonalExibitonDto();
         exibitonDto.setIdEspecialidade(especialidadePorPersonal.getIdEspecialidade());
-        exibitonDto.setDtFormacao(especialidadePorPersonal.getDtFormacao());
         exibitonDto.setPersonalId(usuarioDto(especialidadePorPersonal.getPersonalId()));
         exibitonDto.setEspecialidadeId(especialidadeDto(especialidadePorPersonal.getEspecialidadeId()));
         return exibitonDto;
@@ -60,8 +58,6 @@ public class EspecialidadePorPersonalMapper {
 
     public static EspecialidadePorPersonal toEdit(EspecialidadePorPersonal especialidadePorPersonal, EspecialidadePorPersonalCreateEditDto dto){
         if (dto == null)return null;
-
-        especialidadePorPersonal.setDtFormacao(dto.getDtFormacao());
         return especialidadePorPersonal;
 
 

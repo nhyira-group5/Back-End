@@ -13,9 +13,6 @@ import java.time.LocalDate;
 @Setter
 public class EspecialidadePorPersonalCreateEditDto {
 
-    @PastOrPresent
-    private LocalDate dtFormacao;
-
     @NotNull
     private int personalId;
 

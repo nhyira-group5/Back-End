@@ -17,8 +17,6 @@ public class EspecialidadePorPersonalExibitonDto {
 
     private int idEspecialidade;
 
-    private LocalDate dtFormacao;
-
 
     private UsuarioDto personalId;
 

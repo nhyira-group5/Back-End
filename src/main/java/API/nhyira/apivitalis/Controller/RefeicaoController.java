@@ -2,6 +2,7 @@ package API.nhyira.apivitalis.Controller;
 
 import API.nhyira.apivitalis.DTO.Alimento.AlimentoExibitionDto;
 import API.nhyira.apivitalis.DTO.Alimento.AlimentoMapper;
+import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibition;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionDto;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoMapper;
 import API.nhyira.apivitalis.Entity.Refeicao;
@@ -22,26 +23,26 @@ public class RefeicaoController {
     private final RefeicaoService refSrv;
 
     @GetMapping("/{id}")
-    public ResponseEntity<RefeicaoExibitionDto> showById(
+    public ResponseEntity<RefeicaoExibition> showById(
             @PathVariable int id
     ) {
         if (id <= 0) return ResponseEntity.badRequest().build();
-        RefeicaoExibitionDto refeicao = RefeicaoMapper.toDto(refSrv.getRefeicaoById(id));
+        RefeicaoExibition refeicao = RefeicaoMapper.toDTO(refSrv.getRefeicaoById(id));
         return ResponseEntity.ok(refeicao);
     }
 
     @GetMapping
-    public ResponseEntity<List<RefeicaoExibitionDto>> showAll() {
-        List<RefeicaoExibitionDto> refeicoes = RefeicaoMapper.toDto(refSrv.getAllRefeicoes());
+    public ResponseEntity<List<RefeicaoExibition>> showAll() {
+        List<RefeicaoExibition> refeicoes = RefeicaoMapper.toDTO(refSrv.getAllRefeicoes());
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
 
     @GetMapping("/por-dieta/{id}")
-    public ResponseEntity<List<RefeicaoExibitionDto>> showByDieta(
+    public ResponseEntity<List<RefeicaoExibition>> showByDieta(
             @PathVariable int id
     ) {
         if (id <= 0) return ResponseEntity.badRequest().build();
-        List<RefeicaoExibitionDto> refeicoes = RefeicaoMapper.toDto(refSrv.getAllRefeicoes());
+        List<RefeicaoExibition> refeicoes = RefeicaoMapper.toDTO(refSrv.getAllRefeicoes());
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
 }

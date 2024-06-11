@@ -8,10 +8,9 @@ import API.nhyira.apivitalis.Service.MuralService;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.mapper.Mapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,6 +29,12 @@ public class MuralController  {
     @GetMapping("/PorUsuarios/{id}")
     public ResponseEntity<MuralExibitionDto> showPorUsuario(@PathVariable int id){
         Mural mural = muralService.showPorUsuario(id);
+        return ResponseEntity.ok(MuralMapper.toDto(mural));
+    }
+
+    @GetMapping("PorData/{id}/date")
+    public ResponseEntity<MuralExibitionDto> showPorData(@PathVariable int id, @RequestParam LocalDate date){
+        Mural mural = muralService.showPorData(id, date);
         return ResponseEntity.ok(MuralMapper.toDto(mural));
     }
 
