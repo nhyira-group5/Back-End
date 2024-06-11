@@ -100,7 +100,6 @@ CREATE TABLE especialidade_por_personal (
     id_especialidade_personal INT IDENTITY,
     personal_id INT,
     especialidade_id INT,
-    dt_formacao DATE NOT NULL,
     PRIMARY KEY (id_especialidade_personal, personal_id, especialidade_id),
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario),
     FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade)
@@ -269,7 +268,7 @@ CREATE TABLE pagamento (
     usuario_id INT,
     assinatura_id INT,
     data_pagamento DATE NOT NULL,
-    tipo VARCHAR(100) CHECK (tipo IN ('Cart„o de dÈbito', 'Cart„o de crÈdito', 'PIX')) NOT NULL, 
+    tipo VARCHAR(100) CHECK (tipo IN ('Cart√£o de d√©bito', 'Cart√£o de cr√©dito', 'PIX')) NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
     FOREIGN KEY (assinatura_id) REFERENCES assinatura(id_assinatura)
 );
