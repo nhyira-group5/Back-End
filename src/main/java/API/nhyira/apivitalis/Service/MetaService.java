@@ -8,6 +8,7 @@ import API.nhyira.apivitalis.Repository.MetaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,13 @@ public class MetaService {
         optMeta.orElseThrow(() -> new NaoEncontradoException("Meta"));
         return optMeta.get();
     }
+    public List<Meta> shows(){
+        List<Meta> metas = metaRepository.findAll();
+        return metas;
+    }
+
+
+
 
 
 }

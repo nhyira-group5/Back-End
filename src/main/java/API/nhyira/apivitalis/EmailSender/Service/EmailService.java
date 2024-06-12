@@ -12,8 +12,8 @@ import java.util.Properties;
 public class EmailService {
 
     public void enviarEmail(EmailModel email) {
-        final String remetente = "VitalisNhyiraSoftware@outlook.com";
-        final String senha = "salada123";
+        final String remetente = "NhyiraVitalis@outlook.com";
+        final String senha = "Uchihamadara12345";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp-mail.outlook.com");
@@ -59,6 +59,10 @@ public class EmailService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Boolean validarEmail(String email) {
+        return email != null && !email.isEmpty() && email.matches("^(.+)@(.+)$") && email.length() <= 100;
     }
 
     public void enviarEmailPagamento(String destinatario, String assunto, String nomeUsuario) {
@@ -110,7 +114,5 @@ public class EmailService {
         }
     }
 
-    public Boolean validarEmail(String email) {
-        return email != null && !email.isEmpty() && email.matches("^(.+)@(.+)$") && email.length() <= 100;
-    }
+
 }

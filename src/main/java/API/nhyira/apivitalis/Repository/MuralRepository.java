@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -15,7 +16,13 @@ public interface MuralRepository extends JpaRepository<Mural, Integer> {
 
     Optional<Mural> findByUsuarioIdIs(Usuario usuario);
 
-    @Query("SELECT m FROM Mural m WHERE m.idMural = :id AND m.dtPostagem = :data")
-    Optional<Mural> buscarPorData(LocalDate data, Mural id);
+//    Optional<Mural> findByIdMuralAndDtPostagem(Integer idMural ,LocalDate data);
+
+
+    List<Mural> findByDtPostagemStartingWith(String date);
+
+
+//    @Query("SELECT m FROM Mural m WHERE m.idMural = :idMural AND m.dtPostagem = ':data%'")
+//    Optional<Mural> buscarPorData( Integer idMural ,LocalDate data);
 
 }

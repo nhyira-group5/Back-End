@@ -2,6 +2,9 @@ package API.nhyira.apivitalis.DTO.Mural;
 
 import API.nhyira.apivitalis.Entity.Mural;
 import API.nhyira.apivitalis.Entity.Usuario;
+import org.apache.maven.lifecycle.internal.LifecycleStarter;
+
+import java.util.List;
 
 public class MuralMapper {
 
@@ -16,6 +19,10 @@ public class MuralMapper {
         muralExibitionDto.setMidiaId(mural.getMidiaId());
         muralExibitionDto.setUsuarioId(usuarioDto(mural.getUsuarioId()));
         return muralExibitionDto;
+    }
+
+    public static List<MuralExibitionDto> toDto(List<Mural> muralList){
+        return muralList.stream().map(MuralMapper::toDto).toList();
     }
 
     public static MuralExibitionDto.UsuarioDto usuarioDto(Usuario usuario){

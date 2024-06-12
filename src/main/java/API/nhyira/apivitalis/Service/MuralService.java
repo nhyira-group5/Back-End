@@ -8,9 +8,11 @@ import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Repository.MuralRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.maven.lifecycle.internal.LifecycleStarter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -35,11 +37,12 @@ public class MuralService {
         return optionalMural.get();
     }
 
-    public Mural showPorData(int id, LocalDate dtPostagem){
-        Mural muralPorId = show(id);
-        Optional<Mural> mural = muralRepository.buscarPorData(dtPostagem,muralPorId);
-        mural.orElseThrow(() -> new NaoEncontradoException("mural"));
-        return mural.get();
+    public List<Mural> showPorData(LocalDate dtPostagem){
+//        Mural muralPorId = show(id);
+        String data = dtPostagem.toString();
+        List<Mural> mural = muralRepository.findByDtPostagemStartingWith(data);
+//        mural.orElseThrow(() -> new NaoEncontradoException("mural"));
+        return mural;
     }
 
 }
