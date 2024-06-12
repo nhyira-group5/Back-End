@@ -1,8 +1,5 @@
 USE vitalisDB;
 
-/* _______________________________________________________________________________ */
-/* Sessão de delete e truncate*/
-
 DELETE FROM lembrete WHERE id_lembrete > 0;
 DELETE FROM mural WHERE id_mural > 0;
 DELETE FROM ficha WHERE id_ficha > 0;
@@ -67,10 +64,62 @@ TRUNCATE TABLE meta;
 TRUNCATE TABLE midia;
 SET FOREIGN_KEY_CHECKS = 1;
 
+INSERT INTO midia (nome, caminho, extensao)
+VALUES
+('Amendoim', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/vt8bw3xzrhi7kl4zsgqn.jpg', 'JPG'), -- 1
+('Abacate', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/uwtjrjjhi8jdzybyywum.jpg', 'JPG'), -- 2
+('Virada Paulista', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/a2fog1ceujlidytlq8mb.jpg', 'JPG'), -- 3
+('Iogurte Natrural', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/a3c8smqnoit2zlnkmolr.jpg', 'JPG'), -- 4
+('Torresmo', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/aovf0uyvjadxwhemqa9q.jpg', 'JPG'), -- 5
+('Salada de Frango Grelhado', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/yjvjplvgmbm9iiphcazw.jpg', 'JPG'), -- 6
+('Salmão com Quinoa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/dwtji5jplzfbwyz87s1y.jpg', 'JPG'), -- 7
+('Salmão', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/ce2cadaqxklgvnif9fgb.jpg', 'JPG'), -- 8
+('Farofa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/h1tmwmeywou5tybswnxl.jpg', 'JPG'), -- 9
+('Salada de Folhas Verdes', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/aho0uljh4s5bnurbhdyx.jpg', 'JPG'), -- 10
+('Ovo', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/ltzbrusehrpnr7hrart8.jpg', 'JPG'), -- 11
+('Linguiça', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/hzgq0nexjgmos5dsu9fe.jpg', 'JPG'), -- 12
+('Omelete de Claras', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/lsiko15fxeljqxknyctk.jpg', 'JPG'), -- 13
+('Frango com Batata Doce', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/fyarzkwh5evynkfsne3m.png', 'PNG'), -- 14
+('Quinoa Cozida', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/bflbinmmdvgbicthxm4g.jpg', 'JPG'), -- 15
+('Legumes', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/eqvtmlcdxxealazxybnb.jpg', 'JPG'), -- 16
+('Couve', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/ojwatdeipahfpzs2ybdc.jpg', 'JPG'), -- 17
+('Carne de vaca', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/jywwig4axaeknweo2lwb.jpg', 'JPG'), -- 18
+('Carne de porco', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/mqoe5ulczacdmt6yf009.jpg', 'JPG'), -- 19
+('Feijão Preto', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/t7rcph08fvnvf3x4gezr.jpg', 'JPG'), -- 20
+('Frango', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/zjk4sr6ks3cvo8yl81r9.jpg', 'JPG'), -- 21
+('Carne com Aveia de Flocos', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/ow44exnjgm1ssi8taiav.png', 'PNG'), -- 22
+('Batata Doce', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/usewobqvvx4udhfrjfai.jpg', 'JPG'), -- 23
+('Arroz Branco', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/qrl878lcfpb6mr6sjrxy.png', 'PNG'), -- 24
+('Feijão Carioca', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/wvpq35wxctpzhlwf6qlv.jpg', 'JPG'), -- 25
+('Aveia em Flocos', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/ntlpyde4xobqrsajhwnz.jpg', 'JPG'), -- 26
 
-/* _______________________________________________________________________________ */
-/*							     Sessão de inserts			      		     	   */
-/* _______________________________________________________________________________ */
+('Flexão de Braço', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114562/exercicios/hicln1lwqn2c3vyoaj9a.png', 'PNG'), -- 27
+('Agachamento Livre', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/pgvfsvdimamebrlrq8lo.png', 'PNG'), -- 28
+('Prancha Abdominal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/ivw5kvvgd3i0fezhp3hm.jpg', 'JPG'), -- 29
+('Tríceps Pulley', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/llwqzomppzetvz6uuh8q.jpg', 'JPG'), -- 30
+('Leg Press', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/v8grdjhkjz4omtdmo4ex.jpg', 'JPG'), -- 31
+('Rosca Direta', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/cjnipso8b9ulpandg5bv.jpg', 'JPG'), -- 32
+('Remada Alta', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/mmqse4o4ovnqag8wedjx.jpg', 'JPG'), -- 33
+('Levantamento Terra', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/bzwkb7omeomketkbmiec.jpg', 'JPG'), -- 34
+('Crucifíxo com Halteres', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/yutkonjrjmfv7d8iypts.jpg', 'JPG'), -- 35
+('Elevação Frontal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/frbkgulpowtszrsv7jvt.jpg', 'JPG'), -- 36
+('Abdominal Crunch', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/u2fq2gpzi5whbvbaksd1.jpg', 'JPG'), -- 37
+('Puxada Frontal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/hadejd8zdzyzfjczbcyv.jpg', 'JPG'), -- 38
+('Desenvolvimento de Ombros', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/uz4heaadlg5kbg7kfw6x.jpg', 'JPG'), -- 39
+('Prancha Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/mjmi8zvimuknb9klj93j.jpg', 'JPG'), -- 40
+('Flexão de Pernas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/d8sg5iugt4g33jxjjmxz.webp', 'WEBP'), -- 41
+('Extensão de Tríceps', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/qa1qcjchjowfvixjfrji.jpg', 'JPG'), -- 42
+('Elevação Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/osnce7yjg5yv7crt5hur.jpg', 'JPG'), -- 43
+('Flexão Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718121243/exercicios/uni6orw0bcgl3stezl6m.jpg', 'JPG'), -- 44
+('Prancha Superman', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718121529/exercicios/tcpfhxtr5ts5uk6tug3m.png', 'PNG'), -- 45
+('Flexão de Braço Inclinada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718122137/exercicios/tpkblqnusy1iljk6bas5.webp', 'WEBP'), -- 46
+
+('foto-mural-1', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126019/mural/cw64tvqvz5zdxds2fcbg.jpg', 'JPG'), -- 47
+('foto-mural-2', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126019/mural/ehz6bscm88abrqts5thg.jpg', 'JPG'), -- 48
+
+('foto-mural-3', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/pwdze5jkmp2g59djagci.jpg', 'JPG'), -- 49
+('foto-mural-4', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/k5svjihaojkf1bo7ld3m.jpg', 'JPG'), -- 50
+('foto-mural-5', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/hmggcwuqr57hgoqagytp.jpg', 'JPG'); -- 51
 
 INSERT INTO meta (nome) VALUES
 ('Emagrecimento'),
@@ -84,9 +133,6 @@ INSERT INTO meta (nome) VALUES
 INSERT INTO assinatura (nome, valor) VALUES
 ('Viva Vitalis', 49.99);
 
-/* _______________________________________________________________________________ */
-/* Sessão de usuario */
-
 -- SENHA -> Daniel@23133 (todos)
 INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id) 
 VALUES 
@@ -98,19 +144,42 @@ INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recu
 VALUES 
 (0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2),
 (1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null),
-(1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null),
-(1, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Militão', '1999-07-18', 'F', 'admin@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
+(1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
+-- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Militão', '1999-07-18', 'F', 'admin@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
 
--- Inserção de contrato para o usuário com id_usuario 2 e personal_id 3
+INSERT INTO endereco (personal_id, logradouro, numero, bairro, cidade, estado, complemento, cep)
+VALUES
+(2, 'Avenida Wilson Carvalho', 10, 'Zerão', 'Macapá', 'AP', null, 68903025),
+(2, 'Rua Verdum', 112, 'Vila Nasser', 'Campo Grande', 'MS', null, 79117360),
+(2, ' Rua Alzira Gomes Queirós', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
+
+-- Inserção de contrato para o usuário com id_usuario 3 e personal_id 2
 INSERT INTO contrato (usuario_id, personal_id, afiliacao, inicio_contrato, fim_contrato) VALUES
 (3, 2, 1, '2024-01-01', '2024-12-31');
+
+INSERT INTO pagamento (assinatura_id, usuario_id, data_pagamento, tipo)
+VALUES
+(1, 2, '2024-01-01', 'PIX');
+
+INSERT INTO chat (usuario_id, personal_id, ativo)
+VALUES
+(3, 2, 1);
+
+INSERT INTO mensagem (chat_id, destinatario_id, remetente_id, assunto, data_hora)
+VALUES
+(1, 2, 3, "Bom dia! Tudo bem com você? Gostaria que conversar mais sobre minha rotina...", "2024-01-01 12:30:37"),
+(1, 3, 2, "Claro! Podemos nos encontrar no parque do Zerão? Podemos começar a treinar juntos!", "2024-01-01 12:30:59"),
+(1, 2, 3, "Legal! Compareço sim, pode ser as 17h? Outra coisa, pode me dar dicas no dia a dia? Meio que estou precisando kkkk", "2024-01-01 12:31:37"),
+(1, 3, 2, "Claro!", "2024-01-01 12:35:37");
 
 INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
 (1, 2),
 (2, 1);
 
-/* _______________________________________________________________________________ */
-/* Sessão de especialidade */
+INSERT INTO ficha (usuario_id, rotina_usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
+VALUES
+(1, 1, 58.60, 1.85, 0, 0, 0, 0, 0, 0),
+(3, 2, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
 
 INSERT INTO especialidade (nome) VALUES
 ('Emagrecimento'),
@@ -122,13 +191,13 @@ INSERT INTO especialidade (nome) VALUES
 ('Alongamento e Relaxamento');
 
 -- Atribuição de usuários personais a especialidades
-INSERT INTO especialidade_por_personal (personal_id, especialidade_id, dt_formacao) VALUES
-(4, 1, '2010-05-20'),  -- Marcos Silva Oliveira Pinto Santos é especializado em Emagrecimento desde 20 de maio de 2010
-(4, 3, '2012-08-15'),  -- Marcos Silva Oliveira Pinto Santos é especializado em Resistência Cardiovascular desde 15 de agosto de 2012
-(5, 2, '2015-03-10'),  -- Roberta Ferreira é especializada em Alta Intensidade (HIIT) desde 10 de março de 2015
-(5, 4, '2017-06-25'),  -- Roberta Ferreira é especializada em Flexibilidade e Mobilidade desde 25 de junho de 2017
-(6, 5, '2011-11-30'),  -- Pedro Gomes é especializado em Resistência Cardiovascular desde 30 de novembro de 2011
-(6, 3, '2013-09-18');  -- Pedro Gomes é especializado em Força e Resistência desde 18 de setembro de 2013
+INSERT INTO especialidade_por_personal (personal_id, especialidade_id) VALUES
+(2, 1),  -- Marcos Silva Oliveira Pinto Santos é especializado em Emagrecimento
+(2, 3),  -- Marcos Silva Oliveira Pinto Santos é especializado em Resistência Cardiovascular
+(4, 2),  -- Roberta Ferreira é especializada em Alta Intensidade (HIIT)
+(4, 4),  -- Roberta Ferreira é especializada em Flexibilidade e Mobilidade
+(5, 5),  -- Pedro Gomes é especializado em Resistência Cardiovascular
+(5, 3);  -- Pedro Gomes é especializado em Força e Resistência
 
 -- Inserção de correspondências entre especialidades e metas
 INSERT INTO especialidade_por_meta (especialidade_id, meta_id) VALUES
@@ -140,9 +209,6 @@ INSERT INTO especialidade_por_meta (especialidade_id, meta_id) VALUES
 (6, 6),   -- Peso Corporal -> Emagrecimento
 (6, 2),   -- Peso Corporal -> Ganho de massa muscular
 (7, 7);   -- Alongamento e Relaxamento -> Redução do Estresse
-
-/* _______________________________________________________________________________ */
-/* Sessão de treino */
 
 INSERT INTO tag (nome) VALUES
 ('Peitoral'),
@@ -162,26 +228,26 @@ INSERT INTO tag (nome) VALUES
 ('Oblíquos');
     
 INSERT INTO exercicio (midia_id, nome, descricao) VALUES
-(NULL, 'Flexão de Braço', 'Exercício que trabalha os músculos peitorais, deltoides e tríceps.'),
-(NULL, 'Agachamento Livre', 'Exercício para fortalecimento dos músculos das pernas e glúteos.'),
-(NULL, 'Remada Alta', 'Exercício para o desenvolvimento dos músculos das costas e dos ombros.'),
-(NULL, 'Abdominal Crunch', 'Exercício para fortalecimento dos músculos abdominais.'),
-(NULL, 'Levantamento Terra', 'Exercício composto que trabalha vários grupos musculares, incluindo os glúteos, costas e pernas.'),
-(NULL, 'Flexão Lateral do Tronco', 'Exercício para fortalecer os músculos oblíquos.'),
-(NULL, 'Rosca Direta', 'Exercício para o desenvolvimento dos músculos dos braços, especialmente os bíceps.'),
-(NULL, 'Elevação Frontal', 'Exercício para o desenvolvimento dos músculos dos ombros, principalmente o deltoide anterior.'),
-(NULL, 'Prancha Abdominal', 'Exercício estático para fortalecer os músculos abdominais e lombares.'),
-(NULL, 'Desenvolvimento de Ombros', 'Exercício para o desenvolvimento dos músculos dos ombros, especialmente o deltoide lateral.'),
-(NULL, 'Leg Press', 'Exercício para fortalecimento dos músculos das pernas, especialmente quadríceps e glúteos.'),
-(NULL, 'Crucifixo com Halteres', 'Exercício para o desenvolvimento dos músculos do peitoral, especialmente a porção esternal.'),
-(NULL, 'Tríceps Pulley', 'Exercício para o desenvolvimento dos músculos tríceps braquial, situados na parte posterior do braço.'),
-(NULL, 'Prancha Lateral', 'Exercício estático para fortalecer os músculos abdominais e oblíquos.'),
-(NULL, 'Flexão de Pernas', 'Exercício para fortalecimento dos músculos isquiotibiais e glúteos.'),
-(NULL, 'Puxada Frontal', 'Exercício para o desenvolvimento dos músculos das costas, especialmente os latíssimos do dorso.'),
-(NULL, 'Elevação Lateral', 'Exercício para o desenvolvimento dos músculos dos ombros, principalmente o deltoide médio.'),
-(NULL, 'Extensão de Tríceps', 'Exercício para o desenvolvimento dos músculos tríceps braquial, situados na parte posterior do braço.'),
-(NULL, 'Prancha Superman', 'Exercício para fortalecer os músculos do core, lombar e glúteos.'),
-(NULL, 'Flexão de Braço Inclinada', 'Variação da flexão de braço que trabalha mais intensamente os músculos do peitoral superior.');
+(27, 'Flexão de Braço', 'Exercício que trabalha os músculos peitorais, deltoides e tríceps.'),
+(28, 'Agachamento Livre', 'Exercício para fortalecimento dos músculos das pernas e glúteos.'),
+(33, 'Remada Alta', 'Exercício para o desenvolvimento dos músculos das costas e dos ombros.'),
+(37, 'Abdominal Crunch', 'Exercício para fortalecimento dos músculos abdominais.'),
+(34, 'Levantamento Terra', 'Exercício composto que trabalha vários grupos musculares, incluindo os glúteos, costa e pernas.'),
+(44, 'Flexão Lateral do Tronco', 'Exercício para fortalecer os músculos oblíquos.'),
+(32, 'Rosca Direta', 'Exercício para o desenvolvimento dos músculos dos braços, especialmente os bíceps.'),
+(36, 'Elevação Frontal', 'Exercício para o desenvolvimento dos músculos dos ombros, principalmente o deltoide anterior.'),
+(29, 'Prancha Abdominal', 'Exercício estático para fortalecer os músculos abdominais e lombares.'),
+(39, 'Desenvolvimento de Ombros', 'Exercício para o desenvolvimento dos músculos dos ombros, especialmente o deltoide lateral.'),
+(31, 'Leg Press', 'Exercício para fortalecimento dos músculos das pernas, especialmente quadríceps e glúteos.'),
+(35, 'Crucifixo com Halteres', 'Exercício para o desenvolvimento dos músculos do peitoral, especialmente a porção esternal.'),
+(30, 'Tríceps Pulley', 'Exercício para o desenvolvimento dos músculos tríceps braquial, situados na parte posterior do braço.'),
+(40, 'Prancha Lateral', 'Exercício estático para fortalecer os músculos abdominais e oblíquos.'),
+(41, 'Flexão de Pernas', 'Exercício para fortalecimento dos músculos isquiotibiais e glúteos.'),
+(38, 'Puxada Frontal', 'Exercício para o desenvolvimento dos músculos das costas, especialmente os latíssimos do dorso.'),
+(43, 'Elevação Lateral', 'Exercício para o desenvolvimento dos músculos dos ombros, principalmente o deltoide médio.'),
+(42, 'Extensão de Tríceps', 'Exercício para o desenvolvimento dos músculos tríceps braquial, situados na parte posterior do braço.'),
+(45, 'Prancha Superman', 'Exercício para fortalecer os músculos do core, lombar e glúteos.'),
+(46, 'Flexão de Braço Inclinada', 'Variação da flexão de braço que trabalha mais intensamente os músculos do peitoral superior.');
 
 -- Associações para o exercício 1 (Flexão de Braço)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
@@ -337,7 +403,6 @@ INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido) VALUES
 (8, 4, 0),
 (8, 5, 0);
 
--- Inserts para a segunda semana de cada rotina mensal
 INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
 VALUES 
 (1, 1, 0, 15, 3, '00:01:00'),
@@ -385,9 +450,6 @@ VALUES
 (7, 18, 0, 12, 3, '00:01:00'),
 (16, 18, 0, 10, 3, '00:01:30');
 
-/* _______________________________________________________________________________ */
-/* Sessão de dieta */
-
 INSERT INTO metrica (metrica) VALUES
 ('gramas'),
 ('quilogramas'),
@@ -401,47 +463,47 @@ INSERT INTO metrica (metrica) VALUES
 
 -- Inserção de refeições
 INSERT INTO refeicao (midia_id, nome, preparo) VALUES
-(NULL, 'Virada Paulista', 'Refeição típica da culinária paulista, composta por arroz, feijão, carne de porco, linguiça, couve refogada, torresmo, ovo frito e farofa.'),
-(NULL, 'Salada de Frango Grelhado', 'Refeição leve e saudável, composta por salada de folhas verdes, peito de frango grelhado, legumes grelhados e iogurte natural desnatado.'),
-(NULL, 'Salmão com Quinoa', 'Refeição nutritiva e pouco calórica, composta por salmão assado, quinoa cozida, abacate e omelete de claras.'),
-(NULL, 'Frango e batata doce', 'Refeição calórica e rica em proteínas para estimular o crescimento muscular, incluindo frango assado, batata doce assada, arroz branco e feijão preto.'),
-(NULL, 'Carne com aveia de flocos', 'Refeição balanceada com carboidratos e proteínas para fornecer energia e promover o ganho de massa muscular, incluindo carne vermelha grelhada, aveia em flocos, ovo cozido e amendoim.');
+(3, 'Virada Paulista', 'Refeição típica da culinária paulista, composta por arroz, feijão, carne de porco, linguiça, couve refogada, torresmo, ovo frito e farofa.'),
+(6, 'Salada de Frango Grelhado', 'Refeição leve e saudável, composta por salada de folhas verdes, peito de frango grelhado, legumes grelhados e iogurte natural desnatado.'),
+(7, 'Salmão com Quinoa', 'Refeição nutritiva e pouco calórica, composta por salmão assado, quinoa cozida, abacate e omelete de claras.'),
+(13, 'Frango e batata doce', 'Refeição calórica e rica em proteínas para estimular o crescimento muscular, incluindo frango assado, batata doce assada, arroz branco e feijão preto.'),
+(22, 'Carne com aveia de flocos', 'Refeição balanceada com carboidratos e proteínas para fornecer energia e promover o ganho de massa muscular, incluindo carne vermelha grelhada, aveia em flocos, ovo cozido e amendoim.');
 
 -- Inserção de alimentos da virada paulista
 INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(NULL, 'Arroz Branco', 45.0, 4.0, 0.5),
-(NULL, 'Feijão Carioca', 30.0, 7.0, 1.5),
-(NULL, 'Carne de Porco', 0.0, 20.0, 5.0),
-(NULL, 'Linguiça', 1.0, 18.0, 10.0),
-(NULL, 'Couve', 5.0, 2.0, 0.5),
-(NULL, 'Torresmo', 2.0, 5.0, 10.0),
-(NULL, 'Ovo', 1.0, 7.0, 5.0),						-- Vai ser usado também na refeição Carne com aveia de flocos"
-(NULL, 'Farofa', 20.0, 2.0, 10.0);
+(23, 'Arroz Branco', 45.0, 4.0, 0.5),
+(25, 'Feijão Carioca', 30.0, 7.0, 1.5),
+(19, 'Carne de Porco', 0.0, 20.0, 5.0),
+(12, 'Linguiça', 1.0, 18.0, 10.0),
+(17, 'Couve', 5.0, 2.0, 0.5),
+(5, 'Torresmo', 2.0, 5.0, 10.0),
+(11, 'Ovo', 1.0, 7.0, 5.0),						-- Vai ser usado também na refeição Carne com aveia de flocos"
+(9, 'Farofa', 20.0, 2.0, 10.0);
 
 -- Inserção de alimentos da Salada de Frango Grelhado
 INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(NULL, 'Salada de Folhas Verdes', 2.0, 1.0, 0.2),
-(NULL, 'Frango', 0.0, 30.0, 3.5),					-- Vai ser usado também na refeição "Frango e batata doce"
-(NULL, 'Legumes', 10.0, 2.0, 0.5),
-(NULL, 'Iogurte Natural', 4.0, 8.0, 0.2);
+(10, 'Salada de Folhas Verdes', 2.0, 1.0, 0.2),
+(21, 'Frango', 0.0, 30.0, 3.5),					-- Vai ser usado também na refeição "Frango e batata doce"
+(16, 'Legumes', 10.0, 2.0, 0.5),
+(4, 'Iogurte Natural', 4.0, 8.0, 0.2);
 
 -- Inserção de alimentos de Salmão com Quinoa
 INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(NULL, 'Salmão Assado', 0.0, 25.0, 12.0),
-(NULL, 'Quinoa Cozida', 20.0, 4.0, 1.5),
-(NULL, 'Abacate', 1.0, 2.0, 14.0),
-(NULL, 'Omelete de Claras', 1.0, 15.0, 3.0);
+(8, 'Salmão Assado', 0.0, 25.0, 12.0),
+(15, 'Quinoa Cozida', 20.0, 4.0, 1.5),
+(2, 'Abacate', 1.0, 2.0, 14.0),
+(13, 'Omelete de Claras', 1.0, 15.0, 3.0);
 
 -- Inserção de alimentos de Frango e batata doce
 INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(NULL, 'Batata Doce', 30.0, 2.0, 0.5),
-(NULL, 'Feijão Preto', 30.0, 7.0, 1.5);
+(23, 'Batata Doce', 30.0, 2.0, 0.5),
+(20, 'Feijão Preto', 30.0, 7.0, 1.5);
 
 -- Inserção de alimentos de Carne com aveia de flocos
 INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(NULL, 'Carne de vaca', 0.0, 25.0, 10.0),
-(NULL, 'Aveia em Flocos', 66.0, 16.9, 7.0),
-(NULL, 'Amendoim', 16.0, 26.0, 49.0);
+(18, 'Carne de vaca', 0.0, 25.0, 10.0),
+(26, 'Aveia em Flocos', 66.0, 16.9, 7.0),
+(1, 'Amendoim', 16.0, 26.0, 49.0);
 
 -- Inserção de alimentos por refeição
 INSERT INTO alimento_por_refeicao (refeicao_id, alimento_id, metrica_id, qtd_alimento) VALUES
@@ -504,4 +566,11 @@ INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
 (18, 4, 0),  -- Frango e Batata Doce
 (18, 5, 0);  -- Carne com Aveia de Flocos
 
-select * from usuario;
+INSERT INTO mural (usuario_id, midia_id, dt_postagem)
+VALUES
+(1, 47, '2024-01-01 19:31:00'),
+(1, 48, '2024-03-26 11:42:50'),
+
+(3, 49, '2024-01-08 11:42:50'),
+(3, 50, '2024-04-08 11:42:50'),
+(3, 51, '2024-07-05 09:22:54');

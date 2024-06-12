@@ -249,7 +249,7 @@ CREATE TABLE alimento_por_refeicao (
     refeicao_id INT,
     alimento_id INT,
     metrica_id INT,
-    qtdAlimento INT NOT NULL,
+    qtd_alimento INT NOT NULL,
     FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao),
     FOREIGN KEY (alimento_id) REFERENCES alimento(id_alimento),
     FOREIGN KEY (metrica_id) REFERENCES metrica(id_metrica)
@@ -268,7 +268,7 @@ CREATE TABLE pagamento (
     usuario_id INT,
     assinatura_id INT,
     data_pagamento DATE NOT NULL,
-    tipo VARCHAR(100) CHECK (tipo IN ('Cart√£o de d√©bito', 'Cart√£o de cr√©dito', 'PIX')) NOT NULL,
+    tipo VARCHAR(100) CHECK (tipo IN ('Cart„o de dÈbito', 'Cart„o de crÈdito', 'PIX')) NOT NULL, 
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
     FOREIGN KEY (assinatura_id) REFERENCES assinatura(id_assinatura)
 );
@@ -291,7 +291,7 @@ CREATE TABLE ficha (
     rotina_usuario_id INT,
     peso FLOAT,
     altura FLOAT,
-	problemas_caridiacos TINYINT,
+	problema_cardiaco TINYINT,
 	dor_peito_atividade TINYINT,
 	dor_peito_ultimo_mes TINYINT,
 	problema_osseo_articular TINYINT,
@@ -305,12 +305,10 @@ GO
 CREATE TABLE mural (
     id_mural INT PRIMARY KEY IDENTITY,
     usuario_id INT,
-    personal_id INT,
-    titulo VARCHAR(255) NOT NULL,
-    conteudo VARCHAR(1000) NOT NULL,
-    data_postagem DATE NOT NULL,
+    midia_id INT,
+    dt_postagem DATETIME NOT NULL,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (midia_id) REFERENCES midia(id_midia)
 );
 GO
 
