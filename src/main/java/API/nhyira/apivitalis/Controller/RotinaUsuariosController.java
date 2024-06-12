@@ -1,13 +1,17 @@
 package API.nhyira.apivitalis.Controller;
 
 
+import API.nhyira.apivitalis.DTO.RotinaUsuario.RotinaUsuarioCreateEditDto;
 import API.nhyira.apivitalis.DTO.RotinaUsuario.RotinaUsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.RotinaUsuario.RotinaUsuarioMapper;
 import API.nhyira.apivitalis.Entity.RotinaUsuario;
 import API.nhyira.apivitalis.Service.RotinaUsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/rotinaUsuarios")
@@ -16,16 +20,14 @@ public class RotinaUsuariosController {
     @Autowired
     private RotinaUsuarioService rotinaUsuarioService;
 
-//    @PostMapping
-//    public ResponseEntity<RotinaUsuarioExibitionDto> create(@RequestBody @Valid RotinaTreinoCreateEditDto dto){
-//        RotinaTreino rotinaTreino = RotinaUsuarioMapper.toEntity(dto);
-//        RotinaTreino rotina = rotinaUsuarioService.create(rotinaTreino);
-//        URI uri = URI.create("/rotinaTreinos/"+ rotina);
-//        RotinaUsuarioExibitionDto exibitionDto = RotinaUsuarioMapper.toDto(rotina);
-//
-//        return ResponseEntity.created(uri).body(exibitionDto);
-//
-//    }
+    @PostMapping
+    public ResponseEntity<RotinaUsuarioExibitionDto> create(@RequestBody @Valid RotinaUsuarioCreateEditDto dto){
+        RotinaUsuario rotina = rotinaUsuarioService.create(dto.getUsuarioId(), dto.getMetaId());
+        URI uri = URI.create("/rotinaTreinos/"+ rotina);
+        RotinaUsuarioExibitionDto exibitionDto = RotinaUsuarioMapper.toDto(rotina);
+        return ResponseEntity.created(uri).body(exibitionDto);
+
+    }
 
 //    @GetMapping
 //    public ResponseEntity<List<RotinaUsuarioExibitionDto>> showAll(){

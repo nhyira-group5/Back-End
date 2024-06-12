@@ -37,11 +37,9 @@ public class MuralService {
         return optionalMural.get();
     }
 
-    public List<Mural> showPorData(LocalDate dtPostagem){
-//        Mural muralPorId = show(id);
-        String data = dtPostagem.toString();
-        List<Mural> mural = muralRepository.findByDtPostagemStartingWith(data);
-//        mural.orElseThrow(() -> new NaoEncontradoException("mural"));
+    public Mural showPorData(LocalDate dtPostagem, int id){
+        Mural mural = muralRepository.buscarPorData(dtPostagem, id);
+
         return mural;
     }
 

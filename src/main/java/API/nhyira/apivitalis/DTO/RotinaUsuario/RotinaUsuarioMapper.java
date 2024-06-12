@@ -8,6 +8,9 @@ import java.util.List;
 
 public class RotinaUsuarioMapper {
 
+
+
+
     public static RotinaUsuarioExibitionDto toDto(RotinaUsuario entity){
         if (entity == null)return null;
 
@@ -22,7 +25,6 @@ public class RotinaUsuarioMapper {
         if (usuario == null)return null;
         UsuarioDto usuarioDto = new UsuarioDto();
 
-        usuarioDto.setCpf(usuario.getCpf());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setSexo(usuario.getSexo());
         usuarioDto.setEmail(usuario.getEmail());

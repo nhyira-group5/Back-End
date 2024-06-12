@@ -2,6 +2,7 @@ package API.nhyira.apivitalis.Service;
 
 
 import API.nhyira.apivitalis.DTO.RotinaUsuario.RotinaUsuarioMapper;
+import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.RotinaUsuario;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
@@ -25,6 +26,8 @@ public class RotinaUsuarioService {
     private final RotinaUsuarioRepository rotinaTreinoRepository;
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
+    private final MetaService metaService;
 
 
     public RotinaUsuario show(int id){
@@ -36,6 +39,15 @@ public class RotinaUsuarioService {
         Optional<RotinaUsuario> rotinaTreino = rotinaTreinoRepository.findByUsuarioIdIs(usuario.get());
         rotinaTreino.orElseThrow((() -> new  NaoEncontradoException("Rotina")));
         return rotinaTreino.get();
+    }
+
+    public RotinaUsuario create(int idUsuario, int idMeta){
+        Usuario  usuario = usuarioService.showUserById(idUsuario);
+        Meta meta = metaService.show(idMeta);
+        RotinaUsuario rotinaUsuario = new RotinaUsuario();
+        rotinaUsuario.setUsuarioId(usuario);
+        rotinaUsuario.setMetaId(meta);
+        return rotinaTreinoRepository.save(rotinaUsuario);
     }
 
 

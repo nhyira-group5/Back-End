@@ -19,10 +19,10 @@ public interface MuralRepository extends JpaRepository<Mural, Integer> {
 //    Optional<Mural> findByIdMuralAndDtPostagem(Integer idMural ,LocalDate data);
 
 
-    List<Mural> findByDtPostagemStartingWith(String date);
 
 
-//    @Query("SELECT m FROM Mural m WHERE m.idMural = :idMural AND m.dtPostagem = ':data%'")
-//    Optional<Mural> buscarPorData( Integer idMural ,LocalDate data);
+
+    @Query("SELECT m FROM Mural m WHERE m.dtPostagem = :data AND m.idMural = :muralId")
+    Mural buscarPorData(LocalDate data, int muralId);
 
 }

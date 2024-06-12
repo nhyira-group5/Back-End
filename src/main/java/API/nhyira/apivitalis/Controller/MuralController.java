@@ -33,9 +33,9 @@ public class MuralController  {
         return ResponseEntity.ok(MuralMapper.toDto(mural));
     }
 
-    @GetMapping("PorData/date")
-    public ResponseEntity<List<MuralExibitionDto>> showPorData( @RequestParam LocalDate date){
-        List<Mural> mural = muralService.showPorData(date);
+    @GetMapping("PorData/{id}/date")
+    public ResponseEntity<MuralExibitionDto> showPorData(@PathVariable int id ,@RequestParam LocalDate date){
+        Mural mural = muralService.showPorData(date, id);
         return ResponseEntity.ok(MuralMapper.toDto(mural));
     }
 
