@@ -101,7 +101,6 @@ CREATE TABLE especialidade_por_personal (
     id_especialidade_personal INT AUTO_INCREMENT,
 	personal_id INT,
     especialidade_id INT,
-    dt_formacao DATE NOT NULL,
     PRIMARY KEY (id_especialidade_personal, personal_id, especialidade_id),
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade) ON DELETE CASCADE ON UPDATE CASCADE
@@ -310,7 +309,7 @@ CREATE TABLE ficha (
     rotina_usuario_id INT,
     peso FLOAT,
     altura FLOAT,
-	problemas_caridiacos TINYINT,
+	problema_cardiaco TINYINT,
 	dor_peito_atividade TINYINT,
 	dor_peito_ultimo_mes TINYINT,
 	problema_osseo_articular TINYINT,

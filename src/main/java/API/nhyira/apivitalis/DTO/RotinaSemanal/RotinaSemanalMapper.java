@@ -13,6 +13,7 @@ public class RotinaSemanalMapper {
         if (rotinaSemanal == null)return null;
         RotinaSemanalExibitionDto rotinaSemanalExibitionDto = new RotinaSemanalExibitionDto();
         rotinaSemanalExibitionDto.setId(rotinaSemanal.getIdRotinaSemanal());
+        rotinaSemanalExibitionDto.setNumSemana(rotinaSemanal.getNumSemana());
         rotinaSemanalExibitionDto.setConcluido(rotinaSemanal.getConcluido());
         rotinaSemanalExibitionDto.setRotinaMensalId(rotinaMensalDto(rotinaSemanal.getRotinaMensalId()));
         rotinaSemanalExibitionDto.setRotinaDiariaDtos(rotinaDiariaDto(rotinaSemanal.getRotinaDiariaId()));
@@ -24,6 +25,7 @@ public class RotinaSemanalMapper {
         if (rotinaSemanal == null)return null;
         RotinaSemanalListExibitionDto rotinaSemanalExibitionDto = new RotinaSemanalListExibitionDto();
         rotinaSemanalExibitionDto.setId(rotinaSemanal.getIdRotinaSemanal());
+        rotinaSemanalExibitionDto.setNumSemana(rotinaSemanal.getNumSemana());
         rotinaSemanalExibitionDto.setConcluido(rotinaSemanal.getConcluido());
         rotinaSemanalExibitionDto.setRotinaMensalId(rotinaMensalDto(rotinaSemanal.getRotinaMensalId()));
         return rotinaSemanalExibitionDto;
