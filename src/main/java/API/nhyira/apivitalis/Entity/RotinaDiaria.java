@@ -13,11 +13,9 @@ import java.util.List;
 @Setter
 @Entity
 public class RotinaDiaria {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRotinaDiaria;
-
 
     @ManyToOne
     @JoinColumn(name = "rotinaSemanalId")
@@ -32,5 +30,4 @@ public class RotinaDiaria {
     private List<RefeicaoDiaria> refeicaoDiariaId;
 
     private Integer concluido;
-
 }

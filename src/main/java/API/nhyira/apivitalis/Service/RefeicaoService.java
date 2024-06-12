@@ -5,6 +5,7 @@ import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Repository.DietaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoPorDietaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoRepository;
+import API.nhyira.apivitalis.Repository.RotinaSemanalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class RefeicaoService {
     private final RefeicaoRepository refRep;
     private final DietaRepository diRep;
     private final RefeicaoPorDietaRepository rpdRep;
+//    private final RotinaSemanalRepository rsRep;
 
     public List<Refeicao> getAllRefeicoes() {
         return refRep.findAll();

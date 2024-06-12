@@ -1,8 +1,6 @@
 package API.nhyira.apivitalis.DTO.Refeicao;
 
-import API.nhyira.apivitalis.Entity.AlimentoPorRefeicao;
-import API.nhyira.apivitalis.Entity.Midia;
-import API.nhyira.apivitalis.Entity.Refeicao;
+import API.nhyira.apivitalis.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +61,40 @@ public class RefeicaoMapper {
             alimentoPorRefeicaoDto.setQtdAlimento(ar.getQtdAlimento());
             return alimentoPorRefeicaoDto;
         }).toList();
-
     }
 
+
+
+    // Controller /refeicoes/por-semana/{idRotinaSemanal}
+    public static RefeicaoExibitionSemanalDto toRefeicaoExibitionSemanalDto (Refeicao ref, RotinaDiaria rd, RefeicaoDiaria refd, Midia midia) {
+        if (ref == null || rd == null || refd == null) return null;
+
+        RefeicaoExibitionSemanalDto refeicaoSemanalDto = new RefeicaoExibitionSemanalDto();
+        refeicaoSemanalDto.setIdRefeicao(ref.getIdRefeicao());
+        refeicaoSemanalDto.setNome(ref.getNome());
+        refeicaoSemanalDto.setPreparo(ref.getPreparo());
+        refeicaoSemanalDto.setConcluido(refd.getConcluido());
+        refeicaoSemanalDto.setRotinaDiaria(toRotinaDiaria(rd));
+        refeicaoSemanalDto.setMidia(toSemanalMidiaDto(midia));
+        return refeicaoSemanalDto;
+    }
+
+    public static RefeicaoExibitionSemanalDto.RotinaDiariaDto toRotinaDiaria (RotinaDiaria refeicaoDiaria) {
+        if (refeicaoDiaria == null) return null;
+
+        RefeicaoExibitionSemanalDto.RotinaDiariaDto rd = new RefeicaoExibitionSemanalDto.RotinaDiariaDto();
+        rd.setId(refeicaoDiaria.getIdRotinaDiaria());
+        rd.setDia(refeicaoDiaria.getDia());
+        return rd;
+    }
+
+    public static RefeicaoExibitionSemanalDto.MidiaDto toSemanalMidiaDto (Midia midia) {
+        if (midia == null) return null;
+        RefeicaoExibitionSemanalDto.MidiaDto midiaDto = new RefeicaoExibitionSemanalDto.MidiaDto();
+        midiaDto.setId(midia.getIdMidia());
+        midiaDto.setNome(midia.getNome());
+        midiaDto.setCaminho(midia.getCaminho());
+        midiaDto.setExtensao(midia.getExtensao());
+        return midiaDto;
+    }
 }

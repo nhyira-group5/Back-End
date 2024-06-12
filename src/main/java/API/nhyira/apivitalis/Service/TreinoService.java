@@ -1,6 +1,6 @@
 package API.nhyira.apivitalis.Service;
 
-
+import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
 import API.nhyira.apivitalis.Entity.RotinaDiaria;
 import API.nhyira.apivitalis.Entity.Treino;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
@@ -30,7 +30,7 @@ public class TreinoService {
         return optTreino;
     }
 
-
-
-
+    public List<Treino> showByRotinaDiaria(RotinaDiaria rd){
+        return treinoRepository.findByRotinaDiariaIdIs(rd);
+    }
 }

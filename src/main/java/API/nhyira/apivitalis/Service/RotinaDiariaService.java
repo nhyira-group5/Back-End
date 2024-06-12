@@ -4,8 +4,7 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.Entity.RotinaDiaria;
 import API.nhyira.apivitalis.Entity.RotinaSemanal;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
-import API.nhyira.apivitalis.Repository.RotinaSemanalRepository;
-import API.nhyira.apivitalis.Repository.RotinaDiarioRepository;
+import API.nhyira.apivitalis.Repository.RotinaDiariaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RotinaDiariaService {
 
-
-    private final RotinaDiarioRepository diarioRepository;
+    private final RotinaDiariaRepository diarioRepository;
 
     private final RotinaSemanalService semanalService;
 
@@ -32,5 +30,4 @@ public class RotinaDiariaService {
         List<RotinaDiaria> rotinaDiaria = diarioRepository.findByRotinaSemanalIdIs(rotinaSemanal);
         return rotinaDiaria;
     }
-
 }

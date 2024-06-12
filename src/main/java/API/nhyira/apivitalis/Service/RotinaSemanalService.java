@@ -32,5 +32,9 @@ public class RotinaSemanalService {
         return semanalRepository.buscarPorIdUsuario(id);
     }
 
-
+    public Integer qtdDiasRealizadosPorSemana (int idRotinaSemanal) {
+        RotinaSemanal rs = show(idRotinaSemanal);
+        Optional<Integer> qtd = semanalRepository.qtdDiasRealizadosPorSemana(rs);
+        return qtd.orElse(0);
+    }
 }

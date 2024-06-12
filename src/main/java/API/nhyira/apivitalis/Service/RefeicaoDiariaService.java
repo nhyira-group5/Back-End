@@ -8,12 +8,12 @@ import API.nhyira.apivitalis.Repository.RefeicaoDiariaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class RefeicaoDiariaService {
-
     private final RefeicaoDiariaRepository diariaRepository;
 
     public RefeicaoDiaria show(int id){
@@ -22,4 +22,7 @@ public class RefeicaoDiariaService {
         return refeicaoDiaria.get();
     }
 
+    public List<RefeicaoDiaria> showByRotinaDiaria(RotinaDiaria rd){
+        return diariaRepository.findRefeicaoDiariaByRotinaDiariaIdIs(rd);
+    }
 }

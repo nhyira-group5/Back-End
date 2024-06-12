@@ -1,12 +1,9 @@
 package API.nhyira.apivitalis.DTO.Treino;
 
-
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
+import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionSemanalDto;
 import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
-import API.nhyira.apivitalis.Entity.Exercicio;
-import API.nhyira.apivitalis.Entity.RotinaDiaria;
-import API.nhyira.apivitalis.Entity.TagExercicio;
-import API.nhyira.apivitalis.Entity.Treino;
+import API.nhyira.apivitalis.Entity.*;
 
 import java.util.List;
 
@@ -26,7 +23,6 @@ public class TreinoMapper {
         return treinoExibitionDto;
     }
 
-
     public static List<TreinoExibitionDto> toDto(List<Treino> treinos){
         return treinos.stream().map(TreinoMapper::toDto).toList();
     }
@@ -42,7 +38,6 @@ public class TreinoMapper {
         return exercicioDto;
     }
 
-
     public static List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){
         return tagExercicioList.stream().map(te -> {
             ExercicioExibition.TagExibitionDto tagExibitionDto = new ExercicioExibition.TagExibitionDto();
@@ -53,12 +48,49 @@ public class TreinoMapper {
         }).toList();
     }
 
-
     public static RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto(RotinaDiaria rotinaDiaria){
         if (rotinaDiaria == null)return null;
         RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto = new RotinaSemanalExibitionDto.RotinaDiariaDto();
         rotinaDiariaDto.setIdRotinaDiaria(rotinaDiaria.getIdRotinaDiaria());
         rotinaDiariaDto.setConcluido(rotinaDiaria.getConcluido());
         return rotinaDiariaDto;
+    }
+
+
+
+    // Controller /treinos/por-semana/{idRotinaSemanal}
+    public static TreinoExibitionSemanalDto toTreinoExibitionSemanalDto (Exercicio ex, Treino treino, RotinaDiaria rd, Midia midia) {
+        if (ex == null || treino == null || rd == null) return null;
+
+        TreinoExibitionSemanalDto treinoSemanalDto = new TreinoExibitionSemanalDto();
+        treinoSemanalDto.setIdExercicio(ex.getIdExercicio());
+        treinoSemanalDto.setNome(ex.getNome());
+        treinoSemanalDto.setDescricao(ex.getDescricao());
+        treinoSemanalDto.setTempo(treino.getTempo());
+        treinoSemanalDto.setSerie(treino.getSerie());
+        treinoSemanalDto.setRepeticao(treino.getRepeticao());
+        treinoSemanalDto.setConcluido(treino.getConcluido());
+        treinoSemanalDto.setRotinaDiaria(toRotinaDiaria(rd));
+        treinoSemanalDto.setMidia(toSemanalMidiaDto(midia));
+        return treinoSemanalDto;
+    }
+
+    public static TreinoExibitionSemanalDto.RotinaDiariaDto toRotinaDiaria (RotinaDiaria refeicaoDiaria) {
+        if (refeicaoDiaria == null) return null;
+
+        TreinoExibitionSemanalDto.RotinaDiariaDto rd = new TreinoExibitionSemanalDto.RotinaDiariaDto();
+        rd.setId(refeicaoDiaria.getIdRotinaDiaria());
+        rd.setDia(refeicaoDiaria.getDia());
+        return rd;
+    }
+
+    public static TreinoExibitionSemanalDto.MidiaDto toSemanalMidiaDto (Midia midia) {
+        if (midia == null) return null;
+        TreinoExibitionSemanalDto.MidiaDto midiaDto = new TreinoExibitionSemanalDto.MidiaDto();
+        midiaDto.setId(midia.getIdMidia());
+        midiaDto.setNome(midia.getNome());
+        midiaDto.setCaminho(midia.getCaminho());
+        midiaDto.setExtensao(midia.getExtensao());
+        return midiaDto;
     }
 }
