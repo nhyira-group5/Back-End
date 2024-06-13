@@ -161,8 +161,9 @@ CREATE TABLE rotina_mensal (
 GO
 
 CREATE TABLE rotina_semanal (
-    id_rotina_semanal INT PRIMARY KEY IDENTITY,
+	id_rotina_semanal INT PRIMARY KEY IDENTITY,
     rotina_mensal_id INT,
+    num_semana INT CHECK (num_semana IN (1, 2, 3, 4, 5)),
     concluido TINYINT,
     FOREIGN KEY (rotina_mensal_id) REFERENCES rotina_mensal(id_rotina_mensal)
 );

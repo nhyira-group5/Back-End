@@ -20,8 +20,8 @@ public class RotinaMensal {
     private RotinaUsuario rotinaUsuarioId;
 
     private int mes;
-
     private int Ano;
+    private int concluido;
 
     @OneToMany(mappedBy = "rotinaMensalId")
     private List<RotinaSemanal> rotinaSemanals;

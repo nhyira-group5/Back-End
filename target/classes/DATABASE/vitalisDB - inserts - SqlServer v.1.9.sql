@@ -288,18 +288,18 @@ INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido) VALUES
 (2, 5, 2024, 0);
 
 -- Para o mes de MAIO de 2024, tem 5 semanas, logo insert de 5 semanas para cada rotina
-INSERT INTO rotina_semanal (rotina_mensal_id, concluido) VALUES
-(1, 0),
-(1, 0),
-(1, 0),
-(1, 0),
-(1, 0),
+INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido) VALUES
+(1, 1, 0),
+(1, 2, 0),
+(1, 3, 0),
+(1, 4, 0),
+(1, 5, 0),
 
-(2, 0),
-(2, 0),
-(2, 0),
-(2, 0),
-(2, 0);
+(2, 1, 0),
+(2, 2, 0),
+(2, 3, 0),
+(2, 4, 0),
+(2, 5, 0);
 
 -- Inserts para a primeira semana de cada rotina mensal
 INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido) VALUES
@@ -503,10 +503,16 @@ INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
 (18, 5, 0);  -- Carne com Aveia de Flocos
 
 INSERT INTO mural (usuario_id, midia_id, dt_postagem)
-VALUES
-(1, 47, '2024-01-01 19:31:00'),
-(1, 48, '2024-03-26 11:42:50'),
+VALUES (1, 47, '2024-01-01 19:31:00');
 
-(3, 49, '2024-01-08 11:42:50'),
-(3, 50, '2024-04-08 11:42:50'),
-(3, 51, '2024-07-05 09:22:54');
+INSERT INTO mural (usuario_id, midia_id, dt_postagem)
+VALUES (1, 48, '2024-01-01 19:35:00');
+
+INSERT INTO mural (usuario_id, midia_id, dt_postagem)
+VALUES (3, 49, '2024-01-08 11:42:50');
+
+INSERT INTO mural (usuario_id, midia_id, dt_postagem)
+VALUES (3, 50, '2024-04-08 11:42:50');
+
+INSERT INTO mural (usuario_id, midia_id, dt_postagem)
+VALUES (3, 51, '2024-07-05 09:22:54');

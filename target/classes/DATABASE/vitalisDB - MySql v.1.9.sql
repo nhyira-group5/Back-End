@@ -162,6 +162,7 @@ CREATE TABLE rotina_mensal (
 CREATE TABLE rotina_semanal (
 	id_rotina_semanal INT AUTO_INCREMENT,
     rotina_mensal_id INT,
+    num_semana INT CHECK (num_semana IN (1, 2, 3, 4, 5)) NOT NULL,
     concluido TINYINT,
     PRIMARY KEY (id_rotina_semanal, rotina_mensal_id),
     FOREIGN KEY (rotina_mensal_id) REFERENCES rotina_mensal(id_rotina_mensal) ON DELETE CASCADE ON UPDATE CASCADE

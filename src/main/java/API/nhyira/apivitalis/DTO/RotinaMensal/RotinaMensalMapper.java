@@ -14,12 +14,12 @@ public class RotinaMensalMapper {
         RotinaMensalExibitionDto exibitionDto = new RotinaMensalExibitionDto();
         exibitionDto.setId(rotinaMensal.getIdRotinaMensal());
         exibitionDto.setMes(rotinaMensal.getMes());
+        exibitionDto.setConcluido(rotinaMensal.getConcluido());
         exibitionDto.setRotinaUsuarioId(rotinaUsuarioDto(rotinaMensal.getRotinaUsuarioId()));
         exibitionDto.setAno(rotinaMensal.getIdRotinaMensal());
         exibitionDto.setRotinaSemanalDtos(rotinaSemanalDto(rotinaMensal.getRotinaSemanals()));
         return exibitionDto;
     }
-
 
     public static RotinaMensalExibitionDto.RotinaUsuarioDto rotinaUsuarioDto(RotinaUsuario rotinaUsuario){
         if (rotinaUsuario == null)return null;
@@ -38,8 +38,4 @@ public class RotinaMensalMapper {
             return rotinaSemanalDto;
         }).toList();
     }
-
-
-
-
 }

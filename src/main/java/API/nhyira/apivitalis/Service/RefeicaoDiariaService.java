@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Service;
 
-import API.nhyira.apivitalis.Entity.Refeicao;
 import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
 import API.nhyira.apivitalis.Entity.RotinaDiaria;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
@@ -24,5 +23,12 @@ public class RefeicaoDiariaService {
 
     public List<RefeicaoDiaria> showByRotinaDiaria(RotinaDiaria rd){
         return diariaRepository.findRefeicaoDiariaByRotinaDiariaIdIs(rd);
+    }
+
+    public RefeicaoDiaria updateConcluido (int id, int concluido) {
+        RefeicaoDiaria refd = diariaRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Refeiçao Diaria"));
+        if (refd.getConcluido() == concluido) return refd;
+        refd.setConcluido(concluido);
+        return diariaRepository.save(refd);
     }
 }
