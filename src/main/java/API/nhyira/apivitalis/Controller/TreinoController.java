@@ -10,10 +10,7 @@ import API.nhyira.apivitalis.Service.RotinaSemanalService;
 import API.nhyira.apivitalis.Service.TreinoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +25,16 @@ public class TreinoController {
     private final RotinaDiariaService rdSrv;
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<TreinoExibitionDto>> show(@PathVariable int id){
+    public ResponseEntity<List<TreinoExibitionDto>> show(@PathVariable int id) {
+        if (id <= 0) throw new ErroClienteException("ID");
         List<Treino> treino = treinoService.show(id);
-        if (treino.isEmpty())return ResponseEntity.noContent().build();
+        if (treino.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
 
     @GetMapping("buscarIdTreinos/{id}")
-    public ResponseEntity<List<TreinoExibitionDto>> buscarPorIdTreinos(@PathVariable int id){
+    public ResponseEntity<List<TreinoExibitionDto>> buscarPorIdTreinos(@PathVariable int id) {
+        if (id <= 0) throw new ErroClienteException("ID");
         List<Treino> treino = treinoService.show(id);
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
@@ -59,5 +58,16 @@ public class TreinoController {
         }
 
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
+    }
+
+    @PatchMapping("/concluir/{id}")
+    public ResponseEntity<TreinoExibitionDto> concluirRotinaMensal(
+            @PathVariable int id,
+            @RequestParam int concluido
+    ) {
+        if (id <= 0) throw new ErroClienteException("ID");
+        if (concluido < 0 || concluido > 1) throw new ErroClienteException("Concluido");
+        TreinoExibitionDto t = TreinoMapper.toDto(treinoService.updateConcluido(id, concluido));
+        return ResponseEntity.ok().body(t);
     }
 }

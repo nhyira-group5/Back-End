@@ -17,6 +17,7 @@ public class RotinaMensalService {
     private final RotinaMensalRepository rotinaMensalRepository;
     private final RotinaUsuarioRepository rotinaUsuarioRepository;
     private final RotinaUsuarioService usuarioService;
+
     public RotinaMensal show(int id, int mes){
         Optional<RotinaUsuario> optRotinaUsuairo = rotinaUsuarioRepository.findById(id);
         optRotinaUsuairo.orElseThrow(() -> new NaoEncontradoException("Rotina usuario"));
@@ -25,6 +26,10 @@ public class RotinaMensalService {
         return rotinaMensal;
     }
 
+    public RotinaMensal showById(int id){
+        RotinaMensal rotinaMensal = rotinaMensalRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Rotina Mensal"));
+        return rotinaMensal;
+    }
 
     public RotinaMensal showPorUsuario(int id, int mes){
         RotinaUsuario rotinaUsuario = usuarioService.show(id);
@@ -33,5 +38,10 @@ public class RotinaMensalService {
         return rotinaMensal;
     }
 
-
+    public RotinaMensal updateConcluido (int id, int concluido) {
+        RotinaMensal rm = rotinaMensalRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Rotina Mensal"));
+        if (rm.getConcluido() == concluido) return rm;
+        rm.setConcluido(concluido);
+        return rotinaMensalRepository.save(rm);
+    }
 }

@@ -33,4 +33,11 @@ public class TreinoService {
     public List<Treino> showByRotinaDiaria(RotinaDiaria rd){
         return treinoRepository.findByRotinaDiariaIdIs(rd);
     }
+
+    public Treino updateConcluido (int id, int concluido) {
+        Treino t = treinoRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Treino"));
+        if (t.getConcluido() == concluido) return t;
+        t.setConcluido(concluido);
+        return treinoRepository.save(t);
+    }
 }

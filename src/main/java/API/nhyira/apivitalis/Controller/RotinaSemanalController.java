@@ -14,10 +14,7 @@ import API.nhyira.apivitalis.Service.RotinaSemanalService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,5 +43,16 @@ public class RotinaSemanalController {
         if (idRotinaSemanal <= 0) throw new ErroClienteException("ID");
         Integer qtd = semanalService.qtdDiasRealizadosPorSemana(idRotinaSemanal);
         return ResponseEntity.ok().body(qtd);
+    }
+
+    @PatchMapping("/concluir/{id}")
+    public ResponseEntity<RotinaSemanalExibitionDto> concluirRotinaSemanal(
+            @PathVariable int id,
+            @RequestParam int concluido
+    ) {
+        if (id <= 0) throw new ErroClienteException("ID");
+        if (concluido < 0 || concluido > 1) throw new ErroClienteException("Concluido");
+        RotinaSemanalExibitionDto rm = RotinaSemanalMapper.toDto(semanalService.updateConcluido(id, concluido));
+        return ResponseEntity.ok().body(rm);
     }
 }

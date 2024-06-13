@@ -1,7 +1,5 @@
 package API.nhyira.apivitalis.Service;
 
-
-import API.nhyira.apivitalis.Entity.RotinaMensal;
 import API.nhyira.apivitalis.Entity.RotinaSemanal;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
@@ -16,7 +14,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RotinaSemanalService {
-
     private final RotinaSemanalRepository semanalRepository;
     private final UsuarioRepository usuarioRepository;
 
@@ -36,5 +33,12 @@ public class RotinaSemanalService {
         RotinaSemanal rs = show(idRotinaSemanal);
         Optional<Integer> qtd = semanalRepository.qtdDiasRealizadosPorSemana(rs);
         return qtd.orElse(0);
+    }
+
+    public RotinaSemanal updateConcluido (int id, int concluido) {
+        RotinaSemanal rs = semanalRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Rotina Semanal"));
+        if (rs.getConcluido() == concluido) return rs;
+        rs.setConcluido(concluido);
+        return semanalRepository.save(rs);
     }
 }
