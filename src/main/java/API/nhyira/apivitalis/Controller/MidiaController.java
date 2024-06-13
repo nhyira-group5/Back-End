@@ -42,12 +42,17 @@ public class MidiaController {
     }
 
     @PostMapping("/salvarMidia")
-    public ResponseEntity<MidiaExibitionDto> createMidia(@RequestBody MidiaCreateEditDto midiaDTO) {
+    public ResponseEntity<MidiaExibitionDto> createMidia(
+            @RequestBody MidiaCreateEditDto midiaDTO
+    ) {
         return ResponseEntity.status(201).body(midiaService.createMidia(midiaDTO));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MidiaExibitionDto> updateMidia(@PathVariable Integer id, @RequestBody MidiaCreateEditDto midiaDTO) {
+    public ResponseEntity<MidiaExibitionDto> updateMidia(
+            @PathVariable Integer id,
+            @RequestBody MidiaCreateEditDto midiaDTO
+    ) {
         if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         return ResponseEntity.ok(midiaService.updateMidia(id, midiaDTO));
     }
@@ -56,6 +61,6 @@ public class MidiaController {
     public ResponseEntity<Void> deleteMidia(@PathVariable Integer id) {
         if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         midiaService.deleteMidia(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
