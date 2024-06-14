@@ -35,8 +35,4 @@ public class EnderecoCreateEditDto {
     private String numero;
 
     private String complemento;
-
-    private Integer personalId;
-
-    
 }

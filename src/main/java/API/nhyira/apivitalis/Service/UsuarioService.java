@@ -8,6 +8,7 @@ import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.EmailSender.Model.EmailModel;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
+import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
@@ -29,6 +30,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository uRep;
+    private final EnderecoService enderecoService;
     private final PasswordEncoder encoder;
     private final EmailService emailService;
     private final AuthenticationManager authenticationManagerForUsuarios;
@@ -82,7 +84,7 @@ public class UsuarioService {
                 "Atenciosamente,\nSua Equipe de Suporte Daniel Santos";
     }
 
-    public Usuario createUser(Usuario usuario) {
+    public Usuario createUser(Usuario usuario, int enderecoId) {
             if (usuario == null) {
                 throw new ErroClienteException("Usuario");
             }
@@ -95,6 +97,8 @@ public class UsuarioService {
             if (emailUnique(usuario.getEmail())){
                 throw new ConflitoException("Email");
             }
+        Endereco endereco = enderecoService.showEndereco(enderecoId);
+            usuario.setEnderecoId(endereco);
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         uRep.save(usuario);
         return usuario;

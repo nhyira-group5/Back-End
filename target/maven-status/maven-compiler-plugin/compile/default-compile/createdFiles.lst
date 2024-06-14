@@ -200,7 +200,6 @@ API\nhyira\apivitalis\Entity\EspecialidadePorMeta.class
 API\nhyira\apivitalis\DTO\Exercicio\ExercicioExibition$TagExibitionDto.class
 API\nhyira\apivitalis\Service\TreinoService.class
 API\nhyira\apivitalis\Repository\RotinaMensalRepository.class
-API\nhyira\apivitalis\DTO\RotinaDiaria\RotinaDiariaExibitionDto$TreinoDto.class
 API\nhyira\apivitalis\DTO\Assinatura\AssinaturaCreateEditDto.class
 API\nhyira\apivitalis\Repository\RotinaSemanalRepository.class
 API\nhyira\apivitalis\Repository\MidiaRepository.class
@@ -264,5 +263,6 @@ API\nhyira\apivitalis\DTO\Ficha\FichaMapper.class
 API\nhyira\apivitalis\DTO\Ficha\FichaCreateEditDto.class
 API\nhyira\apivitalis\DTO\Treino\TreinoExibitionSemanalDto$MidiaDto.class
 API\nhyira\apivitalis\DTO\Mural\MuralExibitionDto$UsuarioDto.class
+API\nhyira\apivitalis\DTO\Usuario\UsuarioExibitionDto$EnderecoDto.class
 API\nhyira\apivitalis\Controller\RotinaMensalController.class
 API\nhyira\apivitalis\Entity\RotinaUsuario.class

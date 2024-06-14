@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.646 s -- in API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.38 s -- in API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest

@@ -21,5 +21,4 @@ public class EnderecoExibitionDto {
     private String cidade;
     private String estado;
     private String cep;
-    private UsuarioDto personalId;
 }

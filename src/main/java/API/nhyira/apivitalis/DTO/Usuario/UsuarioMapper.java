@@ -38,7 +38,7 @@ public class UsuarioMapper {
             user.setTipo(entity.getTipo());
             user.setMidia(entity.getMidiaId());
             user.setPersonalId(usuarioDto(entity.getPersonalId()));
-            user.setEndereco(endercoDto(entity.getEnderecoId()));
+            user.setAcademiaId(endercoDto(entity.getEnderecoId()));
             return user;
         }
         return null;
