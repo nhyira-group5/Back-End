@@ -26,24 +26,27 @@ public class TreinoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<List<TreinoExibitionDto>> show(@PathVariable int id) {
-        if (id <= 0) throw new ErroClienteException("ID");
+        if (id <= 0)
+            throw new ErroClienteException("ID");
         List<Treino> treino = treinoService.show(id);
-        if (treino.isEmpty()) return ResponseEntity.noContent().build();
+        if (treino.isEmpty())
+            return ResponseEntity.noContent().build();
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
 
     @GetMapping("buscarIdTreinos/{id}")
     public ResponseEntity<List<TreinoExibitionDto>> buscarPorIdTreinos(@PathVariable int id) {
-        if (id <= 0) throw new ErroClienteException("ID");
+        if (id <= 0)
+            throw new ErroClienteException("ID");
         List<Treino> treino = treinoService.show(id);
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
 
     @GetMapping("/por-semana/{idRotinaSemanal}")
-    public ResponseEntity<List<TreinoExibitionSemanalDto>> buscarRefeiçõesPorSemana(
-            @PathVariable int idRotinaSemanal
-    ) {
-        if (idRotinaSemanal <= 0) throw new ErroClienteException("ID");
+    public ResponseEntity<List<TreinoExibitionSemanalDto>> buscarTreinosPorSemana(
+            @PathVariable int idRotinaSemanal) {
+        if (idRotinaSemanal <= 0)
+            throw new ErroClienteException("ID");
         RotinaSemanal rs = rsSrv.show(idRotinaSemanal);
         List<RotinaDiaria> rotinasDiariasPelaSemana = rdSrv.showPorSemanal(rs.getIdRotinaSemanal());
 
@@ -60,13 +63,31 @@ public class TreinoController {
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
     }
 
+    @GetMapping("/por-dia/{idRotinaDiaria}")
+    public ResponseEntity<List<TreinoExibitionSemanalDto>> buscarTreinosPorDia(
+            @PathVariable int idRotinaDiaria) {
+        if (idRotinaDiaria <= 0)
+            throw new ErroClienteException("ID");
+        RotinaDiaria rd = rdSrv.show(idRotinaDiaria);
+        List<TreinoExibitionSemanalDto> dtoList = new ArrayList<>(0);
+        List<Treino> treinosDiarios = treinoService.showByRotinaDiaria(rd);
+        for (Treino td : treinosDiarios) {
+            Exercicio ex = td.getExercicioId();
+            Midia midia = ex.getMidia();
+            dtoList.add(TreinoMapper.toTreinoExibitionSemanalDto(ex, td, rd, midia));
+        }
+
+        return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
+    }
+
     @PatchMapping("/concluir/{id}")
     public ResponseEntity<TreinoExibitionDto> concluirRotinaMensal(
             @PathVariable int id,
-            @RequestParam int concluido
-    ) {
-        if (id <= 0) throw new ErroClienteException("ID");
-        if (concluido < 0 || concluido > 1) throw new ErroClienteException("Concluido");
+            @RequestParam int concluido) {
+        if (id <= 0)
+            throw new ErroClienteException("ID");
+        if (concluido < 0 || concluido > 1)
+            throw new ErroClienteException("Concluido");
         TreinoExibitionDto t = TreinoMapper.toDto(treinoService.updateConcluido(id, concluido));
         return ResponseEntity.ok().body(t);
     }

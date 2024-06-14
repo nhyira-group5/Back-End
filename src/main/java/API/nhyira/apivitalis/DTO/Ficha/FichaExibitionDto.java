@@ -10,28 +10,14 @@ import lombok.Setter;
 
 @Data
 public class FichaExibitionDto {
-
-
     private Integer id;
-
-
-    private Integer problemasCardiacos;
-
+    private Integer problemaCardiaco;
     private Integer dorPeitoAtividade;
-
     private Integer dorPeitoUltimoMes;
-
     private Integer problemaOsseoArticular;
-
     private Integer medicamentoPressaoCoracao;
-
     private Integer impedimentoAtividade;
-
     private Float peso;
-
     private float altura;
-
     private UsuarioDto usuarioId;
-
-
 }

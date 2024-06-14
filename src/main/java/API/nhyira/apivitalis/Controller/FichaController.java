@@ -36,7 +36,6 @@ public class FichaController {
         Ficha user = fichaService.showFicha(id);
         FichaExibitionDto exibitionDto = FichaMapper.toDto(user);
         return ResponseEntity.ok(exibitionDto);
-
     }
 
     @PutMapping("/{id}")
@@ -62,6 +61,5 @@ public class FichaController {
 //        }
 //        return ResponseEntity.ok(fichasOrdenadas);
 //    }
-
 
 }

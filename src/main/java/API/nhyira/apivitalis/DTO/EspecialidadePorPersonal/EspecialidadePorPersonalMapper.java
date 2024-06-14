@@ -1,7 +1,6 @@
 package API.nhyira.apivitalis.DTO.EspecialidadePorPersonal;
 
 import API.nhyira.apivitalis.DTO.Especialidade.EspecialidadeExibitionDto;
-import API.nhyira.apivitalis.DTO.Especialidade.EspecialidadeMapper;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
 import API.nhyira.apivitalis.Entity.Especialidade;
 import API.nhyira.apivitalis.Entity.EspecialidadePorPersonal;
@@ -23,7 +22,7 @@ public class EspecialidadePorPersonalMapper {
         if (especialidadePorPersonal == null)return null;
 
         EspecialidadePorPersonalExibitonDto exibitonDto = new EspecialidadePorPersonalExibitonDto();
-        exibitonDto.setIdEspecialidade(especialidadePorPersonal.getIdEspecialidade());
+        exibitonDto.setIdEspecialidade(especialidadePorPersonal.getIdEspecialidadePersonal());
         exibitonDto.setPersonalId(usuarioDto(especialidadePorPersonal.getPersonalId()));
         exibitonDto.setEspecialidadeId(especialidadeDto(especialidadePorPersonal.getEspecialidadeId()));
         return exibitonDto;
@@ -59,9 +58,5 @@ public class EspecialidadePorPersonalMapper {
     public static EspecialidadePorPersonal toEdit(EspecialidadePorPersonal especialidadePorPersonal, EspecialidadePorPersonalCreateEditDto dto){
         if (dto == null)return null;
         return especialidadePorPersonal;
-
-
     }
-
-
 }

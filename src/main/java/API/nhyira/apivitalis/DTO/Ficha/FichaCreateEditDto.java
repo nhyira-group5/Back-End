@@ -16,9 +16,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FichaCreateEditDto {
 
-
     @NotNull
-    private Integer problemasCardiacos;
+    private Integer problemaCardiaco;
 
     @NotNull
     private Integer dorPeitoAtividade;
@@ -44,5 +43,4 @@ public class FichaCreateEditDto {
 
     @NotNull
     private int usuarioId;
-
 }

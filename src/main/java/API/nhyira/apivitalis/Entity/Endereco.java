@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Endereco {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEndereco;
@@ -19,13 +18,4 @@ public class Endereco {
     private String estado;
     private String cep;
     private String complemento;
-
-
-    @ManyToOne
-    @JoinColumn(name = "personalId")
-    private Usuario personalId;
-
-
-    // Getters and Setters
-
 }

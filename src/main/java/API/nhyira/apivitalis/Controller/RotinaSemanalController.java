@@ -26,12 +26,14 @@ public class RotinaSemanalController {
 
     @GetMapping("/{id}")
     public ResponseEntity<RotinaSemanalExibitionDto> show(@PathVariable int id) {
+        if (id <= 0) throw new ErroClienteException("ID");
         RotinaSemanal rotinaSemanal = semanalService.show(id);
         return ResponseEntity.ok(RotinaSemanalMapper.toDto(rotinaSemanal));
     }
 
     @GetMapping("buscarUsuario/{id}")
     public ResponseEntity<List<RotinaSemanalListExibitionDto>> buscarPorId(@PathVariable int id) {
+        if (id <= 0) throw new ErroClienteException("ID");
         List<RotinaSemanal> rotinaSemanal = semanalService.showPorUsuario(id);
         return ResponseEntity.ok(RotinaSemanalMapper.toDtos(rotinaSemanal));
     }

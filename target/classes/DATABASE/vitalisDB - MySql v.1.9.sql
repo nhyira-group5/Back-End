@@ -17,8 +17,16 @@ CREATE TABLE meta (
     nome VARCHAR(100)
 );
 
-/* ------------------------------------------------------------------------------- */
-/* Sessão de usuários */
+CREATE TABLE endereco (
+    id_endereco INT PRIMARY KEY AUTO_INCREMENT,
+    logradouro VARCHAR(100) NOT NULL,
+    numero VARCHAR(100),
+    bairro VARCHAR(100) NOT NULL,
+    cidade VARCHAR(100) NOT NULL,
+    estado CHAR(2) NOT NULL,
+    complemento VARCHAR(100),
+    cep CHAR(8)
+);
 
 CREATE TABLE usuario (
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
@@ -34,7 +42,9 @@ CREATE TABLE usuario (
     senha VARCHAR(100) NOT NULL,
     midia_id INT,
     personal_id INT,
-    FOREIGN KEY (midia_id) REFERENCES midia(id_midia) ON DELETE CASCADE ON UPDATE CASCADE, 
+    endereco_id INT,
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id_endereco) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (midia_id) REFERENCES midia(id_midia) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -49,22 +59,6 @@ CREATE TABLE contrato (
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-CREATE TABLE endereco (
-    id_endereco INT PRIMARY KEY AUTO_INCREMENT,
-    personal_id INT,
-    logradouro VARCHAR(100) NOT NULL,
-    numero VARCHAR(100),
-    bairro VARCHAR(100) NOT NULL,
-    cidade VARCHAR(100) NOT NULL,
-    estado CHAR(2) NOT NULL,
-    complemento VARCHAR(100),
-    cep CHAR(8),
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-/* ------------------------------------------------------------------------------- */
-/* Sessão de chat */
 
 CREATE TABLE chat (
     id_chat INT AUTO_INCREMENT,
@@ -89,9 +83,6 @@ CREATE TABLE mensagem (
     FOREIGN KEY (destinatario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-/* ------------------------------------------------------------------------------- */
-/* Sessão de especialidade */
-
 CREATE TABLE especialidade (
     id_especialidade INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
@@ -114,9 +105,6 @@ CREATE TABLE especialidade_por_meta (
     FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (meta_id) REFERENCES meta(id_meta) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
-/* ------------------------------------------------------------------------------- */
-/* Sessão de treino */
 
 CREATE TABLE tag (
 	id_tag INT PRIMARY KEY AUTO_INCREMENT,
@@ -190,9 +178,6 @@ CREATE TABLE treino (
     FOREIGN KEY (rotina_diaria_id) REFERENCES rotina_diaria(id_rotina_diaria) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-/* ------------------------------------------------------------------------------- */
-/* Sessão de dietas */
-
 CREATE TABLE dieta (
     id_dieta INT AUTO_INCREMENT,
     meta_id INT,
@@ -206,7 +191,7 @@ CREATE TABLE refeicao (
     id_refeicao INT PRIMARY KEY AUTO_INCREMENT,
     midia_id INT,
     nome VARCHAR(100) NOT NULL,
-    preparo VARCHAR(250),
+    preparo VARCHAR(5001),
     FOREIGN KEY(midia_id) REFERENCES midia(id_midia) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -256,9 +241,6 @@ CREATE TABLE alimento_por_refeicao (
     FOREIGN KEY (metrica_id) REFERENCES metrica(id_metrica) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-/* ------------------------------------------------------------------------------- */
-/* Sessão de pagamento */
-
 CREATE TABLE assinatura (
     id_assinatura INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
@@ -290,9 +272,6 @@ CREATE TABLE cartao (
 );
 */
 
-/* ------------------------------------------------------------------------------- */
-/* Sessão de funcionalidades */
-
 CREATE TABLE denuncia (
 	id_denuncia INT AUTO_INCREMENT,
     denunciado_id INT,
@@ -307,7 +286,6 @@ CREATE TABLE denuncia (
 CREATE TABLE ficha (
     id_ficha INT AUTO_INCREMENT,
     usuario_id INT,
-    rotina_usuario_id INT,
     peso FLOAT,
     altura FLOAT,
 	problema_cardiaco TINYINT,
@@ -316,9 +294,8 @@ CREATE TABLE ficha (
 	problema_osseo_articular TINYINT,
 	medicamento_pressao_coracao TINYINT,
 	impedimento_atividade TINYINT,
-	PRIMARY KEY (id_ficha, usuario_id, rotina_usuario_id),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (rotina_usuario_id) REFERENCES rotina_usuario(id_rotina_usuario) ON DELETE CASCADE ON UPDATE CASCADE
+	PRIMARY KEY (id_ficha, usuario_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE mural (

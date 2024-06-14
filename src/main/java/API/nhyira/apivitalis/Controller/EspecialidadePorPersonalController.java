@@ -1,7 +1,5 @@
 package API.nhyira.apivitalis.Controller;
 
-
-import API.nhyira.apivitalis.DTO.Especialidade.EspecialidadeExibitionDto;
 import API.nhyira.apivitalis.DTO.EspecialidadePorPersonal.EspecialidadePorPersonalCreateEditDto;
 import API.nhyira.apivitalis.DTO.EspecialidadePorPersonal.EspecialidadePorPersonalExibitonDto;
 import API.nhyira.apivitalis.DTO.EspecialidadePorPersonal.EspecialidadePorPersonalMapper;
@@ -10,7 +8,6 @@ import API.nhyira.apivitalis.Service.EspecialidadePorPersonalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,7 +17,6 @@ import java.util.List;
 @RequestMapping("/especialidadesPersonais")
 @RequiredArgsConstructor
 public class EspecialidadePorPersonalController {
-
     private final EspecialidadePorPersonalService personalService;
 
 
@@ -29,11 +25,10 @@ public class EspecialidadePorPersonalController {
         EspecialidadePorPersonal especialidade = EspecialidadePorPersonalMapper.toEntity(dto);
         EspecialidadePorPersonal novaEspecialidade = personalService.create(especialidade, dto.getPersonalId(), dto.getEspecialidadeId());
         EspecialidadePorPersonalExibitonDto exibitionDto = EspecialidadePorPersonalMapper.toDto(novaEspecialidade);
-        URI uri = URI.create("/especialidadesPersonais/" + novaEspecialidade.getIdEspecialidade());
+        URI uri = URI.create("/especialidadesPersonais/" + novaEspecialidade.getIdEspecialidadePersonal());
 
         return ResponseEntity.created(uri).body(exibitionDto);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<List<EspecialidadePorPersonalExibitonDto>> show(@PathVariable int id){

@@ -15,14 +15,14 @@ public class FichaMapper {
         Ficha ficha = new Ficha();
         ficha.setAltura(dto.getAltura());
         ficha.setPeso(dto.getPeso());
-        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
+        ficha.setProblemaCardiaco(dto.getProblemaCardiaco());
         ficha.setDorPeitoAtividade(dto.getDorPeitoAtividade());
         ficha.setDorPeitoUltimoMes(dto.getDorPeitoUltimoMes());
-        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
+        ficha.setProblemaCardiaco(dto.getProblemaCardiaco());
 
         ficha.setMedicamentoPressaoCoracao(dto.getMedicamentoPressaoCoracao());
         ficha.setImpedimentoAtividade(dto.getImpedimentoAtividade());
-        ficha.setProblemaOsseoArticular(ficha.getProblemaOsseoArticular());
+        ficha.setProblemaOsseoArticular(dto.getProblemaOsseoArticular());
         return ficha;
     }
     public static List<FichaExibitionDto> toDtoList(List<Ficha> fichas) {
@@ -37,7 +37,7 @@ public class FichaMapper {
         FichaExibitionDto user = new FichaExibitionDto();
         user.setId(entity.getIdFicha());
         user.setAltura(entity.getAltura());
-        user.setProblemasCardiacos(entity.getProblemasCardiacos());
+        user.setProblemaCardiaco(entity.getProblemaCardiaco());
         user.setDorPeitoAtividade(entity.getDorPeitoAtividade());
         user.setPeso(entity.getPeso());
         user.setDorPeitoUltimoMes(entity.getDorPeitoUltimoMes());
@@ -47,7 +47,6 @@ public class FichaMapper {
         user.setUsuarioId(usuarioDto(entity.getUsuarioId()));
         return user;
     }
-
 
     public static UsuarioDto usuarioDto(Usuario usuario){
         if (usuario == null)return null;
@@ -69,10 +68,10 @@ public class FichaMapper {
 
         ficha.setAltura(dto.getAltura());
         ficha.setPeso(dto.getPeso());
-        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
+        ficha.setProblemaCardiaco(dto.getProblemaCardiaco());
         ficha.setDorPeitoAtividade(dto.getDorPeitoAtividade());
         ficha.setDorPeitoUltimoMes(dto.getDorPeitoUltimoMes());
-        ficha.setProblemasCardiacos(dto.getProblemasCardiacos());
+        ficha.setProblemaCardiaco(dto.getProblemaCardiaco());
         ficha.setMedicamentoPressaoCoracao(dto.getMedicamentoPressaoCoracao());
         ficha.setImpedimentoAtividade(dto.getImpedimentoAtividade());
         ficha.setProblemaOsseoArticular(ficha.getProblemaOsseoArticular());

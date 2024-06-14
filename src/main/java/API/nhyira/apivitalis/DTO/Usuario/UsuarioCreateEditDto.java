@@ -1,19 +1,14 @@
 package API.nhyira.apivitalis.DTO.Usuario;
 
-import API.nhyira.apivitalis.Entity.Meta;
-import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
-
-@Getter
-@Setter
+@Data
 public class UsuarioCreateEditDto {
     @Column(nullable = false, unique = true, length = 20)
     @NotBlank(message = "O nome de usuário é obrigatório")
@@ -47,7 +42,6 @@ public class UsuarioCreateEditDto {
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
-
     //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotBlank(message = "A senha é obrigatória")
     @Size(min = 6, max = 100, message = "A senha deve ter entre 6 e 100 caracteres")
@@ -57,6 +51,4 @@ public class UsuarioCreateEditDto {
     private String senha;
 
     private Usuario.TipoUsuario tipo;
-
-
 }

@@ -26,17 +26,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
 public class FichaService {
-
-
     private final FichaRepository fichaRepository;
-
     private final UsuarioRepository usuarioRepository;
-
-
 
     public Ficha create(Ficha dto, int idUsuario) {
         if (dto == null)throw new ErroClienteException("Ficha");

@@ -34,6 +34,10 @@ public class Usuario {
     @JoinColumn(name = "personalId")
     private Usuario personalId;
 
+    @ManyToOne
+    @JoinColumn(name = "enderecoId")
+    private Endereco enderecoId;
+
     public enum TipoUsuario {
         USUARIO,
         PERSONAL,

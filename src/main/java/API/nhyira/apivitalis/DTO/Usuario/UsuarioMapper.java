@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
+import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ public class UsuarioMapper {
             user.setSexo(dto.getSexo());
             user.setDtNasc(dto.getDtNasc());
             user.setTipo(dto.getTipo() != null ?  Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
-
             return user;
         }
         return null;
@@ -38,6 +38,7 @@ public class UsuarioMapper {
             user.setTipo(entity.getTipo());
             user.setMidia(entity.getMidiaId());
             user.setPersonalId(usuarioDto(entity.getPersonalId()));
+            user.setEndereco(endercoDto(entity.getEnderecoId()));
             return user;
         }
         return null;
@@ -70,7 +71,6 @@ public class UsuarioMapper {
         return dtos;
     }
 
-
     public static Usuario of(UsuarioCreateEditDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
 
@@ -98,7 +98,6 @@ public class UsuarioMapper {
         return usuario;
     }
 
-
     public static UsuarioDto usuarioDto(Usuario usuario){
         if (usuario == null)return null;
         UsuarioDto usuarioDto = new UsuarioDto();
@@ -109,5 +108,20 @@ public class UsuarioMapper {
         usuarioDto.setTipo(usuario.getTipo());
         usuarioDto.setNickname(usuario.getNickname());
         return usuarioDto;
+    }
+
+    public static UsuarioExibitionDto.EnderecoDto endercoDto(Endereco endereco) {
+        if (endereco == null) return null;
+
+        UsuarioExibitionDto.EnderecoDto enderecoDto = new UsuarioExibitionDto.EnderecoDto();
+        enderecoDto.setId(endereco.getIdEndereco());
+        enderecoDto.setLogradouro(endereco.getLogradouro());
+        enderecoDto.setBairro(endereco.getBairro());
+        enderecoDto.setCidade(endereco.getCidade());
+        enderecoDto.setCep(endereco.getCep());
+        enderecoDto.setComplemento(endereco.getComplemento());
+        enderecoDto.setEstado(endereco.getEstado());
+        enderecoDto.setNumero(endereco.getNumero());
+        return enderecoDto;
     }
 }

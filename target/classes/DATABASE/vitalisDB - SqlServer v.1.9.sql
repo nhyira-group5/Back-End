@@ -21,6 +21,18 @@ CREATE TABLE meta (
 );
 GO
 
+CREATE TABLE endereco (
+    id_endereco INT PRIMARY KEY IDENTITY,
+    logradouro VARCHAR(100) NOT NULL,
+    numero VARCHAR(100),
+    bairro VARCHAR(100) NOT NULL,
+    cidade VARCHAR(100) NOT NULL,
+    estado CHAR(2) NOT NULL,
+    complemento VARCHAR(100),
+    cep CHAR(8)
+);
+GO
+
 CREATE TABLE usuario (
     id_usuario INT PRIMARY KEY IDENTITY,
     tipo TINYINT NOT NULL, 
@@ -34,6 +46,8 @@ CREATE TABLE usuario (
     senha VARCHAR(100) NOT NULL,
     midia_id INT,
     personal_id INT,
+    endereco_id INT,
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id_endereco),
     FOREIGN KEY (midia_id) REFERENCES midia(id_midia),
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
 );
@@ -48,20 +62,6 @@ CREATE TABLE contrato (
     fim_contrato DATE,
     PRIMARY KEY (id_contrato, usuario_id, personal_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
-);
-GO
-
-CREATE TABLE endereco (
-    id_endereco INT PRIMARY KEY IDENTITY,
-    personal_id INT,
-    logradouro VARCHAR(100) NOT NULL,
-    numero VARCHAR(100),
-    bairro VARCHAR(100) NOT NULL,
-    cidade VARCHAR(100) NOT NULL,
-    estado CHAR(2) NOT NULL,
-    complemento VARCHAR(100),
-    cep CHAR(8),
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
 );
 GO
@@ -204,7 +204,7 @@ CREATE TABLE refeicao (
     id_refeicao INT PRIMARY KEY IDENTITY,
     midia_id INT,
     nome VARCHAR(100) NOT NULL,
-    preparo VARCHAR(250),
+    preparo VARCHAR(5001),
     FOREIGN KEY (midia_id) REFERENCES midia(id_midia)
 );
 GO
@@ -269,7 +269,7 @@ CREATE TABLE pagamento (
     usuario_id INT,
     assinatura_id INT,
     data_pagamento DATE NOT NULL,
-    tipo VARCHAR(100) CHECK (tipo IN ('Cartão de débito', 'Cartão de crédito', 'PIX')) NOT NULL, 
+    tipo VARCHAR(100) CHECK (tipo IN ('Cartï¿½o de dï¿½bito', 'Cartï¿½o de crï¿½dito', 'PIX')) NOT NULL, 
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
     FOREIGN KEY (assinatura_id) REFERENCES assinatura(id_assinatura)
 );
@@ -289,7 +289,6 @@ GO
 CREATE TABLE ficha (
     id_ficha INT PRIMARY KEY IDENTITY,
     usuario_id INT,
-    rotina_usuario_id INT,
     peso FLOAT,
     altura FLOAT,
 	problema_cardiaco TINYINT,
@@ -299,7 +298,6 @@ CREATE TABLE ficha (
 	medicamento_pressao_coracao TINYINT,
 	impedimento_atividade TINYINT,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (rotina_usuario_id) REFERENCES rotina_usuario(id_rotina_usuario)
 );
 GO
 

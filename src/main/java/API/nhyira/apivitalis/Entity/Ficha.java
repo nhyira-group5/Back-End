@@ -12,12 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ficha {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idFicha;
 
-    private Integer problemasCardiacos;
+    private Integer problemaCardiaco;
 
     private Integer dorPeitoAtividade;
 
@@ -36,5 +35,4 @@ public class Ficha {
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuarioId;
-
 }

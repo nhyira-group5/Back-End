@@ -1,11 +1,8 @@
 package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Entity.Usuario;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import org.hibernate.validator.constraints.br.CPF;
-
 import java.time.LocalDate;
 
 @Data

@@ -1,12 +1,8 @@
 package API.nhyira.apivitalis.Entity;
 
-
-import API.nhyira.apivitalis.DTO.Especialidade.EspecialidadeMapper;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -15,7 +11,7 @@ public class EspecialidadePorPersonal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEspecialidade;
+    private Integer idEspecialidadePersonal;
 
     @ManyToOne
     @JoinColumn(name = "personalId")
@@ -25,6 +21,5 @@ public class EspecialidadePorPersonal {
     @ManyToOne
     @JoinColumn(name = "especialidadeId")
     private Especialidade especialidadeId;
-
 }
 

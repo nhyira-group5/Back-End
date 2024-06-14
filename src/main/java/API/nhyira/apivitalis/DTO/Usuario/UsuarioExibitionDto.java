@@ -18,5 +18,18 @@ public class UsuarioExibitionDto {
     private Midia midia;
     private Usuario.TipoUsuario tipo; // Alterado para String
     private UsuarioDto personalId;
+    private EnderecoDto endereco;
     private double imc;
+
+    @Data
+    public static class EnderecoDto {
+        private Integer id;
+        private String logradouro;
+        private String numero;
+        private String bairro;
+        private String cidade;
+        private String estado;
+        private String cep;
+        private String complemento;
+    }
 }

@@ -35,10 +35,7 @@ public class EnderecoMapper {
         enderecoExibitionDto.setCidade(entity.getCidade());
         enderecoExibitionDto.setEstado(entity.getEstado());
         enderecoExibitionDto.setCep(entity.getCep());
-        enderecoExibitionDto.setPersonalId(usuarioDto(entity.getPersonalId()));
         enderecoExibitionDto.setComplemento(entity.getComplemento());
-
-
         return enderecoExibitionDto;
     }
 

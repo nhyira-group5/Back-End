@@ -133,25 +133,25 @@ INSERT INTO meta (nome) VALUES
 INSERT INTO assinatura (nome, valor) VALUES
 ('Viva Vitalis', 49.99);
 
--- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id) 
-VALUES 
-(0, 'ylu1Gi@@', '56438153036', 'Luigi Vicchietti', '2005-01-17', 'M', 'luigi@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null),
-(1, 'marC@SSilV4', '92865867013', 'Marcos Silva Oliveira Pinto Santos', '1980-12-05', 'M', 'marcos@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
-
--- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id) 
-VALUES 
-(0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2),
-(1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null),
-(1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
--- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Militão', '1999-07-18', 'F', 'admin@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
-
-INSERT INTO endereco (personal_id, logradouro, numero, bairro, cidade, estado, complemento, cep)
+INSERT INTO endereco (logradouro, numero, bairro, cidade, estado, complemento, cep)
 VALUES
-(2, 'Avenida Wilson Carvalho', 10, 'Zerão', 'Macapá', 'AP', null, 68903025),
-(2, 'Rua Verdum', 112, 'Vila Nasser', 'Campo Grande', 'MS', null, 79117360),
-(2, ' Rua Alzira Gomes Queirós', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
+('Avenida Wilson Carvalho', 10, 'Zer�o', 'Macap�', 'AP', null, 68903025),
+('Rua Verdum', 112, 'Vila Nasser', 'Campo Grande', 'MS', null, 79117360),
+('Rua Alzira Gomes Queir�s', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
+
+-- SENHA -> Daniel@23133 (todos)
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
+VALUES 
+(0, 'ylu1Gi@@', '56438153036', 'Luigi Vicchietti', '2005-01-17', 'M', 'luigi@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, null),
+(1, 'marC@SSilV4', '92865867013', 'Marcos Silva Oliveira Pinto Santos', '1980-12-05', 'M', 'marcos@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 1);
+
+-- SENHA -> Daniel@23133 (todos)
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
+VALUES 
+(0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2, null),
+(1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 2),
+(1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@example.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 3);
+-- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Milit�o', '1999-07-18', 'F', 'admin@example.com', 'padrao@nhyira', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
 
 -- Inserção de contrato para o usuário com id_usuario 3 e personal_id 2
 INSERT INTO contrato (usuario_id, personal_id, afiliacao, inicio_contrato, fim_contrato) VALUES
@@ -176,10 +176,10 @@ INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
 (1, 2),
 (2, 1);
 
-INSERT INTO ficha (usuario_id, rotina_usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
 VALUES
-(1, 1, 58.60, 1.85, 0, 0, 0, 0, 0, 0),
-(3, 2, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
+(1, 58.60, 1.85, 0, 0, 0, 0, 0, 0),
+(3, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
 
 INSERT INTO especialidade (nome) VALUES
 ('Emagrecimento'),

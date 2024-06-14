@@ -10,7 +10,5 @@ import java.util.List;
 
 @Repository
 public interface RotinaDiariaRepository extends JpaRepository<RotinaDiaria, Integer> {
-
     List<RotinaDiaria> findByRotinaSemanalIdIs(RotinaSemanal rotinaSemanal);
-
 }

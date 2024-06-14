@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Controller;
 
-
 import API.nhyira.apivitalis.DTO.Endereco.AcademiaDto;
 
 import API.nhyira.apivitalis.DTO.Endereco.EnderecoCreateEditDto;
@@ -10,34 +9,35 @@ import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.GooglePlaces.Service.AcademiasProximasService;
 import API.nhyira.apivitalis.Service.EnderecoService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/enderecos")
 public class EnderecoController {
-
-    @Autowired
     private EnderecoService enderecoService;
-
-    @Autowired
     private AcademiasProximasService academiasProximasService;
-
-
 
     @PostMapping
     public ResponseEntity<EnderecoExibitionDto> criarEndereco(@RequestBody @Valid EnderecoCreateEditDto dto) {
         Endereco endereco = EnderecoMapper.toEntity(dto);
-        Endereco enderecoCriado = enderecoService.create(endereco, dto.getPersonalId());
+        Endereco enderecoCriado = enderecoService.create(endereco);
         URI uri = URI.create("/enderecos/" + enderecoCriado.getIdEndereco());
         EnderecoExibitionDto exibitionDto = EnderecoMapper.toDto(enderecoCriado);
         return ResponseEntity.created(uri).body(exibitionDto);
+    }
+
+    @GetMapping("/buscar-usuario/{id}")
+    public ResponseEntity<EnderecoExibitionDto> mostrarEnderecoPorUsuario(@PathVariable int id) {
+        Endereco endereco = enderecoService.showEnderecoPorUsuario(id);
+        EnderecoExibitionDto exibitionDto = EnderecoMapper.toDto(endereco);
+        return ResponseEntity.ok(exibitionDto);
     }
 
     @GetMapping("/{id}")
@@ -64,6 +64,4 @@ public class EnderecoController {
     public ResponseEntity<List<AcademiaDto>> buscarAcademiasProximas(@RequestParam String logradouro, @RequestParam String bairro, @RequestParam String cidade, @RequestParam String estado, @RequestParam String cep) {
         return academiasProximasService.buscarAcademiasProximas(logradouro, bairro, cidade, estado,cep);
     }
-
-
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -17,29 +18,43 @@ import java.util.List;
 public class RotinaDiariaController {
     private final RotinaDiariaService rotinaDiariaService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<RotinaDiariaExibitionDto>> show(@PathVariable int id){
-        if (id <= 0) throw new ErroClienteException("ID");
-        List<RotinaDiaria> rotinaDiaria = rotinaDiariaService.showPorSemanal(id);
-        if (rotinaDiaria.isEmpty())return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(RotinaDiariaMapper.toDtos(rotinaDiaria));
+    @GetMapping("/por-semana/{id}")
+    public ResponseEntity<List<RotinaDiariaExibitionDto>> showPorIdSemanal(@PathVariable int id) {
+        if (id <= 0)
+            throw new ErroClienteException("ID");
+        List<RotinaDiaria> rotinasDiarias = rotinaDiariaService.showPorSemanal(id);
+        if (rotinasDiarias.isEmpty())
+            return ResponseEntity.noContent().build();
+        List<RotinaDiariaExibitionDto> dtosList = new ArrayList<>(0);
+        for (RotinaDiaria rd : rotinasDiarias) {
+            Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rd);
+            Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rd);
+            dtosList.add(RotinaDiariaMapper.toDto(rd, totalExercicios, totalExerciciosFeitos));
+        }
+        return ResponseEntity.ok(dtosList);
     }
 
-    @GetMapping("buscarIdDiario/{id}")
-    public ResponseEntity<RotinaDiariaExibitionDto> showPorIdDiario(@PathVariable int id){
-        if (id <= 0) throw new ErroClienteException("ID");
+    @GetMapping("/{id}")
+    public ResponseEntity<RotinaDiariaExibitionDto> showPorIdDiario(@PathVariable int id) {
+        if (id <= 0)
+            throw new ErroClienteException("ID");
         RotinaDiaria rotinaDiaria = rotinaDiariaService.show(id);
-        return ResponseEntity.ok(RotinaDiariaMapper.toDto(rotinaDiaria));
+        Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rotinaDiaria);
+        Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rotinaDiaria);
+        return ResponseEntity.ok(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
     }
 
     @PatchMapping("/concluir/{id}")
     public ResponseEntity<RotinaDiariaExibitionDto> concluirRotinaDiaria(
             @PathVariable int id,
-            @RequestParam int concluido
-    ) {
-        if (id <= 0) throw new ErroClienteException("ID");
-        if (concluido < 0 || concluido > 1) throw new ErroClienteException("Concluido");
-        RotinaDiariaExibitionDto rd = RotinaDiariaMapper.toDto(rotinaDiariaService.updateConcluido(id, concluido));
-        return ResponseEntity.ok().body(rd);
+            @RequestParam int concluido) {
+        if (id <= 0)
+            throw new ErroClienteException("ID");
+        if (concluido < 0 || concluido > 1)
+            throw new ErroClienteException("Concluido");
+        RotinaDiaria rd = rotinaDiariaService.updateConcluido(id, concluido);
+        Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rd);
+        Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rd);
+        return ResponseEntity.ok().body(RotinaDiariaMapper.toDto(rd, totalExercicios, totalExerciciosFeitos));
     }
 }
