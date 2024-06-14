@@ -11,11 +11,9 @@ import API.nhyira.apivitalis.Service.RefeicaoService;
 import API.nhyira.apivitalis.Service.RotinaDiariaService;
 import API.nhyira.apivitalis.Service.RotinaSemanalService;
 import lombok.RequiredArgsConstructor;
+import okhttp3.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +53,14 @@ public class RefeicaoController {
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
 
+    @GetMapping("/filtro/nome")
+    public ResponseEntity<List<RefeicaoExibition>> showByNome(
+            @RequestParam String nome
+    ) {
+        List<RefeicaoExibition> dtoList = RefeicaoMapper.toDTO(refSrv.showRefeicoesByNome(nome));
+        return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
+    }
+
     @GetMapping("/por-semana/{idRotinaSemanal}")
     public ResponseEntity<List<RefeicaoExibitionSemanalDto>> buscarRefeiçõesPorSemana(
             @PathVariable int idRotinaSemanal
@@ -72,7 +78,6 @@ public class RefeicaoController {
                 dtoList.add(RefeicaoMapper.toRefeicaoExibitionSemanalDto(ref, rd, refd, midia));
             }
         }
-
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
     }
 }
