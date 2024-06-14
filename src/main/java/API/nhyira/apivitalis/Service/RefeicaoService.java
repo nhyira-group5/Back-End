@@ -40,6 +40,10 @@ public class RefeicaoService {
         return refeicoes;
     }
 
+    public List<Refeicao> showRefeicoesByNome(String nome) {
+        return refRep.buscarFiltroPorNome(nome);
+    }
+
     public List<Refeicao> getRefeicaosByRefeicao(int dietaId) {
         Optional<Dieta> dieta = diRep.findById(dietaId);
         dieta.orElseThrow(() -> new NaoEncontradoException("Dieta"));

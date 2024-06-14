@@ -8,12 +8,12 @@ VALUES
 ('Iogurte Natrural', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/a3c8smqnoit2zlnkmolr.jpg', 'JPG'), -- 4
 ('Torresmo', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114337/alimentos-refeicoes/aovf0uyvjadxwhemqa9q.jpg', 'JPG'), -- 5
 ('Salada de Frango Grelhado', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/yjvjplvgmbm9iiphcazw.jpg', 'JPG'), -- 6
-('Salm�o com Quinoa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/dwtji5jplzfbwyz87s1y.jpg', 'JPG'), -- 7
-('Salm�o', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/ce2cadaqxklgvnif9fgb.jpg', 'JPG'), -- 8
+('Salmão com Quinoa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/dwtji5jplzfbwyz87s1y.jpg', 'JPG'), -- 7
+('Salmão', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/ce2cadaqxklgvnif9fgb.jpg', 'JPG'), -- 8
 ('Farofa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/h1tmwmeywou5tybswnxl.jpg', 'JPG'), -- 9
 ('Salada de Folhas Verdes', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/aho0uljh4s5bnurbhdyx.jpg', 'JPG'), -- 10
 ('Ovo', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/ltzbrusehrpnr7hrart8.jpg', 'JPG'), -- 11
-('Lingui�a', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/hzgq0nexjgmos5dsu9fe.jpg', 'JPG'), -- 12
+('Linguiça', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/hzgq0nexjgmos5dsu9fe.jpg', 'JPG'), -- 12
 ('Omelete de Claras', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/lsiko15fxeljqxknyctk.jpg', 'JPG'), -- 13
 ('Frango com Batata Doce', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/fyarzkwh5evynkfsne3m.png', 'PNG'), -- 14
 ('Quinoa Cozida', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114336/alimentos-refeicoes/bflbinmmdvgbicthxm4g.jpg', 'JPG'), -- 15
@@ -21,34 +21,34 @@ VALUES
 ('Couve', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/ojwatdeipahfpzs2ybdc.jpg', 'JPG'), -- 17
 ('Carne de vaca', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/jywwig4axaeknweo2lwb.jpg', 'JPG'), -- 18
 ('Carne de porco', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/mqoe5ulczacdmt6yf009.jpg', 'JPG'), -- 19
-('Feij�o Preto', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/t7rcph08fvnvf3x4gezr.jpg', 'JPG'), -- 20
+('Feijão Preto', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/t7rcph08fvnvf3x4gezr.jpg', 'JPG'), -- 20
 ('Frango', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/zjk4sr6ks3cvo8yl81r9.jpg', 'JPG'), -- 21
 ('Carne com Aveia de Flocos', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114335/alimentos-refeicoes/ow44exnjgm1ssi8taiav.png', 'PNG'), -- 22
 ('Batata Doce', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/usewobqvvx4udhfrjfai.jpg', 'JPG'), -- 23
 ('Arroz Branco', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/qrl878lcfpb6mr6sjrxy.png', 'PNG'), -- 24
-('Feij�o Carioca', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/wvpq35wxctpzhlwf6qlv.jpg', 'JPG'), -- 25
+('Feijão Carioca', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/wvpq35wxctpzhlwf6qlv.jpg', 'JPG'), -- 25
 ('Aveia em Flocos', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114334/alimentos-refeicoes/ntlpyde4xobqrsajhwnz.jpg', 'JPG'), -- 26
 
-('Flex�o de Bra�o', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114562/exercicios/hicln1lwqn2c3vyoaj9a.png', 'PNG'), -- 27
+('Flexão de Braço', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114562/exercicios/hicln1lwqn2c3vyoaj9a.png', 'PNG'), -- 27
 ('Agachamento Livre', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/pgvfsvdimamebrlrq8lo.png', 'PNG'), -- 28
 ('Prancha Abdominal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/ivw5kvvgd3i0fezhp3hm.jpg', 'JPG'), -- 29
-('Tr�ceps Pulley', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/llwqzomppzetvz6uuh8q.jpg', 'JPG'), -- 30
+('Tríceps Pulley', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/llwqzomppzetvz6uuh8q.jpg', 'JPG'), -- 30
 ('Leg Press', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/v8grdjhkjz4omtdmo4ex.jpg', 'JPG'), -- 31
 ('Rosca Direta', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/cjnipso8b9ulpandg5bv.jpg', 'JPG'), -- 32
 ('Remada Alta', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114561/exercicios/mmqse4o4ovnqag8wedjx.jpg', 'JPG'), -- 33
 ('Levantamento Terra', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/bzwkb7omeomketkbmiec.jpg', 'JPG'), -- 34
-('Crucif�xo com Halteres', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/yutkonjrjmfv7d8iypts.jpg', 'JPG'), -- 35
-('Eleva��o Frontal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/frbkgulpowtszrsv7jvt.jpg', 'JPG'), -- 36
+('Crucifíxo com Halteres', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/yutkonjrjmfv7d8iypts.jpg', 'JPG'), -- 35
+('Elevação Frontal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/frbkgulpowtszrsv7jvt.jpg', 'JPG'), -- 36
 ('Abdominal Crunch', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/u2fq2gpzi5whbvbaksd1.jpg', 'JPG'), -- 37
 ('Puxada Frontal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114560/exercicios/hadejd8zdzyzfjczbcyv.jpg', 'JPG'), -- 38
 ('Desenvolvimento de Ombros', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/uz4heaadlg5kbg7kfw6x.jpg', 'JPG'), -- 39
 ('Prancha Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/mjmi8zvimuknb9klj93j.jpg', 'JPG'), -- 40
-('Flex�o de Pernas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/d8sg5iugt4g33jxjjmxz.webp', 'WEBP'), -- 41
-('Extens�o de Tr�ceps', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/qa1qcjchjowfvixjfrji.jpg', 'JPG'), -- 42
-('Eleva��o Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/osnce7yjg5yv7crt5hur.jpg', 'JPG'), -- 43
-('Flex�o Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718121243/exercicios/uni6orw0bcgl3stezl6m.jpg', 'JPG'), -- 44
+('Flexão de Pernas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/d8sg5iugt4g33jxjjmxz.webp', 'WEBP'), -- 41
+('Extensão de Tríceps', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/qa1qcjchjowfvixjfrji.jpg', 'JPG'), -- 42
+('Elevação Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718114559/exercicios/osnce7yjg5yv7crt5hur.jpg', 'JPG'), -- 43
+('Flexão Lateral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718121243/exercicios/uni6orw0bcgl3stezl6m.jpg', 'JPG'), -- 44
 ('Prancha Superman', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718121529/exercicios/tcpfhxtr5ts5uk6tug3m.png', 'PNG'), -- 45
-('Flex�o de Bra�o Inclinada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718122137/exercicios/tpkblqnusy1iljk6bas5.webp', 'WEBP'), -- 46
+('Flexão de Braço Inclinada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718122137/exercicios/tpkblqnusy1iljk6bas5.webp', 'WEBP'), -- 46
 
 ('foto-mural-1', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126019/mural/cw64tvqvz5zdxds2fcbg.jpg', 'JPG'), -- 47
 ('foto-mural-2', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126019/mural/ehz6bscm88abrqts5thg.jpg', 'JPG'), -- 48
