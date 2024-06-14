@@ -29,7 +29,7 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<UsuarioExibitionDto> create(@RequestBody @Valid UsuarioCreateEditDto newUser) {
         Usuario user = UsuarioMapper.toDto(newUser);
-        Usuario userNovo = this.uService.createUser(user);
+        Usuario userNovo = this.uService.createUser(user, newUser.getAcademiaId());
         UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(userNovo);
         URI uri = URI.create("/usuarios/" + exibitionDto.getId());
         return ResponseEntity.created(uri).body(exibitionDto);

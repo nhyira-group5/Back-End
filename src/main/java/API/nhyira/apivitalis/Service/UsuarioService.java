@@ -8,6 +8,7 @@ import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.EmailSender.Model.EmailModel;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
+import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
@@ -29,6 +30,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository uRep;
+    private final EnderecoService enderecoService;
     private final PasswordEncoder encoder;
     private final EmailService emailService;
     private final AuthenticationManager authenticationManagerForUsuarios;
@@ -82,38 +84,40 @@ public class UsuarioService {
                 "Atenciosamente,\nSua Equipe de Suporte Daniel Santos";
     }
 
-    public Usuario createUser(Usuario usuario) {
-            if (usuario == null) {
-                throw new ErroClienteException("Usuario");
-            }
-            if(cpfUnique(usuario.getCpf())){
-                throw new ConflitoException("CPF");
-            }
-            if (nomeUnique(usuario.getNickname())){
-                throw new ConflitoException("Nickname");
-            }
-            if (emailUnique(usuario.getEmail())){
-                throw new ConflitoException("Email");
-            }
+    public Usuario createUser(Usuario usuario, int enderecoId) {
+        if (usuario == null) {
+            throw new ErroClienteException("Usuario");
+        }
+        if(cpfUnique(usuario.getCpf())){
+            throw new ConflitoException("CPF");
+        }
+        if (nomeUnique(usuario.getNickname())){
+            throw new ConflitoException("Nickname");
+        }
+        if (emailUnique(usuario.getEmail())){
+            throw new ConflitoException("Email");
+        }
+        Endereco endereco = enderecoService.showEndereco(enderecoId);
+        usuario.setEnderecoId(endereco);
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         uRep.save(usuario);
         return usuario;
     }
 
     public List<Usuario> showAllUsers() {
-            List<Usuario> allUsers = uRep.buscarUsuarios();
-            if (allUsers.isEmpty()){
-                throw new SemConteudoException("Usuarios");
-            }
-            return allUsers;
+        List<Usuario> allUsers = uRep.buscarUsuarios();
+        if (allUsers.isEmpty()){
+            throw new SemConteudoException("Usuarios");
+        }
+        return allUsers;
     }
 
     public List<Usuario> showAllUsersPersonal() {
-            List<Usuario> allUsers = uRep.buscarPersonal();
-            if (allUsers.isEmpty()){
-                throw new SemConteudoException("Personais");
-            }
-            return allUsers;
+        List<Usuario> allUsers = uRep.buscarPersonal();
+        if (allUsers.isEmpty()){
+            throw new SemConteudoException("Personais");
+        }
+        return allUsers;
     }
 
     public Usuario showUserById(int id) {
@@ -135,10 +139,10 @@ public class UsuarioService {
             if (emailUnique(updatedUser.getEmail())){
                 throw new ConflitoException("Email");
             }
-                updatedUser.setSenha(encoder.encode(updatedUser.getSenha()));
-                Usuario usuario = UsuarioMapper.toEditDto(user.get(), updatedUser);
-                uRep.save(usuario);
-                return usuario;
+            updatedUser.setSenha(encoder.encode(updatedUser.getSenha()));
+            Usuario usuario = UsuarioMapper.toEditDto(user.get(), updatedUser);
+            uRep.save(usuario);
+            return usuario;
         }
         throw new NaoEncontradoException("Id");
     }
@@ -150,9 +154,9 @@ public class UsuarioService {
     }
 
     public boolean delUser(int id) {
-            if (!uRep.existsById(id)) {
-                throw new NaoEncontradoException("Id");
-            }
+        if (!uRep.existsById(id)) {
+            throw new NaoEncontradoException("Id");
+        }
         uRep.deleteById(id);
         return true;
 

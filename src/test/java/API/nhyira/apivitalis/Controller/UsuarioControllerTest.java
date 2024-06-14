@@ -51,7 +51,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "USUARIO",
-                          "nickname": "T3STer@12388"
+                          "nickname": "T3STer@12388",
+                          "academiaId" : 1
                         }
                     """;
             mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
@@ -81,7 +82,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "PERSONAL",
-                          "nickname": "T3STer@12388"
+                          "nickname": "T3STer@12388",
+                          "academiaId" : 1
                         }
                     """;
             mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
@@ -111,7 +113,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "USUARIO",
-                          "nickname": "T3STer@12388"
+                          "nickname": "T3STer@12388",
+                          "academiaId" : 1
                         }
                     """;
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
@@ -137,7 +140,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "USUARIO",
-                          "nickname": "pedR0G@"
+                          "nickname": "pedR0G@",
+                          "academiaId" : 1
                         }
                     """;
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
@@ -163,7 +167,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "USUARIO",
-                          "nickname": "T3STer@12388"
+                          "nickname": "T3STer@12388",
+                          "academiaId" : 1
                         }
                     """;
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")

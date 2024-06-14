@@ -18,7 +18,7 @@ public class UsuarioExibitionDto {
     private Midia midia;
     private Usuario.TipoUsuario tipo; // Alterado para String
     private UsuarioDto personalId;
-    private EnderecoDto endereco;
+    private EnderecoDto academiaId;
     private double imc;
 
     @Data

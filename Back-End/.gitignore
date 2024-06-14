@@ -1,0 +1,6 @@
+.vscode/settings.json
+.vscode/launch.json
+
+usuarios.csv
+vitalisDB - mySql.session.sql
+vitalisDB - SqlServer.session.sql

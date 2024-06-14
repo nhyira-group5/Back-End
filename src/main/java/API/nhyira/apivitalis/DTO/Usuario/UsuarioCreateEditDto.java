@@ -51,4 +51,6 @@ public class UsuarioCreateEditDto {
     private String senha;
 
     private Usuario.TipoUsuario tipo;
+
+    private Integer academiaId;
 }
