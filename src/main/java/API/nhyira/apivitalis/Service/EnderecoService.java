@@ -26,15 +26,15 @@ public class EnderecoService {
         return dto;
     }
 
-    public Endereco showEnderecoPorUsuario(int id) {
-        if (id < 1) throw new ErroClienteException("ID");
-
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
-        Optional<Endereco> optEndereco = enderecoRepository.findByPersonalIdIs(optUsuario.get());
-        optEndereco.orElseThrow(() -> new  NaoEncontradoException("Endereco"));
-        return optEndereco.get();
-    }
+//    public Endereco showEnderecoPorUsuario(int id) {
+//        if (id < 1) throw new ErroClienteException("ID");
+//
+//        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+//        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+//        Optional<Endereco> optEndereco = enderecoRepository.findByPersonalIdIs(optUsuario.get());
+//        optEndereco.orElseThrow(() -> new  NaoEncontradoException("Endereco"));
+//        return optEndereco.get();
+//    }
 
     public Endereco showEndereco(int id) {
         if (id < 1) throw new ErroClienteException("ID");
@@ -43,27 +43,27 @@ public class EnderecoService {
         return optEndereco.get();
     }
 
-    public Endereco updateEndereco(int id, EnderecoCreateEditDto dto) {
-        if (dto == null) throw new ErroClienteException("Endereco");
-        if (id < 1)throw new ErroClienteException("ID");
+//    public Endereco updateEndereco(int id, EnderecoCreateEditDto dto) {
+//        if (dto == null) throw new ErroClienteException("Endereco");
+//        if (id < 1)throw new ErroClienteException("ID");
+//
+//        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+//        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+//        Optional<Endereco> optEndereco = enderecoRepository.findByPersonalIdIs(optUsuario.get());
+//        optEndereco.orElseThrow(() -> new  NaoEncontradoException("Endereco"));
+//        Endereco endereco = EnderecoMapper.toEditDto(optEndereco.get(), dto);
+//        enderecoRepository.save(endereco);
+//        return endereco;
+//    }
 
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
-        Optional<Endereco> optEndereco = enderecoRepository.findByPersonalIdIs(optUsuario.get());
-        optEndereco.orElseThrow(() -> new  NaoEncontradoException("Endereco"));
-        Endereco endereco = EnderecoMapper.toEditDto(optEndereco.get(), dto);
-        enderecoRepository.save(endereco);
-        return endereco;
-    }
-
-    public Boolean deleteUser(int id) {
-        if(id < 1)throw new NaoEncontradoException("ID");
-
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
-        Optional<Endereco> optEndereco = enderecoRepository.findByPersonalIdIs(optUsuario.get());
-        optEndereco.orElseThrow(() -> new NaoEncontradoException("Endereco"));
-        enderecoRepository.delete(optEndereco.get());
-        return true;
-    }
+//    public Boolean deleteUser(int id) {
+//        if(id < 1)throw new NaoEncontradoException("ID");
+//
+//        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
+//        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+//        Optional<Endereco> optEndereco = enderecoRepository.findByPersonalIdIs(optUsuario.get());
+//        optEndereco.orElseThrow(() -> new NaoEncontradoException("Endereco"));
+//        enderecoRepository.delete(optEndereco.get());
+//        return true;
+//    }
 }

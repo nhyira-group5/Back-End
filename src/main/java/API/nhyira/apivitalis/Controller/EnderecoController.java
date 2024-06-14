@@ -33,12 +33,12 @@ public class EnderecoController {
         return ResponseEntity.created(uri).body(exibitionDto);
     }
 
-    @GetMapping("/buscar-usuario/{id}")
-    public ResponseEntity<EnderecoExibitionDto> mostrarEnderecoPorUsuario(@PathVariable int id) {
-        Endereco endereco = enderecoService.showEnderecoPorUsuario(id);
-        EnderecoExibitionDto exibitionDto = EnderecoMapper.toDto(endereco);
-        return ResponseEntity.ok(exibitionDto);
-    }
+//    @GetMapping("/buscar-usuario/{id}")
+//    public ResponseEntity<EnderecoExibitionDto> mostrarEnderecoPorUsuario(@PathVariable int id) {
+//        Endereco endereco = enderecoService.showEnderecoPorUsuario(id);
+//        EnderecoExibitionDto exibitionDto = EnderecoMapper.toDto(endereco);
+//        return ResponseEntity.ok(exibitionDto);
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity<EnderecoExibitionDto> mostrarEndereco(@PathVariable int id) {
@@ -47,18 +47,18 @@ public class EnderecoController {
         return ResponseEntity.ok(exibitionDto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<EnderecoExibitionDto> atualizarEndereco(@PathVariable int id, @RequestBody EnderecoCreateEditDto dto) {
-        Endereco enderecoAtualizado = enderecoService.updateEndereco(id, dto);
-        EnderecoExibitionDto exibitionDto = EnderecoMapper.toDto(enderecoAtualizado);
-        return ResponseEntity.ok(exibitionDto);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deletarEndereco(@PathVariable int id) {
-        boolean deletado = enderecoService.deleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<EnderecoExibitionDto> atualizarEndereco(@PathVariable int id, @RequestBody EnderecoCreateEditDto dto) {
+//        Endereco enderecoAtualizado = enderecoService.updateEndereco(id, dto);
+//        EnderecoExibitionDto exibitionDto = EnderecoMapper.toDto(enderecoAtualizado);
+//        return ResponseEntity.ok(exibitionDto);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Boolean> deletarEndereco(@PathVariable int id) {
+//        boolean deletado = enderecoService.deleteUser(id);
+//        return ResponseEntity.noContent().build();
+//    }
 
     @GetMapping("/api/academias/proximas")
     public ResponseEntity<List<AcademiaDto>> buscarAcademiasProximas(@RequestParam String logradouro, @RequestParam String bairro, @RequestParam String cidade, @RequestParam String estado, @RequestParam String cep) {
