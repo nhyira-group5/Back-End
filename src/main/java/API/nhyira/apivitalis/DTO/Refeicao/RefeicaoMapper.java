@@ -36,12 +36,6 @@ public class RefeicaoMapper {
         return entity.stream().map(RefeicaoMapper::toDTO).toList();
     }
 
-    public static List<RefeicaoExibitionDto> toDto (List<Refeicao> entities) {
-        if (entities == null) return null;
-        List<Refeicao> dtos = new ArrayList<>();
-        return dtos.stream().map(RefeicaoMapper::toDto).toList();
-    }
-
     public static RefeicaoExibitionDto.MidiaDto toMidiaDto (Midia midia) {
         if (midia == null) return null;
         RefeicaoExibitionDto.MidiaDto midiaDto = new RefeicaoExibitionDto.MidiaDto();

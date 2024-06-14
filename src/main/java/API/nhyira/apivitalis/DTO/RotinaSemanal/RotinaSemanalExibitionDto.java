@@ -6,7 +6,6 @@ import java.util.List;
 
 @Data
 public class RotinaSemanalExibitionDto {
-
     private Integer id;
     private RotinaMensalExibitionDto rotinaMensalId;
     private Integer numSemana;

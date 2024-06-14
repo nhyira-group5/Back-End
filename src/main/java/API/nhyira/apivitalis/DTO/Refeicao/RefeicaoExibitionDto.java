@@ -7,16 +7,9 @@ import javax.validation.constraints.Size;
 @Data
 public class RefeicaoExibitionDto {
     private Integer idRefeicao;
-
-    @Size(min = 1, max = 100)
     private String nome;
-
-    @Size(min = 1, max = 550)
     private String preparo;
-
     private MidiaDto midia;
-
-
 
     @Data
     public static class MidiaDto {

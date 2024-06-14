@@ -32,8 +32,7 @@ public class AlimentoMapper {
 
     public static List<AlimentoExibitionDto> toDto (List<Alimento> entities) {
         if (entities == null) return null;
-        List<Alimento> dtos = new ArrayList<>();
-        return dtos.stream().map(AlimentoMapper::toDto).toList();
+        return entities.stream().map(AlimentoMapper::toDto).toList();
     }
 
     public static AlimentoExibitionDto.MidiaDto toMidiaDto (Midia midia) {

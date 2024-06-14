@@ -20,9 +20,9 @@ public class RotinaDiariaService {
     private final TreinoRepository tRep;
 
     public RotinaDiaria show(int id) {
-        Optional<RotinaDiaria> rotinaDiario = diarioRepository.findById(id);
-        rotinaDiario.orElseThrow(() -> new NaoEncontradoException("Rotina Diaria"));
-        return rotinaDiario.get();
+        Optional<RotinaDiaria> rotinaDiaria = diarioRepository.findById(id);
+        rotinaDiaria.orElseThrow(() -> new NaoEncontradoException("Rotina Diaria"));
+        return rotinaDiaria.get();
     }
 
     public List<RotinaDiaria> showPorSemanal(int id) {

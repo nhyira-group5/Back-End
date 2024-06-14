@@ -29,8 +29,7 @@ public class AlimentoPorRefeicaoMapper {
 
     public static List<AlimentoPorRefeicaoExibitionDto> toDto (List<AlimentoPorRefeicao> entities) {
         if (entities == null) return null;
-        List<AlimentoPorRefeicao> dtos = new ArrayList<>();
-        return dtos.stream().map(AlimentoPorRefeicaoMapper::toDto).toList();
+        return entities.stream().map(AlimentoPorRefeicaoMapper::toDto).toList();
     }
 
     public static AlimentoPorRefeicaoExibitionDto.AlimentoDto toAlimentoDto(Alimento entity) {

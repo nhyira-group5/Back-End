@@ -26,5 +26,4 @@ public class DietaMapper {
     public static List<DietaExibitionDto> toDto(List<Dieta> entities){
         return entities.stream().map(DietaMapper::toDto).toList();
     }
-
 }

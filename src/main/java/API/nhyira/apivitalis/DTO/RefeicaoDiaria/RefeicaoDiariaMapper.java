@@ -8,13 +8,10 @@ import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
 import API.nhyira.apivitalis.Entity.RotinaDiaria;
 
 public class RefeicaoDiariaMapper {
-
-    public static RefeicaoDiariaExibitionDto toDto(RefeicaoDiaria refeicaoDiaria){
-        if (refeicaoDiaria == null)return null;
+    public static RefeicaoDiariaExibitionDto toDto(RefeicaoDiaria refeicaoDiaria) {
+        if (refeicaoDiaria == null) return null;
 
         RefeicaoDiariaExibitionDto refeicaoDiariaExibitionDto = new RefeicaoDiariaExibitionDto();
-
-
         refeicaoDiariaExibitionDto.setConcluido(refeicaoDiaria.getConcluido());
         refeicaoDiariaExibitionDto.setIdRefeicaoDiaria(refeicaoDiaria.getIdRefeicaoDiaria());
         refeicaoDiariaExibitionDto.setRotinaDiariaId(rotinaDiariaDto(refeicaoDiaria.getRotinaDiariaId()));
@@ -22,7 +19,8 @@ public class RefeicaoDiariaMapper {
         return refeicaoDiariaExibitionDto;
     }
 
-    public static RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto(RotinaDiaria rotinaDiaria){
+    public static RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto(RotinaDiaria rotinaDiaria) {
+        if (rotinaDiaria == null) return null;
 
         RotinaSemanalExibitionDto.RotinaDiariaDto rotinaDiariaDto = new RotinaSemanalExibitionDto.RotinaDiariaDto();
         rotinaDiariaDto.setIdRotinaDiaria(rotinaDiaria.getIdRotinaDiaria());
@@ -30,14 +28,13 @@ public class RefeicaoDiariaMapper {
         return rotinaDiariaDto;
     }
 
-    public static RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto(Refeicao refeicao){
+    public static RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto(Refeicao refeicao) {
+        if (refeicao == null) return null;
 
         RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto = new RefeicaoPorDietaExibitionDto.RefeicaoDto();
-
         refeicaoDto.setId(refeicao.getIdRefeicao());
         refeicaoDto.setNome(refeicao.getNome());
         refeicaoDto.setPreparo(refeicao.getPreparo());
         return refeicaoDto;
     }
-
 }

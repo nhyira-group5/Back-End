@@ -1,20 +1,15 @@
 package API.nhyira.apivitalis.DTO.RefeicaoPorDieta;
 
-import API.nhyira.apivitalis.DTO.AlimentoPorRefeicao.AlimentoPorRefeicaoExibitionDto;
-import API.nhyira.apivitalis.DTO.AlimentoPorRefeicao.AlimentoPorRefeicaoMapper;
-import API.nhyira.apivitalis.Entity.AlimentoPorRefeicao;
 import API.nhyira.apivitalis.Entity.Dieta;
 import API.nhyira.apivitalis.Entity.Refeicao;
 import API.nhyira.apivitalis.Entity.RefeicaoPorDieta;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RefeicaoPorDietaMapper {
     public static RefeicaoPorDieta toEntity(RefeicaoPorDietaCreateDto dto) {
         if (dto == null) return null;
-        RefeicaoPorDieta refPorDieta = new RefeicaoPorDieta();
-        return refPorDieta;
+        return new RefeicaoPorDieta();
     }
 
     public static RefeicaoPorDietaExibitionDto toDto(RefeicaoPorDieta entity) {
@@ -28,8 +23,7 @@ public class RefeicaoPorDietaMapper {
 
     public static List<RefeicaoPorDietaExibitionDto> toDto (List<RefeicaoPorDieta> entities) {
         if (entities == null) return null;
-        List<RefeicaoPorDieta> dtos = new ArrayList<>();
-        return dtos.stream().map(RefeicaoPorDietaMapper::toDto).toList();
+        return entities.stream().map(RefeicaoPorDietaMapper::toDto).toList();
     }
 
     public static RefeicaoPorDietaExibitionDto.RefeicaoDto toRefeicaoDto(Refeicao entity) {

@@ -41,7 +41,7 @@ public class RotinaDiariaController {
         RotinaDiaria rotinaDiaria = rotinaDiariaService.show(id);
         Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rotinaDiaria);
         Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rotinaDiaria);
-        return ResponseEntity.ok(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
+        return ResponseEntity.ok().body(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
     }
 
     @PatchMapping("/concluir/{id}")

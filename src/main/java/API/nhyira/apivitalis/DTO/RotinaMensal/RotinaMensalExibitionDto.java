@@ -17,7 +17,6 @@ public class RotinaMensalExibitionDto {
     @Data
     public static class RotinaUsuarioDto{
         private int id;
-
         private Meta metaId;
     }
 

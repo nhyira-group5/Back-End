@@ -8,9 +8,9 @@ import API.nhyira.apivitalis.Entity.RotinaSemanal;
 import java.util.List;
 
 public class RotinaDiariaMapper {
-
     public static RotinaDiariaExibitionDto toDto(RotinaDiaria rotinaDiaria, Integer totalExercicios,
-            Integer totalExerciciosFeitos) {
+                                                 Integer totalExerciciosFeitos) {
+        if (rotinaDiaria == null || (totalExercicios == null || totalExercicios < 0) || (totalExerciciosFeitos == null || totalExerciciosFeitos < 0)) return null;
         RotinaDiariaExibitionDto rotinaDiariaExibitionDto = new RotinaDiariaExibitionDto();
 
         rotinaDiariaExibitionDto.setIdRotinaDiaria(rotinaDiaria.getIdRotinaDiaria());
@@ -23,8 +23,10 @@ public class RotinaDiariaMapper {
         return rotinaDiariaExibitionDto;
     }
 
-    public static List<RotinaDiariaExibitionDto> toDtos(List<RotinaDiaria> rotinaDiarias, Integer totalExercicios,
-            Integer totalExerciciosFeitos) {
+    public static List<RotinaDiariaExibitionDto> toDto(List<RotinaDiaria> rotinaDiarias, Integer totalExercicios,
+                                                       Integer totalExerciciosFeitos) {
+        if (rotinaDiarias == null || (totalExercicios == null || totalExercicios < 0) || (totalExerciciosFeitos == null || totalExerciciosFeitos < 0))
+            return null;
         return rotinaDiarias.stream().map(rd -> toDto(rd, totalExercicios, totalExerciciosFeitos)).toList();
     }
 
@@ -39,6 +41,7 @@ public class RotinaDiariaMapper {
 
     public static List<RotinaDiariaExibitionDto.RefeicaoDiariaDto> refeicaoDiariaDtos(
             List<RefeicaoDiaria> refeicaoDiarias) {
+        if (refeicaoDiarias == null) return null;
         return refeicaoDiarias.stream().map(rd -> {
             RotinaDiariaExibitionDto.RefeicaoDiariaDto refeicaoDiariaDto = new RotinaDiariaExibitionDto.RefeicaoDiariaDto();
             refeicaoDiariaDto.setConcluido(rd.getConcluido());

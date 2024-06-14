@@ -27,6 +27,24 @@ public class AlimentoPorRefeicaoController {
         return ResponseEntity.ok(alimentoPorRefeicao);
     }
 
+    @GetMapping("/por-refeicao/{idRefeicao}")
+    public ResponseEntity<List<AlimentoPorRefeicaoExibitionDto>> showByIdRefeicao(
+            @PathVariable int idRefeicao
+    ) {
+        if (idRefeicao <= 0) return ResponseEntity.badRequest().build();
+        List<AlimentoPorRefeicaoExibitionDto> alimentoPorRefeicao = AlimentoPorRefeicaoMapper.toDto(aprSrv.showAlimentoPorRefeicaoByIdRefeicao(idRefeicao));
+        return ResponseEntity.ok(alimentoPorRefeicao);
+    }
+
+    @GetMapping("/por-alimento/{idAlimento}")
+    public ResponseEntity<List<AlimentoPorRefeicaoExibitionDto>> showByIdAlimento(
+            @PathVariable int idAlimento
+    ) {
+        if (idAlimento <= 0) return ResponseEntity.badRequest().build();
+        List<AlimentoPorRefeicaoExibitionDto> alimentoPorRefeicao = AlimentoPorRefeicaoMapper.toDto(aprSrv.showAlimentoPorRefeicaoByIdAlimento(idAlimento));
+        return ResponseEntity.ok(alimentoPorRefeicao);
+    }
+
     @GetMapping
     public ResponseEntity<List<AlimentoPorRefeicaoExibitionDto>> showAll() {
         List<AlimentoPorRefeicaoExibitionDto> alimentosPorRefeicoes = AlimentoPorRefeicaoMapper.toDto(aprSrv.getAllAlimentoPorRefeicao());
