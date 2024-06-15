@@ -162,7 +162,7 @@ class UsuarioControllerTest {
                         {
                           "cpf" : "71191770010",
                           "dtNasc" : "1999-08-08",
-                          "email": "pedro@example.com",
+                          "email": "pedro@gmail.com",
                           "sexo": "M",
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
@@ -382,7 +382,7 @@ class UsuarioControllerTest {
                     .andExpect(jsonPath("$.nome").value("Luigi Vicchietti"))
                     .andExpect(jsonPath("$.dtNasc").value("2005-01-17"))
                     .andExpect(jsonPath("$.sexo").value("M"))
-                    .andExpect(jsonPath("$.email").value("luigi@example.com"))
+                    .andExpect(jsonPath("$.email").value("luigi@gmail.com"))
                     .andExpect(jsonPath("$.tipo").value("USUARIO"));
         }
 
@@ -432,7 +432,7 @@ class UsuarioControllerTest {
                     .andExpect(jsonPath("$[0].nome").value("Marcos Silva Oliveira Pinto Santos"))
                     .andExpect(jsonPath("$[0].dtNasc").value("1980-12-05"))
                     .andExpect(jsonPath("$[0].sexo").value("M"))
-                    .andExpect(jsonPath("$[0].email").value("marcos@example.com"))
+                    .andExpect(jsonPath("$[0].email").value("marcos@gmail.com"))
                     .andExpect(jsonPath("$[0].tipo").value("PERSONAL"));
         }
 
@@ -452,7 +452,7 @@ class UsuarioControllerTest {
                     .andExpect(jsonPath("$[0].nome").value("Luigi Vicchietti"))
                     .andExpect(jsonPath("$[0].dtNasc").value("2005-01-17"))
                     .andExpect(jsonPath("$[0].sexo").value("M"))
-                    .andExpect(jsonPath("$[0].email").value("luigi@example.com"))
+                    .andExpect(jsonPath("$[0].email").value("luigi@gmail.com"))
                     .andExpect(jsonPath("$[0].tipo").value("USUARIO"));
         }
 
@@ -476,7 +476,7 @@ class UsuarioControllerTest {
                     .andExpect(jsonPath("$.nome").value("Luigi Vicchietti"))
                     .andExpect(jsonPath("$.dtNasc").value("2005-01-17"))
                     .andExpect(jsonPath("$.sexo").value("M"))
-                    .andExpect(jsonPath("$.email").value("luigi@example.com"))
+                    .andExpect(jsonPath("$.email").value("luigi@gmail.com"))
                     .andExpect(jsonPath("$.tipo").value("USUARIO"));
         }
 
@@ -689,7 +689,7 @@ class UsuarioControllerTest {
                         {
                           "cpf" : "71191770010",
                           "dtNasc" : "1999-08-08",
-                          "email": "pedro@example.com",
+                          "email": "pedro@gmail.com",
                           "sexo": "M",
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",

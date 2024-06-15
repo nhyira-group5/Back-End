@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: API.nhyira.apivitalis.ApiVitalisApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.87 s -- in API.nhyira.apivitalis.ApiVitalisApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 39.43 s -- in API.nhyira.apivitalis.ApiVitalisApplicationTests

@@ -84,7 +84,7 @@ public class UsuarioService {
                 "Atenciosamente,\nSua Equipe de Suporte Daniel Santos";
     }
 
-    public Usuario createUser(Usuario usuario, int enderecoId) {
+    public Usuario createUser(Usuario usuario, Integer enderecoId) {
         if (usuario == null) {
             throw new ErroClienteException("Usuario");
         }
@@ -97,8 +97,10 @@ public class UsuarioService {
         if (emailUnique(usuario.getEmail())){
             throw new ConflitoException("Email");
         }
-        Endereco endereco = enderecoService.showEndereco(enderecoId);
-        usuario.setEnderecoId(endereco);
+        if (enderecoId != null){
+            Endereco endereco = enderecoService.showEndereco(enderecoId);
+            usuario.setEnderecoId(endereco);
+        }
         usuario.setSenha(encoder.encode(usuario.getSenha()));
         uRep.save(usuario);
         return usuario;
