@@ -1,6 +1,8 @@
 CREATE DATABASE IF NOT EXISTS vitalisDB;
 USE vitalisDB;
 
+DROP TRIGGER IF EXISTS cria_rotina;
+
 DROP DATABASE IF EXISTS vitalisDB;
 CREATE DATABASE vitalisDB;
 USE vitalisDB;
@@ -76,7 +78,7 @@ CREATE TABLE mensagem (
     remetente_id INT,
     destinatario_id INT,
     assunto VARCHAR(255),
-    data_hora DATE NOT NULL,
+    data_hora DATETIME NOT NULL,
     PRIMARY KEY (id_mensagem, remetente_id, destinatario_id, chat_id),
     FOREIGN KEY (chat_id) REFERENCES chat(id_chat) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (remetente_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -316,3 +318,96 @@ CREATE TABLE lembrete (
     PRIMARY KEY (id_lembrete, usuario_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- ---------------------------------------------------------------------------
+-- TRIGGERS
+-- ---------------------------------------------------------------------------
+DELIMITER //
+
+CREATE TRIGGER cria_rotina
+AFTER INSERT ON rotina_usuario
+FOR EACH ROW
+BEGIN
+    DECLARE rotina_mensal_id INT;
+    DECLARE rotina_semanal_id INT;
+    DECLARE rotina_diaria_id INT;
+    DECLARE num_semana INT;
+    DECLARE dia INT;
+    DECLARE padrao INT DEFAULT 1;
+
+    INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
+    VALUES 
+    (NEW.id_rotina_usuario, MONTH(CURDATE()), YEAR(CURDATE()), 0);
+
+    SET rotina_mensal_id = LAST_INSERT_ID();
+
+    SET num_semana = 1;
+    WHILE num_semana <= 5 DO
+        INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
+        VALUES 
+        (rotina_mensal_id, num_semana, 0);
+
+        SET rotina_semanal_id = LAST_INSERT_ID();
+
+
+        SET dia = 1;
+        WHILE dia <= 7 DO
+            INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
+            VALUES 
+            (rotina_semanal_id, dia, 0);
+
+            SET rotina_diaria_id = LAST_INSERT_ID();
+
+
+            INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+            VALUES
+            (1, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+            (2, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+            (3, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+            (4, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+            (5, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+            (6, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+            (7, rotina_diaria_id, 0, 12, 3, '00:01:00');
+
+            CASE padrao
+                WHEN 1 THEN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (rotina_diaria_id, 1, 0),
+                    (rotina_diaria_id, 2, 0),
+                    (rotina_diaria_id, 3, 0);
+                WHEN 2 THEN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (rotina_diaria_id, 1, 0),
+                    (rotina_diaria_id, 2, 0),
+                    (rotina_diaria_id, 4, 0);
+                WHEN 3 THEN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (rotina_diaria_id, 1, 0),
+                    (rotina_diaria_id, 2, 0),
+                    (rotina_diaria_id, 5, 0);
+				WHEN 4 THEN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (rotina_diaria_id, 2, 0),
+                    (rotina_diaria_id, 4, 0),
+                    (rotina_diaria_id, 5, 0);
+                WHEN 5 THEN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (rotina_diaria_id, 5, 0),
+                    (rotina_diaria_id, 4, 0),
+                    (rotina_diaria_id, 3, 0);
+            END CASE;
+
+            SET padrao = padrao + 1;
+            IF padrao > 3 THEN
+                SET padrao = 1;
+            END IF;
+
+            SET dia = dia + 1;
+        END WHILE;
+
+        SET num_semana = num_semana + 1;
+    END WHILE;
+
+END //
+
+DELIMITER ;

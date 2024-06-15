@@ -1,7 +1,24 @@
-IF NOT EXISTS (SELECT 1 FROM sys.databases WHERE name = 'vitalisDB')
-BEGIN
-    CREATE DATABASE vitalisDB;
-END
+USE master;
+
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'vitalisDB')
+	BEGIN
+		ALTER DATABASE vitalisDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+		DROP DATABASE vitalisDB;
+	END
+ELSE
+	BEGIN
+		CREATE DATABASE vitalisDB;
+	END
+GO
+
+IF EXISTS (
+    SELECT * 
+    FROM sys.triggers 
+    WHERE object_id = OBJECT_ID(N'[dbo].[cria_rotina]')
+)
+	BEGIN
+		DROP TRIGGER [dbo].[cria_rotina];
+	END
 GO
 
 USE vitalisDB;
@@ -320,4 +337,107 @@ CREATE TABLE lembrete (
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
     FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
 );
+GO
+
+-- ---------------------------------------------------------------------------
+-- TRIGGERS
+-- ---------------------------------------------------------------------------
+CREATE TRIGGER cria_rotina
+ON rotina_usuario
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @rotina_mensal_id INT;
+    DECLARE @rotina_semanal_id INT;
+    DECLARE @rotina_diaria_id INT;
+    DECLARE @num_semana INT;
+    DECLARE @dia INT;
+    DECLARE @padrao INT = 1;
+
+    DECLARE @id_rotina_usuario INT;
+    SELECT @id_rotina_usuario = id_rotina_usuario FROM inserted;
+
+    INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
+    VALUES 
+    (@id_rotina_usuario, MONTH(GETDATE()), YEAR(GETDATE()), 0);
+
+    SET @rotina_mensal_id = SCOPE_IDENTITY();
+
+
+    SET @num_semana = 1;
+    WHILE @num_semana <= 5
+    BEGIN
+        INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
+        VALUES 
+        (@rotina_mensal_id, @num_semana, 0);
+
+        SET @rotina_semanal_id = SCOPE_IDENTITY();
+
+
+        SET @dia = 1;
+        WHILE @dia <= 7
+        BEGIN
+            INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
+            VALUES 
+            (@rotina_semanal_id, @dia, 0);
+
+            SET @rotina_diaria_id = SCOPE_IDENTITY();
+
+
+            INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+            VALUES
+            (1, @rotina_diaria_id, 0, 15, 3, '00:01:00'),
+            (2, @rotina_diaria_id, 0, 12, 3, '00:02:00'),
+            (3, @rotina_diaria_id, 0, 10, 3, '00:01:30'),
+            (4, @rotina_diaria_id, 0, 20, 3, '00:01:00'),
+            (5, @rotina_diaria_id, 0, 8, 3, '00:02:00'),
+            (6, @rotina_diaria_id, 0, 15, 3, '00:01:30'),
+            (7, @rotina_diaria_id, 0, 12, 3, '00:01:00');
+
+            INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) 
+            VALUES
+            (@rotina_diaria_id,
+                CASE @padrao
+                    WHEN 1 THEN 1
+                    WHEN 2 THEN 2
+                    WHEN 3 THEN 3
+                    WHEN 4 THEN 1
+                    WHEN 5 THEN 2
+                END, 0);
+
+            INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) 
+            VALUES
+            (@rotina_diaria_id,
+                CASE @padrao
+                    WHEN 1 THEN 2
+                    WHEN 2 THEN 2
+                    WHEN 3 THEN 2
+                    WHEN 4 THEN 4
+                    WHEN 5 THEN 4
+                END, 0);
+
+            INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) 
+            VALUES
+            (@rotina_diaria_id,
+                CASE @padrao
+                    WHEN 1 THEN 3
+                    WHEN 2 THEN 4
+                    WHEN 3 THEN 5
+                    WHEN 4 THEN 5
+                    WHEN 5 THEN 3
+                END, 0);
+
+            SET @padrao = @padrao + 1;
+            IF @padrao > 5
+                SET @padrao = 1;
+
+            SET @dia = @dia + 1;
+        END; -- END WHILE dia
+
+        SET @num_semana = @num_semana + 1;
+    END; -- END WHILE num_semana
+
+END;
 GO

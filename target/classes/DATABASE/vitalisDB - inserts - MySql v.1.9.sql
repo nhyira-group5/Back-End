@@ -121,66 +121,6 @@ VALUES
 ('foto-mural-4', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/k5svjihaojkf1bo7ld3m.jpg', 'JPG'), -- 50
 ('foto-mural-5', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/hmggcwuqr57hgoqagytp.jpg', 'JPG'); -- 51
 
-INSERT INTO meta (nome) VALUES
-('Emagrecimento'),
-('Ganho de Massa Muscular'),
-('Melhoria da Resistência Cardiovascular'),
-('Redução do Estresse'),
-('Aumento da Flexibilidade'),
-('Melhoria da Postura'),
-('Redução da Pressão Arterial');
-
-INSERT INTO assinatura (nome, valor) VALUES
-('Viva Vitalis', 49.99);
-
-INSERT INTO endereco (logradouro, numero, bairro, cidade, estado, complemento, cep)
-VALUES
-('Avenida Wilson Carvalho', 10, 'Zer�o', 'Macap�', 'AP', null, 68903025),
-('Rua Verdum', 112, 'Vila Nasser', 'Campo Grande', 'MS', null, 79117360),
-('Rua Alzira Gomes Queir�s', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
-
--- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
-VALUES 
-(0, 'ylu1Gi@@', '56438153036', 'Luigi Vicchietti', '2005-01-17', 'M', 'luigi@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, null),
-(1, 'marC@SSilV4', '92865867013', 'Marcos Silva Oliveira Pinto Santos', '1980-12-05', 'M', 'marcos@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 1);
-
--- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
-VALUES 
-(0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2, null),
-(1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 2),
-(1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 3);
--- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Milit�o', '1999-07-18', 'F', 'admin@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
-
--- Inserção de contrato para o usuário com id_usuario 3 e personal_id 2
-INSERT INTO contrato (usuario_id, personal_id, afiliacao, inicio_contrato, fim_contrato) VALUES
-(3, 2, 1, '2024-01-01', '2024-12-31');
-
-INSERT INTO pagamento (assinatura_id, usuario_id, data_pagamento, tipo)
-VALUES
-(1, 2, '2024-01-01', 'PIX');
-
-INSERT INTO chat (usuario_id, personal_id, ativo)
-VALUES
-(3, 2, 1);
-
-INSERT INTO mensagem (chat_id, destinatario_id, remetente_id, assunto, data_hora)
-VALUES
-(1, 2, 3, "Bom dia! Tudo bem com você? Gostaria que conversar mais sobre minha rotina...", "2024-01-01 12:30:37"),
-(1, 3, 2, "Claro! Podemos nos encontrar no parque do Zerão? Podemos começar a treinar juntos!", "2024-01-01 12:30:59"),
-(1, 2, 3, "Legal! Compareço sim, pode ser as 17h? Outra coisa, pode me dar dicas no dia a dia? Meio que estou precisando kkkk", "2024-01-01 12:31:37"),
-(1, 3, 2, "Claro!", "2024-01-01 12:35:37");
-
-INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
-(1, 2),
-(2, 1);
-
-INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
-VALUES
-(1, 58.60, 1.85, 0, 0, 0, 0, 0, 0),
-(3, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
-
 INSERT INTO especialidade (nome) VALUES
 ('Emagrecimento'),
 ('Alta Intensidade (HIIT)'),
@@ -190,14 +130,14 @@ INSERT INTO especialidade (nome) VALUES
 ('Peso Corporal'),
 ('Alongamento e Relaxamento');
 
--- Atribuição de usuários personais a especialidades
-INSERT INTO especialidade_por_personal (personal_id, especialidade_id) VALUES
-(2, 1),  -- Marcos Silva Oliveira Pinto Santos é especializado em Emagrecimento
-(2, 3),  -- Marcos Silva Oliveira Pinto Santos é especializado em Resistência Cardiovascular
-(4, 2),  -- Roberta Ferreira é especializada em Alta Intensidade (HIIT)
-(4, 4),  -- Roberta Ferreira é especializada em Flexibilidade e Mobilidade
-(5, 5),  -- Pedro Gomes é especializado em Resistência Cardiovascular
-(5, 3);  -- Pedro Gomes é especializado em Força e Resistência
+INSERT INTO meta (nome) VALUES
+('Emagrecimento'),
+('Ganho de Massa Muscular'),
+('Melhoria da Resistência Cardiovascular'),
+('Redução do Estresse'),
+('Aumento da Flexibilidade'),
+('Melhoria da Postura'),
+('Redução da Pressão Arterial');
 
 -- Inserção de correspondências entre especialidades e metas
 INSERT INTO especialidade_por_meta (especialidade_id, meta_id) VALUES
@@ -209,6 +149,90 @@ INSERT INTO especialidade_por_meta (especialidade_id, meta_id) VALUES
 (6, 6),   -- Peso Corporal -> Emagrecimento
 (6, 2),   -- Peso Corporal -> Ganho de massa muscular
 (7, 7);   -- Alongamento e Relaxamento -> Redução do Estresse
+
+INSERT INTO metrica (metrica) VALUES
+('gramas'),
+('quilogramas'),
+('miligramas'),
+('litros'),
+('mililitros'),
+('unidade'),
+('xícaras'),
+('colheres de sopa'),
+('colheres de chá');
+
+-- Inserção de refeições
+INSERT INTO refeicao (midia_id, nome, preparo) VALUES
+(3, 'Virada Paulista', 'Refeição típica da culinária paulista, composta por arroz, feijão, carne de porco, linguiça, couve refogada, torresmo, ovo frito e farofa.'),
+(6, 'Salada de Frango Grelhado', 'Refeição leve e saudável, composta por salada de folhas verdes, peito de frango grelhado, legumes grelhados e iogurte natural desnatado.'),
+(7, 'Salmão com Quinoa', 'Refeição nutritiva e pouco calórica, composta por salmão assado, quinoa cozida, abacate e omelete de claras.'),
+(13, 'Frango e batata doce', 'Refeição calórica e rica em proteínas para estimular o crescimento muscular, incluindo frango assado, batata doce assada, arroz branco e feijão preto.'),
+(22, 'Carne com aveia de flocos', 'Refeição balanceada com carboidratos e proteínas para fornecer energia e promover o ganho de massa muscular, incluindo carne vermelha grelhada, aveia em flocos, ovo cozido e amendoim.');
+
+-- Inserção de alimentos da virada paulista
+INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
+(23, 'Arroz Branco', 45.0, 4.0, 0.5),
+(25, 'Feijão Carioca', 30.0, 7.0, 1.5),
+(19, 'Carne de Porco', 0.0, 20.0, 5.0),
+(12, 'Linguiça', 1.0, 18.0, 10.0),
+(17, 'Couve', 5.0, 2.0, 0.5),
+(5, 'Torresmo', 2.0, 5.0, 10.0),
+(11, 'Ovo', 1.0, 7.0, 5.0),						-- Vai ser usado também na refeição Carne com aveia de flocos"
+(9, 'Farofa', 20.0, 2.0, 10.0);
+
+-- Inserção de alimentos da Salada de Frango Grelhado
+INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
+(10, 'Salada de Folhas Verdes', 2.0, 1.0, 0.2),
+(21, 'Frango', 0.0, 30.0, 3.5),					-- Vai ser usado também na refeição "Frango e batata doce"
+(16, 'Legumes', 10.0, 2.0, 0.5),
+(4, 'Iogurte Natural', 4.0, 8.0, 0.2);
+
+-- Inserção de alimentos de Salmão com Quinoa
+INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
+(8, 'Salmão Assado', 0.0, 25.0, 12.0),
+(15, 'Quinoa Cozida', 20.0, 4.0, 1.5),
+(2, 'Abacate', 1.0, 2.0, 14.0),
+(13, 'Omelete de Claras', 1.0, 15.0, 3.0);
+
+-- Inserção de alimentos de Frango e batata doce
+INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
+(23, 'Batata Doce', 30.0, 2.0, 0.5),
+(20, 'Feijão Preto', 30.0, 7.0, 1.5);
+
+-- Inserção de alimentos de Carne com aveia de flocos
+INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
+(18, 'Carne de vaca', 0.0, 25.0, 10.0),
+(26, 'Aveia em Flocos', 66.0, 16.9, 7.0),
+(1, 'Amendoim', 16.0, 26.0, 49.0);
+
+-- Inserção de alimentos por refeição
+INSERT INTO alimento_por_refeicao (refeicao_id, alimento_id, metrica_id, qtd_alimento) VALUES
+(1, 1, 6, 1),    -- Virada Paulista: Arroz Branco - 1 unidade
+(1, 2, 6, 1),    -- Virada Paulista: Feijão Carioca - 1 unidade
+(1, 3, 1, 150),  -- Virada Paulista: Carne de Porco - 150 gramas
+(1, 4, 6, 1),    -- Virada Paulista: Linguiça - 1 unidade
+(1, 5, 1, 100),  -- Virada Paulista: Couve - 100 gramas
+(1, 6, 1, 100),  -- Virada Paulista: Torresmo - 100 gramas
+(1, 7, 6, 1),    -- Virada Paulista: Ovo - 1 unidade
+(1, 8, 1, 50),   -- Virada Paulista: Farofa - 50 gramas
+
+(2, 9, 1, 100),  -- Salada de Frango Grelhado: Salada de Folhas Verdes - 100 gramas
+(2, 10, 1, 150), -- Salada de Frango Grelhado: Frango - 150 gramas
+(2, 11, 1, 100), -- Salada de Frango Grelhado: Legumes - 100 gramas
+(2, 12, 1, 150), -- Salada de Frango Grelhado: Iogurte Natural - 150 gramas
+
+(3, 13, 1, 150), -- Salmão com Quinoa: Salmão Assado - 150 gramas
+(3, 14, 1, 100), -- Salmão com Quinoa: Quinoa Cozida - 100 gramas
+(3, 15, 6, 1),   -- Salmão com Quinoa: Abacate - 1 unidade
+(3, 16, 6, 1),   -- Salmão com Quinoa: Omelete de Claras - 1 unidade
+
+(4, 10, 1, 200), -- Frango e batata doce: Frango - 200 gramas
+(4, 17, 1, 200), -- Frango e batata doce: Batata Doce - 200 gramas
+(4, 2, 6, 1),    -- Frango e batata doce: Feijão Preto - 1 unidade
+
+(5, 18, 1, 200), -- Carne com aveia de flocos: Carne de vaca - 200 gramas
+(5, 7, 1, 50),   -- Carne com aveia de flocos: Aveia em Flocos - 50 gramas
+(5, 8, 1, 30);   -- Carne com aveia de flocos: Amendoim - 30 gramas
 
 INSERT INTO tag (nome) VALUES
 ('Peitoral'),
@@ -347,224 +371,70 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 (1, 20), -- Peitoral
 (9, 20); -- Deltoides
 
-INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido) VALUES
-(1, 5, 2024, 0),
-(2, 5, 2024, 0);
+INSERT INTO assinatura (nome, valor) VALUES
+('Viva Vitalis', 49.99);
 
--- Para o mes de MAIO de 2024, tem 5 semanas, logo insert de 5 semanas para cada rotina
-INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido) VALUES
-(1, 1, 0),
-(1, 2, 0),
-(1, 3, 0),
-(1, 4, 0),
-(1, 5, 0),
+INSERT INTO endereco (logradouro, numero, bairro, cidade, estado, complemento, cep)
+VALUES
+('Avenida Wilson Carvalho', 10, 'Zer�o', 'Macap�', 'AP', null, 68903025),
+('Rua Verdum', 112, 'Vila Nasser', 'Campo Grande', 'MS', null, 79117360),
+('Rua Alzira Gomes Queir�s', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
 
-(2, 1, 0),
-(2, 2, 0),
-(2, 3, 0),
-(2, 4, 0),
-(2, 5, 0);
-
--- Inserts para a primeira semana de cada rotina mensal
-INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido) VALUES
-(1, 1, 0),
-(1, 2, 0),
-(1, 3, 0),
-(1, 4, 0),
-(1, 5, 0),
-
-(2, 1, 0),
-(2, 2, 0),
-(2, 3, 0),
-(2, 4, 0),
-(2, 5, 0),
-
-(3, 1, 0),
-(3, 2, 0),
-(3, 3, 0),
-(3, 4, 0),
-(3, 5, 0),
-
-(6, 1, 0),
-(6, 2, 0),
-(6, 3, 0),
-(6, 4, 0),
-(6, 5, 0),
-
-(7, 1, 0),
-(7, 2, 0),
-(7, 3, 0),
-(7, 4, 0),
-(7, 5, 0),
-
-(8, 1, 0),
-(8, 2, 0),
-(8, 3, 0),
-(8, 4, 0),
-(8, 5, 0);
-
-INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+-- SENHA -> Daniel@23133 (todos)
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
 VALUES 
-(1, 1, 0, 15, 3, '00:01:00'),
-(2, 1, 0, 12, 3, '00:02:00'),
-(3, 1, 0, 10, 3, '00:01:30'),
-(4, 1, 0, 20, 3, '00:01:00'),
-(5, 1, 0, 8, 3, '00:02:00'),
-(6, 1, 0, 15, 3, '00:01:30'),
-(7, 1, 0, 12, 3, '00:01:00'),
+(0, 'ylu1Gi@@', '56438153036', 'Luigi Vicchietti', '2005-01-17', 'M', 'luigi@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, null),
+(1, 'marC@SSilV4', '92865867013', 'Marcos Silva Oliveira Pinto Santos', '1980-12-05', 'M', 'marcos@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 1);
 
-(1, 2, 0, 15, 3, '00:01:00'),
-(2, 2, 0, 12, 3, '00:02:00'),
-(3, 2, 0, 10, 3, '00:01:30'),
-(4, 2, 0, 20, 3, '00:01:00'),
-(5, 2, 0, 8, 3, '00:02:00'),
-(6, 2, 0, 15, 3, '00:01:30'),
-(7, 2, 0, 12, 3, '00:01:00'),
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
+VALUES
+(1, 58.60, 1.85, 0, 0, 0, 0, 0, 0);
 
-(1, 3, 0, 15, 3, '00:01:00'),
-(2, 3, 0, 12, 3, '00:02:00'),
-(3, 3, 0, 10, 3, '00:01:30'),
-(4, 3, 0, 20, 3, '00:01:00'),
-(5, 3, 0, 8, 3, '00:02:00'),
-(6, 3, 0, 15, 3, '00:01:30'),
-(7, 3, 0, 12, 3, '00:01:00'),
---
---
---
---
-(5, 16, 0, 8, 3, '00:02:00'),
-(2, 16, 0, 12, 3, '00:02:00'),
-(10, 16, 0, 10, 3, '00:01:30'),
-(7, 16, 0, 12, 3, '00:01:00'),
-(16, 16, 0, 10, 3, '00:01:30'),
+INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
+(1, 2);
 
-(5, 17, 0, 8, 3, '00:02:00'),
-(2, 17, 0, 12, 3, '00:02:00'),
-(10, 17, 0, 10, 3, '00:01:30'),
-(7, 17, 0, 12, 3, '00:01:00'),
-(16, 17, 0, 10, 3, '00:01:30'),
+-- SENHA -> Daniel@23133 (todos)
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
+VALUES 
+(0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2, null),
+(1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 2),
+(1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 3);
+-- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Milit�o', '1999-07-18', 'F', 'admin@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
 
-(5, 18, 0, 8, 3, '00:02:00'),
-(2, 18, 0, 12, 3, '00:02:00'),
-(10, 18, 0, 10, 3, '00:01:30'),
-(7, 18, 0, 12, 3, '00:01:00'),
-(16, 18, 0, 10, 3, '00:01:30');
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
+VALUES
+(3, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
 
-INSERT INTO metrica (metrica) VALUES
-('gramas'),
-('quilogramas'),
-('miligramas'),
-('litros'),
-('mililitros'),
-('unidade'),
-('xícaras'),
-('colheres de sopa'),
-('colheres de chá');
+INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
+(2, 1);
 
--- Inserção de refeições
-INSERT INTO refeicao (midia_id, nome, preparo) VALUES
-(3, 'Virada Paulista', 'Refeição típica da culinária paulista, composta por arroz, feijão, carne de porco, linguiça, couve refogada, torresmo, ovo frito e farofa.'),
-(6, 'Salada de Frango Grelhado', 'Refeição leve e saudável, composta por salada de folhas verdes, peito de frango grelhado, legumes grelhados e iogurte natural desnatado.'),
-(7, 'Salmão com Quinoa', 'Refeição nutritiva e pouco calórica, composta por salmão assado, quinoa cozida, abacate e omelete de claras.'),
-(13, 'Frango e batata doce', 'Refeição calórica e rica em proteínas para estimular o crescimento muscular, incluindo frango assado, batata doce assada, arroz branco e feijão preto.'),
-(22, 'Carne com aveia de flocos', 'Refeição balanceada com carboidratos e proteínas para fornecer energia e promover o ganho de massa muscular, incluindo carne vermelha grelhada, aveia em flocos, ovo cozido e amendoim.');
+-- Inserção de contrato para o usuário com id_usuario 3 e personal_id 2
+INSERT INTO contrato (usuario_id, personal_id, afiliacao, inicio_contrato, fim_contrato) VALUES
+(3, 2, 1, '2024-01-01', '2024-12-31');
 
--- Inserção de alimentos da virada paulista
-INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(23, 'Arroz Branco', 45.0, 4.0, 0.5),
-(25, 'Feijão Carioca', 30.0, 7.0, 1.5),
-(19, 'Carne de Porco', 0.0, 20.0, 5.0),
-(12, 'Linguiça', 1.0, 18.0, 10.0),
-(17, 'Couve', 5.0, 2.0, 0.5),
-(5, 'Torresmo', 2.0, 5.0, 10.0),
-(11, 'Ovo', 1.0, 7.0, 5.0),						-- Vai ser usado também na refeição Carne com aveia de flocos"
-(9, 'Farofa', 20.0, 2.0, 10.0);
+INSERT INTO pagamento (assinatura_id, usuario_id, data_pagamento, tipo)
+VALUES
+(1, 2, '2024-01-01', 'PIX');
 
--- Inserção de alimentos da Salada de Frango Grelhado
-INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(10, 'Salada de Folhas Verdes', 2.0, 1.0, 0.2),
-(21, 'Frango', 0.0, 30.0, 3.5),					-- Vai ser usado também na refeição "Frango e batata doce"
-(16, 'Legumes', 10.0, 2.0, 0.5),
-(4, 'Iogurte Natural', 4.0, 8.0, 0.2);
+INSERT INTO chat (usuario_id, personal_id, ativo)
+VALUES
+(3, 2, 1);
 
--- Inserção de alimentos de Salmão com Quinoa
-INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(8, 'Salmão Assado', 0.0, 25.0, 12.0),
-(15, 'Quinoa Cozida', 20.0, 4.0, 1.5),
-(2, 'Abacate', 1.0, 2.0, 14.0),
-(13, 'Omelete de Claras', 1.0, 15.0, 3.0);
+INSERT INTO mensagem (chat_id, destinatario_id, remetente_id, assunto, data_hora)
+VALUES
+(1, 2, 3, 'Bom dia! Tudo bem com você? Gostaria que conversar mais sobre minha rotina...', '2024-01-01 12:30:37'),
+(1, 3, 2, 'Claro! Podemos nos encontrar no parque do Zerão? Podemos começar a treinar juntos!', '2024-01-01 12:30:59'),
+(1, 2, 3, 'Legal! Compareço sim, pode ser as 17h? Outra coisa, pode me dar dicas no dia a dia? Meio que estou precisando kkkk', '2024-01-01 12:31:37'),
+(1, 3, 2, 'Claro!', '2024-01-01 12:35:37');
 
--- Inserção de alimentos de Frango e batata doce
-INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(23, 'Batata Doce', 30.0, 2.0, 0.5),
-(20, 'Feijão Preto', 30.0, 7.0, 1.5);
-
--- Inserção de alimentos de Carne com aveia de flocos
-INSERT INTO alimento (midia_id, nome, carboidrato, proteina, gordura) VALUES
-(18, 'Carne de vaca', 0.0, 25.0, 10.0),
-(26, 'Aveia em Flocos', 66.0, 16.9, 7.0),
-(1, 'Amendoim', 16.0, 26.0, 49.0);
-
--- Inserção de alimentos por refeição
-INSERT INTO alimento_por_refeicao (refeicao_id, alimento_id, metrica_id, qtd_alimento) VALUES
-(1, 1, 6, 1),    -- Virada Paulista: Arroz Branco - 1 unidade
-(1, 2, 6, 1),    -- Virada Paulista: Feijão Carioca - 1 unidade
-(1, 3, 1, 150),  -- Virada Paulista: Carne de Porco - 150 gramas
-(1, 4, 6, 1),    -- Virada Paulista: Linguiça - 1 unidade
-(1, 5, 1, 100),  -- Virada Paulista: Couve - 100 gramas
-(1, 6, 1, 100),  -- Virada Paulista: Torresmo - 100 gramas
-(1, 7, 6, 1),    -- Virada Paulista: Ovo - 1 unidade
-(1, 8, 1, 50),   -- Virada Paulista: Farofa - 50 gramas
-
-(2, 9, 1, 100),  -- Salada de Frango Grelhado: Salada de Folhas Verdes - 100 gramas
-(2, 10, 1, 150), -- Salada de Frango Grelhado: Frango - 150 gramas
-(2, 11, 1, 100), -- Salada de Frango Grelhado: Legumes - 100 gramas
-(2, 12, 1, 150), -- Salada de Frango Grelhado: Iogurte Natural - 150 gramas
-
-(3, 13, 1, 150), -- Salmão com Quinoa: Salmão Assado - 150 gramas
-(3, 14, 1, 100), -- Salmão com Quinoa: Quinoa Cozida - 100 gramas
-(3, 15, 6, 1),   -- Salmão com Quinoa: Abacate - 1 unidade
-(3, 16, 6, 1),   -- Salmão com Quinoa: Omelete de Claras - 1 unidade
-
-(4, 10, 1, 200), -- Frango e batata doce: Frango - 200 gramas
-(4, 17, 1, 200), -- Frango e batata doce: Batata Doce - 200 gramas
-(4, 2, 6, 1),    -- Frango e batata doce: Feijão Preto - 1 unidade
-
-(5, 18, 1, 200), -- Carne com aveia de flocos: Carne de vaca - 200 gramas
-(5, 7, 1, 50),   -- Carne com aveia de flocos: Aveia em Flocos - 50 gramas
-(5, 8, 1, 30);   -- Carne com aveia de flocos: Amendoim - 30 gramas
-
--- Inserts para refeicao_diaria
-INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
--- Associando refeições para a rotina_diaria_id 1
-(1, 1, 0),  -- Virada Paulista
-(1, 2, 0),  -- Salada de Frango Grelhado
-(1, 3, 0),  -- Salmão com Quinoa
-
--- Associando refeições para a rotina_diaria_id 2
-(2, 1, 0),  -- Virada Paulista
-(2, 2, 0),  -- Salada de Frango Grelhado
-(2, 4, 0),  -- Frango e Batata Doce
-
--- Associando refeições para a rotina_diaria_id 3
-(3, 1, 0),  -- Virada Paulista
-(3, 2, 0),  -- Salada de Frango Grelhado
-(3, 5, 0),  -- Carne com Aveia de Flocos
-
--- Associando refeições para a rotina_diaria_id 16
-(16, 1, 0),  -- Virada Paulista
-(16, 3, 0),  -- Salmão com Quinoa
-(16, 4, 0),  -- Frango e Batata Doce
-
--- Associando refeições para a rotina_diaria_id 17
-(17, 2, 0),  -- Salada de Frango Grelhado
-(17, 3, 0),  -- Salmão com Quinoa
-(17, 5, 0),  -- Carne com Aveia de Flocos
-
--- Associando refeições para a rotina_diaria_id 18
-(18, 1, 0),  -- Virada Paulista
-(18, 4, 0),  -- Frango e Batata Doce
-(18, 5, 0);  -- Carne com Aveia de Flocos
+-- Atribuição de usuários personais a especialidades
+INSERT INTO especialidade_por_personal (personal_id, especialidade_id) VALUES
+(2, 1),  -- Marcos Silva Oliveira Pinto Santos é especializado em Emagrecimento
+(2, 3),  -- Marcos Silva Oliveira Pinto Santos é especializado em Resistência Cardiovascular
+(4, 2),  -- Roberta Ferreira é especializada em Alta Intensidade (HIIT)
+(4, 4),  -- Roberta Ferreira é especializada em Flexibilidade e Mobilidade
+(5, 5),  -- Pedro Gomes é especializado em Resistência Cardiovascular
+(5, 3);  -- Pedro Gomes é especializado em Força e Resistência
 
 INSERT INTO mural (usuario_id, midia_id, dt_postagem)
 VALUES

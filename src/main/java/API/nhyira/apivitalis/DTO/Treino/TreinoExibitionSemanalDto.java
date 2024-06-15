@@ -6,6 +6,7 @@ import java.time.LocalTime;
 
 @Data
 public class TreinoExibitionSemanalDto {
+    private Integer idTreino;
     private int idExercicio;
     private String nome;
     private String descricao;

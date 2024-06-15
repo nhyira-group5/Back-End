@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Service;
 
-import API.nhyira.apivitalis.Entity.RefeicaoDiaria;
 import API.nhyira.apivitalis.Entity.RotinaDiaria;
 import API.nhyira.apivitalis.Entity.Treino;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
@@ -14,7 +13,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class TreinoService {
-
     private final TreinoRepository treinoRepository;
     private final RotinaDiariaService rotinaDiariaService;
 

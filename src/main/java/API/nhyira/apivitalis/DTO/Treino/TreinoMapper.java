@@ -59,10 +59,12 @@ public class TreinoMapper {
 
 
     // Controller /treinos/por-semana/{idRotinaSemanal}
+    // Controller /treinos/por-dia/{idRotinaDiaria}
     public static TreinoExibitionSemanalDto toTreinoExibitionSemanalDto (Exercicio ex, Treino treino, RotinaDiaria rd, Midia midia) {
         if (ex == null || treino == null || rd == null) return null;
 
         TreinoExibitionSemanalDto treinoSemanalDto = new TreinoExibitionSemanalDto();
+        treinoSemanalDto.setIdTreino(treino.getIdTreino());
         treinoSemanalDto.setIdExercicio(ex.getIdExercicio());
         treinoSemanalDto.setNome(ex.getNome());
         treinoSemanalDto.setDescricao(ex.getDescricao());

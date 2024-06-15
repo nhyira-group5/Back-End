@@ -1,47 +1,43 @@
 package API.nhyira.apivitalis.Service;
 
-
 import API.nhyira.apivitalis.Entity.Mural;
 import API.nhyira.apivitalis.Entity.Usuario;
-import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Repository.MuralRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.maven.lifecycle.internal.LifecycleStarter;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class MuralService {
-
     private final MuralRepository muralRepository;
-
     private final UsuarioRepository usuarioRepository;
 
-    public Mural showPorUsuario(int id){
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
-        usuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
-        Optional<Mural> optionalMural = muralRepository.findByUsuarioIdIs(usuario.get());
-        optionalMural.orElseThrow(() -> new NaoEncontradoException("Mural"));
-        return optionalMural.get();
+    public List<Mural> showPorUsuario(int id){
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Usuario"));
+        List<Mural> murais = muralRepository.findByUsuarioIdIs(usuario);
+        return murais;
     }
 
     public Mural show(int id){
-        Optional<Mural> optionalMural = muralRepository.findById(id);
-        optionalMural.orElseThrow(() -> new NaoEncontradoException("Mural"));
-        return optionalMural.get();
-    }
-
-    public Mural showPorData(LocalDate dtPostagem, int id){
-        Mural mural = muralRepository.buscarPorData(dtPostagem, id);
-
+        Mural mural = muralRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Mural"));
         return mural;
     }
 
+    public List<Mural> showPorData(LocalDate dtPostagem){
+        List<Mural> murais = muralRepository.findByDtPostagem(dtPostagem);
+        return murais;
+    }
+
+    public List<Mural> showPorDataUsuario(LocalDate dtPostagem, int idUsuario){
+        Usuario user = usuarioRepository.findById(idUsuario).orElseThrow(() -> new NaoEncontradoException("Usuário"));
+        List<Mural> murais = muralRepository.findByDtPostagemAndUsuarioIdIs(dtPostagem, user);
+        return murais;
+    }
 }
 
