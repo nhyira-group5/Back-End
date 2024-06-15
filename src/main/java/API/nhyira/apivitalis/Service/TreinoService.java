@@ -18,13 +18,13 @@ public class TreinoService {
     private final TreinoRepository treinoRepository;
     private final RotinaDiariaService rotinaDiariaService;
 
-//    public Treino show(int id){
-//        Optional<Treino> optTreino = treinoRepository.findById(id);
-//        optTreino.orElseThrow(() -> new NaoEncontradoException("Treino"));
-//        return optTreino.get();
-//    }
+    public Treino show(int id){
+        Optional<Treino> optTreino = treinoRepository.findById(id);
+        optTreino.orElseThrow(() -> new NaoEncontradoException("Treino"));
+        return optTreino.get();
+    }
 
-    public List<Treino> show(int id){
+    public List<Treino> showPorDiaria(int id){
         RotinaDiaria rotinaDiaria = rotinaDiariaService.show(id);
         List<Treino> optTreino = treinoRepository.findByRotinaDiariaIdIs(rotinaDiaria);
         return optTreino;

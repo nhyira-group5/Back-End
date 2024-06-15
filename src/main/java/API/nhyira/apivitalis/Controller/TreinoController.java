@@ -28,17 +28,17 @@ public class TreinoController {
     public ResponseEntity<List<TreinoExibitionDto>> show(@PathVariable int id) {
         if (id <= 0)
             throw new ErroClienteException("ID");
-        List<Treino> treino = treinoService.show(id);
+        List<Treino> treino = treinoService.showPorDiaria(id);
         if (treino.isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
 
     @GetMapping("buscarIdTreinos/{id}")
-    public ResponseEntity<List<TreinoExibitionDto>> buscarPorIdTreinos(@PathVariable int id) {
+    public ResponseEntity<TreinoExibitionDto> buscarPorIdTreinos(@PathVariable int id) {
         if (id <= 0)
             throw new ErroClienteException("ID");
-        List<Treino> treino = treinoService.show(id);
+        Treino treino = treinoService.show(id);
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
 
