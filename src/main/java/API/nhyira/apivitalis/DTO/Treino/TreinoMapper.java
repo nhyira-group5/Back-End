@@ -35,6 +35,11 @@ public class TreinoMapper {
         exercicioDto.setNome(exercicio.getNome());
         exercicioDto.setDescricao(exercicio.getDescricao());
         exercicioDto.setTagExercicioDtos(tagExibitionDto(exercicio.getTagExercicios()));
+        Midia midia = exercicio.getMidia();
+        exercicioDto.setIdMidia(midia.getIdMidia());
+        exercicioDto.setMidiaNome(midia.getNome());
+        exercicioDto.setMidiaCaminho(midia.getCaminho());
+        exercicioDto.setMidiaExtensao(midia.getExtensao());
         return exercicioDto;
     }
 

@@ -13,6 +13,7 @@ public class ExercicioExibition {
     private String nome;
     private String descricao;
     private List<TagExibitionDto> tagExercicioDtos;
+    private Integer idMidia;
     private String midiaNome;     // Nome da midia
     private String midiaCaminho;  // Caminho da midia
     private String midiaExtensao;

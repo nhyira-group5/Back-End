@@ -10,16 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/LembreteController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteCreateEditDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteExibitionDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Lembrete.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/LembreteRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/LembreteService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Auth/Configuration/Security/AuthConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Auth/Configuration/Security/AuthConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +113,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.java in api-vitalis">
+  <component name="RunManager" selected="Application.ApiVitalisApplication">
     <configuration name="ApiVitalisApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.ApiVitalisApplication" />
       <module name="api-vitalis" />
@@ -182,8 +176,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in api-vitalis" />
         <item itemvalue="Application.ApiVitalisApplication" />
+        <item itemvalue="JUnit.java in api-vitalis" />
         <item itemvalue="JUnit.UsuarioControllerTest$UsuarioSaveTest.createUserPersonal" />
         <item itemvalue="JUnit.All in api-vitalis" />
         <item itemvalue="JUnit.API.nhyira.apivitalis.Controller in api-vitalis" />
