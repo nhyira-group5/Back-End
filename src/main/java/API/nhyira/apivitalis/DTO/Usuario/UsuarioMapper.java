@@ -102,10 +102,13 @@ public class UsuarioMapper {
         if (usuario == null)return null;
         UsuarioDto usuarioDto = new UsuarioDto();
 
+        usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setSexo(usuario.getSexo());
         usuarioDto.setEmail(usuario.getEmail());
+        usuarioDto.setCpf(usuario.getEmail());
         usuarioDto.setTipo(usuario.getTipo());
+        usuarioDto.setDtNasc(usuario.getDtNasc());
         usuarioDto.setNickname(usuario.getNickname());
         return usuarioDto;
     }

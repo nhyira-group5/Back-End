@@ -42,4 +42,7 @@ public class Usuario {
         USUARIO,
         PERSONAL,
     }
+
+
+
 }

@@ -9,11 +9,13 @@ import API.nhyira.apivitalis.EmailSender.Model.EmailModel;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
 import API.nhyira.apivitalis.Entity.Endereco;
+import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Exception.SemConteudoException;
+import API.nhyira.apivitalis.Repository.FichaRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,6 +32,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository uRep;
+    private final FichaService fichaService;
     private final EnderecoService enderecoService;
     private final PasswordEncoder encoder;
     private final EmailService emailService;
@@ -111,6 +114,7 @@ public class UsuarioService {
         if (allUsers.isEmpty()){
             throw new SemConteudoException("Usuarios");
         }
+
         return allUsers;
     }
 
@@ -125,6 +129,7 @@ public class UsuarioService {
     public Usuario showUserById(int id) {
         Optional<Usuario> usuario = uRep.findById(id);
         usuario.orElseThrow(() -> new NaoEncontradoException("usuario"));
+        Ficha ficha = fichaService.showFicha(id);
         return usuario.get();
     }
 

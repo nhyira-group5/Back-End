@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.Repository;
 
+import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     @Query("SELECT u FROM Usuario u WHERE u.tipo = 0")
     List<Usuario> buscarUsuarios();
+
 }

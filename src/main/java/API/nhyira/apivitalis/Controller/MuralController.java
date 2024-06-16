@@ -1,13 +1,18 @@
 package API.nhyira.apivitalis.Controller;
 
+import API.nhyira.apivitalis.DTO.Mural.MuralCreateEditDto;
 import API.nhyira.apivitalis.DTO.Mural.MuralExibitionDto;
 import API.nhyira.apivitalis.DTO.Mural.MuralMapper;
 import API.nhyira.apivitalis.Entity.Mural;
 import API.nhyira.apivitalis.Service.MuralService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +21,22 @@ import java.util.List;
 @RequestMapping("/murais")
 public class MuralController {
     private final MuralService muralService;
+
+
+    @PostMapping
+    public ResponseEntity<MuralExibitionDto> create(@RequestBody @Valid MuralCreateEditDto muralCreateEditDto){
+        Mural mural = MuralMapper.toEntity(muralCreateEditDto);
+        Mural muralSalvo = muralService.create(mural, muralCreateEditDto.getUsuarioId(), muralCreateEditDto.getMidiaId());
+        URI uri = URI.create("/murais/" + muralSalvo.getIdMural());
+        return ResponseEntity.created(uri).body(MuralMapper.toDto(muralSalvo));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable int id){
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        boolean mural = muralService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<MuralExibitionDto> show(@PathVariable int id) {

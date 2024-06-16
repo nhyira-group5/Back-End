@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface FichaRepository extends JpaRepository<Ficha, Integer> {
     Optional<Ficha> findByUsuarioIdIs(Usuario usuario);
+
 }

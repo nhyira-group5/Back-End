@@ -9,6 +9,12 @@ import java.util.List;
 public class MuralMapper {
 
 
+    public static Mural toEntity(MuralCreateEditDto muralCreateEditDto){
+        Mural mural = new Mural();
+        mural.setDtPostagem(muralCreateEditDto.getDtPostagem());
+        return mural;
+    }
+
     public static MuralExibitionDto toDto(Mural mural){
         if (mural == null)return null;
 
