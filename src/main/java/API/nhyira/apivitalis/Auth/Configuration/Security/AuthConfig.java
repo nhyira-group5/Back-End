@@ -85,6 +85,7 @@ public class AuthConfig {
             new AntPathRequestMatcher("/exercicios/**"),
             new AntPathRequestMatcher("/alimentos/**"),
             new AntPathRequestMatcher("/refeicoes/**"),
+            new AntPathRequestMatcher("/lembretes/**"),
             new AntPathRequestMatcher("/contratos/**"),
             new AntPathRequestMatcher("/alimentos-por-refeicoes/**"),
             new AntPathRequestMatcher("/refeicoes-por-dietas/**"),
