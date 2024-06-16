@@ -45,6 +45,7 @@ public class FichaMapper {
         user.setMedicamentoPressaoCoracao(entity.getMedicamentoPressaoCoracao());
         user.setImpedimentoAtividade(entity.getImpedimentoAtividade());
         user.setUsuarioId(usuarioDto(entity.getUsuarioId()));
+        user.setIMC(entity.getIMC());
         return user;
     }
 

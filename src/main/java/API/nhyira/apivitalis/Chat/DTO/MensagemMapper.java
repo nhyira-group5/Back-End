@@ -1,3 +1,4 @@
+
 package API.nhyira.apivitalis.Chat.DTO;
 
 import API.nhyira.apivitalis.Chat.Entity.Chat;
@@ -5,7 +6,8 @@ import API.nhyira.apivitalis.Chat.Entity.Mensagem;
 import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.time.LocalDate;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +16,7 @@ public class MensagemMapper {
         if (dto == null) return null;
         Mensagem mensagem = new Mensagem();
         mensagem.setAssunto(dto.getAssunto());
-        mensagem.setDataHora(LocalDate.now());
+        mensagem.setDateTime(LocalDateTime.now());
         return mensagem;
     }
 
@@ -25,7 +27,7 @@ public class MensagemMapper {
         dto.setRemetenteId(toUsuarioDto(entity.getRemetenteId()));
         dto.setDestinatarioId(toUsuarioDto(entity.getDestinatarioId()));
         dto.setAssunto(entity.getAssunto());
-        dto.setDataHora(entity.getDataHora());
+        dto.setDateTime(entity.getDateTime());
         return dto;
     }
 

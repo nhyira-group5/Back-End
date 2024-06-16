@@ -1,11 +1,10 @@
 package API.nhyira.apivitalis.Controller;
 
-import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
-import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
-import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
-import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
+import API.nhyira.apivitalis.DTO.Usuario.*;
+import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Service.CsvService;
+import API.nhyira.apivitalis.Service.FichaService;
 import API.nhyira.apivitalis.Service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,9 @@ import java.util.List;
 public class UsuarioController {
     @Autowired
     private UsuarioService uService;
+
+    @Autowired
+    private FichaService fichaService;
 
     @Autowired
     private CsvService csvService;
@@ -94,4 +96,14 @@ public class UsuarioController {
 
         }
     }
+
+    @GetMapping("/buscar-imc/{id}")
+    public ResponseEntity<UsuarioFichaDto> showImc (@PathVariable int id) {
+        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        Usuario user = uService.showUserById(id);
+        Ficha ficha = fichaService.showFicha(id);
+        UsuarioFichaDto exibitionDto = UsuarioMapper.toExibitionIMC(user, ficha.getIMC());
+        return ResponseEntity.ok(exibitionDto);
+    }
+
 }

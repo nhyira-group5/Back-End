@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.Chat.DTO;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class MensagemExibitionDto {
@@ -11,7 +12,7 @@ public class MensagemExibitionDto {
     private toUsuarioDto remetenteId;
     private toUsuarioDto destinatarioId;
     private String assunto;
-    private LocalDate dataHora;
+    private LocalDateTime dateTime;
 
     @Data
     public static class toChatDto {
@@ -29,4 +30,3 @@ public class MensagemExibitionDto {
         private Integer personalId;
     }
 }
-

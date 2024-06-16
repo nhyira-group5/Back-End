@@ -2,6 +2,7 @@ package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
 import API.nhyira.apivitalis.Entity.Endereco;
+import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.util.ArrayList;
@@ -42,6 +43,23 @@ public class UsuarioMapper {
             return user;
         }
         return null;
+    }
+
+    public static UsuarioFichaDto toExibitionIMC(Usuario entity, double imc){
+        if (entity == null) return null;
+
+            UsuarioFichaDto user = new UsuarioFichaDto();
+
+            user.setIdUsuario(entity.getIdUsuario());
+            user.setNome(entity.getNome());
+            user.setNickname(entity.getNickname());
+            user.setCpf(entity.getCpf());
+            user.setEmail(entity.getEmail());
+            user.setTipo(entity.getTipo());
+            user.setDtNasc(entity.getDtNasc());
+            user.setSexo(entity.getSexo());
+            user.setIMC(imc);
+            return user;
     }
 
     public static Usuario toEditDto(Usuario user, UsuarioCreateEditDto dto) {
@@ -127,4 +145,5 @@ public class UsuarioMapper {
         enderecoDto.setNumero(endereco.getNumero());
         return enderecoDto;
     }
+
 }

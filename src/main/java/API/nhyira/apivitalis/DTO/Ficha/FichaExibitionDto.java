@@ -20,4 +20,5 @@ public class FichaExibitionDto {
     private Float peso;
     private float altura;
     private UsuarioDto usuarioId;
+    private double IMC;
 }

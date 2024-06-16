@@ -35,4 +35,8 @@ public class Ficha {
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuarioId;
+
+    public double getIMC(){
+        return peso/(altura* altura);
+    }
 }

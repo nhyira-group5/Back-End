@@ -129,9 +129,9 @@ public class UsuarioService {
     public Usuario showUserById(int id) {
         Optional<Usuario> usuario = uRep.findById(id);
         usuario.orElseThrow(() -> new NaoEncontradoException("usuario"));
-        Ficha ficha = fichaService.showFicha(id);
         return usuario.get();
     }
+
 
     public Usuario updtUser(int id, UsuarioCreateEditDto updatedUser) {
         if (uRep.existsById(id)) {

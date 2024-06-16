@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,7 +17,7 @@ public class Mensagem {
     private int idMensagem;
 
     private String assunto;
-    private LocalDate dataHora;
+    private LocalDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "chatId", nullable = false)
@@ -31,3 +31,4 @@ public class Mensagem {
     @JoinColumn(name = "destinatarioId", nullable = false)
     private Usuario destinatarioId;
 }
+
