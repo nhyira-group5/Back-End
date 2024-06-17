@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.Controller;
 
 import API.nhyira.apivitalis.DTO.Usuario.*;
+import API.nhyira.apivitalis.Entity.EspecialidadePorPersonal;
 import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Usuario;
@@ -49,12 +50,12 @@ public class UsuarioController {
     }
 
     @GetMapping("/personais")
-    public ResponseEntity<List<UsuarioExibitionDto>> showAllPersonal() {
-        List<UsuarioExibitionDto> dtos = new ArrayList<>(0);
+    public ResponseEntity<List<PersonalEspecialidadeDto>> showAllPersonal() {
+        List<PersonalEspecialidadeDto> dtos = new ArrayList<>(0);
         List<Usuario> users = uService.showAllUsersPersonal();
-        for (Usuario u : users) {
-            Meta meta = uService.searchMetaUsuario(u);
-            dtos.add(UsuarioMapper.toExibition(u, meta));
+        for (Usuario u: users){
+            List<EspecialidadePorPersonal> personal = uService.buscarEspecialidade(u);
+            dtos.add(UsuarioMapper.toDtoPersonal(u, personal));
         }
         return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtos);
     }

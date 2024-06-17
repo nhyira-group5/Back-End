@@ -1,10 +1,9 @@
 package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
-import API.nhyira.apivitalis.Entity.Endereco;
-import API.nhyira.apivitalis.Entity.Ficha;
-import API.nhyira.apivitalis.Entity.Meta;
-import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.DTO.Especialidade.EspecialidadeExibitionDto;
+import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionDto;
+import API.nhyira.apivitalis.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,11 +66,15 @@ public class UsuarioMapper {
         return null;
     }
 
+    public static List<UsuarioExibitionDto> toExibition(List<Usuario> entities) {
+        if (entities == null)
+            return null;
+        return entities.stream().map(e -> toExibition(e)).toList();
+    }
+
     public static UsuarioFichaDto toExibitionIMC(Usuario entity, double imc){
         if (entity == null) return null;
-
             UsuarioFichaDto user = new UsuarioFichaDto();
-
             user.setIdUsuario(entity.getIdUsuario());
             user.setNome(entity.getNome());
             user.setNickname(entity.getNickname());
@@ -100,16 +103,7 @@ public class UsuarioMapper {
         return null;
     }
 
-    // public static List<UsuarioExibitionDto> toExibitionList(List<Usuario> entities) {
-    //     List<UsuarioExibitionDto> dtos = new ArrayList<>();
-    //     for (Usuario entity : entities) {
-    //         UsuarioExibitionDto dto = toExibition(entity);
-    //         if (dto != null) {
-    //             dtos.add(dto);
-    //         }
-    //     }
-    //     return dtos;
-    // }
+
 
     public static Usuario of(UsuarioCreateEditDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
@@ -168,6 +162,49 @@ public class UsuarioMapper {
         return enderecoDto;
     }
 
+    public static PersonalEspecialidadeDto toDtoPersonal(Usuario entity, List<EspecialidadePorPersonal> especialidadePorPersonal){
+        if (entity == null)return null;
+        PersonalEspecialidadeDto personalEspecialidadeDto = new PersonalEspecialidadeDto();
+        personalEspecialidadeDto.setIdPersonal(entity.getIdUsuario());
+        personalEspecialidadeDto.setNome(entity.getNome());
+        personalEspecialidadeDto.setSexo(entity.getSexo());
+        personalEspecialidadeDto.setEmail(entity.getEmail());
+        personalEspecialidadeDto.setCpf(entity.getEmail());
+        personalEspecialidadeDto.setTipo(entity.getTipo());
+        personalEspecialidadeDto.setDtNasc(entity.getDtNasc());
+        personalEspecialidadeDto.setNickname(entity.getNickname());
+        personalEspecialidadeDto.setExibitonDto(especialidadePorPersonalDto(especialidadePorPersonal));
+        personalEspecialidadeDto.setMidiaDto(toMidiaDto(entity.getMidiaId()));
+        return personalEspecialidadeDto;
+    }
+
+    public static List<PersonalEspecialidadeDto.EspecialidadePorPersonalDto> especialidadePorPersonalDto(List<EspecialidadePorPersonal> especialidadePorPersonal){
+      return especialidadePorPersonal.stream().map(ep -> {
+          PersonalEspecialidadeDto.EspecialidadePorPersonalDto especialidadePorPersonalDto = new PersonalEspecialidadeDto.EspecialidadePorPersonalDto();
+          especialidadePorPersonalDto.setEspecialidadeId(especialidadeDto(ep.getEspecialidadeId()));
+          especialidadePorPersonalDto.setId(ep.getIdEspecialidadePersonal());
+          return especialidadePorPersonalDto;
+      }).toList();
+    }
+    public static EspecialidadeExibitionDto especialidadeDto(Especialidade especialidade){
+        if (especialidade== null)return null;
+        EspecialidadeExibitionDto exibitionDto = new EspecialidadeExibitionDto();
+        exibitionDto.setId(especialidade.getIdEspecialidade());
+        exibitionDto.setNome(especialidade.getNome());
+        return exibitionDto;
+    }
+
+    public static RefeicaoExibitionDto.MidiaDto toMidiaDto (Midia midia) {
+        if (midia == null) return null;
+        RefeicaoExibitionDto.MidiaDto midiaDto = new RefeicaoExibitionDto.MidiaDto();
+        midiaDto.setId(midia.getIdMidia());
+        midiaDto.setNome(midia.getNome());
+        midiaDto.setCaminho(midia.getCaminho());
+        midiaDto.setExtensao(midia.getExtensao());
+        return midiaDto;
+    }
+
+
     public static UsuarioExibitionDto.MetaDto toMetaDto(Meta meta) {
         if (meta == null) return null;
 
@@ -176,4 +213,6 @@ public class UsuarioMapper {
         metaDto.setNome(meta.getNome());
         return metaDto;
     }
+
+
 }

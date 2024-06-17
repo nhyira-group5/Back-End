@@ -8,19 +8,12 @@ import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.EmailSender.Model.EmailModel;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
-import API.nhyira.apivitalis.Entity.Endereco;
-import API.nhyira.apivitalis.Entity.Ficha;
-import API.nhyira.apivitalis.Entity.Meta;
-import API.nhyira.apivitalis.Entity.RotinaUsuario;
-import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Entity.*;
 import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Exception.SemConteudoException;
-import API.nhyira.apivitalis.Repository.FichaRepository;
-import API.nhyira.apivitalis.Repository.MetaRepository;
-import API.nhyira.apivitalis.Repository.RotinaUsuarioRepository;
-import API.nhyira.apivitalis.Repository.UsuarioRepository;
+import API.nhyira.apivitalis.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,6 +37,8 @@ public class UsuarioService {
     private final EmailService emailService;
     private final AuthenticationManager authenticationManagerForUsuarios;
     private final TokenGenJwt tokenGenJwt;
+    private final EspecialidadePorPersonalRepository especialidadePorPersonal;
+    private final MidiaRepository midiaRepository;
     private final Set<String> emailsEnviados = new HashSet<>();
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLogin) {
@@ -138,10 +133,17 @@ public class UsuarioService {
     }
 
     public Meta searchMetaUsuario (Usuario usuario) {
-        RotinaUsuario ru = ruRep.findByUsuarioIdIs(usuario).orElseThrow(() -> new NaoEncontradoException("Rotina Usuário"));
+        RotinaUsuario ru = ruRep.findByUsuarioIdIs(usuario).orElse(null);
+        if (ru == null) return null;
         Meta m = mRep.findById(ru.getMetaId().getIdMeta()).orElseThrow(() -> new NaoEncontradoException("Meta"));
         return m;
     }
+
+    public List<EspecialidadePorPersonal> buscarEspecialidade(Usuario usuario){
+        List<EspecialidadePorPersonal> espe = especialidadePorPersonal.findByPersonalIdIs(usuario);
+        return espe;
+    }
+
 
     public Usuario updtUser(int id, UsuarioCreateEditDto updatedUser) {
         if (uRep.existsById(id)) {

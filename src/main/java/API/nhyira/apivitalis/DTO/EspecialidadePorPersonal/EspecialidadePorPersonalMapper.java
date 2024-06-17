@@ -12,7 +12,6 @@ public class EspecialidadePorPersonalMapper {
 
     public static EspecialidadePorPersonal toEntity(EspecialidadePorPersonalCreateEditDto dto){
         if (dto == null)return null;
-
         EspecialidadePorPersonal especialidadePorPersonal = new EspecialidadePorPersonal();
         return especialidadePorPersonal;
 

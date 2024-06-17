@@ -10,32 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoRelatorioDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoRelatorioDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/PersonalEspecialidadeDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/TreinoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/EmailSender/Service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/EmailSender/Service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/TreinoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/TreinoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/TreinoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemExibitionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemExibitionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/TreinoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/TreinoController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition$TagExibitionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition$TagExibitionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Ficha/FichaExibitionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Ficha/FichaExibitionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteCreateEditDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteCreateEditDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteExibitionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteExibitionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralCreateEditDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralCreateEditDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioFichaDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioFichaDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/TreinoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/TreinoRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/TreinoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/TreinoService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/UsuarioController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/MidiaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/MidiaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/UsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/UsuarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/UsuarioController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/UsuarioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/UsuarioService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +121,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.java in api-vitalis">
+  <component name="RunManager" selected="Application.ApiVitalisApplication">
     <configuration name="ApiVitalisApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.ApiVitalisApplication" />
       <module name="api-vitalis" />
@@ -197,8 +183,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.java in api-vitalis" />
         <item itemvalue="Application.ApiVitalisApplication" />
+        <item itemvalue="JUnit.java in api-vitalis" />
         <item itemvalue="JUnit.UsuarioControllerTest$UsuarioSaveTest.createUserPersonal" />
         <item itemvalue="JUnit.All in api-vitalis" />
       </list>
