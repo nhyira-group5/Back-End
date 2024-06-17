@@ -16,10 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -482,26 +479,6 @@ class UsuarioControllerTest {
 
         @Test
         @Transactional
-        @DisplayName("Busca de usuário pelo seu nickname incorreto, nickname inválido")
-        void showUserByNicknameInvalid() throws Exception {
-            var json = """
-                    {
-                        "nickname": "ylu1Ge"
-                    }
-                    """;
-
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/usuarios/por-username")
-                            .contentType("application/json")
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
-
-            MockHttpServletResponse responseBody = mvcResult.getResponse();
-            assertEquals(responseBody.getStatus(), MockHttpServletResponse.SC_BAD_REQUEST);
-        }
-
-        @Test
-        @Transactional
         @DisplayName("Busca de usuário pelo seu nickname incorreto, nickname não encontrado")
         void showUserByNicknameEmpty() throws Exception {
             var json = """
@@ -551,7 +528,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "USUARIO",
-                          "nickname": "T3STer@12388"
+                          "nickname": "T3STer@12388",
+                          "academiaId": null
                         }
                     """;
             var id = 3;

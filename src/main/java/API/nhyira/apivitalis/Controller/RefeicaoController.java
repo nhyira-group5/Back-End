@@ -3,27 +3,28 @@ package API.nhyira.apivitalis.Controller;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibition;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionSemanalDto;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoMapper;
-import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
 import API.nhyira.apivitalis.Entity.*;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
+import API.nhyira.apivitalis.Service.DietaService;
+import API.nhyira.apivitalis.Service.MetaService;
 import API.nhyira.apivitalis.Service.RefeicaoDiariaService;
 import API.nhyira.apivitalis.Service.RefeicaoService;
 import API.nhyira.apivitalis.Service.RotinaDiariaService;
 import API.nhyira.apivitalis.Service.RotinaSemanalService;
 import lombok.RequiredArgsConstructor;
-import okhttp3.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/refeicoes")
 @RequiredArgsConstructor
 public class RefeicaoController {
     private final RefeicaoService refSrv;
+    private final MetaService mSrv;
+    private final DietaService dSrv;
 
     private final RotinaSemanalService rsSrv;
     private final RotinaDiariaService rdSrv;
@@ -44,11 +45,26 @@ public class RefeicaoController {
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
 
-    @GetMapping("/por-dieta/{id}")
-    public ResponseEntity<List<RefeicaoExibition>> showByDieta(
-            @PathVariable int id
+    @GetMapping("/por-meta/{idMeta}")
+    public ResponseEntity<List<RefeicaoExibition>> showAllByMeta(
+        @PathVariable int idMeta
     ) {
-        if (id <= 0) return ResponseEntity.badRequest().build();
+        if (idMeta <= 0) throw new ErroClienteException("ID");
+        Meta meta = mSrv.show(idMeta);
+        List<Dieta> dietas = dSrv.showByMeta(meta);
+        if (dietas.isEmpty()) return ResponseEntity.noContent().build();
+        List<RefeicaoExibition> refeicoes = new ArrayList<>(0);
+        for (Dieta d : dietas) {
+            refeicoes.addAll(RefeicaoMapper.toDTO(refSrv.showRefeicaoByDieta(d)));
+        }
+        return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
+    }
+
+    @GetMapping("/por-dieta/{idDieta}")
+    public ResponseEntity<List<RefeicaoExibition>> showByDieta(
+            @PathVariable int idDieta
+    ) {
+        if (idDieta <= 0) return ResponseEntity.badRequest().build();
         List<RefeicaoExibition> refeicoes = RefeicaoMapper.toDTO(refSrv.getAllRefeicoes());
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
