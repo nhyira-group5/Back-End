@@ -24,7 +24,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/contratos")
 public class ContratoController {
-
     private final ContratoService contratoService;
     private final UsuarioService usuarioService;
 
@@ -42,11 +41,10 @@ public class ContratoController {
         return ResponseEntity.ok(ContratoMapper.toDto(contrato));
     }
 
-
-    @GetMapping("/Por-Personal/{id}")
-    public ResponseEntity<List<ContratoExibitionDto>> showPorPersonal(@PathVariable int id){
+    @GetMapping("/por-personal/{idPersonal}")
+    public ResponseEntity<List<ContratoExibitionDto>> showPorPersonal(@PathVariable int idPersonal){
         List<ContratoExibitionDto> dto = new ArrayList<>(0);
-        List<Contrato> contrato = contratoService.shows(id);
+        List<Contrato> contrato = contratoService.shows(idPersonal);
         for (Contrato c: contrato){
             Meta meta = usuarioService.searchMetaUsuario(c.getUsuarioId());
             dto.add(ContratoMapper.toDto(c, meta));
@@ -60,12 +58,9 @@ public class ContratoController {
         return ResponseEntity.ok(ContratoMapper.toDto(contrato));
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id){
         boolean contrato = contratoService.del(id);
         return ResponseEntity.noContent().build();
     }
-
-
 }

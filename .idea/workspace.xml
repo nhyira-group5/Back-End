@@ -10,14 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_05_2024_15_34__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_05_2024_15_34__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/ContratoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/ContratoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Contrato/ContratoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Contrato/ContratoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Mural/MuralExibitionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Mural/MuralExibitionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/EmailSender/Service/EmailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/EmailSender/Service/EmailService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/ContratoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/ContratoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/ContratoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/ContratoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - MySql v.1.9.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - MySql v.1.9.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - SqlServer v.1.9.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - SqlServer v.1.9.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - inserts - MySql v.1.9.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - inserts - MySql v.1.9.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - inserts - SqlServer v.1.9.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/DATABASE/vitalisDB - inserts - SqlServer v.1.9.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/ContratoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/ContratoController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +122,7 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiVitalisApplication">
+  <component name="RunManager" selected="JUnit.java in api-vitalis">
     <configuration name="ApiVitalisApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.ApiVitalisApplication" />
       <module name="api-vitalis" />
@@ -142,23 +147,6 @@
       <option name="PACKAGE_NAME" value="API.nhyira.apivitalis.Controller.UsuarioControllerTest" />
       <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest" />
       <option name="METHOD_NAME" value="ShowUserByIdInvalid" />
-      <option name="TEST_OBJECT" value="method" />
-      <dir value="$PROJECT_DIR$/src/test/java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UsuarioControllerTest$UsuarioSaveTest.createUserPersonal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="api-vitalis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="API.nhyira.apivitalis.Controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="API.nhyira.apivitalis.Controller.UsuarioControllerTest" />
-      <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.Controller.UsuarioControllerTest$UsuarioSaveTest" />
-      <option name="METHOD_NAME" value="createUserPersonal" />
       <option name="TEST_OBJECT" value="method" />
       <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
@@ -190,13 +178,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ApiVitalisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="api-vitalis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="API.nhyira.apivitalis.ApiVitalisApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="API.nhyira.apivitalis.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.java in api-vitalis" />
+        <item itemvalue="Spring Boot.ApiVitalisApplication" />
         <item itemvalue="Application.ApiVitalisApplication" />
         <item itemvalue="JUnit.UsuarioControllerTest$UserEditTest.ShowUserByIdInvalid" />
-        <item itemvalue="JUnit.java in api-vitalis" />
         <item itemvalue="JUnit.UsuarioControllerTest$UsuarioShowTest.showAllPersonal" />
-        <item itemvalue="JUnit.UsuarioControllerTest$UsuarioSaveTest.createUserPersonal" />
       </list>
     </recent_temporary>
   </component>
@@ -232,6 +233,7 @@
       <workItem from="1718418460159" duration="1089000" />
       <workItem from="1718494201189" duration="1119000" />
       <workItem from="1718577411176" duration="5429000" />
+      <workItem from="1718641656169" duration="1320000" />
     </task>
     <servers />
   </component>

@@ -1,7 +1,11 @@
 API\nhyira\apivitalis\Controller\EspecialidadePorMetaController.class
 API\nhyira\apivitalis\DTO\Midia\MidiaExibitionDto.class
+API\nhyira\apivitalis\Service\LembreteService.class
 API\nhyira\apivitalis\Entity\Dieta.class
+API\nhyira\apivitalis\Entity\Lembrete.class
+API\nhyira\apivitalis\DTO\Lembrete\LembreteMapper.class
 API\nhyira\apivitalis\DTO\AlimentoPorRefeicao\AlimentoPorRefeicaoExibitionDto$RefeicaoDto.class
+API\nhyira\apivitalis\DTO\Usuario\UsuarioFichaDto.class
 API\nhyira\apivitalis\Controller\RotinaSemanalController.class
 API\nhyira\apivitalis\Entity\Contrato.class
 API\nhyira\apivitalis\Service\MuralService.class
@@ -13,6 +17,7 @@ API\nhyira\apivitalis\Service\RefeicaoDiariaService.class
 API\nhyira\apivitalis\Controller\RotinaDiariaController.class
 API\nhyira\apivitalis\DTO\Endereco\EnderecoExibitionDto.class
 API\nhyira\apivitalis\DTO\Especialidade\EspecialidadeMapper.class
+API\nhyira\apivitalis\DTO\Usuario\PersonalEspecialidadeDto$EspecialidadePorPersonalDto.class
 API\nhyira\apivitalis\DTO\AlimentoPorRefeicao\AlimentoPorRefeicaoCreateDto.class
 API\nhyira\apivitalis\Exception\NaoEncontradoException.class
 API\nhyira\apivitalis\Repository\EnderecoRepository.class
@@ -25,6 +30,8 @@ API\nhyira\apivitalis\DTO\RotinaUsuario\RotinaUsuarioCreateEditDto.class
 API\nhyira\apivitalis\Repository\RefeicaoRepository.class
 API\nhyira\apivitalis\Chat\Entity\Chat.class
 API\nhyira\apivitalis\Repository\RotinaUsuarioRepository.class
+API\nhyira\apivitalis\DTO\Lembrete\LembreteCreateEditDto.class
+API\nhyira\apivitalis\DTO\Lembrete\LembreteExibitionDto.class
 API\nhyira\apivitalis\DTO\RotinaUsuario\RotinaTreinoCreateEditDto.class
 API\nhyira\apivitalis\Repository\RotinaDiariaRepository.class
 API\nhyira\apivitalis\Controller\AssinaturaController.class
@@ -86,6 +93,7 @@ API\nhyira\apivitalis\DTO\Exercicio\ExercicioMapper.class
 API\nhyira\apivitalis\Entity\Ficha.class
 API\nhyira\apivitalis\Repository\CartaoRepository.class
 API\nhyira\apivitalis\DTO\Contrato\ContratoCreateEditDto.class
+API\nhyira\apivitalis\DTO\Treino\TreinoRelatorioDto.class
 API\nhyira\apivitalis\DTO\Refeicao\RefeicaoMapper.class
 API\nhyira\apivitalis\Service\EspecialidadePorMetaService.class
 API\nhyira\apivitalis\Entity\Tag.class
@@ -96,6 +104,7 @@ API\nhyira\apivitalis\Repository\TreinoRepository.class
 API\nhyira\apivitalis\Pagamento\DTO\PagamentoExibitionDto$AssinaturaDto.class
 API\nhyira\apivitalis\Controller\DietaController.class
 API\nhyira\apivitalis\Chat\Service\MensagemService.class
+API\nhyira\apivitalis\DTO\Usuario\UsuarioExibitionDto$MetaDto.class
 API\nhyira\apivitalis\Entity\Exercicio.class
 API\nhyira\apivitalis\DTO\EspecialidadePorPersonal\EspecialidadePorPersonalCreateEditDto.class
 API\nhyira\apivitalis\Entity\Alimento.class
@@ -138,9 +147,11 @@ API\nhyira\apivitalis\Auth\Usuario\DTO\DetailsUsuario.class
 API\nhyira\apivitalis\Controller\MuralController.class
 API\nhyira\apivitalis\Service\RotinaDiariaService.class
 API\nhyira\apivitalis\DTO\Contrato\ContratoMapper.class
+API\nhyira\apivitalis\DTO\Mural\MuralCreateEditDto.class
 API\nhyira\apivitalis\Entity\Midia.class
 API\nhyira\apivitalis\Service\CartaoService.class
 API\nhyira\apivitalis\Pagamento\DTO\PagamentoCreateEditDto.class
+API\nhyira\apivitalis\Controller\LembreteController.class
 API\nhyira\apivitalis\DTO\Cartao\CartaoExibitionDto.class
 API\nhyira\apivitalis\Entity\RotinaSemanal.class
 API\nhyira\apivitalis\Auth\Usuario\DTO\UsuarioLoginDto.class
@@ -202,6 +213,7 @@ API\nhyira\apivitalis\Service\TreinoService.class
 API\nhyira\apivitalis\Repository\RotinaMensalRepository.class
 API\nhyira\apivitalis\DTO\Assinatura\AssinaturaCreateEditDto.class
 API\nhyira\apivitalis\Repository\RotinaSemanalRepository.class
+API\nhyira\apivitalis\Pagamento\Service\PagamentoService.class
 API\nhyira\apivitalis\Repository\MidiaRepository.class
 API\nhyira\apivitalis\Pagamento\Service\MercadoPagoService$2.class
 API\nhyira\apivitalis\DTO\Exercicio\ExercicioExibition.class
@@ -222,6 +234,7 @@ API\nhyira\apivitalis\DTO\Metrica\MetricaCreateDto.class
 API\nhyira\apivitalis\Controller\FichaController.class
 API\nhyira\apivitalis\Exception\DuplicatedCartaoException.class
 API\nhyira\apivitalis\DTO\Endereco\EnderecoCreateEditDto.class
+API\nhyira\apivitalis\DTO\Usuario\PersonalEspecialidadeDto.class
 API\nhyira\apivitalis\Pagamento\Entity\Pagamento$TipoPagamento.class
 API\nhyira\apivitalis\DTO\Cartao\CartaoMapper.class
 API\nhyira\apivitalis\DTO\Midia\MidiaCreateEditDto.class
@@ -236,6 +249,7 @@ API\nhyira\apivitalis\DTO\Refeicao\RefeicaoExibition$AlimentoPorRefeicaoDto.clas
 API\nhyira\apivitalis\Service\AlimentoService.class
 API\nhyira\apivitalis\DTO\Endereco\EnderecoProximosGoogleDto.class
 API\nhyira\apivitalis\DTO\Usuario\UsuarioDto.class
+API\nhyira\apivitalis\Repository\LembreteRepository.class
 API\nhyira\apivitalis\Chat\Repository\MensagemRepository.class
 API\nhyira\apivitalis\Controller\EnderecoController.class
 API\nhyira\apivitalis\DTO\Treino\TreinoExibitionDto.class

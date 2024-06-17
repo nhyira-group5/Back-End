@@ -212,7 +212,7 @@ CREATE TABLE dieta (
     id_dieta INT PRIMARY KEY IDENTITY,
     meta_id INT,
     nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(250) NOT NULL,
+    descricao VARCHAR(500) NOT NULL,
     FOREIGN KEY (meta_id) REFERENCES meta(id_meta)
 );
 GO

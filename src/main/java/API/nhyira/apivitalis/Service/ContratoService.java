@@ -25,7 +25,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ContratoService {
-
     private final ContratoRepository contratoRepository;
     private final UsuarioRepository usuarioRepository;
     private final UsuarioService usuarioService;

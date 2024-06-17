@@ -40,6 +40,7 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\Especi
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\RotinaMensal\RotinaMensalMapper.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Especialidade\EspecialidadeMapper.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Assinatura\AssinaturaExibitionDto.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\LembreteService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Chat\Controller\ChatController.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Treino\TreinoExibitionSemanalDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\Meta.java
@@ -67,6 +68,7 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Pagamento\Con
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\RefeicaoRepository.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Dieta\DietaExibitionDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\RefeicaoController.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Treino\TreinoRelatorioDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Exception\SemConteudoException.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Usuario\UsuarioCreateEditDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Exercicio\TagExercicioDto.java
@@ -101,6 +103,7 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Usuario\U
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\DietaRepository.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Chat\Repository\ChatRepository.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\AlimentoPorRefeicaoService.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Lembrete\LembreteCreateEditDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\Treino.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\EspecialidadePorPersonal.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Exercicio\ExercicioExibition.java
@@ -143,11 +146,13 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Auth\Usuario\
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Chat\Service\ChatService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Tag\TagExercicioCreateEditDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\Tag.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Usuario\PersonalEspecialidadeDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Auth\Usuario\DTO\UsuarioLoginDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\RotinaSemanal\RotinaSemanalListExibitionDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\RotinaUsuariosController.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\RotinaDiariaService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Auth\AuthController.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\Lembrete.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Endereco\AcademiaDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\RotinaSemanal.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Dieta\DietaCreateEditDto.java
@@ -157,7 +162,9 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Especiali
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\TagExercicioController.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\RotinaUsuario\RotinaUsuarioExibitionDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\ContratoRepository.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Lembrete\LembreteExibitionDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Metrica\MetricaExibitionDto.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Usuario\UsuarioFichaDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\CartaoController.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\ExercicioService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\EnderecoRepository.java
@@ -192,13 +199,16 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Treino\Tr
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Chat\Service\ChatQueueService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\EspecialidadePorMetaService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Tag\TagCreateEditDto.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Mural\MuralCreateEditDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\RefeicaoDiaria\RefeicaoDiariaExibitionDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\RotinaSemanal\RotinaSemanalExibitionDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\RotinaSemanalController.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\MidiaService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Refeicao\RefeicaoExibition.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\RotinaMensalController.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Pagamento\Service\PagamentoService.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Chat\Service\ChatQueueConsumerService.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\Lembrete\LembreteMapper.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Entity\RotinaDiaria.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\RotinaSemanalRepository.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\AssinaturaService.java
@@ -234,5 +244,7 @@ C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Auth\Usuario\
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\DTO\EspecialidadePorMeta\EspecialidadePorMetaMapper.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\MetricaRepository.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Service\TreinoService.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Controller\LembreteController.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Chat\DTO\ChatCreateEditDto.java
 C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Exception\DuplicatedCartaoException.java
+C:\Users\user\Desktop\Back-End\src\main\java\API\nhyira\apivitalis\Repository\LembreteRepository.java

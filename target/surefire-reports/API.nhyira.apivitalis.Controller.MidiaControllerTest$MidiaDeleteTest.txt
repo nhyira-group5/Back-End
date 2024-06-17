@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: API.nhyira.apivitalis.Controller.MidiaControllerTest$MidiaDeleteTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.13 s -- in API.nhyira.apivitalis.Controller.MidiaControllerTest$MidiaDeleteTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.709 s -- in API.nhyira.apivitalis.Controller.MidiaControllerTest$MidiaDeleteTest

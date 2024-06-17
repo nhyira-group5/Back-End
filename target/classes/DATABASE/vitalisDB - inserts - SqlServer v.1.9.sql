@@ -170,6 +170,24 @@ INSERT INTO alimento_por_refeicao (refeicao_id, alimento_id, metrica_id, qtd_ali
 (5, 7, 1, 50),   -- Carne com aveia de flocos: Aveia em Flocos - 50 gramas
 (5, 8, 1, 30);   -- Carne com aveia de flocos: Amendoim - 30 gramas
 
+INSERT INTO dieta(nome, descricao, meta_id)
+VALUES
+('Emagrecimento', 'Uma dieta de emagrecimento bem-sucedida deve ser equilibrada, sustentável e personalizada para atender às necessidades individuais. O objetivo principal é criar um déficit calórico, onde a quantidade de calorias ingeridas é menor do que a quantidade de calorias gastas.', 1),
+('Ganho de massa', 'Uma dieta para ganho de massa muscular precisa fornecer um excedente calórico, ou seja, consumir mais calorias do que se gasta, junto com uma quantidade adequada de proteínas, carboidratos e gorduras saudáveis para promover a construção muscular. Além disso, a alimentação deve ser distribuída ao longo do dia para manter um fornecimento constante de nutrientes', 2);
+
+INSERT INTO refeicao_por_dieta (refeicao_id, dieta_id)
+VALUES
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2),
+(5, 2);
+
 INSERT INTO tag (nome) VALUES
 ('Peitoral'),
 ('Pernas'),
@@ -312,9 +330,9 @@ INSERT INTO assinatura (nome, valor) VALUES
 
 INSERT INTO endereco (logradouro, numero, bairro, cidade, estado, complemento, cep)
 VALUES
-('Avenida Wilson Carvalho', 10, 'Zer�o', 'Macap�', 'AP', null, 68903025),
+('Avenida Wilson Carvalho', 10, 'Zerão', 'Macapá', 'AP', null, 68903025),
 ('Rua Verdum', 112, 'Vila Nasser', 'Campo Grande', 'MS', null, 79117360),
-('Rua Alzira Gomes Queir�s', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
+('Rua Alzira Gomes Queiros', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
 
 -- SENHA -> Daniel@23133 (todos)
 INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, midia_id, personal_id, endereco_id) 
@@ -342,7 +360,7 @@ VALUES
 (3, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
 
 INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
-(2, 1);
+(3, 1);
 
 -- Inserção de contrato para o usuário com id_usuario 3 e personal_id 2
 INSERT INTO contrato (usuario_id, personal_id, afiliacao, inicio_contrato, fim_contrato) VALUES
