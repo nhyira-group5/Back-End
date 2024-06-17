@@ -347,24 +347,23 @@ ON rotina_usuario
 AFTER INSERT
 AS
 BEGIN
-    SET NOCOUNT ON;
-
     DECLARE @rotina_mensal_id INT;
     DECLARE @rotina_semanal_id INT;
     DECLARE @rotina_diaria_id INT;
     DECLARE @num_semana INT;
     DECLARE @dia INT;
     DECLARE @padrao INT = 1;
+    DECLARE @meta_id INT;
+    DECLARE @current_date DATE = GETDATE();
 
-    DECLARE @id_rotina_usuario INT;
-    SELECT @id_rotina_usuario = id_rotina_usuario FROM inserted;
+    SELECT @meta_id = meta_id
+    FROM inserted;
 
     INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
     VALUES 
-    (@id_rotina_usuario, MONTH(GETDATE()), YEAR(GETDATE()), 0);
+    ((SELECT id_rotina_usuario FROM inserted), MONTH(@current_date), YEAR(@current_date), 0);
 
     SET @rotina_mensal_id = SCOPE_IDENTITY();
-
 
     SET @num_semana = 1;
     WHILE @num_semana <= 5
@@ -375,7 +374,6 @@ BEGIN
 
         SET @rotina_semanal_id = SCOPE_IDENTITY();
 
-
         SET @dia = 1;
         WHILE @dia <= 7
         BEGIN
@@ -385,59 +383,117 @@ BEGIN
 
             SET @rotina_diaria_id = SCOPE_IDENTITY();
 
+            IF @meta_id = 1
+            BEGIN
+                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+                VALUES
+                (1, @rotina_diaria_id, 0, 15, 3, '00:01:00'),
+                (2, @rotina_diaria_id, 0, 12, 3, '00:02:00'),
+                (3, @rotina_diaria_id, 0, 10, 3, '00:01:30'),
+                (4, @rotina_diaria_id, 0, 20, 3, '00:01:00'),
+                (5, @rotina_diaria_id, 0, 8, 3, '00:02:00'),
+                (6, @rotina_diaria_id, 0, 15, 3, '00:01:30'),
+                (7, @rotina_diaria_id, 0, 12, 3, '00:01:00');
+            END
+            ELSE IF @meta_id = 2
+            BEGIN
+                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+                VALUES
+                (8, @rotina_diaria_id, 0, 15, 3, '00:01:00'),
+                (9, @rotina_diaria_id, 0, 12, 3, '00:02:00'),
+                (10, @rotina_diaria_id, 0, 10, 3, '00:01:30'),
+                (11, @rotina_diaria_id, 0, 20, 3, '00:01:00'),
+                (12, @rotina_diaria_id, 0, 8, 3, '00:02:00'),
+                (13, @rotina_diaria_id, 0, 15, 3, '00:01:30'),
+                (14, @rotina_diaria_id, 0, 12, 3, '00:01:00');
+            END
 
-            INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
-            VALUES
-            (1, @rotina_diaria_id, 0, 15, 3, '00:01:00'),
-            (2, @rotina_diaria_id, 0, 12, 3, '00:02:00'),
-            (3, @rotina_diaria_id, 0, 10, 3, '00:01:30'),
-            (4, @rotina_diaria_id, 0, 20, 3, '00:01:00'),
-            (5, @rotina_diaria_id, 0, 8, 3, '00:02:00'),
-            (6, @rotina_diaria_id, 0, 15, 3, '00:01:30'),
-            (7, @rotina_diaria_id, 0, 12, 3, '00:01:00');
-
-            INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) 
-            VALUES
-            (@rotina_diaria_id,
-                CASE @padrao
-                    WHEN 1 THEN 1
-                    WHEN 2 THEN 2
-                    WHEN 3 THEN 3
-                    WHEN 4 THEN 1
-                    WHEN 5 THEN 2
-                END, 0);
-
-            INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) 
-            VALUES
-            (@rotina_diaria_id,
-                CASE @padrao
-                    WHEN 1 THEN 2
-                    WHEN 2 THEN 2
-                    WHEN 3 THEN 2
-                    WHEN 4 THEN 4
-                    WHEN 5 THEN 4
-                END, 0);
-
-            INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) 
-            VALUES
-            (@rotina_diaria_id,
-                CASE @padrao
-                    WHEN 1 THEN 3
-                    WHEN 2 THEN 4
-                    WHEN 3 THEN 5
-                    WHEN 4 THEN 5
-                    WHEN 5 THEN 3
-                END, 0);
+            IF @meta_id = 1
+            BEGIN
+                IF @padrao = 1
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 1, 0),
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 3, 0);
+                END
+                ELSE IF @padrao = 2
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 1, 0),
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 4, 0);
+                END
+                ELSE IF @padrao = 3
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 1, 0),
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 5, 0);
+                END
+                ELSE IF @padrao = 4
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 4, 0),
+                    (@rotina_diaria_id, 5, 0);
+                END
+                ELSE IF @padrao = 5
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 5, 0),
+                    (@rotina_diaria_id, 4, 0),
+                    (@rotina_diaria_id, 3, 0);
+                END
+            END
+            ELSE IF @meta_id = 2
+            BEGIN
+                IF @padrao = 1
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 5, 0),
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 3, 0);
+                END
+                ELSE IF @padrao = 2
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 3, 0),
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 4, 0);
+                END
+                ELSE IF @padrao = 3
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 5, 0),
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 5, 0);
+                END
+                ELSE IF @padrao = 4
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 2, 0),
+                    (@rotina_diaria_id, 4, 0),
+                    (@rotina_diaria_id, 5, 0);
+                END
+                ELSE IF @padrao = 5
+                BEGIN
+                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+                    (@rotina_diaria_id, 5, 0),
+                    (@rotina_diaria_id, 4, 0),
+                    (@rotina_diaria_id, 3, 0);
+                END
+            END
 
             SET @padrao = @padrao + 1;
-            IF @padrao > 5
+            IF @padrao > 3 
+            BEGIN
                 SET @padrao = 1;
+            END
 
             SET @dia = @dia + 1;
-        END; -- END WHILE dia
+        END
 
         SET @num_semana = @num_semana + 1;
-    END; -- END WHILE num_semana
-
+    END
 END;
-GO

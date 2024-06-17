@@ -358,43 +358,86 @@ BEGIN
 
             SET rotina_diaria_id = LAST_INSERT_ID();
 
-
-            INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
-            VALUES
-            (1, rotina_diaria_id, 0, 15, 3, '00:01:00'),
-            (2, rotina_diaria_id, 0, 12, 3, '00:02:00'),
-            (3, rotina_diaria_id, 0, 10, 3, '00:01:30'),
-            (4, rotina_diaria_id, 0, 20, 3, '00:01:00'),
-            (5, rotina_diaria_id, 0, 8, 3, '00:02:00'),
-            (6, rotina_diaria_id, 0, 15, 3, '00:01:30'),
-            (7, rotina_diaria_id, 0, 12, 3, '00:01:00');
-
-            CASE padrao
-                WHEN 1 THEN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (rotina_diaria_id, 1, 0),
-                    (rotina_diaria_id, 2, 0),
-                    (rotina_diaria_id, 3, 0);
+			CASE NEW.meta_id
+				WHEN 1 THEN
+					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+					VALUES
+					(1, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+					(2, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+					(3, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+					(4, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+					(5, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+					(6, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+					(7, rotina_diaria_id, 0, 12, 3, '00:01:00');
                 WHEN 2 THEN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (rotina_diaria_id, 1, 0),
-                    (rotina_diaria_id, 2, 0),
-                    (rotina_diaria_id, 4, 0);
-                WHEN 3 THEN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (rotina_diaria_id, 1, 0),
-                    (rotina_diaria_id, 2, 0),
-                    (rotina_diaria_id, 5, 0);
-				WHEN 4 THEN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (rotina_diaria_id, 2, 0),
-                    (rotina_diaria_id, 4, 0),
-                    (rotina_diaria_id, 5, 0);
-                WHEN 5 THEN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (rotina_diaria_id, 5, 0),
-                    (rotina_diaria_id, 4, 0),
-                    (rotina_diaria_id, 3, 0);
+					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+					VALUES
+					(8, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+					(9, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+					(10, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+					(11, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+					(12, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+					(13, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+					(14, rotina_diaria_id, 0, 12, 3, '00:01:00');
+            END CASE;
+
+            CASE NEW.meta_id
+				WHEN 1 THEN
+					CASE padrao
+						WHEN 1 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 3, 0);
+						WHEN 2 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0);
+						WHEN 3 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 4 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 5 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 3, 0);
+					END CASE;
+                WHEN 2 THEN
+					CASE padrao
+						WHEN 1 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 3, 0);
+						WHEN 2 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 3, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0);
+						WHEN 3 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 4 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 5 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 3, 0);
+					END CASE;
             END CASE;
 
             SET padrao = padrao + 1;
