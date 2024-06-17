@@ -17,9 +17,7 @@ public class Dieta {
 
     private String descricao;
 
-
     @ManyToOne
     @JoinColumn(name = "metaId")
     private Meta metaId;
-
 }

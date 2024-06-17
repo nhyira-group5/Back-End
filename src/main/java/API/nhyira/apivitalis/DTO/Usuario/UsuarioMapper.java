@@ -26,6 +26,26 @@ public class UsuarioMapper {
         return null;
     }
 
+    public static UsuarioExibitionDto toExibition(Usuario entity) {
+        if (entity != null) {
+            UsuarioExibitionDto user = new UsuarioExibitionDto();
+
+            user.setId(entity.getIdUsuario());
+            user.setNome(entity.getNome());
+            user.setNickname(entity.getNickname());
+            user.setCpf(entity.getCpf());
+            user.setEmail(entity.getEmail());
+            user.setSexo(entity.getSexo());
+            user.setDtNasc(entity.getDtNasc());
+            user.setTipo(entity.getTipo());
+            user.setMidia(entity.getMidiaId());
+            user.setPersonalId(usuarioDto(entity.getPersonalId()));
+            user.setAcademiaId(endercoDto(entity.getEnderecoId()));
+            return user;
+        }
+        return null;
+    }
+
     public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity) {
         if (entity != null) {
             UsuarioExibitionDto user = new UsuarioExibitionDto();

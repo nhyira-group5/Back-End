@@ -2,22 +2,18 @@ package API.nhyira.apivitalis.Service;
 
 import API.nhyira.apivitalis.Entity.*;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
-import API.nhyira.apivitalis.Repository.DietaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoPorDietaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoRepository;
-import API.nhyira.apivitalis.Repository.RotinaSemanalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class RefeicaoService {
     private final RefeicaoRepository refRep;
-    private final DietaRepository diRep;
+//    private final DietaRepository diRep;
     private final RefeicaoPorDietaRepository rpdRep;
 //    private final RotinaSemanalRepository rsRep;
 
@@ -26,27 +22,18 @@ public class RefeicaoService {
     }
 
     public Refeicao getRefeicaoById(int id) {
-        Optional<Refeicao> refeicao = refRep.findById(id);
-        refeicao.orElseThrow(() -> new NaoEncontradoException("Refeição"));
-        return refeicao.get();
+        Refeicao refeicao = refRep.findById(id).orElseThrow(() -> new NaoEncontradoException("Refeição"));
+        return refeicao;
     }
 
-    public List<Refeicao> refeicoesPorDieta(List<RefeicaoPorDieta> dataList) {
-        List<Refeicao> refeicoes = new ArrayList<>();
-        for (RefeicaoPorDieta row : dataList) {
-            Optional<Refeicao> refeicao = refRep.findById(row.getRefeicaoId().getIdRefeicao());
-            refeicao.ifPresent(refeicoes::add);
-        }
+    public List<Refeicao> showRefeicaoByDieta(Dieta dieta) {
+        List<RefeicaoPorDieta> rpdList = rpdRep.findByDietaIdIs(dieta);
+        if (rpdList.isEmpty()) throw new NaoEncontradoException("Refeição por Dieta com a dieta " + dieta.getNome());
+        List<Refeicao> refeicoes = rpdList.stream().map(rpd -> refRep.findById(rpd.getRefeicaoId().getIdRefeicao()).get()).toList();
         return refeicoes;
     }
 
     public List<Refeicao> showRefeicoesByNome(String nome) {
         return refRep.buscarFiltroPorNome(nome);
-    }
-
-    public List<Refeicao> getRefeicaosByRefeicao(int dietaId) {
-        Optional<Dieta> dieta = diRep.findById(dietaId);
-        dieta.orElseThrow(() -> new NaoEncontradoException("Dieta"));
-        return refeicoesPorDieta(rpdRep.findByDietaIdIs(dieta.get()));
     }
 }

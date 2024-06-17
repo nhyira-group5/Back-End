@@ -10,13 +10,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/UsuarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/UsuarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Dieta.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Dieta.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/DietaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/DietaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoPorDietaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoPorDietaRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/DietaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/DietaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/MetaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/MetaService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RefeicaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RefeicaoService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Controller/UsuarioControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Controller/UsuarioControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/UsuarioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/UsuarioController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Dieta.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Dieta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/DietaRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/DietaRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/DietaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/DietaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/MetaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/MetaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RefeicaoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RefeicaoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/UsuarioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/UsuarioService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,7 +234,7 @@
       <workItem from="1718375124358" duration="5013000" />
       <workItem from="1718418460159" duration="1089000" />
       <workItem from="1718494201189" duration="1119000" />
-      <workItem from="1718577411176" duration="1163000" />
+      <workItem from="1718577411176" duration="5429000" />
     </task>
     <servers />
   </component>

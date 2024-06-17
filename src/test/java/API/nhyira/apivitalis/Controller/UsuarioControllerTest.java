@@ -16,10 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -531,7 +528,8 @@ class UsuarioControllerTest {
                           "nome": "Silva dos Santos",
                           "senha": "Daniel@23133",
                           "tipo": "USUARIO",
-                          "nickname": "T3STer@12388"
+                          "nickname": "T3STer@12388",
+                          "academiaId": null
                         }
                     """;
             var id = 3;

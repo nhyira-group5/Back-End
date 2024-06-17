@@ -4,6 +4,7 @@ import API.nhyira.apivitalis.DTO.Usuario.*;
 import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Service.CsvService;
 import API.nhyira.apivitalis.Service.FichaService;
 import API.nhyira.apivitalis.Service.UsuarioService;
@@ -31,8 +32,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioExibitionDto> create(@RequestBody @Valid UsuarioCreateEditDto newUser) {
         Usuario user = UsuarioMapper.toDto(newUser);
         Usuario userNovo = this.uService.createUser(user, newUser.getAcademiaId());
-        Meta meta = uService.searchMetaUsuario(userNovo);
-        UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(userNovo, meta);
+        UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(userNovo);
         URI uri = URI.create("/usuarios/" + exibitionDto.getId());
         return ResponseEntity.created(uri).body(exibitionDto);
     }
@@ -80,10 +80,9 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioExibitionDto> update(@PathVariable int id,@RequestBody @Valid UsuarioCreateEditDto updtUser ) {
-        if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        if (id <= 0) throw new NaoEncontradoException("ID");
         Usuario updatedUser = uService.updtUser(id, updtUser);
-        Meta meta = uService.searchMetaUsuario(updatedUser);
-        UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(updatedUser, meta);
+        UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(updatedUser);
         return ResponseEntity.status(200).body(exibitionDto);
     }
 
