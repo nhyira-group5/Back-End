@@ -20,6 +20,7 @@ public class UsuarioExibitionDto {
     private UsuarioDto personalId;
     private EnderecoDto academiaId;
     private MetaDto meta;
+    private boolean pagamentoAtivo;
 
     @Data
     public static class EnderecoDto {

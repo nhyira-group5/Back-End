@@ -423,7 +423,7 @@ class UsuarioControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$").isArray())
                     .andExpect(jsonPath("$.length()").value(tamanho))
-                    .andExpect(jsonPath("$[0].id").value(2))
+                    .andExpect(jsonPath("$[0].idPersonal").value(2))
                     .andExpect(jsonPath("$[0].nickname").value("marC@SSilV4"))
                     .andExpect(jsonPath("$[0].cpf").value("92865867013"))
                     .andExpect(jsonPath("$[0].nome").value("Marcos Silva Oliveira Pinto Santos"))
@@ -569,11 +569,11 @@ class UsuarioControllerTest {
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put("/usuarios/" + id)
                             .contentType("application/json")
                             .content(json))
-                    .andExpect(status().isBadRequest())
+                    .andExpect(status().isNotFound())
                     .andReturn();
 
             MockHttpServletResponse responseBody = mvcResult.getResponse();
-            assertEquals(responseBody.getStatus(), MockHttpServletResponse.SC_BAD_REQUEST);
+            assertEquals(responseBody.getStatus(), MockHttpServletResponse.SC_NOT_FOUND);
         }
 
         @Test

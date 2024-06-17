@@ -6,6 +6,7 @@ import API.nhyira.apivitalis.Entity.Ficha;
 import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
+import API.nhyira.apivitalis.Pagamento.Service.PagamentoService;
 import API.nhyira.apivitalis.Service.CsvService;
 import API.nhyira.apivitalis.Service.FichaService;
 import API.nhyira.apivitalis.Service.UsuarioService;
@@ -28,6 +29,7 @@ public class UsuarioController {
     private final UsuarioService uService;
     private final FichaService fichaService;
     private final CsvService csvService;
+    private final PagamentoService pagSrv;
 
     @PostMapping
     public ResponseEntity<UsuarioExibitionDto> create(@RequestBody @Valid UsuarioCreateEditDto newUser) {
@@ -44,10 +46,13 @@ public class UsuarioController {
         List<Usuario> users = uService.showAllUsers();
         for (Usuario u : users) {
             Meta meta = uService.searchMetaUsuario(u);
-            dtos.add(UsuarioMapper.toExibition(u, meta));
+            Boolean pagamentoAtivo = pagSrv.verifyUserPagamento(u);
+            dtos.add(UsuarioMapper.toExibition(u, meta, pagamentoAtivo));
         }
         return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtos);
     }
+
+
 
     @GetMapping("/personais")
     public ResponseEntity<List<PersonalEspecialidadeDto>> showAllPersonal() {
@@ -75,7 +80,8 @@ public class UsuarioController {
         if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         Usuario user = uService.showUserById(id);
         Meta meta = uService.searchMetaUsuario(user);
-        UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(user, meta);
+        Boolean pagamentoAtivo = pagSrv.verifyUserPagamento(user);
+        UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(user, meta, pagamentoAtivo);
         return ResponseEntity.ok(exibitionDto);
     }
 
@@ -110,4 +116,7 @@ public class UsuarioController {
         UsuarioFichaDto exibitionDto = UsuarioMapper.toExibitionIMC(user, ficha.getIMC());
         return ResponseEntity.ok(exibitionDto);
     }
+
+
+
 }

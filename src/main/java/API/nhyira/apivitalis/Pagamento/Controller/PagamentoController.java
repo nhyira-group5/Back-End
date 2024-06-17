@@ -34,4 +34,6 @@ public class PagamentoController {
             @RequestParam Optional<String> criteria) {
         return mercadoPagoService.buscarPagamentos(status, sort, criteria);
     }
+
+
 }

@@ -66,6 +66,28 @@ public class UsuarioMapper {
         return null;
     }
 
+    public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity, boolean pagAtivo) {
+        if (entity != null) {
+            UsuarioExibitionDto user = new UsuarioExibitionDto();
+
+            user.setId(entity.getIdUsuario());
+            user.setNome(entity.getNome());
+            user.setNickname(entity.getNickname());
+            user.setCpf(entity.getCpf());
+            user.setEmail(entity.getEmail());
+            user.setSexo(entity.getSexo());
+            user.setDtNasc(entity.getDtNasc());
+            user.setTipo(entity.getTipo());
+            user.setMidia(entity.getMidiaId());
+            user.setPersonalId(usuarioDto(entity.getPersonalId()));
+            user.setAcademiaId(endercoDto(entity.getEnderecoId()));
+            user.setMeta(toMetaDto(metaEntity));
+            user.setPagamentoAtivo(pagAtivo);
+            return user;
+        }
+        return null;
+    }
+
     public static List<UsuarioExibitionDto> toExibition(List<Usuario> entities) {
         if (entities == null)
             return null;
@@ -169,7 +191,7 @@ public class UsuarioMapper {
         personalEspecialidadeDto.setNome(entity.getNome());
         personalEspecialidadeDto.setSexo(entity.getSexo());
         personalEspecialidadeDto.setEmail(entity.getEmail());
-        personalEspecialidadeDto.setCpf(entity.getEmail());
+        personalEspecialidadeDto.setCpf(entity.getCpf());
         personalEspecialidadeDto.setTipo(entity.getTipo());
         personalEspecialidadeDto.setDtNasc(entity.getDtNasc());
         personalEspecialidadeDto.setNickname(entity.getNickname());

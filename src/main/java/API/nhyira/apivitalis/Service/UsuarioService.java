@@ -13,6 +13,7 @@ import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Exception.SemConteudoException;
+import API.nhyira.apivitalis.Pagamento.Service.PagamentoService;
 import API.nhyira.apivitalis.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,7 @@ public class UsuarioService {
     private final TokenGenJwt tokenGenJwt;
     private final EspecialidadePorPersonalRepository especialidadePorPersonal;
     private final MidiaRepository midiaRepository;
+    private final PagamentoService pagSrv;
     private final Set<String> emailsEnviados = new HashSet<>();
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLogin) {
@@ -203,7 +205,8 @@ public class UsuarioService {
             if (index != -1) {
                 Usuario user = allUsers.get(index);
                 Meta meta = searchMetaUsuario(user);
-                return UsuarioMapper.toExibition(user, meta);
+                Boolean pagamentoAtivo = pagSrv.verifyUserPagamento(user);
+                return UsuarioMapper.toExibition(user, meta, pagamentoAtivo);
             } else {
                 return null;
             }
