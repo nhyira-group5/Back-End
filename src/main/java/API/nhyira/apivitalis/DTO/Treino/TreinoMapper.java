@@ -5,6 +5,7 @@ import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionSemanalDto;
 import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
 import API.nhyira.apivitalis.Entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TreinoMapper {
@@ -59,6 +60,19 @@ public class TreinoMapper {
         rotinaDiariaDto.setIdRotinaDiaria(rotinaDiaria.getIdRotinaDiaria());
         rotinaDiariaDto.setConcluido(rotinaDiaria.getConcluido());
         return rotinaDiariaDto;
+    }
+
+    public static List<TreinoRelatorioDto> toDtoRelatorio(List<Integer> count, List<String> nome){
+        List<TreinoRelatorioDto> relatorioDtos = new ArrayList<>();
+        int size = Math.min(count.size(), nome.size());
+        for (int i = 0; i < size; i++) {
+            TreinoRelatorioDto dto = new TreinoRelatorioDto();
+            dto.setConcluido(count.get(i));
+            dto.setNome(nome.get(i));
+            relatorioDtos.add(dto);
+        }
+
+        return relatorioDtos;
     }
 
 

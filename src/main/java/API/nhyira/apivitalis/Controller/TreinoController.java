@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.Controller;
 import API.nhyira.apivitalis.DTO.Treino.TreinoExibitionDto;
 import API.nhyira.apivitalis.DTO.Treino.TreinoExibitionSemanalDto;
 import API.nhyira.apivitalis.DTO.Treino.TreinoMapper;
+import API.nhyira.apivitalis.DTO.Treino.TreinoRelatorioDto;
 import API.nhyira.apivitalis.Entity.*;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Service.RotinaDiariaService;
@@ -32,6 +33,15 @@ public class TreinoController {
         if (treino.isEmpty())
             return ResponseEntity.noContent().build();
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
+    }
+
+    @GetMapping("/relatorio/{id}")
+    public ResponseEntity<List<TreinoRelatorioDto>> showT(@PathVariable int id) {
+        if (id <= 0)
+            throw new ErroClienteException("ID");
+        List<Integer> count = treinoService.showCount(id);
+        List<String> nome = treinoService.showString(id);
+        return ResponseEntity.ok(TreinoMapper.toDtoRelatorio(count, nome));
     }
 
     @GetMapping("buscarIdTreinos/{id}")
