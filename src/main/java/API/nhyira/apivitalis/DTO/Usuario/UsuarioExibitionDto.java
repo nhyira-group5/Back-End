@@ -5,7 +5,6 @@ import API.nhyira.apivitalis.Entity.Usuario;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class UsuarioExibitionDto {
@@ -20,6 +19,7 @@ public class UsuarioExibitionDto {
     private Usuario.TipoUsuario tipo; // Alterado para String
     private UsuarioDto personalId;
     private EnderecoDto academiaId;
+    private MetaDto meta;
 
     @Data
     public static class EnderecoDto {
@@ -33,4 +33,9 @@ public class UsuarioExibitionDto {
         private String complemento;
     }
 
+    @Data
+    public static class MetaDto {
+        private Integer id;
+        private String nome;
+    }
 }

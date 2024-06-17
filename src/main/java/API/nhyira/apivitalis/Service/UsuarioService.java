@@ -10,12 +10,16 @@ import API.nhyira.apivitalis.DTO.Usuario.UsuarioExibitionDto;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioMapper;
 import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.Entity.Ficha;
+import API.nhyira.apivitalis.Entity.Meta;
+import API.nhyira.apivitalis.Entity.RotinaUsuario;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ConflitoException;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Exception.SemConteudoException;
 import API.nhyira.apivitalis.Repository.FichaRepository;
+import API.nhyira.apivitalis.Repository.MetaRepository;
+import API.nhyira.apivitalis.Repository.RotinaUsuarioRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +36,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository uRep;
+    private final RotinaUsuarioRepository ruRep;
+    private final MetaRepository mRep;
     private final FichaService fichaService;
     private final EnderecoService enderecoService;
     private final PasswordEncoder encoder;
@@ -127,11 +133,15 @@ public class UsuarioService {
     }
 
     public Usuario showUserById(int id) {
-        Optional<Usuario> usuario = uRep.findById(id);
-        usuario.orElseThrow(() -> new NaoEncontradoException("usuario"));
-        return usuario.get();
+        Usuario usuario = uRep.findById(id).orElseThrow(() -> new NaoEncontradoException("usuario"));
+        return usuario;
     }
 
+    public Meta searchMetaUsuario (Usuario usuario) {
+        RotinaUsuario ru = ruRep.findByUsuarioIdIs(usuario).orElseThrow(() -> new NaoEncontradoException("Rotina Usuário"));
+        Meta m = mRep.findById(ru.getMetaId().getIdMeta()).orElseThrow(() -> new NaoEncontradoException("Meta"));
+        return m;
+    }
 
     public Usuario updtUser(int id, UsuarioCreateEditDto updatedUser) {
         if (uRep.existsById(id)) {
@@ -190,7 +200,8 @@ public class UsuarioService {
             int index = binarySearch(allUsers, username);
             if (index != -1) {
                 Usuario user = allUsers.get(index);
-                return UsuarioMapper.toExibition(user);
+                Meta meta = searchMetaUsuario(user);
+                return UsuarioMapper.toExibition(user, meta);
             } else {
                 return null;
             }

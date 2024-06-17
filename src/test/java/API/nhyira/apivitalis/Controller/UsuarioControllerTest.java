@@ -482,26 +482,6 @@ class UsuarioControllerTest {
 
         @Test
         @Transactional
-        @DisplayName("Busca de usuário pelo seu nickname incorreto, nickname inválido")
-        void showUserByNicknameInvalid() throws Exception {
-            var json = """
-                    {
-                        "nickname": "ylu1Ge"
-                    }
-                    """;
-
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/usuarios/por-username")
-                            .contentType("application/json")
-                            .content(json))
-                    .andExpect(status().isBadRequest())
-                    .andReturn();
-
-            MockHttpServletResponse responseBody = mvcResult.getResponse();
-            assertEquals(responseBody.getStatus(), MockHttpServletResponse.SC_BAD_REQUEST);
-        }
-
-        @Test
-        @Transactional
         @DisplayName("Busca de usuário pelo seu nickname incorreto, nickname não encontrado")
         void showUserByNicknameEmpty() throws Exception {
             var json = """

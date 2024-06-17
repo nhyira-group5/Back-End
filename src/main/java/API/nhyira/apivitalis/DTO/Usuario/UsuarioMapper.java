@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.DTO.Usuario;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
 import API.nhyira.apivitalis.Entity.Endereco;
 import API.nhyira.apivitalis.Entity.Ficha;
+import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Usuario;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class UsuarioMapper {
         return null;
     }
 
-    public static UsuarioExibitionDto toExibition(Usuario entity) {
+    public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity) {
         if (entity != null) {
             UsuarioExibitionDto user = new UsuarioExibitionDto();
 
@@ -40,6 +41,7 @@ public class UsuarioMapper {
             user.setMidia(entity.getMidiaId());
             user.setPersonalId(usuarioDto(entity.getPersonalId()));
             user.setAcademiaId(endercoDto(entity.getEnderecoId()));
+            user.setMeta(toMetaDto(metaEntity));
             return user;
         }
         return null;
@@ -78,16 +80,16 @@ public class UsuarioMapper {
         return null;
     }
 
-    public static List<UsuarioExibitionDto> toExibitionList(List<Usuario> entities) {
-        List<UsuarioExibitionDto> dtos = new ArrayList<>();
-        for (Usuario entity : entities) {
-            UsuarioExibitionDto dto = toExibition(entity);
-            if (dto != null) {
-                dtos.add(dto);
-            }
-        }
-        return dtos;
-    }
+    // public static List<UsuarioExibitionDto> toExibitionList(List<Usuario> entities) {
+    //     List<UsuarioExibitionDto> dtos = new ArrayList<>();
+    //     for (Usuario entity : entities) {
+    //         UsuarioExibitionDto dto = toExibition(entity);
+    //         if (dto != null) {
+    //             dtos.add(dto);
+    //         }
+    //     }
+    //     return dtos;
+    // }
 
     public static Usuario of(UsuarioCreateEditDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
@@ -146,4 +148,12 @@ public class UsuarioMapper {
         return enderecoDto;
     }
 
+    public static UsuarioExibitionDto.MetaDto toMetaDto(Meta meta) {
+        if (meta == null) return null;
+
+        UsuarioExibitionDto.MetaDto metaDto = new UsuarioExibitionDto.MetaDto();
+        metaDto.setId(meta.getIdMeta());
+        metaDto.setNome(meta.getNome());
+        return metaDto;
+    }
 }
