@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -57,6 +58,13 @@ public class ContratoService {
         Optional<Contrato> optContrato = contratoRepository.findById(id);
         optContrato.orElseThrow(() -> new NaoEncontradoException("Contrato"));
         return optContrato.get();
+    }
+
+    public List<Contrato> shows(int id){
+        Optional<Usuario> optPersonal = usuarioRepository.findById(id);
+        optPersonal.orElseThrow(() -> new NaoEncontradoException("Personal"));
+        List<Contrato> contratos = contratoRepository.buscarContratoPorPersonal(optPersonal.get());
+        return contratos;
     }
 
     public Contrato updtUser(int id, ContratoEditDto contrato){

@@ -5,7 +5,11 @@ import API.nhyira.apivitalis.DTO.Contrato.ContratoEditDto;
 import API.nhyira.apivitalis.DTO.Contrato.ContratoExibitionDto;
 import API.nhyira.apivitalis.DTO.Contrato.ContratoMapper;
 import API.nhyira.apivitalis.Entity.Contrato;
+import API.nhyira.apivitalis.Entity.Meta;
+import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Service.ContratoService;
+import API.nhyira.apivitalis.Service.MetaService;
+import API.nhyira.apivitalis.Service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.mapper.Mapper;
@@ -13,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +26,7 @@ import java.net.URI;
 public class ContratoController {
 
     private final ContratoService contratoService;
+    private final UsuarioService usuarioService;
 
     @PostMapping
     public ResponseEntity<ContratoExibitionDto> create(@RequestBody @Valid ContratoCreateEditDto contratoCreateEditDto){
@@ -33,6 +40,18 @@ public class ContratoController {
     public ResponseEntity<ContratoExibitionDto> show(@PathVariable int id){
         Contrato contrato = contratoService.show(id);
         return ResponseEntity.ok(ContratoMapper.toDto(contrato));
+    }
+
+
+    @GetMapping("/Por-Personal/{id}")
+    public ResponseEntity<List<ContratoExibitionDto>> showPorPersonal(@PathVariable int id){
+        List<ContratoExibitionDto> dto = new ArrayList<>(0);
+        List<Contrato> contrato = contratoService.shows(id);
+        for (Contrato c: contrato){
+            Meta meta = usuarioService.searchMetaUsuario(c.getUsuarioId());
+            dto.add(ContratoMapper.toDto(c, meta));
+        }
+        return ResponseEntity.ok(dto);
     }
 
     @PutMapping("/{id}")

@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.DTO.Mural;
 
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
+import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
 import lombok.Data;
@@ -29,6 +30,10 @@ public class MuralExibitionDto {
         private String nome;
 
         private Usuario.TipoUsuario tipo;
+
+        private Midia midia;
+
+        private Meta meta;
 
     }
 }

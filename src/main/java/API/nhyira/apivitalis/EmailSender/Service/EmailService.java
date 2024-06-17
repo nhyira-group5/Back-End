@@ -12,8 +12,8 @@ import java.util.Properties;
 public class EmailService {
 
     public void enviarEmail(EmailModel email) {
-        final String remetente = "VitalisNhyiraFive@outlook.com ";
-        final String senha = "NhyiraFive";
+        final String remetente = "NhyraFive@outlook.com";
+        final String senha = "FiveNhyra";
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp-mail.outlook.com");

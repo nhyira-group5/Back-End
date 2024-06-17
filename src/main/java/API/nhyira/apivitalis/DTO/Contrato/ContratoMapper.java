@@ -2,9 +2,13 @@ package API.nhyira.apivitalis.DTO.Contrato;
 
 import API.nhyira.apivitalis.DTO.Mural.MuralExibitionDto;
 import API.nhyira.apivitalis.Entity.Contrato;
+import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Usuario;
 
+import java.util.List;
+
 public class ContratoMapper {
+
 
 
     public static ContratoExibitionDto toDto(Contrato contrato){
@@ -18,6 +22,24 @@ public class ContratoMapper {
         contratoExibitionDto.setUsuarioId(usuarioDto(contrato.getUsuarioId()));
         contratoExibitionDto.setAfiliacao(contrato.getAfiliacao());
         return contratoExibitionDto;
+    }
+
+
+    public static ContratoExibitionDto toDto(Contrato contrato, Meta meta){
+        if(contrato == null)return null;
+        ContratoExibitionDto contratoExibitionDto = new ContratoExibitionDto();
+
+        contratoExibitionDto.setIdContrato(contrato.getIdContrato());
+        contratoExibitionDto.setInicioContrato(contrato.getInicioContrato());
+        contratoExibitionDto.setFimContrato(contrato.getFimContrato());
+        contratoExibitionDto.setPersonalId(usuarioDto(contrato.getPersonalId(), meta));
+        contratoExibitionDto.setUsuarioId(usuarioDto(contrato.getUsuarioId(), meta));
+        contratoExibitionDto.setAfiliacao(contrato.getAfiliacao());
+        return contratoExibitionDto;
+    }
+
+    public static List<ContratoExibitionDto> toDto(List<Contrato> contratoes){
+        return contratoes.stream().map(ContratoMapper::toDto).toList();
     }
 
     public static Contrato toEntity(ContratoCreateEditDto contratoCreateEditDto){
@@ -39,12 +61,23 @@ public class ContratoMapper {
         return contrato;
     }
 
+    public static MuralExibitionDto.UsuarioDto usuarioDto(Usuario usuario, Meta meta){
+        MuralExibitionDto.UsuarioDto usuarioDto = new MuralExibitionDto.UsuarioDto();
+        usuarioDto.setIdUsuario(usuario.getIdUsuario());
+        usuarioDto.setNome(usuario.getNome());
+        usuarioDto.setNickname(usuario.getCpf());
+        usuarioDto.setTipo(usuario.getTipo());
+        usuarioDto.setMidia(usuarioDto.getMidia());
+        usuarioDto.setMeta(meta);
+        return usuarioDto;
+    }
     public static MuralExibitionDto.UsuarioDto usuarioDto(Usuario usuario){
         MuralExibitionDto.UsuarioDto usuarioDto = new MuralExibitionDto.UsuarioDto();
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setNickname(usuario.getCpf());
         usuarioDto.setTipo(usuario.getTipo());
+        usuarioDto.setMidia(usuarioDto.getMidia());
         return usuarioDto;
     }
 
