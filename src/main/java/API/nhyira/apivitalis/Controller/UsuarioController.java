@@ -52,6 +52,18 @@ public class UsuarioController {
         return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtos);
     }
 
+    @GetMapping("/usuario-afiliado/{id}")
+    public ResponseEntity<List<UsuarioExibitionDto>> showUserAfiliando(@PathVariable int id) {
+        List<UsuarioExibitionDto> dtos = new ArrayList<>(0);
+        List<Usuario> users = uService.showUsserAfiliado(id);
+        for (Usuario u : users) {
+            Meta meta = uService.searchMetaUsuario(u);
+            Boolean pagamentoAtivo = pagSrv.verifyUserPagamento(u);
+            dtos.add(UsuarioMapper.toExibition(u, meta, pagamentoAtivo));
+        }
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtos);
+    }
+
 
 
     @GetMapping("/personais")

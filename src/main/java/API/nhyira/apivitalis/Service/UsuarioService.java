@@ -134,6 +134,12 @@ public class UsuarioService {
         return usuario;
     }
 
+    public List<Usuario> showUsserAfiliado(int id){
+        Usuario usuario = showUserById(id);
+        List<Usuario> usuarios = uRep.findByPersonalIdIs(usuario);
+        return usuarios;
+    }
+
     public Meta searchMetaUsuario (Usuario usuario) {
         RotinaUsuario ru = ruRep.findByUsuarioIdIs(usuario).orElse(null);
         if (ru == null) return null;
