@@ -140,6 +140,12 @@ public class UsuarioService {
         return usuarios;
     }
 
+    public UsuarioExibitionDto buscarPersonalPorUsuario(Integer id) {
+        Usuario usuarioEncontrado = uRep.findById(id).orElseThrow(() -> new NaoEncontradoException("Usuario"));
+        System.out.println(usuarioEncontrado);
+        return UsuarioMapper.toExibition(usuarioEncontrado.getPersonalId());
+    }
+
     public Meta searchMetaUsuario (Usuario usuario) {
         RotinaUsuario ru = ruRep.findByUsuarioIdIs(usuario).orElse(null);
         if (ru == null) return null;

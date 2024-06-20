@@ -65,6 +65,14 @@ public class UsuarioController {
     }
 
 
+    @GetMapping("/personal/{userId}")
+    public ResponseEntity<UsuarioExibitionDto> buscarPersonalPorUsuario(@PathVariable Integer userId) {
+        UsuarioExibitionDto dto =uService.buscarPersonalPorUsuario(userId);
+
+        return ResponseEntity.ok(dto);
+    }
+
+
 
     @GetMapping("/personais")
     public ResponseEntity<List<PersonalEspecialidadeDto>> showAllPersonal() {
