@@ -70,7 +70,7 @@ public class ContratoService {
         Optional<Contrato> optContrato = contratoRepository.findById(id);
         optContrato.orElseThrow(() -> new NaoEncontradoException("Contrato"));
         Contrato contratoUpd = ContratoMapper.toEdit(optContrato.get(), contrato);
-        contratoUpd.setAfiliacao(1);
+        contratoUpd.setAfiliacao(contrato.getAfiliado());
         contratoRepository.save(contratoUpd);
         usuarioService.afiliacao(contratoUpd.getUsuarioId(), contratoUpd.getPersonalId());
         return optContrato.get();
