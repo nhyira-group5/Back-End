@@ -15,7 +15,7 @@ public interface PagamentoRepository extends JpaRepository<Pagamento, Integer> {
     @Query("""
         SELECT p FROM Pagamento p
                 WHERE p.usuario = :usuario
-                AND DATEDIFF(month, CURRENT_DATE, p.dataPagamento) <= 30
+                AND DATEDIFF(CURRENT_DATE, p.dataPagamento) <= 30
                 ORDER BY p.dataPagamento DESC
     """)
     Optional<Pagamento> findUltimoPagamentoValido(Usuario usuario);

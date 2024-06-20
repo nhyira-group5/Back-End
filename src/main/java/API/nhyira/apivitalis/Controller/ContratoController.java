@@ -55,7 +55,8 @@ public class ContratoController {
     @PutMapping("/{id}")
     public ResponseEntity<ContratoExibitionDto> updt(@PathVariable int id, @RequestBody @Valid ContratoEditDto contratoEditDto){
         Contrato contrato = contratoService.updtUser(id, contratoEditDto);
-        return ResponseEntity.ok(ContratoMapper.toDto(contrato));
+        Meta meta = usuarioService.searchMetaUsuario(contrato.getUsuarioId());
+        return ResponseEntity.ok(ContratoMapper.toDto(contrato, meta));
     }
 
     @DeleteMapping("/{id}")

@@ -30,4 +30,6 @@ public class ContratoExibitionDto {
     private Integer afiliacao;
 
 
+
+
 }
