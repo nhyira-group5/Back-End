@@ -2,6 +2,8 @@ package API.nhyira.apivitalis.DTO.Contrato;
 
 
 import API.nhyira.apivitalis.DTO.Mural.MuralExibitionDto;
+import API.nhyira.apivitalis.Entity.Meta;
+import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Usuario;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -16,10 +18,10 @@ public class ContratoExibitionDto {
     private Integer idContrato;
 
 
-    private MuralExibitionDto.UsuarioDto usuarioId;
+    private UsuarioDto usuarioId;
 
 
-    private MuralExibitionDto.UsuarioDto personalId;
+    private UsuarioDto personalId;
 
 
     private LocalDate inicioContrato;
@@ -29,7 +31,21 @@ public class ContratoExibitionDto {
 
     private Integer afiliacao;
 
+    @Data
+    public static class UsuarioDto{
+        private Integer idUsuario;
 
+        private String nickname;
+
+        private String nome;
+
+        private Usuario.TipoUsuario tipo;
+
+        private Midia midia;
+        private Meta meta;
+
+
+    }
 
 
 }

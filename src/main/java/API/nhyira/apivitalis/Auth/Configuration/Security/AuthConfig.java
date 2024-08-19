@@ -91,6 +91,7 @@ public class AuthConfig {
             new AntPathRequestMatcher("/refeicoes-por-dietas/**"),
             new AntPathRequestMatcher("/sqlserver/data/insert**"),
             new AntPathRequestMatcher("/usuarios", "POST"),
+            new AntPathRequestMatcher("/tagExercicios/**"),
             new AntPathRequestMatcher("/login/usuario", "POST"),
             new AntPathRequestMatcher("/websocket/**"),
             new AntPathRequestMatcher("/error/**"),

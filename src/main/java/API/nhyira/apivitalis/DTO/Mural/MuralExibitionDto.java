@@ -31,9 +31,5 @@ public class MuralExibitionDto {
 
         private Usuario.TipoUsuario tipo;
 
-        private Midia midia;
-
-        private Meta meta;
-
     }
 }

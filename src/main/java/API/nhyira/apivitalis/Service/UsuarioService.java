@@ -69,10 +69,10 @@ public class UsuarioService {
         final String token = tokenGenJwt.generateToken(auth, tipo);
         String emailDoUsuario = user.getEmail();
 
-        if (!emailsEnviados.contains(emailDoUsuario)) {
-            enviarEmailDeBoasVindas(emailDoUsuario);
-            emailsEnviados.add(emailDoUsuario);
-        }
+//        if (!emailsEnviados.contains(emailDoUsuario)) {
+//            enviarEmailDeBoasVindas(emailDoUsuario);
+//            emailsEnviados.add(emailDoUsuario);
+//        }
 
         SecurityContextHolder.getContext().setAuthentication(auth);
         return UsuarioMapper.of(user, token);

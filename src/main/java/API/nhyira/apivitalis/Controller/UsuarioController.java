@@ -40,6 +40,7 @@ public class UsuarioController {
         return ResponseEntity.created(uri).body(exibitionDto);
     }
 
+    // VER ESSE RETORNO
     @GetMapping
     public ResponseEntity<List<UsuarioExibitionDto>> showAll() {
         List<UsuarioExibitionDto> dtos = new ArrayList<>(0);
@@ -64,11 +65,10 @@ public class UsuarioController {
         return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtos);
     }
 
-
+    // ARRUMAR ESSE RETORNO
     @GetMapping("/personal/{userId}")
     public ResponseEntity<UsuarioExibitionDto> buscarPersonalPorUsuario(@PathVariable Integer userId) {
         UsuarioExibitionDto dto =uService.buscarPersonalPorUsuario(userId);
-
         return ResponseEntity.ok(dto);
     }
 

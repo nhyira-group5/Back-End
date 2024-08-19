@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
 Test set: API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.498 s -- in API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest
+Tests run: 13, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 9.344 s <<< FAILURE! -- in API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest
+API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest.createDataNascimentoDifPassado -- Time elapsed: 0.447 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<400> but was:<200>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:59)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:122)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:637)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at API.nhyira.apivitalis.Controller.UsuarioControllerTest$UserEditTest.createDataNascimentoDifPassado(UsuarioControllerTest.java:870)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

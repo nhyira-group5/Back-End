@@ -42,6 +42,7 @@ public class RefeicaoPorDietaMapper {
         dietaDto.setId(entity.getIdDieta());
         dietaDto.setNome(entity.getNome());
         dietaDto.setMeta(entity.getMetaId());
+        dietaDto.setDescricao(entity.getDescricao());
         return dietaDto;
     }
 }

@@ -10,6 +10,7 @@ public class EspecialidadePorMetaMapper {
     public static EspecialidadePorMetaExibitionDto toDto(EspecialidadePorMeta especialidadePorMeta){
         if (especialidadePorMeta == null)return null;
         EspecialidadePorMetaExibitionDto exibitionDto = new EspecialidadePorMetaExibitionDto();
+        exibitionDto.setIdEspecialidadeMeta(especialidadePorMeta.getIdEspecialidadeMeta());
         exibitionDto.setEspecialidadeId(especialidadePorMeta.getEspecialidadeId());
         exibitionDto.setMetaId(especialidadePorMeta.getMetaId());
         exibitionDto.setEspecialidadeId(especialidadePorMeta.getEspecialidadeId());

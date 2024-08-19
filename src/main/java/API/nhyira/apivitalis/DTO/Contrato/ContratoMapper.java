@@ -61,8 +61,8 @@ public class ContratoMapper {
         return contrato;
     }
 
-    public static MuralExibitionDto.UsuarioDto usuarioDto(Usuario usuario, Meta meta){
-        MuralExibitionDto.UsuarioDto usuarioDto = new MuralExibitionDto.UsuarioDto();
+    public static ContratoExibitionDto.UsuarioDto usuarioDto(Usuario usuario, Meta meta){
+        ContratoExibitionDto.UsuarioDto usuarioDto = new ContratoExibitionDto.UsuarioDto();
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setNickname(usuario.getNickname());
@@ -71,8 +71,8 @@ public class ContratoMapper {
         usuarioDto.setMeta(meta);
         return usuarioDto;
     }
-    public static MuralExibitionDto.UsuarioDto usuarioDto(Usuario usuario){
-        MuralExibitionDto.UsuarioDto usuarioDto = new MuralExibitionDto.UsuarioDto();
+    public static ContratoExibitionDto.UsuarioDto usuarioDto(Usuario usuario){
+        ContratoExibitionDto.UsuarioDto usuarioDto = new ContratoExibitionDto.UsuarioDto();
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setNickname(usuario.getNickname());

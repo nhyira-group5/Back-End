@@ -120,7 +120,7 @@ VALUES
 ('foto-mural-3', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/pwdze5jkmp2g59djagci.jpg', 'JPG'), -- 49
 ('foto-mural-4', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/k5svjihaojkf1bo7ld3m.jpg', 'JPG'), -- 50
 ('foto-mural-5', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1718126494/mural/hmggcwuqr57hgoqagytp.jpg', 'JPG'); -- 51
-
+--
 INSERT INTO especialidade (nome) VALUES
 ('Emagrecimento'),
 ('Alta Intensidade (HIIT)'),

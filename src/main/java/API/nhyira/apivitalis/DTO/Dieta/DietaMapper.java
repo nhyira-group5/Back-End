@@ -17,6 +17,7 @@ public class DietaMapper {
     public static DietaExibitionDto toDto(Dieta entity){
         if (entity == null) return null;
         DietaExibitionDto dietaExibitionDto = new DietaExibitionDto();
+        dietaExibitionDto.setId(entity.getIdDieta());
         dietaExibitionDto.setNome(entity.getNome());
         dietaExibitionDto.setDescricao(entity.getDescricao());
         dietaExibitionDto.setMetaId(entity.getMetaId());
