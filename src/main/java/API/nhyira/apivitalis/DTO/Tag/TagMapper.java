@@ -5,6 +5,8 @@ import API.nhyira.apivitalis.Entity.Exercicio;
 import API.nhyira.apivitalis.Entity.Tag;
 import API.nhyira.apivitalis.Entity.TagExercicio;
 
+import java.util.List;
+
 public class TagMapper {
     public TagExibitionDto toDTO(Tag tag) {
         TagExibitionDto dto = new TagExibitionDto();
@@ -19,12 +21,26 @@ public class TagMapper {
         return tag;
     }
 
-    public TagExercicioExibitionDto toDTO(TagExercicio tagExercicio) {
+    public static TagExercicioExibitionDto toDTO(TagExercicio tagExercicio) {
         TagExercicioExibitionDto dto = new TagExercicioExibitionDto();
         dto.setIdTagExercicio(tagExercicio.getIdTagExercicio());
         dto.setTag(tagExercicio.getTag());
         dto.setExercicio(exibitionDto(tagExercicio.getExercicioId()));
         return dto;
+    }
+
+    public static List<TagExercicioExibitionDto> toDTO(List<TagExercicio> tagExercicios){
+        return tagExercicios.stream().map(TagMapper::toDTO).toList();
+    }
+
+
+    public static TagExibitionDto toDTOTags(Tag tag){
+        if (tag == null)return null;
+        return TagExibitionDto.builder().idTag(tag.getIdTag()).nome(tag.getNome()).build();
+    }
+
+    public static List<TagExibitionDto> toDTOTags(List<Tag> tags){
+        return tags.stream().map(TagMapper::toDTOTags).toList();
     }
 
     public static ExercicioExibitionDto exibitionDto(Exercicio exercicio){

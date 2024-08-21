@@ -21,9 +21,7 @@ public class TagExercicioService {
 
     public List<TagExercicioExibitionDto> getAllTagExercicios() {
         List<TagExercicio> tagExercicios = tagExercicioRepository.findAll();
-        return tagExercicios.stream()
-                .map(tagMapper::toDTO)
-                .collect(Collectors.toList());
+        return TagMapper.toDTO(tagExercicios);
     }
 
     public TagExercicioExibitionDto getTagExercicioById(Integer id) {

@@ -21,15 +21,13 @@ public class TagService {
 
     public List<TagExibitionDto> getAllTags() {
         List<Tag> tags = tagRepository.findAll();
-        return tags.stream()
-                .map(tagMapper::toDTO)
-                .collect(Collectors.toList());
+        return TagMapper.toDTOTags(tags);
     }
 
     public TagExibitionDto getTagById(Integer id) {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tag não encontrada com o id: " + id));
-        return tagMapper.toDTO(tag);
+        return TagMapper.toDTOTags(tag);
     }
 
     public TagExibitionDto createTag(TagCreateEditDto tagCreateEditDTO) {
