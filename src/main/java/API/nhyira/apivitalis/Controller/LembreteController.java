@@ -30,11 +30,10 @@ public class LembreteController {
         return ResponseEntity.created(uri).body(exibitionDto);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<LembreteExibitionDto>> show(@PathVariable int id){
-        List<Lembrete> lembrete = lembreteService.shows(id);
-        List<LembreteExibitionDto> lembreteExibitionDto = LembreteMapper.toDto(lembrete);
-        return ResponseEntity.ok(lembreteExibitionDto);
+
+    @GetMapping("/{usuarioId}")
+    public List<LembreteExibitionDto> getLembretesByUsuarioId(@PathVariable Integer usuarioId) {
+        return lembreteService.findLembretesByUsuarioId(usuarioId);
     }
 
     @DeleteMapping("/{id}")

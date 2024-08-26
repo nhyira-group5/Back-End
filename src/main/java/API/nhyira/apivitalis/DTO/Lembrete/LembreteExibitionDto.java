@@ -4,8 +4,7 @@ import API.nhyira.apivitalis.DTO.Usuario.UsuarioDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class LembreteExibitionDto {
@@ -15,10 +14,8 @@ public class LembreteExibitionDto {
     private String conteudo;
 
 
-    private LocalDate dataLembrete;
+    private LocalDateTime dataLembrete;
 
-
-    private UsuarioDto usuarioId;
 
 
 }

@@ -23,7 +23,6 @@ public class LembreteMapper {
         lembreteExibitionDto.setId(lembrete.getIdLembrete());
         lembreteExibitionDto.setDataLembrete(lembrete.getDataLembrete());
         lembreteExibitionDto.setConteudo(lembrete.getConteudo());
-        lembreteExibitionDto.setUsuarioId(usuarioDto(lembrete.getUsuarioId()));
         return lembreteExibitionDto;
     }
 
@@ -31,6 +30,7 @@ public class LembreteMapper {
     public static List<LembreteExibitionDto> toDto(List<Lembrete> lembretes){
         return lembretes.stream().map(LembreteMapper::toDto).toList();
     }
+
 
     public static UsuarioDto usuarioDto(Usuario usuario){
         if (usuario == null)return null;

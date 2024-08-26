@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -17,7 +18,7 @@ public class Lembrete {
 
     private String conteudo;
 
-    private LocalDate dataLembrete;
+    private LocalDateTime dataLembrete;
 
 
     @ManyToOne

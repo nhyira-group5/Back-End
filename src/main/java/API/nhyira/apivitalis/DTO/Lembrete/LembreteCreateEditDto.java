@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 public class LembreteCreateEditDto {
@@ -17,7 +18,7 @@ public class LembreteCreateEditDto {
     private String conteudo;
 
     @NotNull
-    private LocalDate dataLembrete;
+    private LocalDateTime dataLembrete;
 
     @NotNull
     private Integer usuarioId;

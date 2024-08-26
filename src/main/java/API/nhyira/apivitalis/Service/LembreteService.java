@@ -1,5 +1,7 @@
 package API.nhyira.apivitalis.Service;
 
+import API.nhyira.apivitalis.DTO.Lembrete.LembreteExibitionDto;
+import API.nhyira.apivitalis.DTO.Lembrete.LembreteMapper;
 import API.nhyira.apivitalis.Entity.Lembrete;
 import API.nhyira.apivitalis.Entity.Usuario;
 import API.nhyira.apivitalis.Exception.ErroClienteException;
@@ -29,12 +31,13 @@ public class LembreteService {
         return lembrete;
     }
 
-    public List<Lembrete> shows(int id){
-        Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
-        List<Lembrete> lembretes = lembreteRepository.findByUsuarioIdIs(optUsuario.get());
-        return lembretes;
+    public List<LembreteExibitionDto> findLembretesByUsuarioId(Integer usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        List<Lembrete> lembretes = lembreteRepository.findByUsuarioId(usuario);
+        return LembreteMapper.toDto(lembretes);
     }
+
 
     public boolean delete(int id){
         if (!lembreteRepository.existsById(id)){
