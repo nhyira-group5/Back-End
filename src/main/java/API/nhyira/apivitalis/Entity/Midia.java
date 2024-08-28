@@ -12,7 +12,29 @@ public class Midia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMidia;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuarioId;
+
+    @ManyToOne
+    @JoinColumn(name = "mural_id")
+    private Mural muralId;
+
+    @ManyToOne
+    @JoinColumn(name = "alimento_id")
+    private Alimento alimentoId;
+
+    @ManyToOne
+    @JoinColumn(name = "exercicio_id")
+    private Exercicio exercicioId;
+
+    @ManyToOne
+    @JoinColumn(name = "refeicao_id")
+    private Refeicao refeicaoId;
+
     private String nome;
     private String caminho;
     private String extensao;
+    private String tipo;
 }
