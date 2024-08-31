@@ -56,12 +56,10 @@ public class MuralService {
     }
 
     public Boolean delete(int id){
-        Optional<Mural> optMural = muralRepository.findById(id);
-        optMural.orElseThrow(() -> new NaoEncontradoException("Mural"));
+        Mural mural = muralRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Mural"));
         muralRepository.deleteById(id);
-        midiaRepository.delete(optMural.get().getMidiaId());
+        midiaRepository.delete(mural.getMidiaId());
         return true;
     }
-
 }
 

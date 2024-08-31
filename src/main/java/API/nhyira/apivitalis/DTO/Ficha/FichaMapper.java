@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public class FichaMapper {
 
-    public static Ficha toEntity(FichaCreateEditDto dto){
-        if (dto == null)return null;
+    public static Ficha toEntity(FichaCreateEditDto dto) {
+        if (dto == null) return null;
 
         Ficha ficha = new Ficha();
         ficha.setAltura(dto.getAltura());
@@ -25,14 +25,15 @@ public class FichaMapper {
         ficha.setProblemaOsseoArticular(dto.getProblemaOsseoArticular());
         return ficha;
     }
+
     public static List<FichaExibitionDto> toDtoList(List<Ficha> fichas) {
         return fichas.stream()
                 .map(FichaMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public static FichaExibitionDto toDto(Ficha entity){
-        if (entity == null)return null;
+    public static FichaExibitionDto toDto(Ficha entity) {
+        if (entity == null) return null;
 
         FichaExibitionDto user = new FichaExibitionDto();
         user.setId(entity.getIdFicha());
@@ -49,8 +50,8 @@ public class FichaMapper {
         return user;
     }
 
-    public static UsuarioDto usuarioDto(Usuario usuario){
-        if (usuario == null)return null;
+    public static UsuarioDto usuarioDto(Usuario usuario) {
+        if (usuario == null) return null;
         UsuarioDto usuarioDto = new UsuarioDto();
 
         usuarioDto.setCpf(usuario.getCpf());
@@ -64,8 +65,8 @@ public class FichaMapper {
         return usuarioDto;
     }
 
-    public static Ficha toEdit(Ficha ficha,FichaCreateEditDto dto){
-        if (dto == null || ficha == null)return null;
+    public static Ficha toEdit(Ficha ficha, FichaCreateEditDto dto) {
+        if (dto == null || ficha == null) return null;
 
         ficha.setAltura(dto.getAltura());
         ficha.setPeso(dto.getPeso());

@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Entity;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,16 +14,13 @@ public class Mural {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMural;
 
-
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuarioId;
 
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "midiaId")
     private Midia midiaId;
 
     private LocalDate dtPostagem;
-
 }

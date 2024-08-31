@@ -18,10 +18,6 @@ public class Midia {
     private Usuario usuarioId;
 
     @ManyToOne
-    @JoinColumn(name = "mural_id")
-    private Mural muralId;
-
-    @ManyToOne
     @JoinColumn(name = "alimento_id")
     private Alimento alimentoId;
 

@@ -26,14 +26,15 @@ public class Usuario {
     private String email;
     private String senha;
     private TipoUsuario tipo;
-
-    @ManyToOne
-    @JoinColumn(name = "midiaId")
-    private Midia midiaId;
+    private Integer pontos;
 
     @ManyToOne
     @JoinColumn(name = "personalId")
     private Usuario personalId;
+
+    @OneToOne
+    @JoinColumn(name = "midiaId")
+    private Midia midiaId;
 
     @ManyToOne
     @JoinColumn(name = "enderecoId")
@@ -41,9 +42,6 @@ public class Usuario {
 
     public enum TipoUsuario {
         USUARIO,
-        PERSONAL,
+        PERSONAL
     }
-
-
-
 }

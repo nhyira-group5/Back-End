@@ -15,6 +15,7 @@ public class UsuarioExibitionDto {
     private LocalDate dtNasc;
     private String sexo;
     private String email;
+    private Integer pontos;
     private Midia midia;
     private Usuario.TipoUsuario tipo; // Alterado para String
     private UsuarioDto personalId;
