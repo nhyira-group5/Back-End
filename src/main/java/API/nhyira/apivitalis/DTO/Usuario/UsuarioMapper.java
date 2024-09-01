@@ -37,7 +37,7 @@ public class UsuarioMapper {
             user.setSexo(entity.getSexo());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
-            user.setMidia(entity.getMidiaId());
+//            user.setMidia(entity.getMidiaId());
             user.setPersonalId(usuarioDto(entity.getPersonalId()));
             user.setAcademiaId(endercoDto(entity.getEnderecoId()));
             return user;
@@ -57,7 +57,7 @@ public class UsuarioMapper {
             user.setSexo(entity.getSexo());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
-            user.setMidia(entity.getMidiaId());
+//            user.setMidia(entity.getMidiaId());
             user.setPersonalId(usuarioDto(entity.getPersonalId()));
             user.setAcademiaId(endercoDto(entity.getEnderecoId()));
             user.setMeta(toMetaDto(metaEntity));
@@ -78,7 +78,7 @@ public class UsuarioMapper {
             user.setSexo(entity.getSexo());
             user.setDtNasc(entity.getDtNasc());
             user.setTipo(entity.getTipo());
-            user.setMidia(entity.getMidiaId());
+//            user.setMidia(entity.getMidiaId());
             user.setPersonalId(usuarioDto(entity.getPersonalId()));
             user.setAcademiaId(endercoDto(entity.getEnderecoId()));
             user.setMeta(toMetaDto(metaEntity));
@@ -196,7 +196,7 @@ public class UsuarioMapper {
         personalEspecialidadeDto.setDtNasc(entity.getDtNasc());
         personalEspecialidadeDto.setNickname(entity.getNickname());
         personalEspecialidadeDto.setExibitonDto(especialidadePorPersonalDto(especialidadePorPersonal));
-        personalEspecialidadeDto.setMidiaDto(toMidiaDto(entity.getMidiaId()));
+//        personalEspecialidadeDto.setMidiaDto(toMidiaDto(entity.getMidiaId()));
         return personalEspecialidadeDto;
     }
 

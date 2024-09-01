@@ -3,7 +3,6 @@ package API.nhyira.apivitalis.DTO.Alimento;
 import API.nhyira.apivitalis.Entity.Alimento;
 import API.nhyira.apivitalis.Entity.Midia;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AlimentoMapper {
@@ -35,13 +34,15 @@ public class AlimentoMapper {
         return entities.stream().map(AlimentoMapper::toDto).toList();
     }
 
-    public static AlimentoExibitionDto.MidiaDto toMidiaDto (Midia midia) {
-        if (midia == null) return null;
-        AlimentoExibitionDto.MidiaDto midiaDto = new AlimentoExibitionDto.MidiaDto();
-        midiaDto.setIdMidia(midia.getIdMidia());
-        midiaDto.setNome(midia.getNome());
-        midiaDto.setCaminho(midia.getCaminho());
-        midiaDto.setExtensao(midia.getExtensao());
-        return midiaDto;
+    public static List<AlimentoExibitionDto.MidiaDto> toMidiaDto (List<Midia> midiaList) {
+        return  midiaList.stream().map(mi -> {
+            AlimentoExibitionDto.MidiaDto midiaDto = new AlimentoExibitionDto.MidiaDto();
+            midiaDto.setIdMidia(mi.getIdMidia());
+            midiaDto.setNome(mi.getNome());
+            midiaDto.setCaminho(mi.getCaminho());
+            midiaDto.setExtensao(mi.getExtensao());
+            midiaDto.setTipo(mi.getTipo());
+            return midiaDto;
+        } ).toList();
     }
 }

@@ -11,19 +11,14 @@ import java.util.List;
 
 @Component
 public class ExercicioMapper {
-    @Autowired
-    private MidiaService midiaService;
+
 
     public ExercicioExibitionDto toDTO(Exercicio exercicio) {
         ExercicioExibitionDto dto = new ExercicioExibitionDto();
         dto.setIdExercicio(exercicio.getIdExercicio());
         dto.setNome(exercicio.getNome());
         dto.setDescricao(exercicio.getDescricao());
-
-        Midia midia = exercicio.getMidia();
-        dto.setMidiaNome(midia.getNome());
-        dto.setMidiaCaminho(midia.getCaminho());
-        dto.setMidiaExtensao(midia.getExtensao());
+        dto.setMidiaList(exercicio.getMidia());
         return dto;
     }
 
@@ -33,17 +28,12 @@ public class ExercicioMapper {
         dto.setNome(exercicio.getNome());
         dto.setDescricao(exercicio.getDescricao());
         dto.setTagExercicioDtos(tagExibitionDto(exercicio.getTagExercicios()));
-
-        Midia midia = exercicio.getMidia();
-        dto.setMidiaNome(midia.getNome());
-        dto.setMidiaCaminho(midia.getCaminho());
-        dto.setMidiaExtensao(midia.getExtensao());
+        dto.setIdMidia(midiaExibitionDtos(exercicio.getMidia()));
         return dto;
     }
 
     public static List<ExercicioExibition> toDto(List<Exercicio> exercicios){
         return exercicios.stream().map(ExercicioMapper::toDto).toList();
-
     }
 
     public static List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){
@@ -56,14 +46,15 @@ public class ExercicioMapper {
         }).toList();
     }
 
-    public  Exercicio toEntity(ExercicioCreateEditDto exercicioDTO) {
-        Exercicio exercicio = new Exercicio();
-        exercicio.setNome(exercicioDTO.getNome());
-        exercicio.setDescricao(exercicioDTO.getDescricao());
-
-        Midia midia = midiaService.findById(exercicioDTO.getMidiaid());
-        exercicio.setMidia(midia);
-
-        return exercicio;
+    public static List<ExercicioExibition.MidiaExibitionDto> midiaExibitionDtos(List<Midia> midiaList){
+        return midiaList.stream().map(mid ->{
+            ExercicioExibition.MidiaExibitionDto midiaExibitionDto = new ExercicioExibition.MidiaExibitionDto();
+            midiaExibitionDto.setCaminho(mid.getCaminho());
+            midiaExibitionDto.setTipo(mid.getTipo());
+            midiaExibitionDto.setExtensao(mid.getExtensao());
+            midiaExibitionDto.setNome(mid.getNome());
+            return midiaExibitionDto;
+        }).toList();
     }
+
 }

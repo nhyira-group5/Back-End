@@ -44,7 +44,7 @@ class FichaServiceTest {
     @DisplayName("Dado que, vou salvar no banco, retorne a entidade com o id e a entidade do usuario")
     void cenarioCorretoSalvar(){
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         Ficha fichaParaSalvar = new Ficha(null, 1, 1, 0, 1,0,1,1.7f, 90.0f, null);
 
@@ -70,7 +70,7 @@ class FichaServiceTest {
     void cenarioErradoBuscarUsuarioParaSalvarFicha(){
         int idUsuario = 1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-      Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+      Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
      Ficha fichaParaSalvar = new Ficha(null, 1, 1, 0, 1,0,1,1.7f, 90.0f, null);
 
@@ -92,7 +92,7 @@ class FichaServiceTest {
         int idUsuario = 1;
 
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         Ficha fichaSalva = new Ficha(1, 1, 1, 0, 1,0,1,1.7f, 90.0f, usuario);
 
@@ -131,7 +131,7 @@ class FichaServiceTest {
 
         int idUsuario =1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         when(usuarioRepository.findById(idUsuario)).thenReturn(Optional.of(usuario));
         when(repository.findByUsuarioIdIs(usuario)).thenReturn(Optional.empty());
@@ -148,7 +148,7 @@ class FichaServiceTest {
     void cenarioCorretoAtualizar(){
         int idUsuario = 1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         FichaCreateEditDto fichaEdit = new FichaCreateEditDto( 1, 1, 1, 1,0,0,1.7f, 83.1f, 1);
 
@@ -178,7 +178,7 @@ class FichaServiceTest {
     void cenarioErradoAtualizarBuscarUsuario(){
         int idUsuario = 1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         FichaCreateEditDto fichaEdit = new FichaCreateEditDto( 1, 1, 1, 1,0,0,1.7f, 83.1f, 1);
 
@@ -197,7 +197,7 @@ class FichaServiceTest {
 
         int idUsuario =1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         FichaCreateEditDto fichaEdit = new FichaCreateEditDto( 1, 1, 1, 1,0,0,1.7f, 83.1f, 1);
 
@@ -218,7 +218,7 @@ class FichaServiceTest {
     void cenarioCorretoDeletar(){
         int idUsuario = 1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         Ficha fichaBanco = new Ficha(1, 1, 1, 0, 1,0,1,1.7f, 90.0f, usuario);
 
@@ -239,7 +239,7 @@ class FichaServiceTest {
     void cenarioErradoDeletarIdUsuario(){
         int idUsuario = 1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         Ficha ficha = new Ficha( 1,1, 1, 1, 1,0,0,1.7f, 83.1f, usuario);
 
@@ -258,7 +258,7 @@ class FichaServiceTest {
     void cenarioErradoDeletarFicha(){
         int idUsuario = 1;
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
 
         Ficha ficha = new Ficha( 1,1, 1, 1, 1,0,0,1.7f, 83.1f, usuario);
 

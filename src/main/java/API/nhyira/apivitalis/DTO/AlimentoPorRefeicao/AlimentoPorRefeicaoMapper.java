@@ -1,9 +1,7 @@
 package API.nhyira.apivitalis.DTO.AlimentoPorRefeicao;
 
-import API.nhyira.apivitalis.Entity.Alimento;
-import API.nhyira.apivitalis.Entity.AlimentoPorRefeicao;
-import API.nhyira.apivitalis.Entity.Metrica;
-import API.nhyira.apivitalis.Entity.Refeicao;
+import API.nhyira.apivitalis.DTO.Alimento.AlimentoExibitionDto;
+import API.nhyira.apivitalis.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +38,7 @@ public class AlimentoPorRefeicaoMapper {
         alimentoDto.setCarboidrato(entity.getCarboidrato());
         alimentoDto.setProteina(entity.getProteina());
         alimentoDto.setGordura(entity.getGordura());
-        alimentoDto.setMidia(entity.getMidiaId());
+        alimentoDto.setMidia(toMidiaDto(entity.getMidiaId()));
         return alimentoDto;
     }
 
@@ -50,7 +48,7 @@ public class AlimentoPorRefeicaoMapper {
         refeicaoDto.setId(entity.getIdRefeicao());
         refeicaoDto.setNome(entity.getNome());
         refeicaoDto.setPreparo(entity.getPreparo());
-        refeicaoDto.setMidia(entity.getMidiaId());
+        refeicaoDto.setMidia(toMidiaDto(entity.getMidiaId()));
         return refeicaoDto;
     }
 
@@ -60,5 +58,17 @@ public class AlimentoPorRefeicaoMapper {
         metricaDto.setId(entity.getIdMetrica());
         metricaDto.setNome(entity.getMetrica());
         return metricaDto;
+    }
+
+    public static List<AlimentoPorRefeicaoExibitionDto.MidiaDto> toMidiaDto (List<Midia> midiaList) {
+        return  midiaList.stream().map(mi -> {
+            AlimentoPorRefeicaoExibitionDto.MidiaDto midiaDto = new AlimentoPorRefeicaoExibitionDto.MidiaDto();
+            midiaDto.setIdMidia(mi.getIdMidia());
+            midiaDto.setNome(mi.getNome());
+            midiaDto.setCaminho(mi.getCaminho());
+            midiaDto.setExtensao(mi.getExtensao());
+            midiaDto.setTipo(mi.getTipo());
+            return midiaDto;
+        } ).toList();
     }
 }
