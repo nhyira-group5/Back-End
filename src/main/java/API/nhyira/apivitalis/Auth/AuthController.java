@@ -19,7 +19,6 @@ public class AuthController {
     @Autowired
     private UsuarioService usuarioService;
 
-
     @PostMapping("/usuario")
     public ResponseEntity<UsuarioTokenDto> loginUser(
             @RequestBody @Valid UsuarioLoginDto usuarioLogin
@@ -27,5 +26,4 @@ public class AuthController {
         UsuarioTokenDto usuarioToken = this.usuarioService.autenticar(usuarioLogin);
         return ResponseEntity.status(200).body(usuarioToken);
     }
-
 }
