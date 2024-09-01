@@ -158,7 +158,6 @@ public class UsuarioService {
         return espe;
     }
 
-
     public Usuario updtUser(int id, UsuarioCreateEditDto updatedUser) {
         if (uRep.existsById(id)) {
             Optional<Usuario> user = uRep.findById(id);
@@ -217,7 +216,7 @@ public class UsuarioService {
             if (index != -1) {
                 Usuario user = allUsers.get(index);
                 Meta meta = searchMetaUsuario(user);
-                Boolean pagamentoAtivo = pagSrv.verifyUserPagamento(user);
+                boolean pagamentoAtivo = pagSrv.verifyUserPagamento(user);
                 return UsuarioMapper.toExibition(user, meta, pagamentoAtivo);
             } else {
                 return null;

@@ -9,12 +9,10 @@ import API.nhyira.apivitalis.Repository.MuralRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.aot.ManagedTypesBeanRegistrationAotProcessor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,19 +47,17 @@ public class MuralService {
     public Mural create(Mural mural, int idUsuario, int idMidia){
         Usuario user = usuarioRepository.findById(idUsuario).orElseThrow(() -> new NaoEncontradoException("Usuário"));
         Midia midia = midiaRepository.findById(idMidia).orElseThrow(() -> new NaoEncontradoException("Midia"));
-//        mural.setMidiaId(midia);
+        mural.setMidiaId(midia);
         mural.setUsuarioId(user);
         muralRepository.save(mural);
         return mural;
     }
 
     public Boolean delete(int id){
-        Optional<Mural> optMural = muralRepository.findById(id);
-        optMural.orElseThrow(() -> new NaoEncontradoException("Mural"));
+        Mural mural = muralRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Mural"));
         muralRepository.deleteById(id);
-//        midiaRepository.delete(optMural.get().getMidiaId());
+        midiaRepository.delete(mural.getMidiaId());
         return true;
     }
-
 }
 

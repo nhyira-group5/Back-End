@@ -32,14 +32,15 @@ public class UsuarioController {
     private final PagamentoService pagSrv;
 
     @PostMapping
-    public ResponseEntity<UsuarioExibitionDto> create(@RequestBody @Valid UsuarioCreateEditDto newUser) {
+    public ResponseEntity<UsuarioExibitionDto> create(
+            @RequestBody @Valid UsuarioCreateEditDto newUser
+    ) {
         Usuario user = UsuarioMapper.toDto(newUser);
         Usuario userNovo = this.uService.createUser(user, newUser.getAcademiaId());
         UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(userNovo);
         URI uri = URI.create("/usuarios/" + exibitionDto.getId());
         return ResponseEntity.created(uri).body(exibitionDto);
     }
-
 
     @GetMapping
     public ResponseEntity<List<UsuarioExibitionDto>> showAll() {
@@ -54,7 +55,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuario-afiliado/{id}")
-    public ResponseEntity<List<UsuarioExibitionDto>> showUserAfiliando(@PathVariable int id) {
+    public ResponseEntity<List<UsuarioExibitionDto>> showUserAfiliando(
+            @PathVariable int id
+    ) {
         List<UsuarioExibitionDto> dtos = new ArrayList<>(0);
         List<Usuario> users = uService.showUsserAfiliado(id);
         for (Usuario u : users) {
@@ -66,18 +69,18 @@ public class UsuarioController {
     }
 
     @GetMapping("/personal/{userId}")
-    public ResponseEntity<UsuarioExibitionDto> buscarPersonalPorUsuario(@PathVariable Integer userId) {
-        UsuarioExibitionDto dto =uService.buscarPersonalPorUsuario(userId);
+    public ResponseEntity<UsuarioExibitionDto> buscarPersonalPorUsuario(
+            @PathVariable Integer userId
+    ) {
+        UsuarioExibitionDto dto = uService.buscarPersonalPorUsuario(userId);
         return ResponseEntity.ok(dto);
     }
-
-
 
     @GetMapping("/personais")
     public ResponseEntity<List<PersonalEspecialidadeDto>> showAllPersonal() {
         List<PersonalEspecialidadeDto> dtos = new ArrayList<>(0);
         List<Usuario> users = uService.showAllUsersPersonal();
-        for (Usuario u: users){
+        for (Usuario u : users) {
             List<EspecialidadePorPersonal> personal = uService.buscarEspecialidade(u);
             dtos.add(UsuarioMapper.toDtoPersonal(u, personal));
         }
@@ -95,7 +98,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioExibitionDto> showUser (@PathVariable int id) {
+    public ResponseEntity<UsuarioExibitionDto> showUser(
+            @PathVariable int id
+    ) {
         if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         Usuario user = uService.showUserById(id);
         Meta meta = uService.searchMetaUsuario(user);
@@ -105,7 +110,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioExibitionDto> update(@PathVariable int id,@RequestBody @Valid UsuarioCreateEditDto updtUser ) {
+    public ResponseEntity<UsuarioExibitionDto> update(
+            @PathVariable int id,
+            @RequestBody @Valid UsuarioCreateEditDto updtUser
+    ) {
         if (id <= 0) throw new NaoEncontradoException("ID");
         Usuario updatedUser = uService.updtUser(id, updtUser);
         UsuarioExibitionDto exibitionDto = UsuarioMapper.toExibition(updatedUser);
@@ -113,7 +121,9 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(
+            @PathVariable int id
+    ) {
         if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         boolean user = uService.delUser(id);
         return ResponseEntity.noContent().build();
@@ -124,18 +134,17 @@ public class UsuarioController {
             @RequestBody @Valid UsuarioDto user
     ) {
         UsuarioExibitionDto usuario = uService.findUserByUsername(user.getNickname());
-        return usuario != null ?  ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
+        return usuario != null ? ResponseEntity.ok(usuario) : ResponseEntity.notFound().build();
     }
 
     @GetMapping("/buscar-imc/{id}")
-    public ResponseEntity<UsuarioFichaDto> showImc (@PathVariable int id) {
+    public ResponseEntity<UsuarioFichaDto> showImc(
+            @PathVariable int id
+    ) {
         if (id <= 0) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         Usuario user = uService.showUserById(id);
         Ficha ficha = fichaService.showFicha(id);
         UsuarioFichaDto exibitionDto = UsuarioMapper.toExibitionIMC(user, ficha.getIMC());
         return ResponseEntity.ok(exibitionDto);
     }
-
-
-
 }

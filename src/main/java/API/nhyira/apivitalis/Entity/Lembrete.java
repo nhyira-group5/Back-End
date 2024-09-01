@@ -16,11 +16,8 @@ public class Lembrete {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idLembrete;
-
     private String conteudo;
-
     private Date dataLembrete;
-
 
     @ManyToOne
     @JoinColumn(name = "usuarioId")

@@ -2,12 +2,11 @@ package API.nhyira.apivitalis.DTO.RotinaUsuario;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-
-@Getter
-@Setter
+@Data
 public class RotinaTreinoCreateEditDto {
 
     @NotBlank
@@ -16,5 +15,4 @@ public class RotinaTreinoCreateEditDto {
 
     @Size(max = 250)
     private String observacao;
-
 }

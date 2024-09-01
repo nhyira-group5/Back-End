@@ -15,11 +15,13 @@ public class Mural {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMural;
 
-
     @ManyToOne
     @JoinColumn(name = "usuarioId")
     private Usuario usuarioId;
 
+    @OneToOne
+    @JoinColumn(name = "midiaId")
+    private Midia midiaId;
 
     private LocalDate dtPostagem;
 

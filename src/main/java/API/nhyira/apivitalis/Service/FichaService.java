@@ -33,19 +33,18 @@ public class FichaService {
     private final UsuarioRepository usuarioRepository;
 
     public Ficha create(Ficha dto, int idUsuario) {
-        if (dto == null)throw new ErroClienteException("Ficha");
+        if (dto == null) throw new ErroClienteException("Ficha");
 
         Optional<Usuario> optUsuario = usuarioRepository.findById(idUsuario);
-        optUsuario.orElseThrow(() -> new  NaoEncontradoException("Usuario"));
+        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
         dto.setUsuarioId(optUsuario.get());
         Ficha ficha = fichaRepository.save(dto);
         return ficha;
     }
 
-    public Ficha showFicha(int id){
-        if (id < 1){
-            throw new ErroClienteException("ID");
-        }
+    public Ficha showFicha(int id) {
+        if (id < 1) throw new ErroClienteException("ID");
+
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         usuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
         Optional<Ficha> ficha = fichaRepository.findByUsuarioIdIs(usuario.get());
@@ -53,14 +52,12 @@ public class FichaService {
         return ficha.get();
     }
 
-    public Ficha updtFicha(int id , FichaCreateEditDto dto) {
-            if (dto == null || id < 1) {
-               throw new ErroClienteException("ID");
-            }
+    public Ficha updtFicha(int id, FichaCreateEditDto dto) {
+        if (dto == null || id < 1) throw new ErroClienteException("ID");
 
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
-            optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
-            Optional<Ficha> optFicha = fichaRepository.findByUsuarioIdIs(optUsuario.get());
+        optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
+        Optional<Ficha> optFicha = fichaRepository.findByUsuarioIdIs(optUsuario.get());
         optFicha.orElseThrow(() -> new NaoEncontradoException("Ficha"));
         Ficha uptFicha = FichaMapper.toEdit(optFicha.get(), dto);
         fichaRepository.save(uptFicha);
@@ -68,9 +65,9 @@ public class FichaService {
 
     }
 
+    public Boolean delUser(int id) {
+        if (id < 1) throw new ErroClienteException("ID");
 
-    public Boolean delUser(int id){
-        if (id < 1)throw new ErroClienteException("ID");
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
         optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
         Optional<Ficha> optFicha = fichaRepository.findByUsuarioIdIs(optUsuario.get());
@@ -102,5 +99,4 @@ public class FichaService {
         return Normalizer.normalize(input.toLowerCase(), Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
     }
-
 }

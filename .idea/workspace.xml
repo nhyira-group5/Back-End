@@ -10,6 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoExibitionDto$MidiaDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition$MidiaExibitionDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition$AlimentoDto.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition$MidiaDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_05_2024_15_34__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_05_2024_15_34__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/ExercicioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/ExercicioController.java" afterDir="false" />
@@ -24,6 +30,9 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Exercicio/ExercicioMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Exercicio/ExercicioMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteCreateEditDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteCreateEditDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteExibitionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Lembrete/LembreteExibitionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Midia/MidiaCreateEditDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Midia/MidiaCreateEditDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Midia/MidiaExibitionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Midia/MidiaExibitionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Midia/MidiaMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Midia/MidiaMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Mural/MuralMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Mural/MuralMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionDto.java" afterDir="false" />
@@ -35,12 +44,11 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Alimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Alimento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Exercicio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Exercicio.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Lembrete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Lembrete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Midia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Midia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Mural.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Mural.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Refeicao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Entity/Usuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/ExercicioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/ExercicioService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/MuralService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/MuralService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/ContratoServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/ContratoServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/FichaServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/API/nhyira/apivitalis/Service/FichaServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/ExercicioController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/ExercicioController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoController.class" afterDir="false" />
@@ -130,51 +138,45 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.ApiVitalisApplication.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in api-vitalis.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.java in api-vitalis.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.api-vitalis [clean,install].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.ApiVitalisApplication.executor&quot;: &quot;Run&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last.edited.regexp&quot;: &quot;Sample Text&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Cliente/Downloads/Lanchonete-backend/Lanchonete-backend/pom.xml&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ApiVitalisApplication.executor": "Run",
+    "JUnit.All in api-vitalis.executor": "Run",
+    "JUnit.java in api-vitalis.executor": "Run",
+    "Maven.api-vitalis [clean,install].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.ApiVitalisApplication.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "Merging dev-luigi",
+    "kotlin-language-version-configured": "true",
+    "last.edited.regexp": "Sample Text",
+    "last_opened_file_path": "C:/Users/Will Dantas/OneDrive - SPTech School/Documents/Back-End",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="API.nhyira.apivitalis.Exception" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Cliente\Desktop\Back-End\src\main\resources" />
       <recent name="C:\Users\Cliente\Documents\Back-End\src\main\java\API\nhyira\apivitalis\DTO" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
-    </key>
-    <key name="ExtractSuperBase.RECENT_KEYS">
-      <recent name="API.nhyira.apivitalis.Exception" />
     </key>
     <key name="CreateTestDialog.RecentsKey">
       <recent name="API.nhyira.apivitalis.Service" />
@@ -195,7 +197,7 @@
       <command value="mvn install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.ApiVitalisApplication">
+  <component name="RunManager" selected="Spring Boot.ApiVitalisApplication">
     <configuration name="ApiVitalisApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.ApiVitalisApplication" />
       <module name="api-vitalis" />
@@ -242,23 +244,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UsuarioControllerTest$UsuarioShowTest.showAllPersonal" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="api-vitalis" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="API.nhyira.apivitalis.Controller.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="API.nhyira.apivitalis.Controller.UsuarioControllerTest" />
-      <option name="MAIN_CLASS_NAME" value="API.nhyira.apivitalis.Controller.UsuarioControllerTest$UsuarioShowTest" />
-      <option name="METHOD_NAME" value="showAllPersonal" />
-      <option name="TEST_OBJECT" value="method" />
-      <dir value="$PROJECT_DIR$/src/test/java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="java in api-vitalis" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="api-vitalis" />
       <option name="TEST_OBJECT" value="directory" />
@@ -267,15 +252,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ApiVitalisApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="api-vitalis" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="API.nhyira.apivitalis.ApiVitalisApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="API.nhyira.apivitalis.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.ApiVitalisApplication" />
         <item itemvalue="Application.ApiVitalisApplication" />
         <item itemvalue="JUnit.FichaServiceTest.cenarioCorretoSalvar" />
         <item itemvalue="JUnit.java in api-vitalis" />
         <item itemvalue="JUnit.UsuarioControllerTest$UserEditTest.ShowUserByIdInvalid" />
-        <item itemvalue="JUnit.UsuarioControllerTest$UsuarioShowTest.showAllPersonal" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
