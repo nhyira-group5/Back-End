@@ -7,26 +7,25 @@ import API.nhyira.apivitalis.Entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 public class UsuarioMapper {
 
     public static Usuario toDto(UsuarioCreateEditDto dto) {
-        if (dto != null) {
-            Usuario user = new Usuario();
-            user.setNome(dto.getNome());
-            user.setNickname(dto.getNickname());
-            user.setCpf(dto.getCpf());
-            user.setEmail(dto.getEmail());
-            user.setSenha(dto.getSenha());
-            user.setSexo(dto.getSexo());
-            user.setDtNasc(dto.getDtNasc());
-            user.setTipo(dto.getTipo() != null ?  Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
-            return user;
-        }
-        return null;
+        if (dto == null) return null;
+        Usuario user = new Usuario();
+        user.setNome(dto.getNome());
+        user.setNickname(dto.getNickname());
+        user.setCpf(dto.getCpf());
+        user.setEmail(dto.getEmail());
+        user.setSenha(dto.getSenha());
+        user.setSexo(dto.getSexo());
+        user.setDtNasc(dto.getDtNasc());
+        user.setTipo(dto.getTipo() != null ? Usuario.TipoUsuario.valueOf(dto.getTipo().name()) : null);
+        return user;
     }
 
     public static UsuarioExibitionDto toExibition(Usuario entity) {
-        if (entity != null) return null;
+        if (entity == null) return null;
         UsuarioExibitionDto user = new UsuarioExibitionDto();
 
         user.setId(entity.getIdUsuario());
@@ -45,7 +44,7 @@ public class UsuarioMapper {
     }
 
     public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity) {
-        if (entity != null) return null;
+        if (entity == null) return null;
         UsuarioExibitionDto user = new UsuarioExibitionDto();
 
         user.setId(entity.getIdUsuario());
@@ -90,7 +89,7 @@ public class UsuarioMapper {
         return entities.stream().map(e -> toExibition(e)).toList();
     }
 
-    public static UsuarioFichaDto toExibitionIMC(Usuario entity, double imc){
+    public static UsuarioFichaDto toExibitionIMC(Usuario entity, double imc) {
         if (entity == null) return null;
         UsuarioFichaDto user = new UsuarioFichaDto();
         user.setIdUsuario(entity.getIdUsuario());
@@ -106,7 +105,7 @@ public class UsuarioMapper {
     }
 
     public static Usuario toEditDto(Usuario user, UsuarioCreateEditDto dto) {
-        if (dto != null) return null;
+        if (dto == null) return null;
         user.setNome(dto.getNome());
         user.setNickname(dto.getNickname());
         user.setCpf(dto.getCpf());
@@ -145,11 +144,10 @@ public class UsuarioMapper {
         return usuario;
     }
 
-    public static UsuarioDto usuarioDto(Usuario usuario){
+    public static UsuarioDto usuarioDto(Usuario usuario) {
         if (usuario == null) return null;
 
         UsuarioDto usuarioDto = new UsuarioDto();
-
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setSexo(usuario.getSexo());
@@ -176,7 +174,7 @@ public class UsuarioMapper {
         return enderecoDto;
     }
 
-    public static PersonalEspecialidadeDto toDtoPersonal(Usuario entity, List<EspecialidadePorPersonal> especialidadePorPersonal){
+    public static PersonalEspecialidadeDto toDtoPersonal(Usuario entity, List<EspecialidadePorPersonal> especialidadePorPersonal) {
         if (entity == null) return null;
 
         PersonalEspecialidadeDto personalEspecialidadeDto = new PersonalEspecialidadeDto();
@@ -193,16 +191,17 @@ public class UsuarioMapper {
         return personalEspecialidadeDto;
     }
 
-    public static List<PersonalEspecialidadeDto.EspecialidadePorPersonalDto> especialidadePorPersonalDto(List<EspecialidadePorPersonal> especialidadePorPersonal){
-      return especialidadePorPersonal.stream().map(ep -> {
-          PersonalEspecialidadeDto.EspecialidadePorPersonalDto especialidadePorPersonalDto = new PersonalEspecialidadeDto.EspecialidadePorPersonalDto();
-          especialidadePorPersonalDto.setEspecialidadeId(especialidadeDto(ep.getEspecialidadeId()));
-          especialidadePorPersonalDto.setId(ep.getIdEspecialidadePersonal());
-          return especialidadePorPersonalDto;
-      }).toList();
+    public static List<PersonalEspecialidadeDto.EspecialidadePorPersonalDto> especialidadePorPersonalDto(List<EspecialidadePorPersonal> especialidadePorPersonal) {
+        return especialidadePorPersonal.stream().map(ep -> {
+            PersonalEspecialidadeDto.EspecialidadePorPersonalDto especialidadePorPersonalDto = new PersonalEspecialidadeDto.EspecialidadePorPersonalDto();
+            especialidadePorPersonalDto.setEspecialidadeId(especialidadeDto(ep.getEspecialidadeId()));
+            especialidadePorPersonalDto.setId(ep.getIdEspecialidadePersonal());
+            return especialidadePorPersonalDto;
+        }).toList();
     }
-    public static EspecialidadeExibitionDto especialidadeDto(Especialidade especialidade){
-        if (especialidade== null) return null;
+
+    public static EspecialidadeExibitionDto especialidadeDto(Especialidade especialidade) {
+        if (especialidade == null) return null;
 
         EspecialidadeExibitionDto exibitionDto = new EspecialidadeExibitionDto();
         exibitionDto.setId(especialidade.getIdEspecialidade());
@@ -210,7 +209,7 @@ public class UsuarioMapper {
         return exibitionDto;
     }
 
-    public static RefeicaoExibitionDto.MidiaDto toMidiaDto (Midia midia) {
+    public static RefeicaoExibitionDto.MidiaDto toMidiaDto(Midia midia) {
         if (midia == null) return null;
 
         RefeicaoExibitionDto.MidiaDto midiaDto = new RefeicaoExibitionDto.MidiaDto();
