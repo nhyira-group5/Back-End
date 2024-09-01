@@ -22,7 +22,7 @@ public class MuralMapper {
 
         muralExibitionDto.setIdMural(mural.getIdMural());
         muralExibitionDto.setDtPostagem(mural.getDtPostagem());
-        muralExibitionDto.setMidiaId(mural.getMidiaId());
+//        muralExibitionDto.setMidiaId(mural.getMidiaId());
         muralExibitionDto.setUsuarioId(usuarioDto(mural.getUsuarioId()));
         return muralExibitionDto;
     }

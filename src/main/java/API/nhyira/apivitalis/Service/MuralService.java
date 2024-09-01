@@ -49,7 +49,7 @@ public class MuralService {
     public Mural create(Mural mural, int idUsuario, int idMidia){
         Usuario user = usuarioRepository.findById(idUsuario).orElseThrow(() -> new NaoEncontradoException("Usuário"));
         Midia midia = midiaRepository.findById(idMidia).orElseThrow(() -> new NaoEncontradoException("Midia"));
-        mural.setMidiaId(midia);
+//        mural.setMidiaId(midia);
         mural.setUsuarioId(user);
         muralRepository.save(mural);
         return mural;
@@ -59,7 +59,7 @@ public class MuralService {
         Optional<Mural> optMural = muralRepository.findById(id);
         optMural.orElseThrow(() -> new NaoEncontradoException("Mural"));
         muralRepository.deleteById(id);
-        midiaRepository.delete(optMural.get().getMidiaId());
+//        midiaRepository.delete(optMural.get().getMidiaId());
         return true;
     }
 

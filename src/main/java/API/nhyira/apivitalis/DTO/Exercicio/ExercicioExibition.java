@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.DTO.Exercicio;
 
 
+import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Tag;
 import API.nhyira.apivitalis.Entity.TagExercicio;
 import lombok.Data;
@@ -13,11 +14,7 @@ public class ExercicioExibition {
     private String nome;
     private String descricao;
     private List<TagExibitionDto> tagExercicioDtos;
-    private Integer idMidia;
-    private String midiaNome;     // Nome da midia
-    private String midiaCaminho;  // Caminho da midia
-    private String midiaExtensao;
-
+    private List<MidiaExibitionDto> idMidia;
 
     @Data
     public static class TagExibitionDto{
@@ -26,7 +23,14 @@ public class ExercicioExibition {
 
         private Tag tagId;
 
+    }
 
+    @Data
+    public static class MidiaExibitionDto{
+        private String nome;
+        private String caminho;
+        private String extensao;
+        private String tipo;
     }
 
 }

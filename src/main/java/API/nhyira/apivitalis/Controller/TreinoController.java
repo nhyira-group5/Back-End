@@ -65,8 +65,8 @@ public class TreinoController {
             List<Treino> treinosDiarios = treinoService.showByRotinaDiaria(rd);
             for (Treino td : treinosDiarios) {
                 Exercicio ex = td.getExercicioId();
-                Midia midia = ex.getMidia();
-                dtoList.add(TreinoMapper.toTreinoExibitionSemanalDto(ex, td, rd, midia));
+//                Midia midia = ex.getMidia();
+                dtoList.add(TreinoMapper.toTreinoExibitionSemanalDto(ex, td, rd));
             }
         }
 
@@ -83,8 +83,8 @@ public class TreinoController {
         List<Treino> treinosDiarios = treinoService.showByRotinaDiaria(rd);
         for (Treino td : treinosDiarios) {
             Exercicio ex = td.getExercicioId();
-            Midia midia = ex.getMidia();
-            dtoList.add(TreinoMapper.toTreinoExibitionSemanalDto(ex, td, rd, midia));
+//            Midia midia = ex.getMidia();
+            dtoList.add(TreinoMapper.toTreinoExibitionSemanalDto(ex, td, rd));
         }
 
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);

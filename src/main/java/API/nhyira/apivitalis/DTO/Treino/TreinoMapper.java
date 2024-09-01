@@ -36,11 +36,11 @@ public class TreinoMapper {
         exercicioDto.setNome(exercicio.getNome());
         exercicioDto.setDescricao(exercicio.getDescricao());
         exercicioDto.setTagExercicioDtos(tagExibitionDto(exercicio.getTagExercicios()));
-        Midia midia = exercicio.getMidia();
-        exercicioDto.setIdMidia(midia.getIdMidia());
-        exercicioDto.setMidiaNome(midia.getNome());
-        exercicioDto.setMidiaCaminho(midia.getCaminho());
-        exercicioDto.setMidiaExtensao(midia.getExtensao());
+//        Midia midia = exercicio.getMidia();
+//        exercicioDto.setIdMidia(midia.getIdMidia());
+//        exercicioDto.setMidiaNome(midia.getNome());
+//        exercicioDto.setMidiaCaminho(midia.getCaminho());
+//        exercicioDto.setMidiaExtensao(midia.getExtensao());
         return exercicioDto;
     }
 
@@ -79,7 +79,7 @@ public class TreinoMapper {
 
     // Controller /treinos/por-semana/{idRotinaSemanal}
     // Controller /treinos/por-dia/{idRotinaDiaria}
-    public static TreinoExibitionSemanalDto toTreinoExibitionSemanalDto (Exercicio ex, Treino treino, RotinaDiaria rd, Midia midia) {
+    public static TreinoExibitionSemanalDto toTreinoExibitionSemanalDto (Exercicio ex, Treino treino, RotinaDiaria rd) {
         if (ex == null || treino == null || rd == null) return null;
 
         TreinoExibitionSemanalDto treinoSemanalDto = new TreinoExibitionSemanalDto();
@@ -92,7 +92,7 @@ public class TreinoMapper {
         treinoSemanalDto.setRepeticao(treino.getRepeticao());
         treinoSemanalDto.setConcluido(treino.getConcluido());
         treinoSemanalDto.setRotinaDiaria(toRotinaDiaria(rd));
-        treinoSemanalDto.setMidia(toSemanalMidiaDto(midia));
+//        treinoSemanalDto.setMidia(toSemanalMidiaDto(midia));
         return treinoSemanalDto;
     }
 

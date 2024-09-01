@@ -50,8 +50,8 @@ class ContratoServiceTest {
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
         LocalDate dataNascPersoanl = LocalDate.parse("1999-09-14");
 
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
-        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
+        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null, null);
         ChatCreateEditDto chat = new ChatCreateEditDto();
 
         LocalDate dataInicio = LocalDate.parse("2024-08-13");
@@ -201,8 +201,8 @@ class ContratoServiceTest {
         LocalDate dataNascUsuario = LocalDate.parse("2001-09-14");
         LocalDate dataNascPersoanl = LocalDate.parse("1999-09-14");
 
-        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null, null);
-        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null, null, null);
+        Usuario usuario = new Usuario(1, "marCOSSilV4","44581975840", "Marcos Silva Oliveira Pinto Santos", dataNascUsuario, "M", "marcos@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.USUARIO, null, null);
+        Usuario personal = new Usuario(2, "w1llSalad","23456789012", "Will Dantas", dataNascPersoanl, "M", "will@example.com", "$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS", Usuario.TipoUsuario.PERSONAL, null, null);
         LocalDate dataInicio = LocalDate.parse("2024-08-13");
 
         Contrato contratoParaSalvar = new Contrato(null, usuario, personal, dataInicio , null, 0);

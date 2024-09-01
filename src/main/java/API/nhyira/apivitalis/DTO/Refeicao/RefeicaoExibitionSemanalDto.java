@@ -2,6 +2,8 @@ package API.nhyira.apivitalis.DTO.Refeicao;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RefeicaoExibitionSemanalDto {
     private Integer idRefeicao;
@@ -9,7 +11,7 @@ public class RefeicaoExibitionSemanalDto {
     private String preparo;
     private Integer concluido;
     private RotinaDiariaDto rotinaDiaria;
-    private MidiaDto midia;
+    private List<MidiaDto> midia;
 
     @Data
     public static class MidiaDto {
@@ -17,6 +19,7 @@ public class RefeicaoExibitionSemanalDto {
         private String nome;
         private String caminho;
         private String extensao;
+        private String tipo;
     }
 
     @Data

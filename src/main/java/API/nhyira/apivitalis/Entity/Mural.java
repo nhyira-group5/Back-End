@@ -21,10 +21,6 @@ public class Mural {
     private Usuario usuarioId;
 
 
-    @ManyToOne
-    @JoinColumn(name = "midiaId")
-    private Midia midiaId;
-
     private LocalDate dtPostagem;
 
 }

@@ -3,13 +3,14 @@ package API.nhyira.apivitalis.DTO.Refeicao;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class RefeicaoExibitionDto {
     private Integer idRefeicao;
     private String nome;
     private String preparo;
-    private MidiaDto midia;
+    private List<MidiaDto> midia;
 
     @Data
     public static class MidiaDto {
@@ -17,5 +18,6 @@ public class RefeicaoExibitionDto {
         private String nome;
         private String caminho;
         private String extensao;
+        private String tipo;
     }
 }

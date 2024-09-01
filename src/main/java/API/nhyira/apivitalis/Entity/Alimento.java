@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,7 +20,6 @@ public class Alimento {
     private Double proteina;
     private Double gordura;
 
-    @ManyToOne
-    @JoinColumn(name = "midiaId")
-    private Midia midiaId;
+    @OneToMany(mappedBy = "alimentoId")
+    private List<Midia> midiaId;
 }
