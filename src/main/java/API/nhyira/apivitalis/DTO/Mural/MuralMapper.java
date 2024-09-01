@@ -3,7 +3,6 @@ package API.nhyira.apivitalis.DTO.Mural;
 import API.nhyira.apivitalis.Entity.Midia;
 import API.nhyira.apivitalis.Entity.Mural;
 import API.nhyira.apivitalis.Entity.Usuario;
-import org.apache.maven.lifecycle.internal.LifecycleStarter;
 
 import java.util.List;
 

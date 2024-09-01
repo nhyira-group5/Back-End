@@ -90,7 +90,7 @@ public class RefeicaoController {
             List<RefeicaoDiaria> refeicoesDiarias = refdSrv.showByRotinaDiaria(rd);
             for (RefeicaoDiaria refd : refeicoesDiarias) {
                 Refeicao ref = refd.getRefeicaoId();
-                Midia midia = ref.getMidiaId();
+                List<Midia> midia = ref.getMidiaId();
                 dtoList.add(RefeicaoMapper.toRefeicaoExibitionSemanalDto(ref, rd, refd, midia));
             }
         }

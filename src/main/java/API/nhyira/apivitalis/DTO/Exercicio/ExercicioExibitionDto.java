@@ -1,10 +1,13 @@
 package API.nhyira.apivitalis.DTO.Exercicio;
 
 
+import API.nhyira.apivitalis.Entity.Midia;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,8 +18,6 @@ public class ExercicioExibitionDto {
     private Integer idExercicio;
     private String nome;
     private String descricao;
-    private String midiaNome;     // Nome da midia
-    private String midiaCaminho;  // Caminho da midia
-    private String midiaExtensao; // Extensão da midia
+    private List<Midia> midiaList;
 
 }

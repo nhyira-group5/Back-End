@@ -12,14 +12,14 @@ public class RefeicaoMapper {
         return refeicao;
     }
 
-    public static RefeicaoExibitionDto toDto (Refeicao entity) {
-        RefeicaoExibitionDto refeicaoExibitionDto = new RefeicaoExibitionDto();
-        refeicaoExibitionDto.setIdRefeicao(entity.getIdRefeicao());
-        refeicaoExibitionDto.setNome(entity.getNome());
-        refeicaoExibitionDto.setPreparo(entity.getPreparo());
-        refeicaoExibitionDto.setMidia(toMidiaDto(entity.getMidiaId()));
-        return refeicaoExibitionDto;
-    }
+//    public static RefeicaoExibitionDto toDto (Refeicao entity) {
+//        RefeicaoExibitionDto refeicaoExibitionDto = new RefeicaoExibitionDto();
+//        refeicaoExibitionDto.setIdRefeicao(entity.getIdRefeicao());
+//        refeicaoExibitionDto.setNome(entity.getNome());
+//        refeicaoExibitionDto.setPreparo(entity.getPreparo());
+//        refeicaoExibitionDto.setMidia(toMidiaDto(entity.getMidiaId()));
+//        return refeicaoExibitionDto;
+//    }
 
     public static RefeicaoExibition toDTO (Refeicao entity) {
         RefeicaoExibition refeicaoExibition = new RefeicaoExibition();
@@ -35,20 +35,22 @@ public class RefeicaoMapper {
         return entity.stream().map(RefeicaoMapper::toDTO).toList();
     }
 
-    public static RefeicaoExibitionDto.MidiaDto toMidiaDto (Midia midia) {
-        if (midia == null) return null;
-        RefeicaoExibitionDto.MidiaDto midiaDto = new RefeicaoExibitionDto.MidiaDto();
-        midiaDto.setId(midia.getIdMidia());
-        midiaDto.setNome(midia.getNome());
-        midiaDto.setCaminho(midia.getCaminho());
-        midiaDto.setExtensao(midia.getExtensao());
-        return midiaDto;
+    public static List<RefeicaoExibition.MidiaDto> toMidiaDto (List<Midia> midias) {
+        return midias.stream().map(mi ->{
+            RefeicaoExibition.MidiaDto midiaDto = new RefeicaoExibition.MidiaDto();
+            midiaDto.setIdMidia(mi.getIdMidia());
+            midiaDto.setNome(mi.getNome());
+            midiaDto.setTipo(mi.getTipo());
+            midiaDto.setExtensao(mi.getExtensao());
+            midiaDto.setCaminho(mi.getCaminho());
+            return midiaDto;
+        }).toList();
     }
 
     public static List<RefeicaoExibition.AlimentoPorRefeicaoDto> alimentoPorRefeicaoDto(List<AlimentoPorRefeicao> alimentoPorRefeicao){
         return alimentoPorRefeicao.stream().map(ar -> {
             RefeicaoExibition.AlimentoPorRefeicaoDto alimentoPorRefeicaoDto = new RefeicaoExibition.AlimentoPorRefeicaoDto();
-            alimentoPorRefeicaoDto.setAlimento(ar.getAlimentoId());
+            alimentoPorRefeicaoDto.setAlimento(alimentoDto(ar.getAlimentoId()));
             alimentoPorRefeicaoDto.setIdAlimentoRefeicao(ar.getIdAlimentoRefeicao());
             alimentoPorRefeicaoDto.setMetrica(ar.getMetricaId());
             alimentoPorRefeicaoDto.setQtdAlimento(ar.getQtdAlimento());
@@ -56,10 +58,20 @@ public class RefeicaoMapper {
         }).toList();
     }
 
+    public static RefeicaoExibition.AlimentoDto alimentoDto(Alimento alimentos){
 
+            RefeicaoExibition.AlimentoDto alimentoDto = new RefeicaoExibition.AlimentoDto();
+            alimentoDto.setId(alimentos.getIdAlimento());
+            alimentoDto.setGordura(alimentos.getGordura());
+            alimentoDto.setCarboidrato(alimentos.getCarboidrato());
+            alimentoDto.setProteina(alimentos.getProteina());
+            alimentoDto.setNome(alimentos.getNome());
+            alimentoDto.setMidia(toMidiaDto(alimentos.getMidiaId()));
+            return alimentoDto;
+    }
 
     // Controller /refeicoes/por-semana/{idRotinaSemanal}
-    public static RefeicaoExibitionSemanalDto toRefeicaoExibitionSemanalDto (Refeicao ref, RotinaDiaria rd, RefeicaoDiaria refd, Midia midia) {
+    public static RefeicaoExibitionSemanalDto toRefeicaoExibitionSemanalDto (Refeicao ref, RotinaDiaria rd, RefeicaoDiaria refd, List<Midia> midia) {
         if (ref == null || rd == null || refd == null) return null;
 
         RefeicaoExibitionSemanalDto refeicaoSemanalDto = new RefeicaoExibitionSemanalDto();
@@ -81,13 +93,15 @@ public class RefeicaoMapper {
         return rd;
     }
 
-    public static RefeicaoExibitionSemanalDto.MidiaDto toSemanalMidiaDto (Midia midia) {
-        if (midia == null) return null;
-        RefeicaoExibitionSemanalDto.MidiaDto midiaDto = new RefeicaoExibitionSemanalDto.MidiaDto();
-        midiaDto.setId(midia.getIdMidia());
-        midiaDto.setNome(midia.getNome());
-        midiaDto.setCaminho(midia.getCaminho());
-        midiaDto.setExtensao(midia.getExtensao());
-        return midiaDto;
+    public static List<RefeicaoExibitionSemanalDto.MidiaDto> toSemanalMidiaDto (List<Midia> midias) {
+        return midias.stream().map(mi ->{
+            RefeicaoExibitionSemanalDto.MidiaDto midiaDto = new RefeicaoExibitionSemanalDto.MidiaDto();
+            midiaDto.setId(mi.getIdMidia());
+            midiaDto.setNome(mi.getNome());
+            midiaDto.setTipo(mi.getTipo());
+            midiaDto.setExtensao(mi.getExtensao());
+            midiaDto.setCaminho(mi.getCaminho());
+            return midiaDto;
+        }).toList();
     }
 }

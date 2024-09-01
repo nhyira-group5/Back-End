@@ -1,10 +1,8 @@
 package API.nhyira.apivitalis.Controller;
 
-import API.nhyira.apivitalis.DTO.Exercicio.ExercicioCreateEditDto;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibitionDto;
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioMapper;
-import API.nhyira.apivitalis.DTO.Treino.TreinoMapper;
 import API.nhyira.apivitalis.Entity.Exercicio;
 import API.nhyira.apivitalis.Service.ExercicioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,8 @@ public class ExercicioController {
     private ExercicioService exercicioService;
 
     @GetMapping
-    public ResponseEntity<List<ExercicioExibitionDto>> getAllExercicios() {
-        return ResponseEntity.ok(exercicioService.getAllExercicios());
+    public ResponseEntity<List<ExercicioExibition>> getAllExercicios() {
+        return ResponseEntity.ok(ExercicioMapper.toDto(exercicioService.getAllExercicios()));
     }
 
 

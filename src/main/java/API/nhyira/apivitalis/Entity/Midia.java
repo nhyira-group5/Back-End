@@ -14,10 +14,6 @@ public class Midia {
     private Integer idMidia;
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuarioId;
-
-    @ManyToOne
     @JoinColumn(name = "alimento_id")
     private Alimento alimentoId;
 

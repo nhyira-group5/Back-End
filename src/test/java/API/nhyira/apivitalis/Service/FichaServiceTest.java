@@ -272,9 +272,4 @@ class FichaServiceTest {
         verify(usuarioRepository, times(0)).findAll();
 
     }
-
-
-
-
-
 }

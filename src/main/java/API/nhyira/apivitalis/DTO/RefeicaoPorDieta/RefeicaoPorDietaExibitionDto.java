@@ -4,6 +4,8 @@ import API.nhyira.apivitalis.Entity.Meta;
 import API.nhyira.apivitalis.Entity.Midia;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class RefeicaoPorDietaExibitionDto {
     private Integer idRefeicaoDieta;
@@ -15,7 +17,7 @@ public class RefeicaoPorDietaExibitionDto {
         private Integer id;
         private String nome;
         private String preparo;
-        private Midia midia;
+        private List<Midia> midia;
     }
 
     @Data

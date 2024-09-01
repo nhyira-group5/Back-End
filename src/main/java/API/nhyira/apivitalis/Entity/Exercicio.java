@@ -17,9 +17,8 @@ public class Exercicio {
     private Integer idExercicio;
 
 
-    @ManyToOne
-    @JoinColumn (name = "midia_id")
-    private Midia midia;
+    @OneToMany(mappedBy = "exercicioId")
+    private List<Midia> midia;
 
     private String nome;
 

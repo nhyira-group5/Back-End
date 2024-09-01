@@ -55,10 +55,14 @@ public class ExercicioService {
     }
 
 
-    public List<ExercicioExibitionDto> getAllExercicios() {
-        return exercicioRepository.findAll().stream()
-                .map(exercicioMapper::toDTO)
-                .collect(Collectors.toList());
+//    public List<ExercicioExibition> getAllExercicios() {
+//        return exercicioRepository.findAll().stream()
+//                .map(exercicioMapper::toDto)
+//                .collect(Collectors.toList());
+//    }
+
+    public List<Exercicio> getAllExercicios(){
+        return exercicioRepository.findAll();
     }
 
     public ExercicioExibition getExercicioById(Integer id) {

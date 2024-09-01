@@ -65,7 +65,7 @@ public class UsuarioMapper {
     }
 
     public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity, boolean pagAtivo) {
-        if (entity != null) return null;
+        if (entity == null) return null;
         UsuarioExibitionDto user = new UsuarioExibitionDto();
 
         user.setId(entity.getIdUsuario());
@@ -120,6 +120,7 @@ public class UsuarioMapper {
 
     public static Usuario of(UsuarioCreateEditDto usuarioCriacaoDto) {
         Usuario usuario = new Usuario();
+
         usuario.setNickname(usuarioCriacaoDto.getNickname());
         usuario.setCpf(usuarioCriacaoDto.getCpf());
         usuario.setSenha(usuarioCriacaoDto.getSenha());
@@ -140,6 +141,7 @@ public class UsuarioMapper {
         usuario.setNickname(user.getNickname());
         usuario.setTipo(user.getTipo());
         usuario.setToken(token);
+
         return usuario;
     }
 
@@ -147,6 +149,7 @@ public class UsuarioMapper {
         if (usuario == null) return null;
 
         UsuarioDto usuarioDto = new UsuarioDto();
+
         usuarioDto.setIdUsuario(usuario.getIdUsuario());
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setSexo(usuario.getSexo());
@@ -218,7 +221,6 @@ public class UsuarioMapper {
         return midiaDto;
     }
 
-
     public static UsuarioExibitionDto.MetaDto toMetaDto(Meta meta) {
         if (meta == null) return null;
 
@@ -227,6 +229,4 @@ public class UsuarioMapper {
         metaDto.setNome(meta.getNome());
         return metaDto;
     }
-
-
 }

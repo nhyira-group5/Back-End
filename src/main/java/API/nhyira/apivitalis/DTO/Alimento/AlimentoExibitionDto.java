@@ -2,6 +2,8 @@ package API.nhyira.apivitalis.DTO.Alimento;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class AlimentoExibitionDto {
     private Integer idAlimento;
@@ -9,7 +11,7 @@ public class AlimentoExibitionDto {
     private Double carboidrato;
     private Double proteina;
     private Double gordura;
-    private MidiaDto midia;
+    private List<MidiaDto> midia;
 
     @Data
     public static class MidiaDto {
@@ -17,5 +19,6 @@ public class AlimentoExibitionDto {
         private String nome;
         private String caminho;
         private String extensao;
+        private String tipo;
     }
 }

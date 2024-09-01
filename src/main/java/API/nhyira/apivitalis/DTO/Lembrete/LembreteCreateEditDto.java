@@ -10,6 +10,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class LembreteCreateEditDto {
@@ -18,7 +19,7 @@ public class LembreteCreateEditDto {
     private String conteudo;
 
     @NotNull
-    private LocalDateTime dataLembrete;
+    private Date dataLembrete;
 
     @NotNull
     private Integer usuarioId;

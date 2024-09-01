@@ -9,12 +9,10 @@ import API.nhyira.apivitalis.Repository.MuralRepository;
 import API.nhyira.apivitalis.Repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.data.aot.ManagedTypesBeanRegistrationAotProcessor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

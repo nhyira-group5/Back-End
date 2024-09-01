@@ -18,9 +18,8 @@ public class Refeicao {
     private String nome;
     private String preparo;
 
-    @ManyToOne
-    @JoinColumn(name = "midiaId")
-    private Midia midiaId;
+    @OneToMany(mappedBy = "refeicaoId")
+    private List<Midia> midiaId;
 
 
     @OneToMany(mappedBy = "refeicaoId")

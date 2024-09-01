@@ -1,5 +1,6 @@
 package API.nhyira.apivitalis.Entity;
 
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,5 @@ public class Mural {
     private Midia midiaId;
 
     private LocalDate dtPostagem;
+
 }
