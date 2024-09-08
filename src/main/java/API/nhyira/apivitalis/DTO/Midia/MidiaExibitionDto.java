@@ -8,4 +8,5 @@ public class MidiaExibitionDto {
     private String nome;
     private String caminho;
     private String extensao;
+    private String tipo;
 }

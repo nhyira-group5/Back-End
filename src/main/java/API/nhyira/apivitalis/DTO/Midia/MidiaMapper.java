@@ -10,6 +10,7 @@ public class MidiaMapper {
         dto.setNome(midia.getNome());
         dto.setCaminho(midia.getCaminho());
         dto.setExtensao(midia.getExtensao());
+        dto.setTipo(midia.getTipo());
         return dto;
     }
 
@@ -18,6 +19,7 @@ public class MidiaMapper {
         midia.setNome(midiaDTO.getNome());
         midia.setCaminho(midiaDTO.getCaminho());
         midia.setExtensao(midiaDTO.getExtensao());
+        midia.setTipo(midiaDTO.getTipo());
         return midia;
     }
 }

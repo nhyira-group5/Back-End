@@ -19,4 +19,6 @@ public class MidiaCreateEditDto {
     @NotNull
     @Size(max = 10)
     private String extensao;
+
+    private String tipo;
 }
