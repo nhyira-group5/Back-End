@@ -48,7 +48,7 @@ public class MuralMapper {
         midiaDto.setId(midia.getIdMidia());
         midiaDto.setNome(midia.getNome());
         midiaDto.setCaminho(midia.getCaminho());
-        midiaDto.setCaminho(midia.getExtensao());
+        midiaDto.setExtensao(midia.getExtensao());
         midiaDto.setTipo(midia.getTipo());
         return midiaDto;
     }
