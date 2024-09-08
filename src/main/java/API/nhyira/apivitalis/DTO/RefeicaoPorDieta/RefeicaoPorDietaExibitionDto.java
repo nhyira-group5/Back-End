@@ -14,7 +14,7 @@ public class RefeicaoPorDietaExibitionDto {
 
     @Data
     public static class RefeicaoDto {
-        private Integer id;
+        private Integer idRefeicao;
         private String nome;
         private String preparo;
         private List<Midia> midia;

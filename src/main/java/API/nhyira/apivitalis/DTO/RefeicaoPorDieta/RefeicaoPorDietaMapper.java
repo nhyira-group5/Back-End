@@ -29,7 +29,7 @@ public class RefeicaoPorDietaMapper {
     public static RefeicaoPorDietaExibitionDto.RefeicaoDto toRefeicaoDto(Refeicao entity) {
         if (entity == null) return null;
         RefeicaoPorDietaExibitionDto.RefeicaoDto refeicaoDto = new RefeicaoPorDietaExibitionDto.RefeicaoDto();
-        refeicaoDto.setId(entity.getIdRefeicao());
+        refeicaoDto.setIdRefeicao(entity.getIdRefeicao());
         refeicaoDto.setNome(entity.getNome());
         refeicaoDto.setPreparo(entity.getPreparo());
         refeicaoDto.setMidia(entity.getMidiaId());
