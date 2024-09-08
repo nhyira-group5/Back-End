@@ -36,11 +36,6 @@ public class TreinoMapper {
         exercicioDto.setNome(exercicio.getNome());
         exercicioDto.setDescricao(exercicio.getDescricao());
         exercicioDto.setTagExercicioDtos(tagExibitionDto(exercicio.getTagExercicios()));
-//        Midia midia = exercicio.getMidia();
-//        exercicioDto.setIdMidia(midia.getIdMidia());
-//        exercicioDto.setMidiaNome(midia.getNome());
-//        exercicioDto.setMidiaCaminho(midia.getCaminho());
-//        exercicioDto.setMidiaExtensao(midia.getExtensao());
         return exercicioDto;
     }
 
@@ -92,7 +87,7 @@ public class TreinoMapper {
         treinoSemanalDto.setRepeticao(treino.getRepeticao());
         treinoSemanalDto.setConcluido(treino.getConcluido());
         treinoSemanalDto.setRotinaDiaria(toRotinaDiaria(rd));
-//        treinoSemanalDto.setMidia(toSemanalMidiaDto(midia));
+        treinoSemanalDto.setMidia(toSemanalMidiaDto(ex.getMidia()));
         return treinoSemanalDto;
     }
 
@@ -105,13 +100,14 @@ public class TreinoMapper {
         return rd;
     }
 
-    public static TreinoExibitionSemanalDto.MidiaDto toSemanalMidiaDto (Midia midia) {
-        if (midia == null) return null;
-        TreinoExibitionSemanalDto.MidiaDto midiaDto = new TreinoExibitionSemanalDto.MidiaDto();
-        midiaDto.setId(midia.getIdMidia());
-        midiaDto.setNome(midia.getNome());
-        midiaDto.setCaminho(midia.getCaminho());
-        midiaDto.setExtensao(midia.getExtensao());
-        return midiaDto;
+    public static List<TreinoExibitionSemanalDto.MidiaDto> toSemanalMidiaDto (List<Midia> midia) {
+        return midia.stream().map(mi ->{
+            TreinoExibitionSemanalDto.MidiaDto midiaDto = new TreinoExibitionSemanalDto.MidiaDto();
+            midiaDto.setId(mi.getIdMidia());
+            midiaDto.setNome(mi.getNome());
+            midiaDto.setCaminho(mi.getCaminho());
+            midiaDto.setExtensao(mi.getExtensao());
+            return midiaDto;
+        }).toList();
     }
 }

@@ -3,6 +3,7 @@ package API.nhyira.apivitalis.DTO.Treino;
 import lombok.Data;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 public class TreinoExibitionSemanalDto {
@@ -15,7 +16,7 @@ public class TreinoExibitionSemanalDto {
     private Integer repeticao;
     private Integer concluido;
     private RotinaDiariaDto rotinaDiaria;
-    private MidiaDto midia;
+    private List<MidiaDto> midia;
 
     @Data
     public static class MidiaDto {

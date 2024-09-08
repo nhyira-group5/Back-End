@@ -31,7 +31,7 @@ public class ContratoService {
     private final ChatService chatService;
 
     public Contrato create(Contrato contrato, int id, int idPersonal){
-        ChatCreateEditDto chatCreateEditDto = new ChatCreateEditDto();
+
 
         Optional<Usuario> optUsuario = usuarioRepository.findById(id);
         optUsuario.orElseThrow(() -> new NaoEncontradoException("Usuario"));
@@ -46,8 +46,6 @@ public class ContratoService {
         contrato.setPersonalId(optPersonal.get());
         contrato.setAfiliacao(0);
 
-        chatCreateEditDto.setAtivo(false);
-        chatService.saveChat(chatCreateEditDto ,optUsuario.get(), optPersonal.get());
 
         Contrato contratoSalvo = contratoRepository.save(contrato);
         return contratoSalvo;
@@ -67,12 +65,18 @@ public class ContratoService {
     }
 
     public Contrato updtUser(int id, ContratoEditDto contrato){
+        ChatCreateEditDto chatCreateEditDto = new ChatCreateEditDto();
+
         Optional<Contrato> optContrato = contratoRepository.findById(id);
         optContrato.orElseThrow(() -> new NaoEncontradoException("Contrato"));
         Contrato contratoUpd = ContratoMapper.toEdit(optContrato.get(), contrato);
         contratoUpd.setAfiliacao(contrato.getAfiliado());
         contratoRepository.save(contratoUpd);
         usuarioService.afiliacao(contratoUpd.getUsuarioId(), contratoUpd.getPersonalId());
+
+        chatCreateEditDto.setAtivo(false);
+        chatService.saveChat(chatCreateEditDto ,optContrato.get().getUsuarioId(), optContrato.get().getPersonalId());
+
         return optContrato.get();
     }
 
