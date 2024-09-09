@@ -27,13 +27,9 @@ public class PagamentoController {
                     .body(Map.of("error", "Erro ao criar o pagamento: " + e.getMessage()));
         }
     }
-    @GetMapping("/buscar")
-    public ResponseEntity<Map<String, Object>> buscarPagamentos(
-            @RequestParam Optional<String> status,
-            @RequestParam Optional<String> sort,
-            @RequestParam Optional<String> criteria) {
-        return mercadoPagoService.buscarPagamentos(status, sort, criteria);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> buscarPagamentoPorId(@PathVariable String id) {
+        return mercadoPagoService.buscarPagamentoPorId(id);
     }
-
-
 }

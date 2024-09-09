@@ -48,60 +48,44 @@ public class MercadoPagoService {
     private String accessToken;
 
 
-    public ResponseEntity<Map<String, Object>> buscarPagamentos(Optional<String> status, Optional<String> sort, Optional<String> criteria) {
-        String url = "https://api.mercadopago.com/v1/payments/search";
+    public ResponseEntity<Map<String, Object>> buscarPagamentoPorId(String paymentId) {
+        String url = "https://api.mercadopago.com/v1/payments/" + paymentId;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
-
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
-        status.ifPresent(s -> uriBuilder.queryParam("status", s));
-        sort.ifPresent(s -> uriBuilder.queryParam("sort", s));
-        criteria.ifPresent(c -> uriBuilder.queryParam("criteria", c));
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(uriBuilder.toUriString(), HttpMethod.GET, entity, new ParameterizedTypeReference<Map<String, Object>>() {});
+            ResponseEntity<Map<String, Object>> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<Map<String, Object>>() {});
             Map<String, Object> responseBody = response.getBody();
 
-            if (responseBody != null && responseBody.containsKey("results")) {
-                List<Map<String, Object>> results = (List<Map<String, Object>>) responseBody.get("results");
-                List<Map<String, Object>> filteredResults = new ArrayList<>();
+            if (responseBody != null) {
+                Map<String, Object> filteredResult = new HashMap<>();
+                filteredResult.put("id", responseBody.get("id"));
+                filteredResult.put("transaction_amount", responseBody.get("transaction_amount"));
+                filteredResult.put("description", responseBody.get("description"));
+                filteredResult.put("date_created", responseBody.get("date_created"));
+                filteredResult.put("payment_method_id", responseBody.get("payment_method_id"));
+                filteredResult.put("payment_type_id", responseBody.get("payment_type_id"));
+                filteredResult.put("status", responseBody.get("status"));
+                filteredResult.put("currency_id", responseBody.get("currency_id"));
 
-                for (Map<String, Object> result : results) {
-                    Map<String, Object> filteredResult = new HashMap<>();
-                    filteredResult.put("id", result.get("id"));
-                    filteredResult.put("transaction_amount", result.get("transaction_amount"));
-                    filteredResult.put("description", result.get("description"));
-                    filteredResult.put("date_created", result.get("date_created"));
-                    filteredResult.put("payment_method_id", result.get("payment_method_id"));
-                    filteredResult.put("payment_type_id", result.get("payment_type_id"));
-                    filteredResult.put("status", result.get("status"));
-                    filteredResult.put("currency_id", result.get("currency_id"));
-
-
-                    filteredResults.add(filteredResult);
-                }
-
-                Map<String, Object> filteredResponse = new HashMap<>();
-                filteredResponse.put("results", filteredResults);
-                filteredResponse.put("paging", responseBody.get("paging"));
-
-                return ResponseEntity.ok(filteredResponse);
+                return ResponseEntity.ok(filteredResult);
             } else {
-                return ResponseEntity.ok(Collections.emptyMap());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Pagamento não encontrado"));
             }
         } catch (HttpClientErrorException e) {
-            logger.error("Erro ao buscar pagamentos: " + e.getResponseBodyAsString(), e);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar pagamentos", e);
+            logger.error("Erro ao buscar pagamento: " + e.getResponseBodyAsString(), e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Erro ao buscar pagamento", e);
         } catch (Exception e) {
-            logger.error("Erro ao buscar pagamentos: ", e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno ao buscar pagamentos", e);
+            logger.error("Erro ao buscar pagamento: ", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno ao buscar pagamento", e);
         }
     }
+
 
 
 
