@@ -1,11 +1,13 @@
 package API.nhyira.apivitalis.DTO.Refeicao;
 
+import API.nhyira.apivitalis.DTO.RotinaDiaria.RotinaDiariaExibitionDto;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
 public class RefeicaoExibitionSemanalDto {
+    private int idRefeicaoDiaria;
     private Integer idRefeicao;
     private String nome;
     private String preparo;
@@ -24,7 +26,9 @@ public class RefeicaoExibitionSemanalDto {
 
     @Data
     public static class RotinaDiariaDto {
-        private Integer id;
+        private Integer idRotinaDiaria;
         private Integer dia;
     }
+
+
 }

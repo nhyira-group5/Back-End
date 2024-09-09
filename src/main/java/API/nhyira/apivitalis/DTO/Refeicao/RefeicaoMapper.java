@@ -71,10 +71,11 @@ public class RefeicaoMapper {
     }
 
     // Controller /refeicoes/por-semana/{idRotinaSemanal}
-    public static RefeicaoExibitionSemanalDto toRefeicaoExibitionSemanalDto (Refeicao ref, RotinaDiaria rd, RefeicaoDiaria refd, List<Midia> midia) {
+    public static RefeicaoExibitionSemanalDto toRefeicaoExibitionSemanalDto (Refeicao ref, RotinaDiaria rd, RefeicaoDiaria refd, List<Midia> midia, int idRefeicaoDiaria) {
         if (ref == null || rd == null || refd == null) return null;
 
         RefeicaoExibitionSemanalDto refeicaoSemanalDto = new RefeicaoExibitionSemanalDto();
+        refeicaoSemanalDto.setIdRefeicaoDiaria(idRefeicaoDiaria);
         refeicaoSemanalDto.setIdRefeicao(ref.getIdRefeicao());
         refeicaoSemanalDto.setNome(ref.getNome());
         refeicaoSemanalDto.setPreparo(ref.getPreparo());
@@ -86,9 +87,8 @@ public class RefeicaoMapper {
 
     public static RefeicaoExibitionSemanalDto.RotinaDiariaDto toRotinaDiaria (RotinaDiaria refeicaoDiaria) {
         if (refeicaoDiaria == null) return null;
-
         RefeicaoExibitionSemanalDto.RotinaDiariaDto rd = new RefeicaoExibitionSemanalDto.RotinaDiariaDto();
-        rd.setId(refeicaoDiaria.getIdRotinaDiaria());
+        rd.setIdRotinaDiaria(refeicaoDiaria.getIdRotinaDiaria());
         rd.setDia(refeicaoDiaria.getDia());
         return rd;
     }

@@ -91,7 +91,7 @@ public class RefeicaoController {
             for (RefeicaoDiaria refd : refeicoesDiarias) {
                 Refeicao ref = refd.getRefeicaoId();
                 List<Midia> midia = ref.getMidiaId();
-                dtoList.add(RefeicaoMapper.toRefeicaoExibitionSemanalDto(ref, rd, refd, midia));
+                dtoList.add(RefeicaoMapper.toRefeicaoExibitionSemanalDto(ref, rd, refd, midia, refd.getIdRefeicaoDiaria()));
             }
         }
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
