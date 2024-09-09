@@ -1,6 +1,7 @@
 package API.nhyira.apivitalis.DTO.Treino;
 
 import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
+import API.nhyira.apivitalis.DTO.Midia.MidiaExibitionDto;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionSemanalDto;
 import API.nhyira.apivitalis.DTO.RotinaSemanal.RotinaSemanalExibitionDto;
 import API.nhyira.apivitalis.Entity.*;
@@ -36,7 +37,20 @@ public class TreinoMapper {
         exercicioDto.setNome(exercicio.getNome());
         exercicioDto.setDescricao(exercicio.getDescricao());
         exercicioDto.setTagExercicioDtos(tagExibitionDto(exercicio.getTagExercicios()));
+        exercicioDto.setIdMidia(midiaExibitionDto(exercicio.getMidia()));
         return exercicioDto;
+    }
+
+    public static List<ExercicioExibition.MidiaExibitionDto> midiaExibitionDto(List<Midia> midiaExibitionDtos){
+        return midiaExibitionDtos.stream().map(md -> {
+            ExercicioExibition.MidiaExibitionDto midiaExibitionDto = new ExercicioExibition.MidiaExibitionDto();
+            midiaExibitionDto.setIdMidia(md.getIdMidia());
+            midiaExibitionDto.setNome(md.getNome());
+            midiaExibitionDto.setTipo(md.getTipo());
+            midiaExibitionDto.setCaminho(md.getCaminho());
+            midiaExibitionDto.setExtensao(md.getExtensao());
+            return midiaExibitionDto;
+        }).toList();
     }
 
     public static List<ExercicioExibition.TagExibitionDto> tagExibitionDto(List<TagExercicio> tagExercicioList){

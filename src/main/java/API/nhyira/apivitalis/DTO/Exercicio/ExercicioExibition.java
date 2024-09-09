@@ -27,6 +27,7 @@ public class ExercicioExibition {
 
     @Data
     public static class MidiaExibitionDto{
+        private int idMidia;
         private String nome;
         private String caminho;
         private String extensao;
