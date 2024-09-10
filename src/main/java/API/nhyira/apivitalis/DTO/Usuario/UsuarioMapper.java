@@ -2,6 +2,7 @@ package API.nhyira.apivitalis.DTO.Usuario;
 
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
 import API.nhyira.apivitalis.DTO.Especialidade.EspecialidadeExibitionDto;
+import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionDto;
 import API.nhyira.apivitalis.Entity.*;
 
@@ -37,7 +38,7 @@ public class UsuarioMapper {
         user.setDtNasc(entity.getDtNasc());
         user.setTipo(entity.getTipo());
         user.setPontos(entity.getPontos());
-        user.setMidia(entity.getMidiaId());
+        user.setMidia(midiaExibitionDto(entity.getMidiaId()));
         user.setPersonalId(usuarioDto(entity.getPersonalId()));
         user.setAcademiaId(endercoDto(entity.getEnderecoId()));
         return user;
@@ -56,11 +57,23 @@ public class UsuarioMapper {
         user.setDtNasc(entity.getDtNasc());
         user.setTipo(entity.getTipo());
         user.setPontos(entity.getPontos());
-        user.setMidia(entity.getMidiaId());
+        user.setMidia(midiaExibitionDto(entity.getMidiaId()));
         user.setPersonalId(usuarioDto(entity.getPersonalId()));
         user.setAcademiaId(endercoDto(entity.getEnderecoId()));
         user.setMeta(toMetaDto(metaEntity));
         return user;
+    }
+
+
+    public static UsuarioExibitionDto.MidiaDto midiaExibitionDto(Midia md){
+            if (md == null)return null;
+            UsuarioExibitionDto.MidiaDto midiaExibitionDto = new UsuarioExibitionDto.MidiaDto();
+            midiaExibitionDto.setIdMidia(md.getIdMidia());
+            midiaExibitionDto.setNome(md.getNome());
+            midiaExibitionDto.setTipo(md.getTipo());
+            midiaExibitionDto.setCaminho(md.getCaminho());
+            midiaExibitionDto.setExtensao(md.getExtensao());
+            return midiaExibitionDto;
     }
 
     public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity, boolean pagAtivo) {
@@ -76,7 +89,7 @@ public class UsuarioMapper {
         user.setDtNasc(entity.getDtNasc());
         user.setTipo(entity.getTipo());
         user.setPontos(entity.getPontos());
-        user.setMidia(entity.getMidiaId());
+        user.setMidia(midiaExibitionDto(entity.getMidiaId()));
         user.setPersonalId(usuarioDto(entity.getPersonalId()));
         user.setAcademiaId(endercoDto(entity.getEnderecoId()));
         user.setMeta(toMetaDto(metaEntity));

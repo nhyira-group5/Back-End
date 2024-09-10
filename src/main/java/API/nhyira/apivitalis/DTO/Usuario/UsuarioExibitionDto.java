@@ -16,7 +16,7 @@ public class UsuarioExibitionDto {
     private String sexo;
     private String email;
     private Integer pontos;
-    private Midia midia;
+    private MidiaDto midia;
     private Usuario.TipoUsuario tipo; // Alterado para String
     private UsuarioDto personalId;
     private EnderecoDto academiaId;
@@ -39,5 +39,14 @@ public class UsuarioExibitionDto {
     public static class MetaDto {
         private Integer id;
         private String nome;
+    }
+
+    @Data
+    public static class MidiaDto{
+        private int idMidia;
+        private String nome;
+        private String caminho;
+        private String extensao;
+        private String tipo;
     }
 }
