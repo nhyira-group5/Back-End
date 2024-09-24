@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  nhyira-backend:
+    build: .
+    ports:
+      - "5225:8080"
+    environment:
+      SPRING_APPLICATION_NAME: api-vitalis
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://projeto-vitalis.database.windows.net:1433;database=Vitalis;user=projeto-vitalis@projeto-vitalis;password=nhyira@123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+      SPRING_DATASOURCE_USERNAME: projeto-vitalis@projeto-vitalis
+      SPRING_DATASOURCE_PASSWORD: nhyira@123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.SQLServerDialect
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_MAIL_USERNAME: contato.nhyira@gmail.com
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: true
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_PASSWORD: disfbjxxqtxffujb
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: true
+      SPRING_MAIL_PROPERTIES_MAIL_TRANSPORT_PROTOCOL: smtp
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: true
+      JWT_EXPIRATION: 3600000
+      JWT_SECRET: RXhpc3RlIHVtYSB0ZW9yaWEgcXVlIGRpeiBxdWUsIHNlIHVtIGRpYSBhbGd16W0gZGVzY29icmlyIGV4YXRhbWVudGUgcGFyYSBxdWUgc2VydmUgbyBVbml2ZXJzbyBlIHBvciBxdWUgZWxlIGVzdOEgYXF1aSwgZWxlIGRlc2FwYXJlY2Vy4SBpbnN0YW50YW5lYW1lbnRlIGUgc2Vy4SBzdWJzdGl0de1kbyBwb3IgYWxnbyBhaW5kYSBtYWlzIGVzdHJhbmhvIGUgaW5leHBsaWPhdmVsLiBFeGlzdGUgdW1hIHNlZ3VuZGEgdGVvcmlhIHF1ZSBkaXogcXVlIGlzc28gauEgYWNvbnRlY2V1Li4u
+      MERCADO_PAGO_ACCESS_TOKEN: APP_USR-824007135770533-052015-ba3b308de0439bc6e6ad15c2c6152ca6-1722687388
+      CLOUDINARY_CLOUD_NAME: vitalis
+      CLOUDINARY_API_KEY: 679425973318895
+      CLOUDINARY_API_SECRET: R-uaJBcdZUfUGu5TuYmiHodqBl4
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 200MB
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: 200MB
+    networks:
+      - nhyira
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: nhyira@123  # Senha do SQL Server  
+      MSSQL_PID: Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./data:/var/opt/mssql
+    networks:
+      - nhyira
+
+networks:
+  nhyira:
+    driver: bridge
