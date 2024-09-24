@@ -1,4 +1,4 @@
-✨ Pull Request - Detalhes
+i✨ Pull Request - Detalhes
 
 📋 Descrição
 <!-- Descreva com clareza e precisão as alterações feitas. O que motivou a mudança? Qual problema ou necessidade está sendo resolvido? -->

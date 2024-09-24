@@ -27,25 +27,25 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package
-        working-directory: ./src
+        working-directory: ./  # Mudado para a raiz do projeto
 
       - name: Run Unit Tests
         run: mvn test
-        working-directory: ./src
+        working-directory: ./  # Mudado para a raiz do projeto
 
       - name: Run Integration Tests
         run: mvn verify
-        working-directory: ./src
+        working-directory: ./  # Mudado para a raiz do projeto
 
       - name: Check Code Coverage
         run: mvn jacoco:report
-        working-directory: ./src
+        working-directory: ./  # Mudado para a raiz do projeto
 
       - name: List files for debugging
-        run: ls -la src/target
+        run: ls -la target  # Mudado para listar arquivos na pasta target da raiz
 
       - name: Verify JAR File
-        run: ls -la ./src/target/
+        run: ls -la ./target/  # Mudado para listar arquivos na pasta target da raiz
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
