@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: API.nhyira.apivitalis.Controller.MidiaControllerTest
--------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 61.72 s -- in API.nhyira.apivitalis.Controller.MidiaControllerTest
