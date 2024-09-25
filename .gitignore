@@ -1,5 +1,10 @@
 .vscode/settings.json
 .vscode/launch.json
+# Ignorar o application.properties no diretório target/classes
+target/classes/application.properties
+
+# Ignorar o application.properties no diretório src/main/resources
+src/main/resources/application.properties
 
 usuarios.csv
 vitalisDB - mySql.session.sql
