@@ -25,20 +25,20 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: src/infraNhyira
+        working-directory: ./src/infraNhyira/moduleEc2
 
       - name: Terraform Plan Destroy
         run: terraform plan -destroy -out=tfplan
-        working-directory: src/infraNhyira
+        working-directory: ./src/infraNhyira/moduleEc2
 
       - name: Verify Plan
         run: terraform show tfplan
-        working-directory: src/infraNhyira
+        working-directory: ./src/infraNhyira/moduleEc2
 
       - name: Terraform Apply Destroy
         run: terraform apply -auto-approve tfplan
-        working-directory: src/infraNhyira
+        working-directory: ./src/infraNhyira/moduleEc2
 
       - name: Verify Destruction
         run: terraform show
-        working-directory: src/infraNhyira
+        working-directory: ./src/infraNhyira/moduleEc2
