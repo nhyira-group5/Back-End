@@ -13,8 +13,10 @@ variable "key_pair_name" {
 variable "ami" {
   description = "AMI ID"
   type        = string
-  default     = "ami-0cc52c2dfd2d4e0cc"  # Substitua pelo ID da AMI desejada
+  default     = "ami-08c6a39626fa63ad7"  # O ID da AMI 
+
 }
+
 
 variable "inst_type" {
   description = "Instance Type"
