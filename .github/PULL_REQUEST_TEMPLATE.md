@@ -25,7 +25,7 @@ Escolha o tipo de mudança para este PR:
 
 
 
-🛠 Como Testar o código
+🛠 Como Testar o código commitado
 <!-- Detalhe os passos para garantir que suas mudanças funcionam como esperado. Certifique-se de que seja fácil reproduzir. -->
 Passo 1:
 
