@@ -45,7 +45,8 @@ jobs:
       - name: Notify on PR
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body "New Pull Request opened! @team-name"  # Mencione a equipe aqui
+          gh pr comment ${{ github.event.pull_request.number }} --body "New Pull Request opened! @team-name" 
+          # Mencione a equipe aqui
 
       - name: Notify Success
         if: success()
