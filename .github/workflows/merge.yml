@@ -1,36 +1,46 @@
-name: Merge Workflow
+name: Developer Pull Request
 
 on:
-  pull_request:
-    branches:
-      - main  # Aciona quando uma PR é aberta para a branch main
   push:
     branches:
-      - main  # Aciona quando há um push na branch main
+      - Developer  # Aciona quando houver um push na branch dev
 
 jobs:
-  merge:
+  suggest_pr:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Git
+      - name: Install GitHub CLI
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          sudo apt-get install gh
 
-      - name: Merge Dev into Main
+      - name: Authenticate with GitHub CLI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Starting merge process..."
-          git fetch origin
-          git checkout main
-          git pull origin main
-          git merge origin/dev || echo "Merge conflict detected. Please resolve conflicts manually."
-          git push origin main
+          echo "${GITHUB_TOKEN}" | gh auth login --with-token
 
-      - name: Notify Success
-        if: success()  # Notifica se a mesclagem foi bem-sucedida
+      - name: Check for existing pull requests
+        id: check_pr
         run: |
-          echo "Merge completed successfully!"
+          if gh pr list --state open --base main | grep "Developer"; then
+            echo "A pull request from Developer to main already exists."
+            echo "::set-output name=pr_exists::true"
+          else
+            echo "::set-output name=pr_exists::false"
+          fi
+
+      - name: Create Pull Request
+        if: steps.check_pr.outputs.pr_exists == 'false'
+        run: |
+          gh pr create --base main --head dev --title "Merge changes from dev to main" --body "This PR merges the latest changes from dev into main." --label "auto-merge"
+
+      - name: Comment on existing PR
+        if: steps.check_pr.outputs.pr_exists == 'true'
+        run: |
+          echo "Commenting on existing pull request..."
+          pr_number=$(gh pr list --state open --base main --json number --jq '.[0].number')
+          gh pr comment $pr_number --body "A new push was made to the dev branch. Please review the changes!"
