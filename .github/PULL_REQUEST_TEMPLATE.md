@@ -48,14 +48,3 @@ Todos os testes estão passando.
 O código foi revisado internamente e está devidamente comentado.
 
 
-❓ Questões para Consideração
-<!-- Alguma questão ou dúvida que você gostaria de discutir com os revisores? -->
-
-Tópico 1:
-
-Tópico 2:
-
-
-
-ℹ️ Informações Adicionais
-<!-- Inclua quaisquer detalhes extras ou links úteis para o contexto do PR, como links para tickets de Jira, issues relacionadas ou decisões importantes no processo de implementação. -->
