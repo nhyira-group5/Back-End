@@ -13,7 +13,7 @@ Detalhes importantes:
 Escolha o tipo de mudança para este PR:
 🐞 Correção de Bug
 
-✨ Nova Funcionalidade
+✨ Nova Funcionalidade do sistema
 
 📝 Melhoria
 
@@ -25,7 +25,7 @@ Escolha o tipo de mudança para este PR:
 
 
 
-🛠 Como Testar
+🛠 Como Testar o código
 <!-- Detalhe os passos para garantir que suas mudanças funcionam como esperado. Certifique-se de que seja fácil reproduzir. -->
 Passo 1:
 
