@@ -31,10 +31,14 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
+          git config --global credential.helper cache
+
+      # Autenticação com o GITHUB_TOKEN
+      - name: Authenticate with GitHub Token
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
       - name: Create Pull Request
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Creating Pull Request..."
           git checkout -b merge-developer-to-main
@@ -44,8 +48,6 @@ jobs:
 
       - name: Notify on PR
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr comment ${{ github.event.pull_request.number }} --body "New Pull Request opened! @team-name"
 
