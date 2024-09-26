@@ -9,7 +9,7 @@ services:
       SPRING_APPLICATION_NAME: api-vitalis
       SPRING_DATASOURCE_URL: jdbc:sqlserver://projeto-vitalis.database.windows.net:1433;database=Vitalis;user=projeto-vitalis@projeto-vitalis;password=nhyira@123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
       SPRING_DATASOURCE_USERNAME: projeto-vitalis@projeto-vitalis
-      SPRING_DATASOURCE_PASSWORD: nhyira@123
+      SPRING_DATASOURCE_PASSWORD: Nhyira123!
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
       SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.SQLServerDialect
@@ -37,7 +37,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: nhyira@123  # Senha do SQL Server  
+      SA_PASSWORD: nhyira@123  # Senha do SQL Server
       MSSQL_PID: Developer
     ports:
       - "1433:1433"
