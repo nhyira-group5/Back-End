@@ -29,10 +29,10 @@ jobs:
           git config --global user.email "action@github.com"
 
       - name: Run Tests
-        run: mvn test
+        run: mvn test # Rodar os testes com Maven
 
       - name: Format Code
-        run: mvn formatter:format
+        run: mvn formatter:format # Formatar o código com Maven (ajustar conforme o seu projeto)
 
       - name: Merge Dev into Main
         run: |
