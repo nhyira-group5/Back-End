@@ -1,12 +1,9 @@
-name: Merge Workflow
+name: Create Pull Request Workflow
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - Developer
+      - Developer  # Dispara o workflow sempre que houver um push no branch Developer
 
 permissions:
   contents: write  # Permite escrita no repositório
@@ -20,37 +17,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: maven
-
       - name: Set up Git
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git config --global credential.helper cache
-
-      # Autenticação com o GITHUB_TOKEN
-      - name: Authenticate with GitHub Token
-        run: |
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
       - name: Create Pull Request
         run: |
-          echo "Creating Pull Request..."
-          git checkout -b merge-developer-to-main
-          git merge --no-ff origin/Developer
-          git push origin merge-developer-to-main
-          gh pr create --base main --head merge-developer-to-main --title "Merge Developer into Main" --body "This PR merges changes from Developer into Main."
-
-      - name: Notify on PR
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
-        run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body "New Pull Request opened! @team-name"
-
-      - name: Notify Success
-        if: success()
-        run: echo "Merge process finished without pushing changes."
+          echo "Creating Pull Request from Developer to Main..."
+          gh pr create --base main --head Developer --title "Merge Developer into Main" --body "This PR merges changes from Developer into Main."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
