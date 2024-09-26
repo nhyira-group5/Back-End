@@ -1,6 +1,6 @@
 i✨ Pull Request - Detalhes
 
-📋 Descrição
+📋 Descrição do commit
 <!-- Descreva com clareza e precisão as alterações feitas. O que motivou a mudança? Qual problema ou necessidade está sendo resolvido? -->
 O que foi feito:
 
@@ -9,7 +9,7 @@ Motivo da mudança:
 Detalhes importantes:
 
 
-🐛 Tipo de Mudança
+🐛 Tipo de Mudança do commit
 Escolha o tipo de mudança para este PR:
 🐞 Correção de Bug
 
