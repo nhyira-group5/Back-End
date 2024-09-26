@@ -8,6 +8,10 @@ on:
     branches:
       - Developer
 
+permissions:
+  contents: write  # Permite escrita no repositório
+  packages: read   # Permite leitura de pacotes
+
 jobs:
   merge:
     runs-on: ubuntu-latest
@@ -35,7 +39,7 @@ jobs:
           git checkout main
           git pull origin main
           if git merge --no-ff origin/Developer; then
-            echo "Merge completed successfully!"  # Mensagem de sucesso sem o push
+            echo "Merge completed successfully!"
           else
             echo "Merge conflict detected. Please resolve conflicts manually."
             gh pr comment ${{ github.event.pull_request.number }} --body "Merge conflict detected while trying to merge into main. Please resolve conflicts before proceeding."
