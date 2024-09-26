@@ -1,0 +1,36 @@
+name: Merge Workflow
+
+on:
+  pull_request:
+    branches:
+      - main  # Aciona quando uma PR é aberta para a branch main
+  push:
+    branches:
+      - main  # Aciona quando há um push na branch main
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Merge Dev into Main
+        run: |
+          echo "Starting merge process..."
+          git fetch origin
+          git checkout main
+          git pull origin main
+          git merge origin/dev || echo "Merge conflict detected. Please resolve conflicts manually."
+          git push origin main
+
+      - name: Notify Success
+        if: success()  # Notifica se a mesclagem foi bem-sucedida
+        run: |
+          echo "Merge completed successfully!"
