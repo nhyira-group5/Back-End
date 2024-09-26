@@ -1,27 +1,29 @@
-# Etapa 1: Usar Maven para construir o .jar
+# Usando a imagem do OpenJDK como base
 FROM openjdk:17 AS build
 
-# Definir o diretório de trabalho no container
+# Definindo o diretório de trabalho
 WORKDIR /app
 
-# Copiar o arquivo pom.xml e as dependências para o container
+# Copiando o arquivo pom.xml para o diretório de trabalho
 COPY pom.xml .
+
+# Instalando o Maven
+RUN apt-get update && apt-get install -y maven
+
+# Copiando o código fonte
 COPY src ./src
 
-# Rodar o Maven para gerar o .jar
+# Construindo o projeto
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Usar o OpenJDK para rodar a aplicação
-FROM openjdk:17-jdk-slim
+# Definindo a imagem final
+FROM openjdk:17
 
-# Diretório de trabalho na imagem final
-WORKDIR /app
+# Definindo o diretório de trabalho
+WORKDIR /target
 
-# Copiar o arquivo .jar gerado na etapa de build
-COPY --from=build /app/target/api-vitalis-0.0.1-SNAPSHOT.jar /app/api-vitalis.jar
+# Copiando o artefato gerado da etapa de build
+COPY --from=build target/api-vitalis.jar api-vitalis.jar
 
-# Expor a porta da aplicação
-EXPOSE 8080
-
-# Comando para rodar a aplicação
+# Definindo o ponto de entrada da aplicação
 ENTRYPOINT ["java", "-jar", "api-vitalis.jar"]
