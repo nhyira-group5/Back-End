@@ -19,7 +19,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          java-version: '17' 
+          java-version: '17'
           distribution: 'adopt'
           cache: maven
 
@@ -35,12 +35,11 @@ jobs:
           git checkout main
           git pull origin main
           if git merge --no-ff origin/Developer; then
-            git push origin main
+            echo "Merge completed successfully!"  # Mensagem de sucesso sem o push
           else
             echo "Merge conflict detected. Please resolve conflicts manually."
             gh pr comment ${{ github.event.pull_request.number }} --body "Merge conflict detected while trying to merge into main. Please resolve conflicts before proceeding."
             exit 1
-          fi  # Adicione este 'fi' para fechar o bloco if
 
       - name: Notify on PR
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
@@ -49,4 +48,4 @@ jobs:
 
       - name: Notify Success
         if: success()
-        run: echo "Merge completed successfully!"
+        run: echo "Merge process finished without pushing changes."
