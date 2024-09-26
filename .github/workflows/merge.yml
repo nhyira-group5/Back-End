@@ -1,46 +1,52 @@
-name: Developer Pull Request
+name: Merge Workflow
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
-      - Developer  # Aciona quando houver um push na branch dev
+      - Developer
 
 jobs:
-  suggest_pr:
+  merge:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install GitHub CLI
+      - name: Set up Git
         run: |
-          sudo apt-get install gh
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
 
-      - name: Authenticate with GitHub CLI
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "${GITHUB_TOKEN}" | gh auth login --with-token
+      - name: Run Tests
+        run: npm test
 
-      - name: Check for existing pull requests
-        id: check_pr
+      - name: Format Code
+        run: npm run format
+
+      - name: Merge Dev into Main
         run: |
-          if gh pr list --state open --base main | grep "Developer"; then
-            echo "A pull request from Developer to main already exists."
-            echo "::set-output name=pr_exists::true"
+          echo "Starting merge process..."
+          git fetch origin
+          git checkout main
+          git pull origin main
+          if git merge --no-ff origin/Developer; then
+            git push origin main
           else
-            echo "::set-output name=pr_exists::false"
+            echo "Merge conflict detected. Please resolve conflicts manually."
+            # Adiciona um comentário na PR para notificar sobre o conflito
+            gh pr comment ${{ github.event.pull_request.number }} --body "Merge conflict detected while trying to merge into main. Please resolve conflicts before proceeding."
+            exit 1
           fi
 
-      - name: Create Pull Request
-        if: steps.check_pr.outputs.pr_exists == 'false'
+      - name: Notify on PR
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
         run: |
-          gh pr create --base main --head dev --title "Merge changes from dev to main" --body "This PR merges the latest changes from dev into main." --label "auto-merge"
+          gh pr comment ${{ github.event.pull_request.number }} --body "New Pull Request opened! @team-name"  # Mencione a equipe aqui
 
-      - name: Comment on existing PR
-        if: steps.check_pr.outputs.pr_exists == 'true'
-        run: |
-          echo "Commenting on existing pull request..."
-          pr_number=$(gh pr list --state open --base main --json number --jq '.[0].number')
-          gh pr comment $pr_number --body "A new push was made to the dev branch. Please review the changes!"
+      - name: Notify Success
+        if: success()
+        run: echo "Merge completed successfully!"
