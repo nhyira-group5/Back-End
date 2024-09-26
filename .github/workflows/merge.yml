@@ -13,7 +13,7 @@ permissions:
   packages: read   # Permite leitura de pacotes
 
 jobs:
-  merge:
+  create_pr:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,18 +32,13 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-      - name: Merge Dev into Main
+      - name: Create Pull Request
         run: |
-          echo "Starting merge process..."
-          git fetch origin
-          git checkout main
-          git pull origin main
-          if git merge --no-ff origin/Developer; then
-            echo "Merge completed successfully!"
-          else
-            echo "Merge conflict detected. Please resolve conflicts manually."
-            gh pr comment ${{ github.event.pull_request.number }} --body "Merge conflict detected while trying to merge into main. Please resolve conflicts before proceeding."
-            exit 1
+          echo "Creating Pull Request..."
+          git checkout -b merge-developer-to-main
+          git merge --no-ff origin/Developer
+          git push origin merge-developer-to-main
+          gh pr create --base main --head merge-developer-to-main --title "Merge Developer into Main" --body "This PR merges changes from Developer into Main."
 
       - name: Notify on PR
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
