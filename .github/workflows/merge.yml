@@ -6,8 +6,8 @@ on:
       - Developer
 
 permissions:
-  contents: write  # Permissões para escrever no conteúdo do repositório
-  pull-requests: write  # Permissões para criar e gerenciar pull requests
+  contents: write
+  pull-requests: write
 
 jobs:
   push_changes:
@@ -26,8 +26,6 @@ jobs:
         run: |
           echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | gh auth login --with-token
 
-      - name: Push Changes (ou outra ação desejada)
+      - name: Create Pull Request
         run: |
-          # Aqui você pode realizar outras ações que não envolvem o merge
-          echo "Realizando outras operações..."
-          # Exemplo: git add, git commit ou qualquer outra tarefa que você precise
+          gh pr create --base main --head Developer --title "Merge Developer into Main" --body "Automated merge from Developer to Main"
