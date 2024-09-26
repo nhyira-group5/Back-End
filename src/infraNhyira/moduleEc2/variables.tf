@@ -10,11 +10,11 @@ variable "key_pair_name" {
   default     = "tf_key"
 }
 
-//variable "ami" {f
- // description = "AMI ID"
-/// type        = string
- // default     = "ami-0cc52c2dfd2d4e0cc"    //não achei ainda//
-}//
+variable "ami" {
+  description = "AMI ID"
+  type        = string
+  default     = "ami-0cc52c2dfd2d4e0cc"  # Substitua pelo ID da AMI desejada
+}
 
 variable "inst_type" {
   description = "Instance Type"
