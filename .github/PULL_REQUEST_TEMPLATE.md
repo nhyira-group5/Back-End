@@ -6,7 +6,7 @@ O que foi feito:
 
 Motivo da mudança:
 
-Detalhes importantes:
+
 
 
 🐛 Tipo de Mudança do commit
