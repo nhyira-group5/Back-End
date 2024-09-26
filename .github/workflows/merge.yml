@@ -1,4 +1,4 @@
-name: Merge and Push Workflow
+name: Push Workflow
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   pull-requests: write  # Permissões para criar e gerenciar pull requests
 
 jobs:
-  merge_and_push:
+  push_changes:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,15 +26,8 @@ jobs:
         run: |
           echo "${{ secrets.PERSONAL_ACCESS_TOKEN }}" | gh auth login --with-token
 
-      - name: Merge Branch
+      - name: Push Changes (ou outra ação desejada)
         run: |
-          echo "Merging Developer into Main..."
-          git checkout main
-          git pull origin main  # Atualiza o branch main
-          git merge Developer
-          git push origin main  # Faz o push do merge
-
-      - name: Create Pull Request (opcional)
-        run: |
-          echo "Creating Pull Request from Developer to Main..."
-          gh pr create --base main --head Developer --title "Merge Developer into Main" --body "This PR merges changes from Developer into Main."
+          # Aqui você pode realizar outras ações que não envolvem o merge
+          echo "Realizando outras operações..."
+          # Exemplo: git add, git commit ou qualquer outra tarefa que você precise
