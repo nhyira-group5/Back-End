@@ -40,6 +40,7 @@ jobs:
             echo "Merge conflict detected. Please resolve conflicts manually."
             gh pr comment ${{ github.event.pull_request.number }} --body "Merge conflict detected while trying to merge into main. Please resolve conflicts before proceeding."
             exit 1
+          fi  # Adicione este 'fi' para fechar o bloco if
 
       - name: Notify on PR
         if: github.event_name == 'pull_request' && github.event.action == 'opened'
