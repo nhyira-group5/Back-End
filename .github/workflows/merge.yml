@@ -3,7 +3,7 @@ name: Auto PR from Developer Branch
 on:
   push:
     branches:
-      - developer
+      - Developer
 
 jobs:
   open_pr:
@@ -18,4 +18,4 @@ jobs:
           title: 'Automated Pull Request'
           body: 'This pull request is automatically created from the developer branch.'
           base: main  # A branch para a qual a PR será aberta
-          head: developer
+          head: Developer
