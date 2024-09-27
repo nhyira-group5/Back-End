@@ -37,7 +37,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: nhyira@123  # Senha do SQL Server  
+      SA_PASSWORD: nhyira@123  # Senha do SQL Server
       MSSQL_PID: Developer
     ports:
       - "1433:1433"
