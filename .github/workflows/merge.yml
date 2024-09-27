@@ -1,41 +1,21 @@
-name: Push Workflow
+name: Auto PR from Developer Branch
 
 on:
   push:
     branches:
-      - Developer
-
-permissions:
-  contents: write
-  pull-requests: write
+      - developer
 
 jobs:
-  push_changes:
+  open_pr:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Git
-        run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-
-      - name: Commit changes (if needed)
-        run: |
-          git add .
-          git commit -m "Automated commit" || echo "No changes to commit"
-
-      - name: Push changes
-        run: |
-          git push origin Developer
-
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: main
-          head: Developer
-          title: "Merge Developer into Main"
-          body: "Automated merge from Developer to Main"
+          title: 'Automated Pull Request'
+          body: 'This pull request is automatically created from the developer branch.'
+          base: main  # A branch para a qual a PR será aberta
+          head: developer

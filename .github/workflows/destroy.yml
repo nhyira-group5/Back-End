@@ -8,7 +8,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -28,7 +29,7 @@ jobs:
         working-directory: ./src/infraNhyira/moduleEc2
 
       - name: Terraform Plan Destroy
-        run: terraform plan -destroy -out=tfplan
+        run: terraform plan -destroy -out=tfplan -var "dockerhub_username=${{ secrets.DOCKERHUB_USERNAME }}"
         working-directory: ./src/infraNhyira/moduleEc2
 
       - name: Verify Plan
