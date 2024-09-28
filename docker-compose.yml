@@ -7,7 +7,7 @@ services:
       - "5225:8080"
     environment:
       SPRING_APPLICATION_NAME: api-vitalis
-      SPRING_DATASOURCE_URL: jdbc:sqlserver://projeto-vitalis.database.windows.net:1433;database=Vitalis;user=projeto-vitalis@projeto-vitalis;password=nhyira@123;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+      SPRING_DATASOURCE_URL: jdbc:sqlserver://projeto-vitalis.database.windows.net:1433;database=Vitalis;user=projeto-vitalis@projeto-vitalis;password=Nhyira123!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
       SPRING_DATASOURCE_USERNAME: projeto-vitalis@projeto-vitalis
       SPRING_DATASOURCE_PASSWORD: Nhyira123!
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.microsoft.sqlserver.jdbc.SQLServerDriver
