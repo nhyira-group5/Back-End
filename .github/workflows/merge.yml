@@ -10,12 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Atualizado para a versão mais recente
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
           title: 'Automated Pull Request'
-          body: 'This pull request is automatically created from the developer branch.'
+          body: |
+            This pull request is automatically created from the Developer branch.
+            
+            ## 📝 Revisores
+            [@WillDantasJPG](link) | [@Danielr194](link)
           base: main  # A branch para a qual a PR será aberta
           head: Developer
+          draft: false  # Altere para true se quiser que o PR seja um rascunho
