@@ -20,10 +20,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Usando o token do repositório
           title: 'Automated Pull Request'
           body: |
             This pull request is automatically created from the Developer branch.
           base: main  # A branch para a qual a PR será aberta
-          head: Developer
-          draft: false  # Altere para true se você quiser que o PR seja um rascunho
+          head: Developer  # A branch de origem
