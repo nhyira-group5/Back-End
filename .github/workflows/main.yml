@@ -51,8 +51,8 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/foodway-api:latest .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/foodway-api:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/nhyira-api:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/nhyira-api:latest
 
   deploy-to-aws:
     needs: build-and-test
