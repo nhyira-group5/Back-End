@@ -44,7 +44,7 @@ Certifique-se de que todos os critérios abaixo foram cumpridos antes de submete
 ## 📅 Data
 [Inserir data do PR]
 
-## 📝 Revisores
-[@WillDantasJPG](https://github.com/WillDantasJPG) | [@Danielr194](https://github.com/Danielr194)
+📝 Revisores
+@WillDantasJPG  @Danielr194
 
 
