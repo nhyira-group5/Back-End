@@ -15,10 +15,12 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          title: 'Automated Pull Request'
+          title: 'Automated Pull Request from Developer'
           body: |
             This pull request is automatically created from the Developer branch.
             
-
+            ## 📝 Revisores
+            [@WillDantasJPG](https://github.com/WillDantasJPG) | [@Danielr194](https://github.com/Danielr194)
           base: main  # A branch para a qual a PR será aberta
           head: Developer
+          draft: true  # Para garantir que não seja um rascunho
