@@ -5,22 +5,25 @@ on:
     branches:
       - Developer
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   open_pr:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          title: 'Automated Pull Request from Developer'
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Usando o token do repositório
+          title: 'Automated Pull Request'
           body: |
             This pull request is automatically created from the Developer branch.
-            
-            ## 📝 Revisores
-            [@WillDantasJPG](https://github.com/WillDantasJPG) | [@Danielr194](https://github.com/Danielr194)
-          base: main  # A branch para a qual a PR será aberta
+          base: main 
           head: Developer
-          draft: true  # Para garantir que não seja um rascunho
+          draft: false 
