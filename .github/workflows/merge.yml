@@ -24,6 +24,6 @@ jobs:
           title: 'Automated Pull Request'
           body: |
             This pull request is automatically created from the Developer branch.
-          base: main 
+          base: main  # A branch para a qual a PR será aberta
           head: Developer
-          draft: false 
+          draft: false  # Altere para true se você quiser que o PR seja um rascunho
