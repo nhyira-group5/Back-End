@@ -14,7 +14,7 @@ RUN mvn clean package -DskipTests
 # Cria a imagem final com o JAR
 FROM openjdk:17-jdk-slim
 WORKDIR /target
-COPY --from=build /target/*.jar /target/api-vitalis.jar
+COPY --from=build /target/*.jar /target/api-vitalis-0.0.1-SNAPSHOT.jar
 
 # Comando para rodar a aplicação
-ENTRYPOINT ["java", "-jar", "/target/api-vitalis.jar"]
+ENTRYPOINT ["java", "-jar", "/target/api-vitalis-0.0.1-SNAPSHOT.jar"]
