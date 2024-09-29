@@ -58,6 +58,7 @@ public class AuthConfig {
             new AntPathRequestMatcher("/usuarios/**", "DELETE"),
             new AntPathRequestMatcher("/usuarios/**", "PUT"),
             new AntPathRequestMatcher("/usuarios/**", "POST"),
+            new AntPathRequestMatcher("/usuarios/**", "PATCH"),
             new AntPathRequestMatcher("/usuarios/download", "GET"),
             new AntPathRequestMatcher("/enderecos/**"),
             new AntPathRequestMatcher("/especialidades/**"),
@@ -94,7 +95,6 @@ public class AuthConfig {
             new AntPathRequestMatcher("/tagExercicios/**"),
             new AntPathRequestMatcher("/tags/**"),
             new AntPathRequestMatcher("/login/usuario", "POST"),
-            new AntPathRequestMatcher("/websocket/**"),
             new AntPathRequestMatcher("/error/**"),
     };
 

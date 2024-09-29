@@ -25,4 +25,6 @@ public class UsuarioDto {
     private String sexo;
     private String email;
     private Usuario.TipoUsuario tipo;
+    private UsuarioExibitionDto.MidiaDto midiaDto;
+
 }

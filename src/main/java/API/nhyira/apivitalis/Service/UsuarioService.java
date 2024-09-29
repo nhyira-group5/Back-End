@@ -3,6 +3,10 @@ package API.nhyira.apivitalis.Service;
 import API.nhyira.apivitalis.Auth.Configuration.Security.TokenGenJwt;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioLoginDto;
 import API.nhyira.apivitalis.Auth.Usuario.DTO.UsuarioTokenDto;
+import API.nhyira.apivitalis.DTO.Midia.MidiaCreateEditDto;
+import API.nhyira.apivitalis.DTO.Midia.MidiaExibitionDto;
+import API.nhyira.apivitalis.DTO.Midia.MidiaMapper;
+import API.nhyira.apivitalis.DTO.Usuario.UsuarioUpdateMidia;
 import API.nhyira.apivitalis.EmailSender.Service.EmailService;
 import API.nhyira.apivitalis.DTO.Usuario.UsuarioCreateEditDto;
 import API.nhyira.apivitalis.EmailSender.Model.EmailModel;
@@ -39,7 +43,7 @@ public class UsuarioService {
     private final AuthenticationManager authenticationManagerForUsuarios;
     private final TokenGenJwt tokenGenJwt;
     private final EspecialidadePorPersonalRepository especialidadePorPersonal;
-    private final MidiaRepository midiaRepository;
+    private final MidiaService midiaService;
     private final PagamentoService pagSrv;
     private final Set<String> emailsEnviados = new HashSet<>();
 
@@ -192,6 +196,14 @@ public class UsuarioService {
         uRep.deleteById(id);
         return true;
 
+    }
+
+    public Midia AtualizarFoto(int idUsuario, UsuarioUpdateMidia midiaUpdate){
+        Usuario usuario = showUserById(idUsuario);
+        Midia midia = midiaService.findById(midiaUpdate.getIdMidia());
+        usuario.setMidiaId(midia);
+        uRep.save(usuario);
+        return midia;
     }
 
     public List<Usuario> getAllUsers(){return uRep.findAll();}

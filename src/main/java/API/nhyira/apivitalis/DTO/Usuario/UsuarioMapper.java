@@ -6,6 +6,7 @@ import API.nhyira.apivitalis.DTO.Exercicio.ExercicioExibition;
 import API.nhyira.apivitalis.DTO.Refeicao.RefeicaoExibitionDto;
 import API.nhyira.apivitalis.Entity.*;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,15 +67,16 @@ public class UsuarioMapper {
 
 
     public static UsuarioExibitionDto.MidiaDto midiaExibitionDto(Midia md){
-            if (md == null)return null;
-            UsuarioExibitionDto.MidiaDto midiaExibitionDto = new UsuarioExibitionDto.MidiaDto();
-            midiaExibitionDto.setIdMidia(md.getIdMidia());
-            midiaExibitionDto.setNome(md.getNome());
-            midiaExibitionDto.setTipo(md.getTipo());
-            midiaExibitionDto.setCaminho(md.getCaminho());
-            midiaExibitionDto.setExtensao(md.getExtensao());
-            return midiaExibitionDto;
+        if (md == null)return null;
+        UsuarioExibitionDto.MidiaDto midiaExibitionDto = new UsuarioExibitionDto.MidiaDto();
+        midiaExibitionDto.setIdMidia(md.getIdMidia());
+        midiaExibitionDto.setNome(md.getNome());
+        midiaExibitionDto.setTipo(md.getTipo());
+        midiaExibitionDto.setCaminho(md.getCaminho());
+        midiaExibitionDto.setExtensao(md.getExtensao());
+        return midiaExibitionDto;
     }
+
 
     public static UsuarioExibitionDto toExibition(Usuario entity, Meta metaEntity, boolean pagAtivo) {
         if (entity == null) return null;
@@ -169,6 +171,7 @@ public class UsuarioMapper {
         usuarioDto.setTipo(usuario.getTipo());
         usuarioDto.setDtNasc(usuario.getDtNasc());
         usuarioDto.setNickname(usuario.getNickname());
+        usuarioDto.setMidiaDto(midiaExibitionDto(usuario.getMidiaId()));
         return usuarioDto;
     }
 

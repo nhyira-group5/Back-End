@@ -1,10 +1,9 @@
 package API.nhyira.apivitalis.Controller;
 
+import API.nhyira.apivitalis.DTO.Midia.MidiaExibitionDto;
+import API.nhyira.apivitalis.DTO.Midia.MidiaMapper;
 import API.nhyira.apivitalis.DTO.Usuario.*;
-import API.nhyira.apivitalis.Entity.EspecialidadePorPersonal;
-import API.nhyira.apivitalis.Entity.Ficha;
-import API.nhyira.apivitalis.Entity.Meta;
-import API.nhyira.apivitalis.Entity.Usuario;
+import API.nhyira.apivitalis.Entity.*;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Pagamento.Service.PagamentoService;
 import API.nhyira.apivitalis.Service.CsvService;
@@ -146,5 +145,11 @@ public class UsuarioController {
         Ficha ficha = fichaService.showFicha(id);
         UsuarioFichaDto exibitionDto = UsuarioMapper.toExibitionIMC(user, ficha.getIMC());
         return ResponseEntity.ok(exibitionDto);
+    }
+
+    @PatchMapping("atualizar-midia/{idUsuario}")
+    public MidiaExibitionDto updateMidia(@RequestBody UsuarioUpdateMidia usuarioUpdateMidia, @PathVariable int idUsuario){
+        Midia midia = uService.AtualizarFoto(idUsuario, usuarioUpdateMidia);
+        return MidiaMapper.toDTO(midia);
     }
 }
