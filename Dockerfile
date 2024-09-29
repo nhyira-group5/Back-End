@@ -10,7 +10,7 @@ FROM openjdk:17
 WORKDIR /target
 
 # Copia o JAR gerado do estágio anterior (build) para o diretório /target no container
-COPY --from=build  target/api-vitalis-0.0.1-SNAPSHOT.jar /target/api-vitalis-0.0.1-SNAPSHOT.jar
+COPY --from=build /app/target/api-vitalis-0.0.1-SNAPSHOT.jar /target/api-vitalis-0.0.1-SNAPSHOT.jar
 
 # Comando para rodar o JAR
-ENTRYPOINT ["java", "-jar", "target/api-vitalis-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/target/api-vitalis-0.0.1-SNAPSHOT.jar"]
