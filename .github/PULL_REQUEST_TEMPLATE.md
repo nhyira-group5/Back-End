@@ -18,7 +18,7 @@ Escolha o tipo de mudança para este PR:
 - ✨ Nova Funcionalidade do Sistema
 - 📝 Melhoria
 - 📚 Documentação
-- 🔄 Refatoração
+- 🔄 Refatoração no código
 - 🎨 Estilo/Código Estético
 
 ---
@@ -28,6 +28,7 @@ Escolha o tipo de mudança para este PR:
 1. [Passo 1]
 2. [Passo 2]
 3. [Passo 3]
+4. [Passo 4]
 
 ---
 
