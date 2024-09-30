@@ -20,7 +20,10 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet HEAD^ HEAD || echo "changes" >> changes.txt
+          # Fetch the main branch
+          git fetch origin main
+          # Check for changes between the Developer branch and main
+          git diff --quiet origin/main...HEAD || echo "changes" >> changes.txt
 
       - name: Create Pull Request
         if: steps.changes.outputs.changes != ''
@@ -31,3 +34,5 @@ jobs:
             This pull request is automatically created from the Developer branch.
           base: main
           head: Developer
+          # Use this parameter to avoid creating a new branch
+          commit-message: "Create pull request from Developer"
