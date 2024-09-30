@@ -1,33 +1,22 @@
-name: Auto PR from Developer Branch
+name: Create Pull Request
 
 on:
   push:
     branches:
       - Developer
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  open_pr:
+  create-pr:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Check for changes
-        id: changes
-        run: |
-          git diff --quiet HEAD^ HEAD || echo "changes" >> changes.txt
-
       - name: Create Pull Request
-        if: steps.changes.outputs.changes != ''
         uses: peter-evans/create-pull-request@v3
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           title: 'Automated Pull Request'
-          body: |
-            This pull request is automatically created from the Developer branch.
+          body: 'This pull request was created automatically.'
           base: main
-          head: Developer
+          branch: Developer
