@@ -35,14 +35,10 @@ Escolha o tipo de mudança para este PR:
 ## ✅ Checklist
 Certifique-se de que todos os critérios abaixo foram cumpridos antes de submeter o PR:
 - [ ] O código segue as diretrizes do projeto e está de acordo com os padrões de código aceitos.
-- [ ] Cobertura de testes foi adequada e inclui testes unitários e/ou de integração.
-- [ ] A documentação foi atualizada (caso necessário).
 - [ ] Todos os testes estão passando.
 - [ ] O código foi revisado internamente e está devidamente comentado.
 
 ---
-
-
 ~~~~📝 Revisores da PR
 @WillDantasJPG  @Danielr194~~~~
 
