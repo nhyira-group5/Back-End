@@ -1,20 +1,21 @@
-name: Open Pull Request on Developer Change  
+name: Open Pull Request on Developer Change
 
-on:  
-  push:  
-    branches:  
-      - Developer  
+on:
+  push:
+    branches:
+      - developer
 
-jobs:  
-  create-pull-request:  
-    runs-on: ubuntu-latest  
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
 
-    steps:  
-      - name: Check out the code  
-        uses: actions/checkout@v2  
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
 
-      - name: Create Pull Request  
-        run: |  
-          gh pr create --base main --head developer --title "Automated Pull Request" --body "This PR is created automatically when changes are pushed to the developer branch."  
-        env:  
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+      - name: Create Pull Request
+        run: |
+          TEMPLATE=$(cat .github/PULL_REQUEST_TEMPLATE/template.md)  
+          gh pr create --base main --head developer --title "Automated Pull Request" --body "$TEMPLATE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
