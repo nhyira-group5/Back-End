@@ -25,6 +25,7 @@ resource "aws_instance" "public_ec2_backend-1" {
     set -x
 
     # Cria o diretório AWS
+
     mkdir -p /home/ubuntu/AWS
 
     # Exporta a variável de ambiente
@@ -38,6 +39,7 @@ resource "aws_instance" "public_ec2_backend-1" {
     sudo apt-get install -y docker.io
 
     # Instala Docker Compose
+
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
 
