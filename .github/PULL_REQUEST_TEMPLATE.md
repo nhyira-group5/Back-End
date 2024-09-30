@@ -4,11 +4,11 @@
 <!-- Descreva com clareza e precisão as alterações feitas no commit. O que motivou a mudança? Qual problema ou necessidade que está sendo resolvido? -->
 **O que foi feito:**
 
-- [Descrever as mudanças realizadas]
+- [Descrever as mudanças realizadas na PR]
 
 **Motivo da mudança:**
 
-- [Explicar a razão para as alterações]
+- [Explicar a razão para as alterações na PR]
 
 ---
 
@@ -18,7 +18,7 @@ Escolha o tipo de mudança para este PR:
 - ✨ Nova Funcionalidade do Sistema
 - 📝 Melhoria
 - 📚 Documentação
-- 🔄 Refatoração
+- 🔄 Refatoração no código
 - 🎨 Estilo/Código Estético
 
 ---
@@ -28,6 +28,7 @@ Escolha o tipo de mudança para este PR:
 1. [Passo 1]
 2. [Passo 2]
 3. [Passo 3]
+4. [Passo 4]
 
 ---
 
@@ -44,7 +45,7 @@ Certifique-se de que todos os critérios abaixo foram cumpridos antes de submete
 ## 📅 Data
 [Inserir a data do PR]
 
-📝 Revisores da PR
-@WillDantasJPG  @Danielr194
+~~~~📝 Revisores da PR
+@WillDantasJPG  @Danielr194~~~~
 
 
