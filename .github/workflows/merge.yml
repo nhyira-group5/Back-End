@@ -33,6 +33,5 @@ jobs:
           body: |
             This pull request is automatically created from the Developer branch.
           base: main
-          head: Developer
-          # Use this parameter to avoid creating a new branch
+          branch: Developer # Use 'branch' instead of 'head'
           commit-message: "Create pull request from Developer"
