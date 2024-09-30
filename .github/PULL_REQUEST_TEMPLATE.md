@@ -42,9 +42,9 @@ Certifique-se de que todos os critérios abaixo foram cumpridos antes de submete
 ---
 
 ## 📅 Data
-[Inserir data do PR]
+[Inserir a data do PR]
 
-📝 Revisores
+📝 Revisores da PR
 @WillDantasJPG  @Danielr194
 
 
