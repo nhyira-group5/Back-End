@@ -1,33 +1,20 @@
-name: PR da Branch de Desenvolvedor
+name: Open Pull Request on Developer Change  
 
-on:
-  push:
-    branches:
-      - Developer
+on:  
+  push:  
+    branches:  
+      - Developer  
 
-permissions:
-  contents: write
-  pull-requests: write
+jobs:  
+  create-pull-request:  
+    runs-on: ubuntu-latest  
 
-jobs:
-  open_pr:
-    runs-on: ubuntu-latest
+    steps:  
+      - name: Check out the code  
+        uses: actions/checkout@v2  
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Check for changes
-        id: changes
-        run: |
-          git diff --quiet HEAD^ HEAD || echo "changes" >> changes.txt
-
-      - name: Create Pull Request
-        if: steps.changes.outputs.changes != ''
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: 'Automated Pull Request'
-          body: |
-            This pull request is automatically created from the Developer branch.
-          base: main
-          head: Developer
+      - name: Create Pull Request  
+        run: |  
+          gh pr create --base main --head developer --title "Automated Pull Request" --body "This PR is created automatically when changes are pushed to the developer branch."  
+        env:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
