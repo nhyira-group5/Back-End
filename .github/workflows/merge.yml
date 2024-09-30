@@ -1,4 +1,4 @@
-Nome:  PR da Branch de Desenvolvedor
+name: PR da Branch de Desenvolvedor
 
 on:
   push:
