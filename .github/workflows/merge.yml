@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - Developer
-A
+
 permissions:
   contents: write
   pull-requests: write
