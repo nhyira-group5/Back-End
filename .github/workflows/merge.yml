@@ -1,33 +1,21 @@
-name: PR da Branch de Desenvolvedor
+name: Open Pull Request on Developer Change
 
 on:
   push:
     branches:
-      - Developer
-
-permissions:
-  contents: write
-  pull-requests: write
+      - developer
 
 jobs:
-  open_pr:
+  create-pull-request:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Check for changes
-        id: changes
-        run: |
-          git diff --quiet HEAD^ HEAD || echo "changes" >> changes.txt
-
       - name: Create Pull Request
-        if: steps.changes.outputs.changes != ''
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: 'Automated Pull Request'
-          body: |
-            This pull request is automatically created from the Developer branch.
-          base: main
-          head: Developer
+        run: |
+          TEMPLATE=$(cat .github/PULL_REQUEST_TEMPLATE/template.md)  
+          gh pr create --base main --head developer --title "Automated Pull Request" --body "$TEMPLATE"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
