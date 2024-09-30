@@ -17,17 +17,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up git
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-
       - name: Check for changes
         id: changes
         run: |
-          git fetch origin main
-          git diff --quiet origin/main..HEAD || echo "changes" >> changes.txt
-          echo "::set-output name=changes::$(cat changes.txt)"
+          git diff --quiet HEAD^ HEAD || echo "changes" >> changes.txt
 
       - name: Create Pull Request
         if: steps.changes.outputs.changes != ''
