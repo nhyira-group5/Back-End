@@ -12,17 +12,5 @@
 
 ---
 
-## 🐛 Tipo de Mudança do Commit
-Escolha o tipo de mudança para este PR:
-- 🐞 Correção de Bug
-- ✨ Nova Funcionalidade do Sistema
-- 📝 Melhoria
-- 📚 Documentação
-- 🔄 Refatoração no código
-- 🎨 Estilo/Código Estético
-
-
-~~~~📝 Revisores da PR
-@WillDantasJPG  @Danielr194~~~~
 
 
