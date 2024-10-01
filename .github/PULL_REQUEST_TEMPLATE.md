@@ -1,51 +1,68 @@
 # ✨ Pull Request - Detalhes
 
 ## 📋 Descrição do Commit
-<!-- Descreva com clareza e precisão as alterações feitas no commit. O que motivou a mudança? Qual problema ou necessidade que está sendo resolvido? -->
-**O que foi feito:**
+🔍 O que foi feito:
+[________] [Descreva as mudanças realizadas na PR]
 
-- [Descrever as mudanças realizadas na PR]
+🛠️ Motivo da mudança:
+[________] [Explique a razão para as alterações na PR]
 
-**Motivo da mudança:**
 
-- [Explicar a razão para as alterações na PR]
-
----
-
-## 🐛 Tipo de Mudança do Commit
-Escolha o tipo de mudança para este PR:
-- 🐞 Correção de Bug
-- ✨ Nova Funcionalidade do Sistema
-- 📝 Melhoria
-- 📚 Documentação
-- 🔄 Refatoração no código
-- 🎨 Estilo/Código Estético
 
 ---
 
-## 🛠 Como Testar o Código Commitado
-<!-- Detalhe os passos para garantir que suas mudanças funcionam como esperado. Certifique-se de que seja fácil reproduzir. -->
-1. [Passo 1]
-2. [Passo 2]
-3. [Passo 3]
-4. [Passo 4]
+
+## 📦 Tipo de Mudança do Commit
+☐ 🐞 Correção de Bug
+
+☐ ✨ Nova Funcionalidade do Sistema
+
+☐ 📝 Melhoria
+
+☐ 📚 Documentação
+
+☐ 🔄 Refatoração no Código
+
+☐ 🎨 Estilo/Código Estético
+
+
 
 ---
 
-## ✅ Checklist
-Certifique-se de que todos os critérios abaixo foram cumpridos antes de submeter o PR:
-- [ ] O código segue as diretrizes do projeto e está de acordo com os padrões de código aceitos.
-- [ ] Cobertura de testes foi adequada e inclui testes unitários e/ou de integração.
-- [ ] A documentação foi atualizada (caso necessário).
-- [ ] Todos os testes estão passando.
-- [ ] O código foi revisado internamente e está devidamente comentado.
+## 🧪 Como Testar o Código Commitado
+1️⃣ Passo 1:
+[________] [Descreva o primeiro passo]
+
+2️⃣ Passo 2:
+[________] [Descreva o segundo passo]
+
+3️⃣ Passo 3:
+[________] [Descreva o terceiro passo]
+
+4️⃣ Passo 4:
+[________] [Descreva o quarto passo]
+
+---
+
+## 📋 Checklist
+☐ O código segue as diretrizes do projeto e está de acordo com os padrões de código aceitos.
+
+☐ Cobertura de testes foi adequada e inclui testes unitários e/ou de integração.
+
+☐ A documentação foi atualizada (caso necessário).
+
+☐ Todos os testes estão passando.
+
+☐ O código foi revisado internamente e está devidamente comentado.
+
 
 ---
 
 ## 📅 Data
-[Inserir a data do PR]
+🗓️ ____/____/______ [Inserir a data do PR]
 
-~~~~📝 Revisores da PR
-@WillDantasJPG  @Danielr194~~~~
+## 📝 Revisores da PR
+👤 @WillDantasJPG
+👤 @Danielr194
 
 
