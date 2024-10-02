@@ -44,6 +44,14 @@ public class RotinaDiariaController {
         return ResponseEntity.ok().body(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
     }
 
+    @GetMapping("/por-usuario/{id}")
+    public ResponseEntity<RotinaDiariaExibitionDto> rotinaPorUsuario(@PathVariable int id){
+        RotinaDiaria rotinaDiaria = rotinaDiariaService.rotinaPorUsuario(id);
+        Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rotinaDiaria);
+        Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rotinaDiaria);
+        return ResponseEntity.ok().body(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
+    }
+
     @PatchMapping("/concluir/{id}")
     public ResponseEntity<RotinaDiariaExibitionDto> concluirRotinaDiaria(
             @PathVariable int id,
