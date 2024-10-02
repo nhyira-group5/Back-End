@@ -41,7 +41,7 @@ services:
     ports:
       - "3306:3306"  # Porta do MySQL
     volumes:
-      - ./data:/docker-entrypoint-initdb.d  # Script SQL de inicialização do banco
+      - ./Data:/docker-entrypoint-initdb.d  # Script SQL de inicialização do banco
     networks:
       - nhyira
 
