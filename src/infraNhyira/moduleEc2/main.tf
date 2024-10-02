@@ -58,8 +58,9 @@ sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
-EOF
-)
+    EOF
+  )
+}
 
 
 
@@ -117,9 +118,9 @@ sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
-EOF
-)
-
+    EOF
+  )
+}
 
 
 resource "aws_eip_association" "eip_assoc_01" {
