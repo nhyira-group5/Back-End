@@ -20,44 +20,48 @@ resource "aws_instance" "public_ec2_backend-1" {
     Name = "private-ec2-01"
   }
 
-  user_data = base64encode(<<-EOF
-    #!/bin/bash
-    exec > /var/log/user_data.log 2>&1
-    set -x
 
-    # Cria o diretório AWS
-    mkdir -p /home/ubuntu/AWS
+user_data = base64encode(<<-EOF
+#!/bin/bash
+exec > /var/log/user_data.log 2>&1
+set -x
 
-    # Atualiza pacotes e instala Java
-    sudo apt-get update
-    sudo apt-get install -y default-jdk
+# Atualiza pacotes e instala Java
+sudo apt-get update
+sudo apt-get install -y default-jdk
 
-    # Instala Docker
-    sudo apt-get install -y docker.io
+# Instala Docker
+sudo apt-get install -y docker.io
 
-    # Instala Docker Compose
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+# Instala Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-    # Inicia e habilita Docker
-    sudo systemctl start docker
-    sudo systemctl enable docker
+# Inicia e habilita Docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
-    # Clona o repositório contendo o Dockerfile e o docker-compose.yml
-    cd /home/ubuntu/AWS
-    git clone https://github.com/nhyira-group5/Back-End.git .
+# Verifica se o diretório existe e clona o repositório, se necessário
+if [ ! -d "/home/ubuntu/AWS" ]; then
+  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
+else
+  # Navega até o diretório do projeto e atualiza o repositório
+  cd /home/ubuntu/AWS
+  git pull origin main
+fi
 
-    # Navega até o diretório do projeto
-    cd /home/ubuntu/AWS
+# Navega até o diretório do projeto
+cd /home/ubuntu/AWS
 
-    # Constrói a imagem Docker usando o Dockerfile
-    sudo docker build -t nhyira-api .
+# Constrói a imagem Docker usando o Dockerfile
+sudo docker build -t nhyira-api .
 
-    # Executa o Docker Compose para iniciar os serviços
-    sudo docker-compose up -d
-  EOF
-  )
-}
+# Executa o Docker Compose para iniciar os serviços
+sudo docker-compose up -d
+EOF
+)
+
+
 
 resource "aws_instance" "public_ec2_backend-2" {
   ami               = var.ami
@@ -77,43 +81,45 @@ resource "aws_instance" "public_ec2_backend-2" {
   }
 
   user_data = base64encode(<<-EOF
-    #!/bin/bash
-    exec > /var/log/user_data.log 2>&1
-    set -x
+#!/bin/bash
+exec > /var/log/user_data.log 2>&1
+set -x
 
-    # Cria o diretório AWS
-    mkdir -p /home/ubuntu/AWS
+# Atualiza pacotes e instala Java
+sudo apt-get update
+sudo apt-get install -y default-jdk
 
-    # Atualiza pacotes e instala Java
-    sudo apt-get update
-    sudo apt-get install -y default-jdk
+# Instala Docker
+sudo apt-get install -y docker.io
 
-    # Instala Docker
-    sudo apt-get install -y docker.io
+# Instala Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
-    # Instala Docker Compose
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+# Inicia e habilita Docker
+sudo systemctl start docker
+sudo systemctl enable docker
 
-    # Inicia e habilita Docker
-    sudo systemctl start docker
-    sudo systemctl enable docker
+# Verifica se o diretório existe e clona o repositório, se necessário
+if [ ! -d "/home/ubuntu/AWS" ]; then
+  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
+else
+  # Navega até o diretório do projeto e atualiza o repositório
+  cd /home/ubuntu/AWS
+  git pull origin main
+fi
 
-    # Clona o repositório contendo o Dockerfile e o docker-compose.yml
-    cd /home/ubuntu/AWS
-    git clone https://github.com/nhyira-group5/Back-End.git .
+# Navega até o diretório do projeto
+cd /home/ubuntu/AWS
 
-    # Navega até o diretório do projeto
-    cd /home/ubuntu/AWS
+# Constrói a imagem Docker usando o Dockerfile
+sudo docker build -t nhyira-api .
 
-    # Constrói a imagem Docker usando o Dockerfile
-    sudo docker build -t nhyira-api .
+# Executa o Docker Compose para iniciar os serviços
+sudo docker-compose up -d
+EOF
+)
 
-    # Executa o Docker Compose para iniciar os serviços
-    sudo docker-compose up -d
-  EOF
-  )
-}
 
 
 resource "aws_eip_association" "eip_assoc_01" {
