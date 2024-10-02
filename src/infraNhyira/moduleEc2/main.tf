@@ -54,7 +54,7 @@ git clone https://github.com/nhyira-group5/Back-End.git .
 cd /home/ubuntu/AWS
 
 # Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t ${DOCKERHUB_USERNAME}/nhyira-api .
+sudo docker build -t ${dockerhub_username}/nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
@@ -114,7 +114,7 @@ git clone https://github.com/nhyira-group5/Back-End.git .
 cd /home/ubuntu/AWS
 
 # Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t ${DOCKERHUB_USERNAME}/nhyira-api .
+sudo docker build -t ${dockerhub_username}/nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
