@@ -20,16 +20,13 @@ resource "aws_instance" "public_ec2_backend-1" {
     Name = "private-ec2-01"
   }
 
-  user_data = base64encode(<<-EOF
+ user_data = base64encode(<<-EOF
    #!/bin/bash
 exec > /var/log/user_data.log 2>&1
 set -x
 
 # Cria o diretório AWS
 mkdir -p /home/ubuntu/AWS
-
-# Exporta a variável de ambiente
-export DOCKERHUB_USERNAME=${var.dockerhub_username}
 
 # Atualiza pacotes e instala Java
 sudo apt-get update
@@ -54,12 +51,12 @@ git clone https://github.com/nhyira-group5/Back-End.git .
 cd /home/ubuntu/AWS
 
 # Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t ${dockerhub_username}/nhyira-api .
+sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
 
-    EOF
+EOF
   )
 }
 
@@ -80,16 +77,13 @@ resource "aws_instance" "public_ec2_backend-2" {
     Name = "private-ec2-02"
   }
 
-  user_data = base64encode(<<-EOF
-  #!/bin/bash
+user_data = base64encode(<<-EOF
+   #!/bin/bash
 exec > /var/log/user_data.log 2>&1
 set -x
 
 # Cria o diretório AWS
 mkdir -p /home/ubuntu/AWS
-
-# Exporta a variável de ambiente
-export DOCKERHUB_USERNAME=${var.dockerhub_username}
 
 # Atualiza pacotes e instala Java
 sudo apt-get update
@@ -114,7 +108,7 @@ git clone https://github.com/nhyira-group5/Back-End.git .
 cd /home/ubuntu/AWS
 
 # Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t ${dockerhub_username}/nhyira-api .
+sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
