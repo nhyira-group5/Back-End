@@ -86,50 +86,75 @@ resource "aws_instance" "private_ec2_backend_2" {
   tags = {
     Name = "private-ec2-02"
   }
+
+
 user_data = base64encode(<<-EOF
-#!/bin/bash
-exec > /var/log/user_data.log 2>&1
-set -x
+    #!/bin/bash
+    exec > /var/log/user_data.log 2>&1
+    set -x
 
-# Atualiza pacotes e instala Java
-sudo apt-get update -y
-sudo apt-get install -y default-jdk
-sudo apt-get install -y git
+    # Atualiza pacotes e instala dependências
+    sudo apt-get update -y
+    sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common git
 
-# Atualiza o repositório novamente
-sudo apt-get update -y
+    # Adiciona o repositório do Docker
+    if ! curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -; then
+      echo "Falha ao adicionar a chave do Docker" >&2
+      exit 1
+    fi
 
-# Instala o Docker
-sudo apt-get install -y docker-ce
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu \$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
 
-# Verifica se o Docker está instalado corretamente
-sudo systemctl start docker
-sudo systemctl enable docker
+    # Atualiza novamente e instala o Docker
+    sudo apt-get update -y
+    if ! sudo apt-get install -y docker-ce; then
+      echo "Falha ao instalar o Docker" >&2
+      exit 1
+    fi
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+    # Verifica se o Docker está instalado corretamente
+    sudo systemctl start docker
+    sudo systemctl enable docker
 
-# Cria o diretório se não existir
-mkdir -p /home/ubuntu/AWS
+    # Instala Docker Compose
+    if ! sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-\$(uname -s)-\$(uname -m)" -o /usr/local/bin/docker-compose; then
+      echo "Falha ao baixar Docker Compose" >&2
+      exit 1
+    fi
+    sudo chmod +x /usr/local/bin/docker-compose
 
-# Clonar ou atualizar o repositório
-cd /home/ubuntu/AWS || {
-  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
-}
+    # Cria o diretório se não existir
+    mkdir -p /home/ubuntu/AWS
+    # Ajusta permissões do diretório
+    sudo chmod 775 /home/ubuntu/AWS
 
-cd /home/ubuntu/AWS
-git pull origin main  # Atualiza o repositório
+    # Clonar ou atualizar o repositório
+    if [ ! -d "/home/ubuntu/AWS/.git" ]; then
+      if ! git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS; then
+        echo "Falha ao clonar o repositório" >&2
+        exit 1
+      fi
+    else
+      cd /home/ubuntu/AWS
+      if ! git pull origin main; then
+        echo "Falha ao atualizar o repositório" >&2
+        exit 1
+      fi
+    fi
 
-# Navega até o diretório do projeto
-cd /home/ubuntu/AWS
+    # Navega até o diretório do projeto e constrói a imagem Docker
+    cd /home/ubuntu/AWS
+    if ! sudo docker build -t nhyira-api .; then
+      echo "Falha ao construir a imagem Docker" >&2
+      exit 1
+    fi
 
-# Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t nhyira-api .
+    # Executa o Docker Compose para iniciar os serviços
+    if ! sudo docker-compose -f /home/ubuntu/AWS/docker-compose.yml up -d; then
+      echo "Falha ao executar o Docker Compose" >&2
+      exit 1
+    fi
+EOF
+)
 
-# Executa o Docker Compose para iniciar os serviços
- sudo docker-compose -f /home/ubuntu/AWS/docker-compose.yml up -d
-   EOF
-  )
-}
 
