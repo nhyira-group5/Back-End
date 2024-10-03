@@ -20,7 +20,7 @@ resource "aws_instance" "public_ec2_backend-1" {
     Name = "private-ec2-01"
   }
 
-
+user_data = base64encode(<<-EOF
 #!/bin/bash
 exec > /var/log/user_data.log 2>&1
 set -x
@@ -57,7 +57,9 @@ sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
-
+   EOF
+  )
+}
 
 
 resource "aws_instance" "public_ec2_backend-2" {
@@ -77,6 +79,7 @@ resource "aws_instance" "public_ec2_backend-2" {
     Name = "private-ec2-02"
   }
 
+user_data = base64encode(<<-EOF
 #!/bin/bash
 exec > /var/log/user_data.log 2>&1
 set -x
@@ -113,6 +116,10 @@ sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
+   EOF
+  )
+}
+
 
 
 resource "aws_eip_association" "eip_assoc_01" {
