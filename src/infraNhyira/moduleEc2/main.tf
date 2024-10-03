@@ -15,7 +15,7 @@ resource "aws_instance" "public_ec2_backend_1" {
     volume_type = "gp3"
   }
   key_name                    = "shh_key"
-  subnet_id                   = var.public_subnet_id # Subnet pública
+  subnet_id                   = var.subnet_idd # Subnet pública
   associate_public_ip_address = true
   vpc_security_group_ids      = [var.sg_id]
   tags = {
@@ -73,7 +73,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     volume_type = "gp3"
   }
   key_name                    = "shh_key"
-  subnet_id                   = var.private_subnet_id # Subnet privada
+  subnet_id                   = var.subnet_id # Subnet privada
   associate_public_ip_address = false
   vpc_security_group_ids      = [var.sg_id]
   tags = {
