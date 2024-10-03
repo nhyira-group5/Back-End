@@ -27,6 +27,17 @@ resource "aws_instance" "public_ec2_backend-1" {
   exec > /var/log/user_data.log 2>&1
   set -x
 
+   # Cria a pasta aws  
+  mkdir -p /home/ubuntu/aws 
+
+  # Clonar ou atualizar o repositório
+  cd /home/ubuntu/aws || {
+    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+  }
+
+ cd /home/ubuntu/aws
+  git pull origin main  # Atualiza o repositório
+
   # Atualiza pacotes e instala Java
   sudo apt-get update
   sudo apt-get install -y default-jdk
@@ -42,14 +53,7 @@ resource "aws_instance" "public_ec2_backend-1" {
   sudo systemctl start docker
   sudo systemctl enable docker
 
-  # Clonar ou atualizar o repositório
-  cd /home/ubuntu/aws || {
-    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
-  }
-
- cd /home/ubuntu/aws
-  git pull origin main  # Atualiza o repositório
-
+ 
   # Navega até o diretório do projeto
   cd /home/ubuntu/aws
 
@@ -80,10 +84,22 @@ resource "aws_instance" "private_ec2_backend_2" {
     Name = "private-ec2-02"
   }
 
+  
   user_data = base64encode(<<-EOF
   #!/bin/bash
   exec > /var/log/user_data.log 2>&1
   set -x
+
+   # Cria a pasta aws  
+  mkdir -p /home/ubuntu/aws 
+
+  # Clonar ou atualizar o repositório
+  cd /home/ubuntu/aws || {
+    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+  }
+
+ cd /home/ubuntu/aws
+  git pull origin main  # Atualiza o repositório
 
   # Atualiza pacotes e instala Java
   sudo apt-get update
@@ -100,14 +116,7 @@ resource "aws_instance" "private_ec2_backend_2" {
   sudo systemctl start docker
   sudo systemctl enable docker
 
-  # Clonar ou atualizar o repositório
-  cd /home/ubuntu/aws || {
-    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
-  }
-
- cd /home/ubuntu/aws
-  git pull origin main  # Atualiza o repositório
-
+ 
   # Navega até o diretório do projeto
   cd /home/ubuntu/aws
 
@@ -119,6 +128,7 @@ resource "aws_instance" "private_ec2_backend_2" {
   EOF
   )
 }
+
 
 
 resource "aws_eip_association" "eip_assoc_01" {
