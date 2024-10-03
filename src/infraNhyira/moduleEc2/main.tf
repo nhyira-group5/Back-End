@@ -1,9 +1,11 @@
+# Define o par de chaves (opcional)
 # resource "aws_key_pair" "generated_key" {
 #   key_name   = var.key_pair_name
 #   public_key = file("${path.module}/tf_key.pem.pub")
 # }
 
-resource "aws_instance" "private_ec2_backend_1" {
+# Instância pública
+resource "aws_instance" "public_ec2_backend_1" {
   ami               = var.ami
   availability_zone = var.az
   instance_type     = var.inst_type
@@ -13,56 +15,54 @@ resource "aws_instance" "private_ec2_backend_1" {
     volume_type = "gp3"
   }
   key_name                    = "shh_key"
-  subnet_id                   = var.subnet_id
-  associate_public_ip_address = false
+  subnet_id                   = var.public_subnet_id # Subnet pública
+  associate_public_ip_address = true
   vpc_security_group_ids      = [var.sg_id]
   tags = {
-    Name = "private-ec2-01"
+    Name = "public-ec2-01"
   }
 
-user_data = base64encode(<<-EOF
-#!/bin/bash
-exec > /var/log/user_data.log 2>&1
-set -x
+  user_data = base64encode(<<-EOF
+  #!/bin/bash
+  exec > /var/log/user_data.log 2>&1
+  set -x
 
-# Atualiza pacotes e instala Java
-sudo apt-get update
-sudo apt-get install -y default-jdk
+  # Atualiza pacotes e instala Java
+  sudo apt-get update
+  sudo apt-get install -y default-jdk
 
-# Instala Docker
-sudo apt-get install -y docker.io
+  # Instala Docker
+  sudo apt-get install -y docker.io
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+  # Instala Docker Compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
 
-# Inicia e habilita Docker
-sudo systemctl start docker
-sudo systemctl enable docker
+  # Inicia e habilita Docker
+  sudo systemctl start docker
+  sudo systemctl enable docker
 
-# Verifica se o diretório existe e clona o repositório, se necessário
-if [ ! -d "/home/ubuntu/AWS" ]; then
-  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
-else
-  # Navega até o diretório do projeto e atualiza o repositório
-  cd /home/ubuntu/AWS
-  git pull origin main
-fi
+  # Clonar ou atualizar o repositório
+  cd /home/ubuntu/aws || {
+    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+  }
 
-# Navega até o diretório do projeto
-cd /home/ubuntu/AWS
+  cd /home/ubuntu/websocket
+  git pull origin main  # Atualiza o repositório
 
-# Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t nhyira-api .
+  # Navega até o diretório do projeto
+  cd /home/ubuntu/aws
 
-# Executa o Docker Compose para iniciar os serviços
-sudo docker-compose up -d
-EOF
-)
+  # Constrói a imagem Docker usando o Dockerfile
+  sudo docker build -t nhyira-api .
+
+  # Executa o Docker Compose para iniciar os serviços
+  sudo docker-compose up -d
+  EOF
+  )
 }
 
-
-
+# Instância privada
 resource "aws_instance" "private_ec2_backend_2" {
   ami               = var.ami
   availability_zone = var.az
@@ -73,52 +73,56 @@ resource "aws_instance" "private_ec2_backend_2" {
     volume_type = "gp3"
   }
   key_name                    = "shh_key"
-  subnet_id                   = var.subnet_id
+  subnet_id                   = var.private_subnet_id # Subnet privada
   associate_public_ip_address = false
   vpc_security_group_ids      = [var.sg_id]
   tags = {
     Name = "private-ec2-02"
   }
 
+  user_data = base64encode(<<-EOF
+  #!/bin/bash
+  exec > /var/log/user_data.log 2>&1
+  set -x
 
-user_data = base64encode(<<-EOF
-#!/bin/bash
-exec > /var/log/user_data.log 2>&1
-set -x
+  # Atualiza pacotes e instala Java
+  sudo apt-get update
+  sudo apt-get install -y default-jdk
 
-# Atualiza pacotes e instala Java
-sudo apt-get update
-sudo apt-get install -y default-jdk
+  # Instala Docker
+  sudo apt-get install -y docker.io
 
-# Instala Docker
-sudo apt-get install -y docker.io
+  # Instala Docker Compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+  # Inicia e habilita Docker
+  sudo systemctl start docker
+  sudo systemctl enable docker
 
-# Inicia e habilita Docker
-sudo systemctl start docker
-sudo systemctl enable docker
+  # Clonar ou atualizar o repositório
+  cd /home/ubuntu/aws || {
+    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+  }
 
-# Verifica se o diretório existe e clona o repositório, se necessário
-if [ ! -d "/home/ubuntu/AWS" ]; then
-  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
-else
-  # Navega até o diretório do projeto e atualiza o repositório
-  cd /home/ubuntu/AWS
-  git pull origin main
-fi
+  cd /home/ubuntu/websocket
+  git pull origin main  # Atualiza o repositório
 
-# Navega até o diretório do projeto
-cd /home/ubuntu/AWS
+  # Navega até o diretório do projeto
+  cd /home/ubuntu/aws
 
-# Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t nhyira-api .
+  # Constrói a imagem Docker usando o Dockerfile
+  sudo docker build -t nhyira-api .
 
-# Executa o Docker Compose para iniciar os serviços
-sudo docker-compose up -d
-EOF
-)
+  # Executa o Docker Compose para iniciar os serviços
+  sudo docker-compose up -d
+  EOF
+  )
+}
+
+
+resource "aws_eip_association" "eip_assoc_01" {
+  instance_id   = aws_instance.public_ec2_backend-1.id
+  allocation_id  = "eipalloc-04c103f2c5910a4cb" # ID de alocação do EIP
 }
 
