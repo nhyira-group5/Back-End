@@ -47,7 +47,7 @@ resource "aws_instance" "public_ec2_backend-1" {
     git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
   }
 
-  cd /home/ubuntu/websocket
+ cd /home/ubuntu/aws
   git pull origin main  # Atualiza o repositório
 
   # Navega até o diretório do projeto
@@ -105,7 +105,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
   }
 
-  cd /home/ubuntu/websocket
+ cd /home/ubuntu/aws
   git pull origin main  # Atualiza o repositório
 
   # Navega até o diretório do projeto
