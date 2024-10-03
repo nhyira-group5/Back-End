@@ -22,24 +22,23 @@ resource "aws_instance" "public_ec2_backend-1" {
   }
 
 
-  user_data = base64encode(<<-EOF
+ user_data = base64encode(<<-EOF
   #!/bin/bash
-  exec > /var/log/user_data.log 2>&1
-  set -x
 
-   # Cria a pasta aws  
-  mkdir -p /home/ubuntu/aws 
+  # Cria a pasta aws
+  sudo mkdir -p /home/ubuntu/aws 
 
   # Clonar ou atualizar o repositório
-  cd /home/ubuntu/aws || {
-    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
-  }
-
- cd /home/ubuntu/aws
-  git pull origin main  # Atualiza o repositório
+  if [ ! -d "/home/ubuntu/aws/.git" ]; then
+    sudo git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+    sudo git clone https://PERSONAL_ACCESS_TOKEN@github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+  else
+    cd /home/ubuntu/aws
+    sudo git pull origin main  # Atualiza o repositório
+  fi
 
   # Atualiza pacotes e instala Java
-  sudo apt-get update
+  sudo apt-get update -y
   sudo apt-get install -y default-jdk
 
   # Instala Docker
@@ -53,7 +52,6 @@ resource "aws_instance" "public_ec2_backend-1" {
   sudo systemctl start docker
   sudo systemctl enable docker
 
- 
   # Navega até o diretório do projeto
   cd /home/ubuntu/aws
 
@@ -62,9 +60,9 @@ resource "aws_instance" "public_ec2_backend-1" {
 
   # Executa o Docker Compose para iniciar os serviços
   sudo docker-compose up -d
-  EOF
-  )
-}
+EOF
+)
+)
 
 # Instância privada
 resource "aws_instance" "private_ec2_backend_2" {
@@ -85,24 +83,23 @@ resource "aws_instance" "private_ec2_backend_2" {
   }
 
   
-  user_data = base64encode(<<-EOF
+ user_data = base64encode(<<-EOF
   #!/bin/bash
-  exec > /var/log/user_data.log 2>&1
-  set -x
 
-   # Cria a pasta aws  
-  mkdir -p /home/ubuntu/aws 
+  # Cria a pasta aws
+  sudo mkdir -p /home/ubuntu/aws 
 
   # Clonar ou atualizar o repositório
-  cd /home/ubuntu/aws || {
-    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
-  }
-
- cd /home/ubuntu/aws
-  git pull origin main  # Atualiza o repositório
+  if [ ! -d "/home/ubuntu/aws/.git" ]; then
+    sudo git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+    sudo git clone https://PERSONAL_ACCESS_TOKEN@github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
+  else
+    cd /home/ubuntu/aws
+    sudo git pull origin main  # Atualiza o repositório
+  fi
 
   # Atualiza pacotes e instala Java
-  sudo apt-get update
+  sudo apt-get update -y
   sudo apt-get install -y default-jdk
 
   # Instala Docker
@@ -116,7 +113,6 @@ resource "aws_instance" "private_ec2_backend_2" {
   sudo systemctl start docker
   sudo systemctl enable docker
 
- 
   # Navega até o diretório do projeto
   cd /home/ubuntu/aws
 
@@ -125,10 +121,9 @@ resource "aws_instance" "private_ec2_backend_2" {
 
   # Executa o Docker Compose para iniciar os serviços
   sudo docker-compose up -d
-  EOF
-  )
-}
-
+EOF
+)
+)
 
 
 resource "aws_eip_association" "eip_assoc_01" {
