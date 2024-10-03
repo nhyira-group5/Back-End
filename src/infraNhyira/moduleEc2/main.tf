@@ -3,7 +3,7 @@
 #   public_key = file("${path.module}/tf_key.pem.pub")
 # }
 
-resource "aws_instance" "public_ec2_backend-1" {
+resource "aws_instance" "private_ec2_backend_1" {
   ami               = var.ami
   availability_zone = var.az
   instance_type     = var.inst_type
@@ -20,49 +20,48 @@ resource "aws_instance" "public_ec2_backend-1" {
     Name = "private-ec2-01"
   }
 
-user_data = base64encode(<<-EOF
-#!/bin/bash
-exec > /var/log/user_data.log 2>&1
-set -x
+  user_data = base64encode(<<-EOF
+  #!/bin/bash
+  exec > /var/log/user_data.log 2>&1
+  set -x
 
-# Atualiza pacotes e instala Java
-sudo apt-get update -y
-sudo apt-get install -y default-jdk
+  # Atualiza pacotes e instala Java
+  sudo apt-get update -y
+  sudo apt-get install -y default-jdk
 
-# Instala Docker
-sudo apt-get install -y docker.io
+  # Instala Docker
+  sudo apt-get install -y docker.io
 
-# Inicia e habilita Docker
-sudo systemctl start docker
-sudo systemctl enable docker
+  # Inicia e habilita Docker
+  sudo systemctl start docker
+  sudo systemctl enable docker
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+  # Instala Docker Compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
 
-# Verifica se o diretório existe e clona o repositório, se necessário
-if [ ! -d "/home/ubuntu/AWS" ]; then
-  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
-else
-  # Navega até o diretório do projeto e atualiza o repositório
+  # Verifica se o diretório existe e clona o repositório, se necessário
+  if [ ! -d "/home/ubuntu/AWS" ]; then
+    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
+  else
+    # Navega até o diretório do projeto e atualiza o repositório
+    cd /home/ubuntu/AWS
+    git pull origin main
+  fi
+
+  # Navega até o diretório do projeto
   cd /home/ubuntu/AWS
-  git pull origin main
-fi
 
-# Navega até o diretório do projeto
-cd /home/ubuntu/AWS
+  # Constrói a imagem Docker usando o Dockerfile
+  sudo docker build -t nhyira-api .
 
-# Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t nhyira-api .
-
-# Executa o Docker Compose para iniciar os serviços
-sudo docker-compose up -d
-   EOF
+  # Executa o Docker Compose para iniciar os serviços
+  sudo docker-compose up -d
+  EOF
   )
 }
 
-
-resource "aws_instance" "public_ec2_backend-2" {
+resource "aws_instance" "private_ec2_backend_2" {
   ami               = var.ami
   availability_zone = var.az
   instance_type     = var.inst_type
@@ -79,50 +78,43 @@ resource "aws_instance" "public_ec2_backend-2" {
     Name = "private-ec2-02"
   }
 
-user_data = base64encode(<<-EOF
-#!/bin/bash
-exec > /var/log/user_data.log 2>&1
-set -x
+  user_data = base64encode(<<-EOF
+  #!/bin/bash
+  exec > /var/log/user_data.log 2>&1
+  set -x
 
-# Atualiza pacotes e instala Java
-sudo apt-get update -y
-sudo apt-get install -y default-jdk
+  # Atualiza pacotes e instala Java
+  sudo apt-get update -y
+  sudo apt-get install -y default-jdk
 
-# Instala Docker
-sudo apt-get install -y docker.io
+  # Instala Docker
+  sudo apt-get install -y docker.io
 
-# Inicia e habilita Docker
-sudo systemctl start docker
-sudo systemctl enable docker
+  # Inicia e habilita Docker
+  sudo systemctl start docker
+  sudo systemctl enable docker
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+  # Instala Docker Compose
+  sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  sudo chmod +x /usr/local/bin/docker-compose
 
-# Verifica se o diretório existe e clona o repositório, se necessário
-if [ ! -d "/home/ubuntu/AWS" ]; then
-  git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
-else
-  # Navega até o diretório do projeto e atualiza o repositório
+  # Verifica se o diretório existe e clona o repositório, se necessário
+  if [ ! -d "/home/ubuntu/AWS" ]; then
+    git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/AWS
+  else
+    # Navega até o diretório do projeto e atualiza o repositório
+    cd /home/ubuntu/AWS
+    git pull origin main
+  fi
+
+  # Navega até o diretório do projeto
   cd /home/ubuntu/AWS
-  git pull origin main
-fi
 
-# Navega até o diretório do projeto
-cd /home/ubuntu/AWS
+  # Constrói a imagem Docker usando o Dockerfile
+  sudo docker build -t nhyira-api .
 
-# Constrói a imagem Docker usando o Dockerfile
-sudo docker build -t nhyira-api .
-
-# Executa o Docker Compose para iniciar os serviços
-sudo docker-compose up -d
-   EOF
+  # Executa o Docker Compose para iniciar os serviços
+  sudo docker-compose up -d
+  EOF
   )
-}
-
-
-
-resource "aws_eip_association" "eip_assoc_01" {
-  instance_id   = aws_instance.public_ec2_backend-1.id
-  allocation_id  = "eipalloc-04c103f2c5910a4cb" # ID de alocação do EIP
 }
