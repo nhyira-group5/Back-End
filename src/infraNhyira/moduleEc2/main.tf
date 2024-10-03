@@ -4,8 +4,7 @@
 #   public_key = file("${path.module}/tf_key.pem.pub")
 # }
 
-# Instância pública
-resource "aws_instance" "public_ec2_backend_1" {
+resource "aws_instance" "public_ec2_backend-1" {
   ami               = var.ami
   availability_zone = var.az
   instance_type     = var.inst_type
@@ -15,12 +14,13 @@ resource "aws_instance" "public_ec2_backend_1" {
     volume_type = "gp3"
   }
   key_name                    = "shh_key"
-  subnet_id                   = var.subnet_id # Subnet pública
-  associate_public_ip_address = true
+  subnet_id                   = var.subnet_id
+  associate_public_ip_address = false
   vpc_security_group_ids      = [var.sg_id]
   tags = {
-    Name = "public-ec2-01"
+    Name = "private-ec2-01"
   }
+
 
   user_data = base64encode(<<-EOF
   #!/bin/bash
