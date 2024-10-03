@@ -21,25 +21,24 @@ resource "aws_instance" "public_ec2_backend-1" {
   }
 
 
-user_data = base64encode(<<-EOF
 #!/bin/bash
 exec > /var/log/user_data.log 2>&1
 set -x
 
 # Atualiza pacotes e instala Java
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y default-jdk
 
 # Instala Docker
 sudo apt-get install -y docker.io
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
 # Inicia e habilita Docker
 sudo systemctl start docker
 sudo systemctl enable docker
+
+# Instala Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 # Verifica se o diretório existe e clona o repositório, se necessário
 if [ ! -d "/home/ubuntu/AWS" ]; then
@@ -58,9 +57,6 @@ sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
-    EOF
-  )
-}
 
 
 
@@ -81,25 +77,24 @@ resource "aws_instance" "public_ec2_backend-2" {
     Name = "private-ec2-02"
   }
 
-  user_data = base64encode(<<-EOF
 #!/bin/bash
 exec > /var/log/user_data.log 2>&1
 set -x
 
 # Atualiza pacotes e instala Java
-sudo apt-get update
+sudo apt-get update -y
 sudo apt-get install -y default-jdk
 
 # Instala Docker
 sudo apt-get install -y docker.io
 
-# Instala Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
 # Inicia e habilita Docker
 sudo systemctl start docker
 sudo systemctl enable docker
+
+# Instala Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 
 # Verifica se o diretório existe e clona o repositório, se necessário
 if [ ! -d "/home/ubuntu/AWS" ]; then
@@ -118,9 +113,6 @@ sudo docker build -t nhyira-api .
 
 # Executa o Docker Compose para iniciar os serviços
 sudo docker-compose up -d
-    EOF
-  )
-}
 
 
 resource "aws_eip_association" "eip_assoc_01" {
