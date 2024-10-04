@@ -55,8 +55,12 @@ resource "aws_instance" "public_ec2_backend-1" {
   # Navega até o diretório do projeto
   cd /home/ubuntu/aws
 
+
   # Constrói a imagem Docker usando o Dockerfile
   sudo docker build -t nhyira-api .
+
+  # baixa o Docker Compose para iniciar os serviços
+ sudo apt  install docker-compose
 
   # Executa o Docker Compose para iniciar os serviços
   sudo docker-compose up -d
@@ -82,8 +86,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     Name = "private-ec2-02"
   }
 
-  
- user_data = base64encode(<<-EOF
+user_data = base64encode(<<-EOF
   #!/bin/bash
 
   # Cria a pasta aws
@@ -116,8 +119,12 @@ resource "aws_instance" "private_ec2_backend_2" {
   # Navega até o diretório do projeto
   cd /home/ubuntu/aws
 
+
   # Constrói a imagem Docker usando o Dockerfile
   sudo docker build -t nhyira-api .
+
+  # baixa o Docker Compose para iniciar os serviços
+ sudo apt  install docker-compose
 
   # Executa o Docker Compose para iniciar os serviços
   sudo docker-compose up -d
