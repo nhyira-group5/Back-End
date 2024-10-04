@@ -61,7 +61,7 @@ resource "aws_instance" "public_ec2_backend_1" {
     sudo docker build -t nhyira-api .
 
     # Executa o Docker Compose para iniciar os serviços
-    sudo docker-compose up -d
+    sudo docker-compose up --build
 EOF
   )
 }
@@ -124,7 +124,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     sudo docker build -t nhyira-api .
 
     # Executa o Docker Compose para iniciar os serviços
-    sudo docker-compose up -d
+    sudo docker-compose up --build
 EOF
   )
 }
