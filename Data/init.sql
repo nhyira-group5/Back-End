@@ -1,1086 +1,813 @@
-USE vitalisDB;
-GO
+-- ---------------------------------------------------------------------------
+-- TRIGGERS & PROCEDURES
+-- ---------------------------------------------------------------------------
+DELIMITER //
 
--- ---------------------------------------------------------------------------
--- TRIGGERS && PROCEDURES
--- ---------------------------------------------------------------------------
+-- ROTINA PADRÂO PÓS CRIAÇÂO DO PERFIL
 CREATE TRIGGER cria_rotina
-ON rotina_usuario
-AFTER INSERT
-AS
+AFTER INSERT ON rotina_usuario
+FOR EACH ROW
 BEGIN
-    DECLARE @rotina_mensal_id INT;
-    DECLARE @rotina_semanal_id INT;
-    DECLARE @rotina_diaria_id INT;
-    DECLARE @num_semana INT;
-    DECLARE @dia INT;
-    DECLARE @padrao INT = 1;
-    DECLARE @meta_id INT;
-    DECLARE @current_date DATE = GETDATE();
+    DECLARE rotina_mensal_id INT;
+    DECLARE rotina_semanal_id INT;
+    DECLARE rotina_diaria_id INT;
+    DECLARE num_semana INT;
+    DECLARE dia INT;
+    DECLARE padrao INT DEFAULT 1;
 
-    SELECT @meta_id = meta_id
-    FROM inserted;
-
+	-- Cria a rotina mensal do usuário
     INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
-    VALUES
-    ((SELECT id_rotina_usuario FROM inserted), MONTH(@current_date), YEAR(@current_date), 0);
+    VALUES 
+    (NEW.id_rotina_usuario, MONTH(CURDATE()), YEAR(CURDATE()), 0);
 
-    SET @rotina_mensal_id = SCOPE_IDENTITY();
+    SET rotina_mensal_id = LAST_INSERT_ID();
 
-    SET @num_semana = 1;
-    WHILE @num_semana <= 5
-    BEGIN
+	-- Cria as rotinas semanais do usuário para a rotina mensal
+    SET num_semana = 1;
+    WHILE num_semana <= 5 DO
         INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
-        VALUES
-        (@rotina_mensal_id, @num_semana, 0);
+        VALUES 
+        (rotina_mensal_id, num_semana, 0);
 
-        SET @rotina_semanal_id = SCOPE_IDENTITY();
-
-        SET @dia = 1;
-        WHILE @dia <= 7
-        BEGIN
+        SET rotina_semanal_id = LAST_INSERT_ID();
+        
+        -- Para cada semana, criar sua rotina por dia
+        SET dia = 1;
+        WHILE dia <= 7 DO
             INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
-            VALUES
-            (@rotina_semanal_id, @dia, 0);
+            VALUES 
+            (rotina_semanal_id, dia, 0);
 
-            SET @rotina_diaria_id = SCOPE_IDENTITY();
+            SET rotina_diaria_id = LAST_INSERT_ID();
+			
+            -- Caso a caso a meta seja X... Monte o treino para a rotina diária
+			CASE NEW.meta_id
+				WHEN 1 THEN
+					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+					VALUES
+					(1, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+					(2, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+					(3, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+					(4, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+					(5, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+					(6, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+					(7, rotina_diaria_id, 0, 12, 3, '00:01:00');
+                WHEN 2 THEN
+					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+					VALUES
+					(8, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+					(9, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+					(10, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+					(11, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+					(12, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+					(13, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+					(14, rotina_diaria_id, 0, 12, 3, '00:01:00');
+            END CASE;
 
-            IF @meta_id = 1
-            BEGIN
-                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
-                VALUES
-                (1, @rotina_diaria_id, 0, 15, 3, '00:01:00'),
-                (2, @rotina_diaria_id, 0, 12, 3, '00:02:00'),
-                (3, @rotina_diaria_id, 0, 10, 3, '00:01:30'),
-                (4, @rotina_diaria_id, 0, 20, 3, '00:01:00'),
-                (5, @rotina_diaria_id, 0, 8, 3, '00:02:00'),
-                (6, @rotina_diaria_id, 0, 15, 3, '00:01:30'),
-                (7, @rotina_diaria_id, 0, 12, 3, '00:01:00');
-            END
-            ELSE IF @meta_id = 2
-            BEGIN
-                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
-                VALUES
-                (8, @rotina_diaria_id, 0, 15, 3, '00:01:00'),
-                (9, @rotina_diaria_id, 0, 12, 3, '00:02:00'),
-                (10, @rotina_diaria_id, 0, 10, 3, '00:01:30'),
-                (11, @rotina_diaria_id, 0, 20, 3, '00:01:00'),
-                (12, @rotina_diaria_id, 0, 8, 3, '00:02:00'),
-                (13, @rotina_diaria_id, 0, 15, 3, '00:01:30'),
-                (14, @rotina_diaria_id, 0, 12, 3, '00:01:00');
-            END
+			-- Caso a caso a meta seja X... Monte as refeições para a rotina diária para cada dia
+            CASE NEW.meta_id
+				WHEN 1 THEN
+					CASE padrao
+						WHEN 1 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 3, 0);
+						WHEN 2 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0);
+						WHEN 3 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 4 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 5 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 3, 0);
+					END CASE;
+                WHEN 2 THEN
+					CASE padrao
+						WHEN 1 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 3, 0);
+						WHEN 2 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 3, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0);
+						WHEN 3 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 4 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 5 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 3, 0);
+					END CASE;
+            END CASE;
+			
+            -- Padrão serve para variar as rotinas diárias
+            SET padrao = padrao + 1;
+            IF padrao > 3 THEN
+                SET padrao = 1;
+            END IF;
+            
+            -- Para cada repetição, aumenta o dia
+            SET dia = dia + 1;
+        END WHILE;
+		
+        -- Para cada repetição, aumenta a semana
+        SET num_semana = num_semana + 1;
+    END WHILE;
 
-            IF @meta_id = 1
-            BEGIN
-                IF @padrao = 1
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 1, 0),
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 3, 0);
-                END
-                ELSE IF @padrao = 2
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 1, 0),
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 4, 0);
-                END
-                ELSE IF @padrao = 3
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 1, 0),
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 5, 0);
-                END
-                ELSE IF @padrao = 4
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 4, 0),
-                    (@rotina_diaria_id, 5, 0);
-                END
-                ELSE IF @padrao = 5
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 5, 0),
-                    (@rotina_diaria_id, 4, 0),
-                    (@rotina_diaria_id, 3, 0);
-                END
-            END
-            ELSE IF @meta_id = 2
-            BEGIN
-                IF @padrao = 1
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 5, 0),
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 3, 0);
-                END
-                ELSE IF @padrao = 2
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 3, 0),
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 4, 0);
-                END
-                ELSE IF @padrao = 3
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 5, 0),
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 5, 0);
-                END
-                ELSE IF @padrao = 4
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 2, 0),
-                    (@rotina_diaria_id, 4, 0),
-                    (@rotina_diaria_id, 5, 0);
-                END
-                ELSE IF @padrao = 5
-                BEGIN
-                    INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-                    (@rotina_diaria_id, 5, 0),
-                    (@rotina_diaria_id, 4, 0),
-                    (@rotina_diaria_id, 3, 0);
-                END
-            END
+END //
 
-            SET @padrao = @padrao + 1;
-            IF @padrao > 3
-            BEGIN
-                SET @padrao = 1;
-            END
+DELIMITER ;
 
-            SET @dia = @dia + 1;
-        END
+-- ----------------------------------------- --
 
-        SET @num_semana = @num_semana + 1;
-    END
-END;
-GO
+DELIMITER //
 
-
---
-CREATE PROCEDURE atualizar_rotinas_expiradas
-AS
+-- FINALIZADA
+	-- EMAGRECIMENTO -> 3/3 TREINOS, 3/3 REF 
+	-- GANHAR MASSA	 -> 3/3 TREINOS, 3/3 REF 
+CREATE PROCEDURE atualizar_rotinas_expiradas()
 BEGIN
-    -- Declara vari�veis
-    DECLARE @done INT = 0;
-    DECLARE @rotina_usuario_id INT;
-    DECLARE @ultimo_mes INT;
-    DECLARE @ultimo_ano INT;
-    DECLARE @rotina_mensal_id INT;
-    DECLARE @rotina_semanal_id INT;
-    DECLARE @rotina_diaria_id INT;
-    DECLARE @num_semana INT;
-    DECLARE @dia INT;
-    DECLARE @treino_aleatorio INT;
-    DECLARE @meta_id INT;
+    DECLARE done INT DEFAULT 0;
+    DECLARE rotina_usuario_id INT;
+    DECLARE ultimo_mes INT;
+    DECLARE ultimo_ano INT;
+    DECLARE rotina_mensal_id INT;
+    DECLARE rotina_semanal_id INT;
+    DECLARE rotina_diaria_id INT;
+    DECLARE num_semana INT;
+    DECLARE dia INT;
+    DECLARE padrao INT DEFAULT 1;
+    DECLARE meta_id INT;
+    DECLARE treino_aleatorio INT;
 
-    -- Declara cursor
+    -- Cursor para iterar sobre os usuários
     DECLARE cursor_usuario CURSOR FOR
-    SELECT id_rotina_usuario
-    FROM rotina_usuario;
+    SELECT id_rotina_usuario FROM rotina_usuario;
 
-    -- Abre o cursor
+    -- Manipulador para o final do cursor
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
     OPEN cursor_usuario;
+    read_loop: LOOP
+        FETCH cursor_usuario INTO rotina_usuario_id;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
 
-    -- Inicia o loop para ler dados do cursor
-    FETCH NEXT FROM cursor_usuario INTO @rotina_usuario_id;
-
-    WHILE @@FETCH_STATUS = 0
-    BEGIN
-        -- Obt�m a �ltima rotina mensal do usu�rio
-        SELECT @ultimo_mes = mes, @ultimo_ano = ano
+        -- Verifica a última rotina mensal do usuário
+        SELECT mes, ano 
+        INTO ultimo_mes, ultimo_ano
         FROM rotina_mensal
-        WHERE rotina_usuario_id = @rotina_usuario_id
-        ORDER BY ano DESC, mes DESC;
+        WHERE rotina_usuario_id = rotina_usuario_id
+        ORDER BY ano DESC, mes DESC
+        LIMIT 1;
 
-        -- Se a �ltima rotina mensal for anterior ao m�s atual, criar nova rotina mensal
-        IF @ultimo_mes < MONTH(GETDATE()) OR @ultimo_ano < YEAR(GETDATE())
-        BEGIN
+        -- Se a última rotina mensal for anterior ao mês atual, criar nova rotina mensal
+        IF ultimo_mes < MONTH(CURDATE()) OR ultimo_ano < YEAR(CURDATE()) THEN
+
             -- Cria a nova rotina mensal
             INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
-            VALUES (@rotina_usuario_id, MONTH(GETDATE()), YEAR(GETDATE()), 0);
+            VALUES 
+            (rotina_usuario_id, MONTH(CURDATE()), YEAR(CURDATE()), 0);
 
-            SET @rotina_mensal_id = SCOPE_IDENTITY();
+            SET rotina_mensal_id = LAST_INSERT_ID();
 
             -- Cria as rotinas semanais para a nova rotina mensal
-            SET @num_semana = 1;
-            WHILE @num_semana <= 5
-            BEGIN
-                -- Gera um n�mero aleat�rio entre 1 e 3 para selecionar a rotina de treino
-                SET @treino_aleatorio = ABS(CHECKSUM(NEWID()) % 3) + 1;
-
+            SET num_semana = 1;
+            WHILE num_semana <= 5 DO
+				-- Gera um número aleatório entre 1 e 3 para selecionar a rotina de treino
+				SET treino_aleatorio = FLOOR(1 + RAND() * 3);
+            
                 INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
-                VALUES (@rotina_mensal_id, @num_semana, 0);
+                VALUES 
+                (rotina_mensal_id, num_semana, 0);
 
-                SET @rotina_semanal_id = SCOPE_IDENTITY();
+                SET rotina_semanal_id = LAST_INSERT_ID();
 
-                -- Cria as rotinas di�rias para cada semana
-                SET @dia = 1;
-                WHILE @dia <= 6
-                BEGIN
+                -- Cria as rotinas diárias para cada semana
+                SET dia = 1;
+                WHILE dia <= 6 DO
                     INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
-                    VALUES (@rotina_semanal_id, @dia, 0);
+                    VALUES 
+                    (rotina_semanal_id, dia, 0);
+
+                    SET rotina_diaria_id = LAST_INSERT_ID();
+
+                    -- Obtém a meta do usuário
+                    SELECT meta_id INTO meta_id FROM rotina_usuario WHERE id_rotina_usuario = rotina_usuario_id;
+
+                    -- Adiciona os treinos diários com base na meta do usuário e no número aleatório
+                    CASE meta_id
+                        WHEN 1 THEN -- EMAGRECIMENTO
+                            CASE treino_aleatorio
+								WHEN 1 THEN	-- ROTINA 1
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(21, rotina_diaria_id, 0, 10, 3, '00:03:30'), -- Burpees
+											(2, rotina_diaria_id, 0, 15, 4, '00:05:50'), -- Agachamento Livre
+											(1, rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Flexão de Braço
+											(9, rotina_diaria_id, 0, 1, 3, '00:04:30'), -- Prancha Abdominal
+											(32, rotina_diaria_id, 0, 20, 4, '00:06:30'); -- Mountain Climbers
+										WHEN 2 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(22, rotina_diaria_id, 0, 30, 3, '00:07:30'), -- Jumping Jacks
+											(23, rotina_diaria_id, 0, 12, 4, '00:05:50'), -- Afundo
+											(19, rotina_diaria_id, 0, 15, 3, '00:06:00'), -- Prancha Superman
+											(33, rotina_diaria_id, 0, 20, 3, '00:06:00'), -- Bicicleta Abdominal
+											(24, rotina_diaria_id, 0, 30, 3, '00:07:30'); -- Polichinelos
+										WHEN 3 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(25, rotina_diaria_id, 0, 50, 3, '00:05:00'), -- Pula Corda
+											(26, rotina_diaria_id, 0, 15, 3, '00:05:50'), -- Ponte (Glúteos)
+											(13, rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Tríceps Pulley
+											(34, rotina_diaria_id, 0, 15, 3, '00:05:30'), -- Abdominal Infra
+											(27, rotina_diaria_id, 0, 20, 5, '00:06:10'); -- Sprint
+										WHEN 4 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(28, rotina_diaria_id, 0, 30, 3, '00:07:00'), -- High Knees
+											(17, rotina_diaria_id, 0, 15, 3, '00:05:50'), -- Elevação Lateral
+											(14, rotina_diaria_id, 0, 30, 3, '00:06:15'), -- Prancha Lateral
+											(35, rotina_diaria_id, 0, 20, 4, '00:06:30'), -- Elevação de Panturrilha
+											(29, rotina_diaria_id, 0, 20, 4, '00:06:30'); -- Skaters
+										WHEN 5 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(36, rotina_diaria_id, 0, 1, 1, '00:25:00'), -- Corrida (Cardio)
+											(4, rotina_diaria_id, 0, 20, 3, '00:05:00'), -- Abdominal Crunch
+											(30, rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Pullover
+											(11, rotina_diaria_id, 0, 10, 4, '00:06:30'), -- Leg Press
+											(37, rotina_diaria_id, 0, 15, 3, '00:05:30'); -- Prancha com Toque no Ombro
+										WHEN 6 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(21, rotina_diaria_id, 0, 10, 3, '00:03:30'), -- Burpees
+											(38, rotina_diaria_id, 0, 10, 3, '00:05:00'), -- Flexão com Abertura
+											(39, rotina_diaria_id, 0, 1, 3, '00:04:30'), -- Agachamento Isométrico
+											(22, rotina_diaria_id, 0, 15, 3, '00:05:30'), -- Jumping Jacks
+											(40, rotina_diaria_id, 0, 15, 3, '00:05:30'); -- Abdominal V-Sit
+									END CASE;
+                                WHEN 2 THEN -- ROTINA 2
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 15, 3, '00:05:30'),
+											(1, rotina_diaria_id, 0, 12, 4, '00:06:15'),
+											(4, rotina_diaria_id, 0, 10, 3, '00:05:15'),
+											(21, rotina_diaria_id, 0, 12, 3, '00:05:15'),
+											(9, rotina_diaria_id, 0, 1, 4, '00:06:30');
+										WHEN 2 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
+											(23, rotina_diaria_id, 0, 15, 4, '00:06:40'),
+											(42, rotina_diaria_id, 0, 12, 3, '00:05:30'),
+											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
+											(14, rotina_diaria_id, 0, 12, 4, '00:06:30');
+										WHEN 3 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 15, 3, '00:05:30'),
+											(1, rotina_diaria_id, 0, 12, 4, '00:06:15'),
+											(4, rotina_diaria_id, 0, 10, 3, '00:05:15'),
+											(21, rotina_diaria_id, 0, 12, 3, '00:05:15'),
+											(9, rotina_diaria_id, 0, 1, 4, '00:06:30');
+										WHEN 4 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
+											(23, rotina_diaria_id, 0, 15, 4, '00:06:40'),
+											(42, rotina_diaria_id, 0, 12, 3, '00:05:30'),
+											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
+											(14, rotina_diaria_id, 0, 12, 4, '00:06:30');
+										WHEN 5 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 15, 3, '00:05:30'),
+											(1, rotina_diaria_id, 0, 12, 4, '00:06:15'),
+											(4, rotina_diaria_id, 0, 10, 3, '00:05:15'),
+											(21, rotina_diaria_id, 0, 12, 3, '00:05:15'),
+											(9, rotina_diaria_id, 0, 1, 4, '00:06:30');
+										WHEN 6 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
+											(23, rotina_diaria_id, 0, 15, 4, '00:06:40'),
+											(42, rotina_diaria_id, 0, 12, 3, '00:05:30'),
+											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
+											(14, rotina_diaria_id, 0, 12, 4, '00:06:30');
+                                    END CASE;
+                                WHEN 3 THEN -- ROTINA 3
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
+											(1, rotina_diaria_id, 0, 15, 3, '00:05:40'),
+											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
+											(4, rotina_diaria_id, 0, 1, 3, '00:03:00'),
+											(9, rotina_diaria_id, 0, 1, 3, '00:04:30');
+										WHEN 2 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 10, 3, '00:04:35'),
+											(21, rotina_diaria_id, 0, 15, 3, '00:05:40'),
+											(42, rotina_diaria_id, 0, 15, 3, '00:05:30'),
+											(14, rotina_diaria_id, 0, 1, 3, '00:04:00'),
+											(1, rotina_diaria_id, 0, 15, 4, '00:06:30');
+										WHEN 3 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
+											(1, rotina_diaria_id, 0, 15, 3, '00:05:40'),
+											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
+											(4, rotina_diaria_id, 0, 1, 3, '00:03:00'),
+											(9, rotina_diaria_id, 0, 1, 3, '00:04:30');
+										WHEN 4 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(21, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- burpee
+											(1, rotina_diaria_id, 0, 15, 4, '00:06:30'), -- flexao de braço
+											(42, rotina_diaria_id, 0, 15, 3, '00:05:30'), -- elevação de quadril
+											(2, rotina_diaria_id, 0, 10, 3, '00:04:35'), -- prancha lateral
+											(14, rotina_diaria_id, 0, 1, 3, '00:04:00'); -- agachamento livre
+										WHEN 5 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 10, 3, '00:04:35'), -- agachamento livre 
+											(21, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- burpee
+											(42, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- elevação de quadril
+											(14, rotina_diaria_id, 0, 1, 3, '00:04:30'), -- prancha lateral
+											(1, rotina_diaria_id, 0, 15, 3, '00:05:40'); -- flexao de braço
+										WHEN 6 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(41, rotina_diaria_id, 0, 1, 3, '00:04:35'), -- corrida no lugar
+											(24, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- polichinelo
+											(3, rotina_diaria_id, 0, 15, 3, '00:06:00'), -- abdominal crunch
+											(9, rotina_diaria_id, 0, 1, 3, '00:04:35'), -- prancha
+											(23, rotina_diaria_id, 0, 15, 3, '00:06:00'); -- afundo
+                                    END CASE;
+                            END CASE;
+                        WHEN 2 THEN		-- GANHAR MASSA
+                            CASE treino_aleatorio
+								WHEN 1 THEN
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(43, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(10, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(7, rotina_diaria_id, 0, 15, 4, '00:06:30'),
+											(13, rotina_diaria_id, 0, 15, 4, '00:06:30');
+										WHEN 2 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(11, rotina_diaria_id, 0, 15, 4, '00:06:45'),
+											(44, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(45, rotina_diaria_id, 0, 20, 4, '00:07:30'),
+											(34, rotina_diaria_id, 0, 20, 4, '00:07:30');
+										WHEN 3 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(46, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(16, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(5, rotina_diaria_id, 0, 8, 4, '00:04:15'),
+											(47, rotina_diaria_id, 0, 15, 4, '00:06:30'),
+											(48, rotina_diaria_id, 0, 20, 4, '00:07:30');
+										WHEN 4 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(49, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(17, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(50, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(51, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(9, rotina_diaria_id, 0, 1, 4, '00:06:15');
+										WHEN 5 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(52, rotina_diaria_id, 0, 12, 4, '00:05:45'),
+											(53, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(15, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(35, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(54, rotina_diaria_id, 0, 15, 4, '00:05:45');
+										WHEN 6 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(55, rotina_diaria_id, 0, 10, 6, '00:07:45'),
+											(56, rotina_diaria_id, 0, 12, 8, '00:09:45'),
+											(57, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(58, rotina_diaria_id, 0, 15, 4, '00:05:45'),
+											(59, rotina_diaria_id, 0, 15, 4, '00:05:15');
+                                    END CASE;
+                                WHEN 2 THEN
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Livre
+											(45, rotina_diaria_id, 0, 15, 4, '00:05:30'), -- Panturrilha no Smith
+											(43, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Supino Reto
+											(33, rotina_diaria_id, 0, 15, 4, '00:05:30'); -- Abdominal
+										WHEN 2 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(7, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Rosca Direta
+											(13, rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Tríceps Pulley
+											(44, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Stiff
+											(34, rotina_diaria_id, 0, 15, 4, '00:03:00'); -- Abdominal Infra
+										WHEN 3 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(46, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Remada Curvada
+											(16, rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Puxada Frontal
+											(47, rotina_diaria_id, 0, 15, 4, '00:02:30'), -- Encolhimento de Ombros
+											(48, rotina_diaria_id, 0, 15, 4, '00:02:30'); -- Abdominal Oblíquo
+										WHEN 4 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(49, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Supino Inclinado
+											(17, rotina_diaria_id, 0, 12, 4, '00:03:00'), -- Elevação Lateral
+											(50, rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Rosca Martelo
+											(51, rotina_diaria_id, 0, 12, 4, '00:03:00'); -- Tríceps Testa
+										WHEN 5 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(52, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Agachamento Hack
+											(53, rotina_diaria_id, 0, 12, 4, '00:03:00'), -- Extensão de Pernas
+											(54, rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Flexão de Pernas
+											(55, rotina_diaria_id, 0, 15, 4, '00:03:00'); -- Elevação de Panturrilha
+										WHEN 6 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(56, rotina_diaria_id, 0, 8, 4, '00:03:00'), -- Barra Fixa
+											(52, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Agachamento Hack
+											(57, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Levantamento Terra
+											(58, rotina_diaria_id, 0, 1, 4, '00:01:00'); -- Abdominal Prancha
+                                    END CASE;
+                                WHEN 3 THEN
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(49, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Supino Inclinado
+											(10, rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Desenvolvimento de Ombros
+											(7, rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Rosca Direta
+											(13, rotina_diaria_id, 0, 12, 4, '00:03:00'); -- Tríceps Pulley
+										WHEN 2 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(2, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Livre
+											(11, rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Leg Press
+											(44, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Stiff
+											(45, rotina_diaria_id, 0, 15, 4, '00:07:00'); -- Panturrilha no Smith
+										WHEN 3 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(46, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Remada Curvada
+											(16, rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Puxada Frontal
+											(5, rotina_diaria_id, 0, 10, 4, '00:11:00'), -- Levantamento Terra
+											(4, rotina_diaria_id, 0, 15, 4, '00:05:30'); -- Abdominal Crunch
+										WHEN 4 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(43, rotina_diaria_id, 0, 10, 4, '00:08:15'), -- Supino Reto
+											(17, rotina_diaria_id, 0, 12, 4, '00:08:15'), -- Elevação Lateral
+											(50, rotina_diaria_id, 0, 10, 4, '00:08:25'), -- Rosca Martelo
+											(13, rotina_diaria_id, 0, 12, 4, '00:08:25'); -- Tríceps Pulley
+										WHEN 5 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(52, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Hack
+											(53, rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Extensão de Pernas
+											(50, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Flexão de Pernas
+											(45, rotina_diaria_id, 0, 15, 4, '00:07:00'); -- Elevação de Panturrilha
+										WHEN 6 THEN
+											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
+											(5, rotina_diaria_id, 0, 10, 4, '00:12:00'), -- Levantamento Terra
+											(54, rotina_diaria_id, 0, 15, 4, '00:05:45'), -- Abdominal Bicicleta (sexta-feira)
+											(53, rotina_diaria_id, 0, 12, 4, '00:08:15'), -- Extensão de Pernas (sábado)
+											(44, rotina_diaria_id, 0, 10, 4, '00:08:15'), -- Stiff
+											(58, rotina_diaria_id, 0, 15, 4, '00:05:45'); -- Abdominal Canivete
+									END CASE;
+                            END CASE;
+                    END CASE;
+
+                    -- Refeições diárias com base na meta do usuário
+                    CASE meta_id
+                        WHEN 1 THEN		-- EMAGRECIMENTO
+                            CASE treino_aleatorio
+								WHEN 1 THEN	-- ROTINA REFEICAO 1
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 6, 0),
+											(rotina_diaria_id, 3, 0),
+											(rotina_diaria_id, 7, 0);
+										WHEN 2 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 9, 0),
+											(rotina_diaria_id, 10, 0);
+                                        WHEN 3 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 12, 0),
+											(rotina_diaria_id, 13, 0);
+                                        WHEN 4 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 14, 0),
+											(rotina_diaria_id, 15, 0),
+											(rotina_diaria_id, 16, 0);
+                                        WHEN 5 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 17, 0),
+											(rotina_diaria_id, 7, 0),
+											(rotina_diaria_id, 18, 0);
+                                        WHEN 6 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 19, 0),
+											(rotina_diaria_id, 20, 0),
+											(rotina_diaria_id, 21, 0);
+                                    END CASE;
+                                WHEN 2 THEN	-- ROTINA REFEICAO 2
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 24, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 9, 0),
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 18, 0);
+										WHEN 2 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 25, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 2, 0),
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 13, 0);
+										WHEN 3 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 3, 0),
+											(rotina_diaria_id, 21, 0),
+											(rotina_diaria_id, 24, 0);
+										WHEN 4 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 14, 0),
+											(rotina_diaria_id, 23, 0),
+											(rotina_diaria_id, 13, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 22, 0);
+										WHEN 5 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 26, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 4, 0),
+											(rotina_diaria_id, 19, 0),
+											(rotina_diaria_id, 27, 0);
+										WHEN 6 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 25, 0),
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 28, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 18, 0);
+                                    END CASE;
+                                WHEN 3 THEN	-- ROTINA REFEICAO 3
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
+											(rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
+											(rotina_diaria_id, 24, 0), -- Omelete de Claras
+											(rotina_diaria_id, 25, 0), -- Smoothie Verde
+											(rotina_diaria_id, 27, 0); -- Salada de Atum
+										WHEN 2 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
+											(rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
+											(rotina_diaria_id, 12, 0), -- Macarrão Integral com Molho de Tomate e Frango
+											(rotina_diaria_id, 19, 0), -- Overnight Oats com Frutas Vermelhas
+											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
+										WHEN 3 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 6, 0), -- Omelete de Legumes
+											(rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
+											(rotina_diaria_id, 17, 0), -- Pão Integral com Ovo Mexido e Abacate
+											(rotina_diaria_id, 28, 0), -- Salada com Quinoa
+											(rotina_diaria_id, 32, 0); -- Tilápia com Legumes
+										WHEN 4 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 1, 0), -- Virada Paulista
+											(rotina_diaria_id, 14, 0), -- Tapioca Recheada
+											(rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
+											(rotina_diaria_id, 26, 0), -- Panqueca de Banana
+											(rotina_diaria_id, 31, 0); -- Bife com Salada
+										WHEN 5 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
+											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
+											(rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
+											(rotina_diaria_id, 21, 0), -- Wraps de Frango com Salada
+											(rotina_diaria_id, 29, 0); -- Smoothie Protéico
+										WHEN 6 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
+											(rotina_diaria_id, 22, 0), -- Risoto de Abóbora com Frango Desfiado
+											(rotina_diaria_id, 23, 0), -- Salada Caprese com Pão Integral
+											(rotina_diaria_id, 24, 0), -- Omelete de Claras
+											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
+									END CASE;
+                            END CASE;
+                        WHEN 2 THEN		-- GANHO DE MASSA
+                            CASE treino_aleatorio
+								WHEN 1 THEN	-- ROTINA REFEICAO 1
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 6, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 9, 0),
+											(rotina_diaria_id, 27, 0),
+											(rotina_diaria_id, 3, 0);
+										WHEN 2 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 29, 0),
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 30, 0),
+											(rotina_diaria_id, 21, 0),
+											(rotina_diaria_id, 32, 0);
+                                        WHEN 3 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 11, 0),
+											(rotina_diaria_id, 29, 0),
+											(rotina_diaria_id, 4, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 31, 0);
+                                        WHEN 4 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 26, 0),
+											(rotina_diaria_id, 19, 0),
+											(rotina_diaria_id, 3, 0),
+											(rotina_diaria_id, 25, 0),
+											(rotina_diaria_id, 13, 0);
+                                        WHEN 5 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 6, 0),
+											(rotina_diaria_id, 21, 0),
+											(rotina_diaria_id, 4, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 16, 0);
+                                        WHEN 6 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 29, 0),
+											(rotina_diaria_id, 10, 0),
+											(rotina_diaria_id, 13, 0),
+											(rotina_diaria_id, 8, 0),
+											(rotina_diaria_id, 3, 0);
+                                    END CASE;
+                                WHEN 2 THEN -- ROTINA REFEICAO 2
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 3, 0), -- Salmão com Quinoa
+											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
+											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
+											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
+											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
+
+										WHEN 2 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
+											(rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
+											(rotina_diaria_id, 12, 0), -- Macarrão Integral com Molho de Tomate e Frango
+											(rotina_diaria_id, 22, 0), -- Risoto de Abóbora com Frango Desfiado
+											(rotina_diaria_id, 29, 0); -- Smoothie Protéico
+										WHEN 3 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 1, 0), -- Virada Paulista
+											(rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
+											(rotina_diaria_id, 14, 0), -- Tapioca Recheada
+											(rotina_diaria_id, 25, 0), -- Smoothie Verde
+											(rotina_diaria_id, 31, 0); -- Bife com Salada
+										WHEN 4 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 2, 0), -- Salada de Frango Grelhado
+											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
+											(rotina_diaria_id, 16, 0), -- Carne Magra com Purê de Batata Doce e Brócolis
+											(rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
+											(rotina_diaria_id, 32, 0); -- Tilápia com Legumes
+										WHEN 5 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 6, 0), -- Omelete de Legumes
+											(rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
+											(rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
+											(rotina_diaria_id, 23, 0), -- Salada Caprese com Pão Integral
+											(rotina_diaria_id, 29, 0); -- Smoothie Protéico
+										WHEN 6 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
+											(rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
+											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
+											(rotina_diaria_id, 25, 0), -- Smoothie Verde
+											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
+									END CASE;
+                                WHEN 3 THEN -- ROTINA REFEICAO 3
+									CASE dia
+										WHEN 1 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 3, 0), -- Salmão com Quinoa
+											(rotina_diaria_id, 12, 0), -- Macarrão Integral com Molho de Tomate e Frango
+											(rotina_diaria_id, 14, 0), -- Tapioca Recheada
+											(rotina_diaria_id, 25, 0), -- Smoothie Verde
+											(rotina_diaria_id, 16, 0); -- Carne Magra com Purê de Batata Doce e Brócolis
+
+										WHEN 2 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
+											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
+											(rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
+											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
+											(rotina_diaria_id, 22, 0); -- Risoto de Abóbora com Frango Desfiado
+
+										WHEN 3 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 1, 0), -- Virada Paulista
+											(rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
+											(rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
+											(rotina_diaria_id, 25, 0), -- Smoothie Verde
+											(rotina_diaria_id, 31, 0); -- Bife com Salada
+
+										WHEN 4 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 6, 0), -- Omelete de Legumes
+											(rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
+											(rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
+											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
+											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
+
+										WHEN 5 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 2, 0), -- Salada de Frango Grelhado
+											(rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
+											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
+											(rotina_diaria_id, 22, 0), -- Risoto de Abóbora com Frango Desfiado
+											(rotina_diaria_id, 32, 0); -- Tilápia com Legumes
+
+										WHEN 6 THEN
+											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
+											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
+											(rotina_diaria_id, 19, 0), -- Overnight Oats com Frutas Vermelhas
+											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
+											(rotina_diaria_id, 31, 0); -- Bife com Salada
+									END CASE;
+                            END CASE;
+                    END CASE;
+
+                    -- Incrementa o dia para a próxima rotina diária
+                    SET dia = dia + 1;
+                END WHILE;
+
+                -- Incrementa a semana para a próxima rotina semanal
+                SET num_semana = num_semana + 1;
+            END WHILE;
+        END IF;
+    END LOOP;
 
-                    SET @rotina_diaria_id = SCOPE_IDENTITY();
-
-                    -- Obt�m a meta do usu�rio
-                    SELECT @meta_id = meta_id
-                    FROM rotina_usuario
-                    WHERE id_rotina_usuario = @rotina_usuario_id;
-
-                    -- Adiciona os treinos di�rios com base na meta do usu�rio e no n�mero aleat�rio
-                    IF @meta_id = 1 -- EMAGRECIMENTO
-                    BEGIN
-                        IF @treino_aleatorio = 1 -- ROTINA 1
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                               INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(21, @rotina_diaria_id, 0, 10, 3, '00:03:30'), -- Burpees
-											(2, @rotina_diaria_id, 0, 15, 4, '00:05:50'), -- Agachamento Livre
-											(1, @rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Flex�o de Bra�o
-											(9, @rotina_diaria_id, 0, 1, 3, '00:04:30'), -- Prancha Abdominal
-											(32, @rotina_diaria_id, 0, 20, 4, '00:06:30'); -- Mountain Climbers
-                            END
-
-                            IF @dia = 2
-                            BEGIN
-                               INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(22, @rotina_diaria_id, 0, 30, 3, '00:07:30'), -- Jumping Jacks
-											(23, @rotina_diaria_id, 0, 12, 4, '00:05:50'), -- Afundo
-											(19, @rotina_diaria_id, 0, 15, 3, '00:06:00'), -- Prancha Superman
-											(33, @rotina_diaria_id, 0, 20, 3, '00:06:00'), -- Bicicleta Abdominal
-											(24, @rotina_diaria_id, 0, 30, 3, '00:07:30'); -- Polichinelos
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                               INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(25, @rotina_diaria_id, 0, 50, 3, '00:05:00'), -- Pula Corda
-											(26, @rotina_diaria_id, 0, 15, 3, '00:05:50'), -- Ponte (Gl�teos)
-											(13, @rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Tr�ceps Pulley
-											(34, @rotina_diaria_id, 0, 15, 3, '00:05:30'), -- Abdominal Infra
-											(27, @rotina_diaria_id, 0, 20, 5, '00:06:10'); -- Sprint
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                               INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(28, @rotina_diaria_id, 0, 30, 3, '00:07:00'), -- High Knees
-											(17, @rotina_diaria_id, 0, 15, 3, '00:05:50'), -- Eleva��o Lateral
-											(14, @rotina_diaria_id, 0, 30, 3, '00:06:15'), -- Prancha Lateral
-											(35, @rotina_diaria_id, 0, 20, 4, '00:06:30'), -- Eleva��o de Panturrilha
-											(29, @rotina_diaria_id, 0, 20, 4, '00:06:30'); -- Skaters
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                               INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(36, @rotina_diaria_id, 0, 1, 1, '00:25:00'), -- Corrida (Cardio)
-											(4, @rotina_diaria_id, 0, 20, 3, '00:05:00'), -- Abdominal Crunch
-											(30, @rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Pullover
-											(11, @rotina_diaria_id, 0, 10, 4, '00:06:30'), -- Leg Press
-											(37, @rotina_diaria_id, 0, 15, 3, '00:05:30'); -- Prancha com Toque no Ombro
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                               INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(21, @rotina_diaria_id, 0, 10, 3, '00:03:30'), -- Burpees
-											(38, @rotina_diaria_id, 0, 10, 3, '00:05:00'), -- Flex�o com Abertura
-											(39, @rotina_diaria_id, 0, 1, 3, '00:04:30'), -- Agachamento Isom�trico
-											(22, @rotina_diaria_id, 0, 15, 3, '00:05:30'), -- Jumping Jacks
-											(40, @rotina_diaria_id, 0, 15, 3, '00:05:30'); -- Abdominal V-Sit
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 2 -- ROTINA 2
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(1, @rotina_diaria_id, 0, 12, 4, '00:06:15'),
-											(4, @rotina_diaria_id, 0, 10, 3, '00:05:15'),
-											(21, @rotina_diaria_id, 0, 12, 3, '00:05:15'),
-											(9, @rotina_diaria_id, 0, 1, 4, '00:06:30');
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, @rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(23, @rotina_diaria_id, 0, 15, 4, '00:06:40'),
-											(42, @rotina_diaria_id, 0, 12, 3, '00:05:30'),
-											(24, @rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(14, @rotina_diaria_id, 0, 12, 4, '00:06:30');
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(1, @rotina_diaria_id, 0, 12, 4, '00:06:15'),
-											(4, @rotina_diaria_id, 0, 10, 3, '00:05:15'),
-											(21, @rotina_diaria_id, 0, 12, 3, '00:05:15'),
-											(9, @rotina_diaria_id, 0, 1, 4, '00:06:30');
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, @rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(23, @rotina_diaria_id, 0, 15, 4, '00:06:40'),
-											(42, @rotina_diaria_id, 0, 12, 3, '00:05:30'),
-											(24, @rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(14, @rotina_diaria_id, 0, 12, 4, '00:06:30');
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(1, @rotina_diaria_id, 0, 12, 4, '00:06:15'),
-											(4, @rotina_diaria_id, 0, 10, 3, '00:05:15'),
-											(21, @rotina_diaria_id, 0, 12, 3, '00:05:15'),
-											(9, @rotina_diaria_id, 0, 1, 4, '00:06:30');
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, @rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(23, @rotina_diaria_id, 0, 15, 4, '00:06:40'),
-											(42, @rotina_diaria_id, 0, 12, 3, '00:05:30'),
-											(24, @rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(14, @rotina_diaria_id, 0, 12, 4, '00:06:30');
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 3 -- ROTINA 3
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, @rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(1, @rotina_diaria_id, 0, 15, 3, '00:05:40'),
-											(24, @rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(4, @rotina_diaria_id, 0, 1, 3, '00:03:00'),
-											(9, @rotina_diaria_id, 0, 1, 3, '00:04:30');
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 10, 3, '00:04:35'),
-											(21, @rotina_diaria_id, 0, 15, 3, '00:05:40'),
-											(42, @rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(14, @rotina_diaria_id, 0, 1, 3, '00:04:00'),
-											(1, @rotina_diaria_id, 0, 15, 4, '00:06:30');
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, @rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(1, @rotina_diaria_id, 0, 15, 3, '00:05:40'),
-											(24, @rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(4, @rotina_diaria_id, 0, 1, 3, '00:03:00'),
-											(9, @rotina_diaria_id, 0, 1, 3, '00:04:30');
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(21, @rotina_diaria_id, 0, 15, 3, '00:05:40'), -- burpee
-											(1, @rotina_diaria_id, 0, 15, 4, '00:06:30'), -- flexao de bra�o
-											(42, @rotina_diaria_id, 0, 15, 3, '00:05:30'), -- eleva��o de quadril
-											(2, @rotina_diaria_id, 0, 10, 3, '00:04:35'), -- prancha lateral
-											(14, @rotina_diaria_id, 0, 1, 3, '00:04:00'); -- agachamento livre
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 10, 3, '00:04:35'), -- agachamento livre
-											(21, @rotina_diaria_id, 0, 15, 3, '00:05:40'), -- burpee
-											(42, @rotina_diaria_id, 0, 15, 3, '00:05:40'), -- eleva��o de quadril
-											(14, @rotina_diaria_id, 0, 1, 3, '00:04:30'), -- prancha lateral
-											(1, @rotina_diaria_id, 0, 15, 3, '00:05:40'); -- flexao de bra�o
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, @rotina_diaria_id, 0, 1, 3, '00:04:35'), -- corrida no lugar
-											(24, @rotina_diaria_id, 0, 15, 3, '00:05:40'), -- polichinelo
-											(3, @rotina_diaria_id, 0, 15, 3, '00:06:00'), -- abdominal crunch
-											(9, @rotina_diaria_id, 0, 1, 3, '00:04:35'), -- prancha
-											(23, @rotina_diaria_id, 0, 15, 3, '00:06:00'); -- afundo
-                            END
-                        END
-                    END
-                    ELSE IF @meta_id = 2 -- GANHAR MASSA
-                    BEGIN
-                        IF @treino_aleatorio = 1 -- ROTINA 1
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(43, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(10, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(7, @rotina_diaria_id, 0, 15, 4, '00:06:30'),
-											(13, @rotina_diaria_id, 0, 15, 4, '00:06:30');
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(11, @rotina_diaria_id, 0, 15, 4, '00:06:45'),
-											(44, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(45, @rotina_diaria_id, 0, 20, 4, '00:07:30'),
-											(34, @rotina_diaria_id, 0, 20, 4, '00:07:30');
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(46, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(16, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(5, @rotina_diaria_id, 0, 8, 4, '00:04:15'),
-											(47, @rotina_diaria_id, 0, 15, 4, '00:06:30'),
-											(48, @rotina_diaria_id, 0, 20, 4, '00:07:30');
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(49, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(17, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(50, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(51, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(9, @rotina_diaria_id, 0, 1, 4, '00:06:15');
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(52, @rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(53, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(15, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(35, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(54, @rotina_diaria_id, 0, 15, 4, '00:05:45');
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(55, @rotina_diaria_id, 0, 10, 6, '00:07:45'),
-											(56, @rotina_diaria_id, 0, 12, 8, '00:09:45'),
-											(57, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(58, @rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(59, @rotina_diaria_id, 0, 15, 4, '00:05:15');
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 2 -- ROTINA 2
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Livre
-											(45, @rotina_diaria_id, 0, 15, 4, '00:05:30'), -- Panturrilha no Smith
-											(43, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Supino Reto
-											(33, @rotina_diaria_id, 0, 15, 4, '00:05:30'); -- Abdominal
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(7, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Rosca Direta
-											(13, @rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Tr�ceps Pulley
-											(44, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Stiff
-											(34, @rotina_diaria_id, 0, 15, 4, '00:03:00'); -- Abdominal Infra
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(46, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Remada Curvada
-											(16, @rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Puxada Frontal
-											(47, @rotina_diaria_id, 0, 15, 4, '00:02:30'), -- Encolhimento de Ombros
-											(48, @rotina_diaria_id, 0, 15, 4, '00:02:30'); -- Abdominal Obl�quo
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(49, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Supino Inclinado
-											(17, @rotina_diaria_id, 0, 12, 4, '00:03:00'), -- Eleva��o Lateral
-											(50, @rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Rosca Martelo
-											(51, @rotina_diaria_id, 0, 12, 4, '00:03:00'); -- Tr�ceps Testa
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(52, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Agachamento Hack
-											(53, @rotina_diaria_id, 0, 12, 4, '00:03:00'), -- Extens�o de Pernas
-											(54, @rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Flex�o de Pernas
-											(55, @rotina_diaria_id, 0, 15, 4, '00:03:00'); -- Eleva��o de Panturrilha
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(56, @rotina_diaria_id, 0, 8, 4, '00:03:00'), -- Barra Fixa
-											(52, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Agachamento Hack
-											(57, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Levantamento Terra
-											(58, @rotina_diaria_id, 0, 1, 4, '00:01:00'); -- Abdominal Prancha
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 3 -- ROTINA 3
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(49, @rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Supino Inclinado
-											(10, @rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Desenvolvimento de Ombros
-											(7, @rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Rosca Direta
-											(13, @rotina_diaria_id, 0, 12, 4, '00:03:00'); -- Tr�ceps Pulley
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Livre
-											(11, @rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Leg Press
-											(44, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Stiff
-											(45, @rotina_diaria_id, 0, 15, 4, '00:07:00'); -- Panturrilha no Smith
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(46, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Remada Curvada
-											(16, @rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Puxada Frontal
-											(5, @rotina_diaria_id, 0, 10, 4, '00:11:00'), -- Levantamento Terra
-											(4, @rotina_diaria_id, 0, 15, 4, '00:05:30'); -- Abdominal Crunch
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(43, @rotina_diaria_id, 0, 10, 4, '00:08:15'), -- Supino Reto
-											(17, @rotina_diaria_id, 0, 12, 4, '00:08:15'), -- Eleva��o Lateral
-											(50, @rotina_diaria_id, 0, 10, 4, '00:08:25'), -- Rosca Martelo
-											(13, @rotina_diaria_id, 0, 12, 4, '00:08:25'); -- Tr�ceps Pulley
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(52, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Hack
-											(53, @rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Extens�o de Pernas
-											(50, @rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Flex�o de Pernas
-											(45, @rotina_diaria_id, 0, 15, 4, '00:07:00'); -- Eleva��o de Panturrilha
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(5, @rotina_diaria_id, 0, 10, 4, '00:12:00'), -- Levantamento Terra
-											(54, @rotina_diaria_id, 0, 15, 4, '00:05:45'), -- Abdominal Bicicleta (sexta-feira)
-											(53, @rotina_diaria_id, 0, 12, 4, '00:08:15'), -- Extens�o de Pernas (s�bado)
-											(44, @rotina_diaria_id, 0, 10, 4, '00:08:15'), -- Stiff
-											(58, @rotina_diaria_id, 0, 15, 4, '00:05:45'); -- Abdominal Canivete
-                            END
-                        END
-                    END
-
-                    -- Refei��es di�rias com base na meta do usu�rio
-                    IF @meta_id = 1 -- EMAGRECIMENTO
-                    BEGIN
-                        IF @treino_aleatorio = 1 -- ROTINA REFEICAO 1
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 6, 0),
-											(@rotina_diaria_id, 3, 0),
-											(@rotina_diaria_id, 7, 0);
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 9, 0),
-											(@rotina_diaria_id, 10, 0);
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 12, 0),
-											(@rotina_diaria_id, 13, 0);
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 14, 0),
-											(@rotina_diaria_id, 15, 0),
-											(@rotina_diaria_id, 16, 0);
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 17, 0),
-											(@rotina_diaria_id, 7, 0),
-											(@rotina_diaria_id, 18, 0);
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 19, 0),
-											(@rotina_diaria_id, 20, 0),
-											(@rotina_diaria_id, 21, 0);
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 2 -- ROTINA REFEICAO 2
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 24, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 9, 0),
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 18, 0);
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 25, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 2, 0),
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 13, 0);
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 3, 0),
-											(@rotina_diaria_id, 21, 0),
-											(@rotina_diaria_id, 24, 0);
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 14, 0),
-											(@rotina_diaria_id, 23, 0),
-											(@rotina_diaria_id, 13, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 22, 0);
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 26, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 4, 0),
-											(@rotina_diaria_id, 19, 0),
-											(@rotina_diaria_id, 27, 0);
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 25, 0),
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 28, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 18, 0);
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 3 -- ROTINA REFEICAO 3
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(@rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
-											(@rotina_diaria_id, 24, 0), -- Omelete de Claras
-											(@rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(@rotina_diaria_id, 27, 0); -- Salada de Atum
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
-											(@rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
-											(@rotina_diaria_id, 12, 0), -- Macarr�o Integral com Molho de Tomate e Frango
-											(@rotina_diaria_id, 19, 0), -- Overnight Oats com Frutas Vermelhas
-											(@rotina_diaria_id, 30, 0); -- Carne Mo�da com Batata Doce
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 6, 0), -- Omelete de Legumes
-											(@rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
-											(@rotina_diaria_id, 17, 0), -- P�o Integral com Ovo Mexido e Abacate
-											(@rotina_diaria_id, 28, 0), -- Salada com Quinoa
-											(@rotina_diaria_id, 32, 0); -- Til�pia com Legumes
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 1, 0), -- Virada Paulista
-											(@rotina_diaria_id, 14, 0), -- Tapioca Recheada
-											(@rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
-											(@rotina_diaria_id, 26, 0), -- Panqueca de Banana
-											(@rotina_diaria_id, 31, 0); -- Bife com Salada
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(@rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarr�o Integral
-											(@rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
-											(@rotina_diaria_id, 21, 0), -- Wraps de Frango com Salada
-											(@rotina_diaria_id, 29, 0); -- Smoothie Prot�ico
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
-											(@rotina_diaria_id, 22, 0), -- Risoto de Ab�bora com Frango Desfiado
-											(@rotina_diaria_id, 23, 0), -- Salada Caprese com P�o Integral
-											(@rotina_diaria_id, 24, 0), -- Omelete de Claras
-											(@rotina_diaria_id, 30, 0); -- Carne Mo�da com Batata Doce
-                            END
-                        END
-                    END
-                    ELSE IF @meta_id = 2 -- GANHO DE MASSA
-                    BEGIN
-                        IF @treino_aleatorio = 1 -- ROTINA REFEICAO 1
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 6, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 9, 0),
-											(@rotina_diaria_id, 27, 0),
-											(@rotina_diaria_id, 3, 0);
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 29, 0),
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 30, 0),
-											(@rotina_diaria_id, 21, 0),
-											(@rotina_diaria_id, 32, 0);
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 11, 0),
-											(@rotina_diaria_id, 29, 0),
-											(@rotina_diaria_id, 4, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 31, 0);
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 26, 0),
-											(@rotina_diaria_id, 19, 0),
-											(@rotina_diaria_id, 3, 0),
-											(@rotina_diaria_id, 25, 0),
-											(@rotina_diaria_id, 13, 0);
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 6, 0),
-											(@rotina_diaria_id, 21, 0),
-											(@rotina_diaria_id, 4, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 16, 0);
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 29, 0),
-											(@rotina_diaria_id, 10, 0),
-											(@rotina_diaria_id, 13, 0),
-											(@rotina_diaria_id, 8, 0),
-											(@rotina_diaria_id, 3, 0);
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 2 -- ROTINA REFEICAO 2
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 3, 0), -- Salm�o com Quinoa
-											(@rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(@rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarr�o Integral
-											(@rotina_diaria_id, 29, 0), -- Smoothie Prot�ico
-											(@rotina_diaria_id, 30, 0); -- Carne Mo�da com Batata Doce
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
-											(@rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
-											(@rotina_diaria_id, 12, 0), -- Macarr�o Integral com Molho de Tomate e Frango
-											(@rotina_diaria_id, 22, 0), -- Risoto de Ab�bora com Frango Desfiado
-											(@rotina_diaria_id, 29, 0); -- Smoothie Prot�ico
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 1, 0), -- Virada Paulista
-											(@rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
-											(@rotina_diaria_id, 14, 0), -- Tapioca Recheada
-											(@rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(@rotina_diaria_id, 31, 0); -- Bife com Salada
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 2, 0), -- Salada de Frango Grelhado
-											(@rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(@rotina_diaria_id, 16, 0), -- Carne Magra com Pur� de Batata Doce e Br�colis
-											(@rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
-											(@rotina_diaria_id, 32, 0); -- Til�pia com Legumes
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 6, 0), -- Omelete de Legumes
-											(@rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
-											(@rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
-											(@rotina_diaria_id, 23, 0), -- Salada Caprese com P�o Integral
-											(@rotina_diaria_id, 29, 0); -- Smoothie Prot�ico
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(@rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
-											(@rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarr�o Integral
-											(@rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(@rotina_diaria_id, 30, 0); -- Carne Mo�da com Batata Doce
-                            END
-                        END
-                        ELSE IF @treino_aleatorio = 3 -- ROTINA REFEICAO 3
-                        BEGIN
-                            IF @dia = 1
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 3, 0), -- Salm�o com Quinoa
-											(@rotina_diaria_id, 12, 0), -- Macarr�o Integral com Molho de Tomate e Frango
-											(@rotina_diaria_id, 14, 0), -- Tapioca Recheada
-											(@rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(@rotina_diaria_id, 16, 0); -- Carne Magra com Pur� de Batata Doce e Br�colis
-                            END
-
-							IF @dia = 2
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
-											(@rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(@rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
-											(@rotina_diaria_id, 29, 0), -- Smoothie Prot�ico
-											(@rotina_diaria_id, 22, 0); -- Risoto de Ab�bora com Frango Desfiado
-                            END
-
-							IF @dia = 3
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 1, 0), -- Virada Paulista
-											(@rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
-											(@rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
-											(@rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(@rotina_diaria_id, 31, 0); -- Bife com Salada
-                            END
-
-							IF @dia = 4
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 6, 0), -- Omelete de Legumes
-											(@rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
-											(@rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
-											(@rotina_diaria_id, 29, 0), -- Smoothie Prot�ico
-											(@rotina_diaria_id, 30, 0); -- Carne Mo�da com Batata Doce
-                            END
-
-							IF @dia = 5
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 2, 0), -- Salada de Frango Grelhado
-											(@rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
-											(@rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarr�o Integral
-											(@rotina_diaria_id, 22, 0), -- Risoto de Ab�bora com Frango Desfiado
-											(@rotina_diaria_id, 32, 0); -- Til�pia com Legumes
-                            END
-
-							IF @dia = 6
-                            BEGIN
-                                INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(@rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(@rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(@rotina_diaria_id, 19, 0), -- Overnight Oats com Frutas Vermelhas
-											(@rotina_diaria_id, 29, 0), -- Smoothie Prot�ico
-											(@rotina_diaria_id, 31, 0); -- Bife com Salada
-                            END
-                        END
-                    END
-
-                    -- Incrementa o dia para a pr�xima rotina di�ria
-                    SET @dia = @dia + 1;
-                END
-
-                -- Incrementa a semana para a pr�xima rotina semanal
-                SET @num_semana = @num_semana + 1;
-            END
-        END
-
-        -- Obt�m o pr�ximo usu�rio
-        FETCH NEXT FROM cursor_usuario INTO @rotina_usuario_id;
-    END
-
-    -- Fecha e desaloca o cursor
     CLOSE cursor_usuario;
-    DEALLOCATE cursor_usuario;
-END
-GO
---
+END //
 
-USE msdb;
-GO
+DELIMITER ;
 
--- Verifica se o job já existe e o remove
-IF EXISTS (SELECT job_id FROM msdb.dbo.sysjobs WHERE name = N'atualiza_rotinas_mensais')
-BEGIN
-    EXEC sp_delete_job @job_name = N'atualiza_rotinas_mensais';
-END
-GO
+-- Evento para ocorrer a chamada da procedure da inserção de novas rotinas mensais
+DELIMITER //
 
--- Cria o job
-EXEC sp_add_job
-    @job_name = N'atualiza_rotinas_mensais',
-    @enabled = 1,  -- O job já é criado habilitado
-    @description = N'Job para atualizar rotinas mensais.',
-    @notify_level_eventlog = 2;
-GO
+CREATE EVENT IF NOT EXISTS atualiza_rotinas_mensais
+-- Rode o evento a cada 1 mês
+ON SCHEDULE EVERY 1 MONTH
+STARTS (TIMESTAMP(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)))	-- Começa no primeiro dia do mês
+DO
+CALL atualizar_rotinas_expiradas();	-- Chama a procedure
 
--- Adiciona um passo ao job
-EXEC sp_add_jobstep
-    @job_name = N'atualiza_rotinas_mensais',
-    @step_name = N'Executar atualizar_rotinas_expiradas',
-    @subsystem = N'TSQL',
-    @command = N'EXEC dbo.atualizar_rotinas_expiradas;',
-    @retry_attempts = 5,
-    @retry_interval = 5;
-GO
+DELIMITER ;
 
--- Adiciona um agendamento ao job para ser executado mensalmente no primeiro dia do próximo mês
-DECLARE @NextMonthStartDate INT;
-
--- Calcula o primeiro dia do próximo mês no formato YYYYMMDD
-SET @NextMonthStartDate = CONVERT(INT, CONVERT(VARCHAR, DATEADD(MONTH, 1, DATEADD(DAY, -DAY(GETDATE()) + 1, GETDATE())), 112));
-
-EXEC sp_add_jobschedule
-    @job_name = N'atualiza_rotinas_mensais',
-    @name = N'Agendamento Mensal',
-    @freq_type = 8,  -- Tipo de frequência: 8 = Mensal
-    @freq_interval = 1,  -- Executa no primeiro dia de cada mês
-    @freq_recurrence_factor = 1,  -- Repetição mensal (1 mês)
-    @active_start_date = @NextMonthStartDate,  -- Data calculada para o primeiro dia do próximo mês
-    @active_start_time = 010000;  -- Hora de início: 01:00:00 (1 da manhã)
-GO
+-- ----------------------------------------- --
 
 
-
-
-USE master;
-
-IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'vitalisDB')
-BEGIN
-    ALTER DATABASE vitalisDB SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE vitalisDB;
-END
-ELSE
-BEGIN
-    CREATE DATABASE vitalisDB;
-END
-GO
-
-IF EXISTS (
-    SELECT *
-    FROM sys.triggers
-    WHERE object_id = OBJECT_ID(N'[dbo].[cria_rotina]')
-)
-BEGIN
-    DROP TRIGGER [dbo].[cria_rotina];
-END
-GO
-
-IF OBJECT_ID(N'[dbo].[atualizar_rotinas_expiradas]', N'P') IS NOT NULL
-BEGIN
-    DROP PROCEDURE [dbo].[atualizar_rotinas_expiradas];
-END
-GO
-
-IF OBJECT_ID(N'[dbo].[atualiza_rotinas_mensais]', N'P') IS NOT NULL
-BEGIN
-    DROP PROCEDURE [dbo].[atualiza_rotinas_mensais];
-END
-GO
-
+CREATE DATABASE IF NOT EXISTS vitalisDB;
 USE vitalisDB;
-GO
+
+DROP TRIGGER IF EXISTS cria_rotina;
+
+DROP DATABASE IF EXISTS vitalisDB;
+CREATE DATABASE vitalisDB;
+USE vitalisDB;
 
 CREATE TABLE meta (
-    id_meta INT IDENTITY(1,1) PRIMARY KEY,
+	id_meta INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100)
 );
 
 CREATE TABLE endereco (
-    id_endereco INT IDENTITY(1,1) PRIMARY KEY,
+    id_endereco INT PRIMARY KEY AUTO_INCREMENT,
     logradouro VARCHAR(100) NOT NULL,
     numero VARCHAR(100),
     bairro VARCHAR(100) NOT NULL,
@@ -1091,53 +818,56 @@ CREATE TABLE endereco (
 );
 
 CREATE TABLE especialidade (
-    id_especialidade INT IDENTITY(1,1) PRIMARY KEY,
+    id_especialidade INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE especialidade_por_meta (
-    id_especialidade_meta INT IDENTITY(1,1) PRIMARY KEY,
+	id_especialidade_meta INT AUTO_INCREMENT,
     especialidade_id INT,
     meta_id INT,
-    FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade),
-    FOREIGN KEY (meta_id) REFERENCES meta(id_meta)
+    PRIMARY KEY (id_especialidade_meta, especialidade_id, meta_id),
+    FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (meta_id) REFERENCES meta(id_meta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE tag (
-    id_tag INT IDENTITY(1,1) PRIMARY KEY,
+	id_tag INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE exercicio (
-    id_exercicio INT IDENTITY(1,1) PRIMARY KEY,
+    id_exercicio INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(550)
 );
 
 CREATE TABLE tag_exercicio (
-    id_tag_exercicio INT IDENTITY(1,1) PRIMARY KEY,
+	id_tag_exercicio INT AUTO_INCREMENT,
     tag_id INT,
     exercicio_id INT,
-    FOREIGN KEY (tag_id) REFERENCES tag(id_tag),
-    FOREIGN KEY (exercicio_id) REFERENCES exercicio(id_exercicio)
+    PRIMARY KEY (id_tag_exercicio, tag_id, exercicio_id),
+    FOREIGN KEY (tag_id) REFERENCES tag(id_tag) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (exercicio_id) REFERENCES exercicio(id_exercicio) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE dieta (
-    id_dieta INT IDENTITY(1,1) PRIMARY KEY,
+    id_dieta INT AUTO_INCREMENT,
     meta_id INT,
     nome VARCHAR(100) NOT NULL,
     descricao VARCHAR(500) NOT NULL,
-    FOREIGN KEY (meta_id) REFERENCES meta(id_meta)
+    PRIMARY KEY (id_dieta, meta_id),
+    FOREIGN KEY (meta_id) REFERENCES meta(id_meta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE refeicao (
-    id_refeicao INT IDENTITY(1,1) PRIMARY KEY,
+    id_refeicao INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    preparo VARCHAR(MAX)
+    preparo VARCHAR(5001)
 );
 
 CREATE TABLE alimento (
-    id_alimento INT IDENTITY(1,1) PRIMARY KEY,
+    id_alimento INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     carboidrato FLOAT NOT NULL,
     proteina FLOAT NOT NULL,
@@ -1145,22 +875,24 @@ CREATE TABLE alimento (
 );
 
 CREATE TABLE midia (
-    id_midia INT IDENTITY(1,1) PRIMARY KEY,
+    id_midia INT AUTO_INCREMENT,
     exercicio_id INT,
     alimento_id INT,
     refeicao_id INT,
     nome VARCHAR(200) NOT NULL,
     caminho VARCHAR(1000) NOT NULL,
     extensao VARCHAR(10) NOT NULL,
-    tipo VARCHAR(20) CHECK (tipo IN ('Imagem', 'Video')),
-    FOREIGN KEY (exercicio_id) REFERENCES exercicio(id_exercicio),
-    FOREIGN KEY (alimento_id) REFERENCES alimento(id_alimento),
-    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao)
+    tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('Imagem', 'Video')),
+    PRIMARY KEY (id_midia),
+    FOREIGN KEY (exercicio_id) REFERENCES exercicio(id_exercicio) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (alimento_id) REFERENCES alimento(id_alimento) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE usuario (
-    id_usuario INT IDENTITY(1,1) PRIMARY KEY,
-    tipo TINYINT NOT NULL,
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+    -- tipo VARCHAR(45) CHECK (tipo IN ('USUARIO', 'PERSONAL', 'ADMIN')), 
+    tipo TINYINT NOT NULL, 
     nickname VARCHAR(20) NOT NULL,
     cpf CHAR(11) NOT NULL,
     nome VARCHAR(200) NOT NULL,
@@ -1173,202 +905,286 @@ CREATE TABLE usuario (
     personal_id INT,
     midia_id INT,
     endereco_id INT,
-    FOREIGN KEY (endereco_id) REFERENCES endereco(id_endereco),
-    FOREIGN KEY (midia_id) REFERENCES midia(id_midia),
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
+    FOREIGN KEY (endereco_id) REFERENCES endereco(id_endereco) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (midia_id) REFERENCES midia(id_midia) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE especialidade_por_personal (
-    id_especialidade_personal INT IDENTITY(1,1) PRIMARY KEY,
-    personal_id INT,
+    id_especialidade_personal INT AUTO_INCREMENT,
+	personal_id INT,
     especialidade_id INT,
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade)
+    PRIMARY KEY (id_especialidade_personal, personal_id, especialidade_id),
+    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (especialidade_id) REFERENCES especialidade(id_especialidade) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE contrato (
-    id_contrato INT IDENTITY(1,1) PRIMARY KEY,
+	id_contrato INT AUTO_INCREMENT,
     usuario_id INT,
     personal_id INT,
-    afiliacao TINYINT NOT NULL CHECK (afiliacao IN (0, 1, 2)), -- 0 para finalizado, 1 para ativo e 2 para pendente
+	afiliacao TINYINT NOT NULL CHECK (afiliacao IN (0, 1, 2)), -- 0 para finalizado, 1 para ativo e 2 para pendente
     inicio_contrato DATE,
     fim_contrato DATE,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
+	PRIMARY KEY (id_contrato, usuario_id, personal_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE chat (
-    id_chat INT IDENTITY(1,1) PRIMARY KEY,
-    usuario_id INT,
+    id_chat INT AUTO_INCREMENT,
+	usuario_id INT,
     personal_id INT,
     ativo TINYINT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario)
+    PRIMARY KEY (id_chat, usuario_id, personal_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (personal_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE mensagem (
-    id_mensagem INT IDENTITY(1,1) PRIMARY KEY,
+    id_mensagem INT AUTO_INCREMENT,
     chat_id INT,
     remetente_id INT,
     destinatario_id INT,
     assunto VARCHAR(255),
     data_hora DATETIME NOT NULL,
-    FOREIGN KEY (chat_id) REFERENCES chat(id_chat),
-    FOREIGN KEY (remetente_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (destinatario_id) REFERENCES usuario(id_usuario)
+    PRIMARY KEY (id_mensagem, remetente_id, destinatario_id, chat_id),
+    FOREIGN KEY (chat_id) REFERENCES chat(id_chat) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (remetente_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (destinatario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rotina_usuario (
-    id_rotina_usuario INT IDENTITY(1,1) PRIMARY KEY,
+    id_rotina_usuario INT AUTO_INCREMENT,
     usuario_id INT,
     meta_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (meta_id) REFERENCES meta(id_meta)
+    PRIMARY KEY (id_rotina_usuario, usuario_id, meta_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (meta_id) REFERENCES meta(id_meta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rotina_mensal (
-    id_rotina_mensal INT IDENTITY(1,1) PRIMARY KEY,
+	id_rotina_mensal INT AUTO_INCREMENT,
     rotina_usuario_id INT,
     mes INT CHECK (mes IN (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)),
     ano INT,
     concluido TINYINT,
-    FOREIGN KEY (rotina_usuario_id) REFERENCES rotina_usuario(id_rotina_usuario)
+    PRIMARY KEY (id_rotina_mensal, rotina_usuario_id),
+    FOREIGN KEY (rotina_usuario_id) REFERENCES rotina_usuario(id_rotina_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rotina_semanal (
-    id_rotina_semanal INT IDENTITY(1,1) PRIMARY KEY,
+	id_rotina_semanal INT AUTO_INCREMENT,
     rotina_mensal_id INT,
     num_semana INT CHECK (num_semana IN (1, 2, 3, 4, 5)) NOT NULL,
     concluido TINYINT,
-    FOREIGN KEY (rotina_mensal_id) REFERENCES rotina_mensal(id_rotina_mensal)
+    PRIMARY KEY (id_rotina_semanal, rotina_mensal_id),
+    FOREIGN KEY (rotina_mensal_id) REFERENCES rotina_mensal(id_rotina_mensal) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE rotina_diaria (
-    id_rotina_diaria INT IDENTITY(1,1) PRIMARY KEY,
+    id_rotina_diaria INT AUTO_INCREMENT,
     rotina_semanal_id INT,
     dia INT CHECK (dia IN (1, 2, 3, 4, 5, 6, 7)),
     concluido TINYINT,
-    FOREIGN KEY (rotina_semanal_id) REFERENCES rotina_semanal(id_rotina_semanal)
+    PRIMARY KEY (id_rotina_diaria, rotina_semanal_id),
+    FOREIGN KEY (rotina_semanal_id) REFERENCES rotina_semanal(id_rotina_semanal) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE treino (
-    id_treino INT IDENTITY(1,1) PRIMARY KEY,
+    id_treino INT AUTO_INCREMENT,
     exercicio_id INT,
     rotina_diaria_id INT,
     concluido TINYINT,
     repeticao INT NOT NULL,
     serie INT NOT NULL,
     tempo TIME NOT NULL,
-    FOREIGN KEY (exercicio_id) REFERENCES exercicio(id_exercicio),
-    FOREIGN KEY (rotina_diaria_id) REFERENCES rotina_diaria(id_rotina_diaria)
+    PRIMARY KEY (id_treino, exercicio_id, rotina_diaria_id),
+    FOREIGN KEY (exercicio_id) REFERENCES exercicio(id_exercicio) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (rotina_diaria_id) REFERENCES rotina_diaria(id_rotina_diaria) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE refeicao_diaria (
-    id_refeicao_diaria INT IDENTITY(1,1) PRIMARY KEY,
+	id_refeicao_diaria INT AUTO_INCREMENT,
     refeicao_id INT,
     rotina_diaria_id INT,
     concluido TINYINT,
-    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao),
-    FOREIGN KEY (rotina_diaria_id) REFERENCES rotina_diaria(id_rotina_diaria)
+    PRIMARY KEY (id_refeicao_diaria, refeicao_id, rotina_diaria_id),
+    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (rotina_diaria_id) REFERENCES rotina_diaria(id_rotina_diaria) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE refeicao_por_dieta (
-    id_refeicao_dieta INT IDENTITY(1,1) PRIMARY KEY,
+	id_refeicao_dieta INT AUTO_INCREMENT,
     refeicao_id INT,
     dieta_id INT,
-    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao),
-    FOREIGN KEY (dieta_id) REFERENCES dieta(id_dieta)
+    PRIMARY KEY (id_refeicao_dieta, refeicao_id, dieta_id),
+    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (dieta_id) REFERENCES dieta(id_dieta) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE metrica (
-    id_metrica INT IDENTITY(1,1) PRIMARY KEY,
+	id_metrica INT PRIMARY KEY AUTO_INCREMENT,
     metrica VARCHAR(100)
 );
 
 CREATE TABLE alimento_por_refeicao (
-    id_alimento_refeicao INT IDENTITY(1,1) PRIMARY KEY,
+    id_alimento_refeicao INT AUTO_INCREMENT,
     refeicao_id INT,
     alimento_id INT,
     metrica_id INT,
     qtd_alimento INT NOT NULL,
-    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao),
-    FOREIGN KEY (alimento_id) REFERENCES alimento(id_alimento),
-    FOREIGN KEY (metrica_id) REFERENCES metrica(id_metrica)
+    PRIMARY KEY (id_alimento_refeicao, refeicao_id, alimento_id),
+    FOREIGN KEY (refeicao_id) REFERENCES refeicao(id_refeicao) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (alimento_id) REFERENCES alimento(id_alimento) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (metrica_id) REFERENCES metrica(id_metrica) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE assinatura (
-    id_assinatura INT IDENTITY(1,1) PRIMARY KEY,
+    id_assinatura INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     valor FLOAT NOT NULL
 );
 
 CREATE TABLE pagamento (
-    id_pagamento INT IDENTITY(1,1) PRIMARY KEY,
+	id_pagamento INT AUTO_INCREMENT,
     usuario_id INT,
     assinatura_id INT,
     data_pagamento DATE NOT NULL,
-    tipo VARCHAR(100) CHECK (tipo IN ('Cartão de débito', 'Cartão de crédito', 'PIX')) NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (assinatura_id) REFERENCES assinatura(id_assinatura)
+    tipo VARCHAR(100) CHECK (tipo IN ('Cartão de débito', 'Cartão de crédito', 'PIX')) NOT NULL, 
+    PRIMARY KEY (id_pagamento, usuario_id, assinatura_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (assinatura_id) REFERENCES assinatura(id_assinatura) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 /*
 CREATE TABLE cartao (
-    id_cartao INT IDENTITY(1,1) PRIMARY KEY,
+	id_cartao INT AUTO_INCREMENT,
     numero CHAR(16) NOT NULL,
     nome_titular VARCHAR(200) NOT NULL,
     validade DATE NOT NULL,
     cvv CHAR(3) NOT NULL,
     bandeira VARCHAR(100) NOT NULL,
     usuario_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+    PRIMARY KEY (id_cartao, numero, nome_titular, cvv, bandeira, usuario_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 */
 
 CREATE TABLE denuncia (
-    id_denuncia INT IDENTITY(1,1) PRIMARY KEY,
+	id_denuncia INT AUTO_INCREMENT,
     denunciado_id INT,
     vitima_id INT,
     titulo VARCHAR(75) NOT NULL,
     assunto VARCHAR(255) NOT NULL,
-    FOREIGN KEY (denunciado_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (vitima_id) REFERENCES usuario(id_usuario)
+    PRIMARY KEY (id_denuncia, denunciado_id, vitima_id),
+    FOREIGN KEY (denunciado_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (vitima_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE ficha (
-    id_ficha INT IDENTITY(1,1) PRIMARY KEY,
+    id_ficha INT AUTO_INCREMENT,
     usuario_id INT,
     peso FLOAT,
     altura FLOAT,
-    problema_cardiaco TINYINT,
-    dor_peito_atividade TINYINT,
-    dor_peito_ultimo_mes TINYINT,
-    problema_osseo_articular TINYINT,
-    medicamento_pressao_coracao TINYINT,
-    impedimento_atividade TINYINT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+	problema_cardiaco TINYINT,
+	dor_peito_atividade TINYINT,
+	dor_peito_ultimo_mes TINYINT,
+	problema_osseo_articular TINYINT,
+	medicamento_pressao_coracao TINYINT,
+	impedimento_atividade TINYINT,
+	PRIMARY KEY (id_ficha, usuario_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE lembrete (
-    id_lembrete INT IDENTITY(1,1) PRIMARY KEY,
+	id_lembrete INT AUTO_INCREMENT,
     usuario_id INT,
     conteudo VARCHAR(500) NOT NULL,
     data_lembrete DATETIME,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario)
+    PRIMARY KEY (id_lembrete, usuario_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE mural (
-    id_mural INT IDENTITY(1,1) PRIMARY KEY,
+    id_mural INT AUTO_INCREMENT,
     dt_postagem DATETIME NOT NULL,
     usuario_id INT,
     midia_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario),
-    FOREIGN KEY (midia_id) REFERENCES midia(id_midia)
+    PRIMARY KEY (id_mural, usuario_id, midia_id),
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (midia_id) REFERENCES midia(id_midia) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
 
-﻿USE vitalisDB;
+
+
+USE vitalisDB;
+
+DELETE FROM lembrete WHERE id_lembrete > 0;
+DELETE FROM mural WHERE id_mural > 0;
+DELETE FROM ficha WHERE id_ficha > 0;
+DELETE FROM denuncia WHERE id_denuncia > 0;
+DELETE FROM pagamento WHERE id_pagamento > 0;
+DELETE FROM assinatura WHERE id_assinatura > 0;
+DELETE FROM alimento_por_refeicao WHERE id_alimento_refeicao > 0;
+DELETE FROM alimento WHERE id_alimento > 0;
+DELETE FROM refeicao_por_dieta WHERE id_refeicao_dieta > 0;
+DELETE FROM refeicao_diaria WHERE id_refeicao_diaria > 0;
+DELETE FROM refeicao WHERE id_refeicao > 0;
+DELETE FROM dieta WHERE id_dieta > 0;
+DELETE FROM treino WHERE id_treino > 0;
+DELETE FROM rotina_diaria WHERE id_rotina_diaria > 0;
+DELETE FROM tag_exercicio WHERE id_tag_exercicio > 0;
+DELETE FROM exercicio WHERE id_exercicio > 0;
+DELETE FROM tag WHERE id_tag > 0;
+DELETE FROM rotina_semanal WHERE id_rotina_semanal > 0;
+DELETE FROM rotina_mensal WHERE id_rotina_mensal > 0;
+DELETE FROM rotina_usuario WHERE id_rotina_usuario > 0;
+DELETE FROM especialidade_por_personal WHERE id_especialidade_personal > 0;
+DELETE FROM especialidade_por_meta WHERE id_especialidade_meta > 0;
+DELETE FROM especialidade WHERE id_especialidade > 0;
+DELETE FROM mensagem WHERE id_mensagem > 0;
+DELETE FROM chat WHERE id_chat > 0;
+DELETE FROM endereco WHERE id_endereco > 0;
+DELETE FROM contrato WHERE id_contrato > 0;
+DELETE FROM usuario WHERE id_usuario > 0;
+DELETE FROM meta WHERE id_meta > 0;
+DELETE FROM midia WHERE id_midia > 0;
+
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE lembrete;
+TRUNCATE TABLE mural;
+TRUNCATE TABLE ficha;
+TRUNCATE TABLE denuncia;
+TRUNCATE TABLE pagamento;
+TRUNCATE TABLE assinatura;
+TRUNCATE TABLE alimento_por_refeicao;
+TRUNCATE TABLE alimento;
+TRUNCATE TABLE refeicao_por_dieta;
+TRUNCATE TABLE refeicao_diaria;
+TRUNCATE TABLE refeicao;
+TRUNCATE TABLE dieta;
+TRUNCATE TABLE treino;
+TRUNCATE TABLE rotina_diaria;
+TRUNCATE TABLE tag_exercicio;
+TRUNCATE TABLE exercicio;
+TRUNCATE TABLE tag;
+TRUNCATE TABLE rotina_semanal;
+TRUNCATE TABLE rotina_mensal;
+TRUNCATE TABLE rotina_usuario;
+TRUNCATE TABLE especialidade_por_personal;
+TRUNCATE TABLE especialidade_por_meta;
+TRUNCATE TABLE especialidade;
+TRUNCATE TABLE mensagem;
+TRUNCATE TABLE chat;
+TRUNCATE TABLE endereco;
+TRUNCATE TABLE contrato;
+TRUNCATE TABLE usuario;
+TRUNCATE TABLE meta;
+TRUNCATE TABLE midia;
+SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO especialidade (nome) VALUES
 ('Emagrecimento'),
@@ -1487,13 +1303,13 @@ INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
 
 -- Omelete com Legumes
 INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
-('Brócolis', 31.5, 12.6, 1.8), -- 22
+('Brócolis', 31.5, 12.6, 1.8), -- 22	
 ('Queijo Branco', 3.2, 17.4, 15.2), -- 23
 ('Espinafre', 3.6, 2.9, 0.4); -- 24
 
 -- Iogurte Grego com Frutas e Granola
 INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
-('Iogurte Grego', 3.6, 8.7, 10.0), -- 25
+('Iogurte Grego', 3.6, 8.7, 10.0), -- 25	
 ('Frutas Vermelhas', 10.0, 1.0, 0.3), -- 26
 ('Granola', 64.0, 10.0, 10.0); -- 27
 
@@ -1503,7 +1319,7 @@ INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
 
 -- Lentilha com Legumes e Pão Integral
 INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
-('Lentilha', 20.0, 9.0, 0.4), -- 29
+('Lentilha', 20.0, 9.0, 0.4), -- 29	
 ('Pão Integral', 43.0, 8.0, 4.0); -- 30
 
 -- Aveia com Frutas e Castanhas
@@ -1858,7 +1674,7 @@ INSERT INTO tag (nome) VALUES
 ('Romboides'), -- 19
 ('Antebraços'), -- 20
 ('Flexores do Quadril'); -- 21
-
+    
 INSERT INTO exercicio (nome, descricao) VALUES
 ('Flexão de Braço', 'A flexão de braço é um exercício de peso corporal que fortalece o peitoral, deltoides e tríceps. Com as mãos no chão e corpo alinhado, você se abaixa até quase tocar o peito no chão e retorna. Melhora a força do core e a estabilidade dos ombros.'), -- 1
 ('Agachamento Livre', 'O agachamento livre fortalece pernas e glúteos. Com os pés na largura dos ombros, você desce como se fosse sentar, mantendo a coluna ereta. É excelente para quadríceps, isquiotibiais e glúteos, além de melhorar a mobilidade dos quadris e joelhos.'), -- 2
@@ -2129,7 +1945,7 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 44 (Stiff)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(13, 44), -- Isquiotibiais
+(13, 44), -- Isquiotibiais 
 (14, 44), -- lombar
 (7, 44); -- gluteos
 
@@ -2139,18 +1955,18 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 46 (Remada Curvada)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(3, 46), -- costas
+(3, 46), -- costas 
 (14, 46), -- lombar
 (10, 46); -- biceps
 
 -- Associações para o exercício 47 (Encolhimento de Ombros)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(8, 47), -- trapezio
+(8, 47), -- trapezio 
 (19, 47); -- romboides
 
 -- Associações para o exercício 48 (Abdominal Oblíquo)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(15, 48), -- obliquo
+(15, 48), -- obliquo 
 (6, 48); -- abdomen
 
 -- Associações para o exercício 49 (Supino Inclinado)
@@ -2169,35 +1985,35 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 52 (agachamento no hack)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(13, 52), -- isquitobiais
-(7, 52), -- gluteos
+(13, 52), -- isquitobiais 
+(7, 52), -- gluteos 
 (12, 52); -- quadriceps
 
 -- Associações para o exercício 53 (Extensão de Perna)
-INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
+INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES 
 (12, 53); -- quadriceps
 
 -- Associações para o exercício 54 (abdominal bicicleta)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(6, 54), -- abdomen
+(6, 54), -- abdomen 
 (15, 54); -- obliquos
 
 -- Associações para o exercício 55 (barra fixa)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(3, 55), -- costa
-(10, 55), -- biceps
+(3, 55), -- costa 
+(10, 55), -- biceps 
 (20, 55); -- antibraco
 
 -- Associações para o exercício 56 (remana unilateral)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(3, 56), -- costas
+(3, 56), -- costas 
 (14, 56), -- lombar
 (10, 56); -- biceps
 
 -- Associações para o exercício 57 (crucifixo invertido)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(4, 57), -- ombro
-(8, 57), -- trapezio
+(4, 57), -- ombro 
+(8, 57), -- trapezio 
 (19, 57); -- romboides
 
 -- Associações para o exercício 58 (Rosca Concentrada)
@@ -2206,7 +2022,7 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 59 (abdominal canivete)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(6, 59), -- abdomen
+(6, 59), -- abdomen 
 (21, 59); -- Flexores do quadril
 
 INSERT INTO assinatura (nome, valor) VALUES
@@ -2219,12 +2035,12 @@ VALUES
 ('Rua Alzira Gomes Queiros', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
 
 -- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos)
-VALUES
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos) 
+VALUES 
 (0, 'ylu1Gi@@', '56438153036', 'Luigi Vicchietti', '2005-01-17', 'M', 'luigi@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 0),
 (1, 'marC@SSilV4', '92865867013', 'Marcos Silva Oliveira Pinto Santos', '1980-12-05', 'M', 'marcos@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 1, 0);
 
-INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade)
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
 VALUES
 (1, 58.60, 1.85, 0, 0, 0, 0, 0, 0);
 
@@ -2232,14 +2048,14 @@ INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
 (1, 2);
 
 -- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos)
-VALUES
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos) 
+VALUES 
 (0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', 2, null, 0),
 (1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2, 0),
 (1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 3, 0);
 -- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Milit�o', '1999-07-18', 'F', 'admin@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
 
-INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade)
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
 VALUES
 (3, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
 
@@ -2513,20 +2329,15 @@ VALUES
 ('Roberta Ferreira (roberTT4F@)', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725826825/foto-perfil/cacxy5jgerqh7x9qvtoc.jpg', 'JPG', 'Imagem', null, null, null), -- 210
 ('Pedro Gomes (pedR0G@)', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725826881/foto-perfil/ifshby1rebpupgqklczf.webp', 'WEBP', 'Imagem', null, null, null); -- 211
 
-INSERT INTO mural (usuario_id, midia_id, dt_postagem)
-VALUES (1, 47, '2024-01-01 19:31:00');
 
-INSERT INTO mural (usuario_id, midia_id, dt_postagem)
-VALUES (1, 48, '2024-01-01 19:35:00');
+INSERT INTO mural (usuario_id, dt_postagem, midia_id)
+VALUES
+(1, '2024-01-01 19:31:00', 47), -- 1
+(1,'2024-03-26 11:42:50', 48), -- 2
 
-INSERT INTO mural (usuario_id, midia_id, dt_postagem)
-VALUES (3, 49, '2024-01-08 11:42:50');
-
-INSERT INTO mural (usuario_id, midia_id, dt_postagem)
-VALUES (3, 50, '2024-04-08 11:42:50');
-
-INSERT INTO mural (usuario_id, midia_id, dt_postagem)
-VALUES (3, 51, '2024-07-05 09:22:54');
+(3, '2024-01-08 11:42:50', 49), -- 3
+(3, '2024-04-08 11:42:50', 50), -- 4
+(3, '2024-07-05 09:22:54', 51); -- 5
 
 -- Atualizar usuário Luigi Vicchietti com id_usuario = 1
 UPDATE usuario
