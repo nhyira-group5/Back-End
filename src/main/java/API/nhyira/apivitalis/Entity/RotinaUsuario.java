@@ -1,6 +1,5 @@
 package API.nhyira.apivitalis.Entity;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +14,7 @@ public class RotinaUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idRotinaUsuario;
-
+    private Integer rotinaAlternativa;
 
     @OneToOne
     @JoinColumn(name = "usuarioId")
@@ -24,6 +23,4 @@ public class RotinaUsuario {
     @ManyToOne
     @JoinColumn(name = "metaId")
     private Meta metaId;
-
-
 }
