@@ -21,11 +21,12 @@ public class RotinaUsuariosController {
 
     @PostMapping
     public ResponseEntity<RotinaUsuarioExibitionDto> create(
-            @RequestBody @Valid RotinaUsuarioCreateEditDto dto
+            @RequestBody @Valid RotinaUsuarioCreateEditDto newRUser
     ) {
-        RotinaUsuario rotina = rUserSvr.create(dto.getUsuarioId(), dto.getMetaId());
-        URI uri = URI.create("/rotinaTreinos/" + rotina);
-        RotinaUsuarioExibitionDto exibitionDto = RotinaUsuarioMapper.toDto(rotina, rUserSvr.verifyRotinaAlternativa(rotina.getUsuarioId()));
+        RotinaUsuario rUser = RotinaUsuarioMapper.toEntity(newRUser);
+        RotinaUsuario rUserCreated = rUserSvr.create(rUser, newRUser.getUsuarioId(), newRUser.getMetaId());
+        URI uri = URI.create("/rotinaTreinos/" + rUserCreated.getIdRotinaUsuario());
+        RotinaUsuarioExibitionDto exibitionDto = RotinaUsuarioMapper.toDto(rUserCreated);
         return ResponseEntity.created(uri).body(exibitionDto);
     }
 
@@ -41,7 +42,7 @@ public class RotinaUsuariosController {
             @PathVariable int id
     ) {
         RotinaUsuario rotina = rUserSvr.show(id);
-        RotinaUsuarioExibitionDto exibitionDto = RotinaUsuarioMapper.toDto(rotina, rUserSvr.verifyRotinaAlternativa(rotina.getUsuarioId()));
+        RotinaUsuarioExibitionDto exibitionDto = RotinaUsuarioMapper.toDto(rotina);
         return ResponseEntity.ok(exibitionDto);
     }
 

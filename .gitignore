@@ -1,11 +1,14 @@
-.vscode/settings.json
-.vscode/launch.json
-# Ignorar o application.properties no diretório target/classes
-target/classes/application.properties
-
-# Ignorar o application.properties no diretório src/main/resources
-src/main/resources/application.properties
+vscode/settings.json
+vscode/launch.json
 
 usuarios.csv
 vitalisDB - mySql.session.sql
 vitalisDB - SqlServer.session.sql
+
+# Adicionando ignore no TARGET e OUT
+target/
+out/
+target/classes/application.properties
+target/api-vitalis-0.0.1-SNAPSHOT.jar
+*.jar
+#src/main/resources/application.properties

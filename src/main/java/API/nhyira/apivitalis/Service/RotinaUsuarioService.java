@@ -33,16 +33,16 @@ public class RotinaUsuarioService {
         return rotinaTreino.get();
     }
 
-    public RotinaUsuario create(int idUsuario, int idMeta){
-        Usuario  usuario = usuarioService.showUserById(idUsuario);
+    public RotinaUsuario create(RotinaUsuario rUser, int idUser, int idMeta){
+        Usuario  usuario = usuarioService.showUserById(idUser);
         Meta meta = metaService.show(idMeta);
-        RotinaUsuario rotinaUsuario = new RotinaUsuario();
-        rotinaUsuario.setUsuarioId(usuario);
-        rotinaUsuario.setMetaId(meta);
-        return rotinaTreinoRepository.save(rotinaUsuario);
+
+        rUser.setUsuarioId(usuario);
+        rUser.setMetaId(meta);
+        return rotinaTreinoRepository.save(rUser);
     }
 
-    public boolean verifyRotinaAlternativa(Usuario user) {
-        return fRep.buscaFichaUsuarioComProblemas(user).isPresent();
-    }
+//    public boolean verifyRotinaAlternativa(Usuario user) {
+//        return fRep.buscaFichaUsuarioComProblemas(user).isPresent();
+//    }
 }

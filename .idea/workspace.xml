@@ -10,311 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_05_2024_15_34__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_25_05_2024_15_34__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/api_vitalis_jar2/api-vitalis_jar2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RotinaDiariaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RotinaDiariaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RotinaDiariaService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/ApiVitalisApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/AuthController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Configuration/AuthEntryPoint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Configuration/Security/AuthConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Configuration/Security/TokenGenJwt.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/AuthUsuarioService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/DTO/DetailsUsuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/DTO/UserDetailsUsuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/DTO/UsuarioLoginDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/DTO/UsuarioTokenDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/Security/AuthUsuarioFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Auth/Usuario/Security/AuthUsuarioProvider.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Config/WebSocketConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Config/WebSocketCorsConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Controller/ChatController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/ChatCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/ChatExibitionDto$toUsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/ChatExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/ChatMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemExibitionDto$toChatDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemExibitionDto$toUsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/DTO/MensagemMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Entity/Chat.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Entity/Mensagem.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Repository/ChatRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Repository/MensagemRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Service/ChatQueueConsumerService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Service/ChatQueueService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Service/ChatService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Chat/Service/MensagemService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/AlimentoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/AlimentoPorRefeicaoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/AssinaturaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/CartaoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/ContratoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/DietaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/EnderecoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/EspecialidadeController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/EspecialidadePorMetaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/EspecialidadePorPersonalController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/ExercicioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/FichaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/LembreteController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/MetaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/MidiaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/MuralController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoDiariaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RefeicaoPorDietaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RotinaDiariaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RotinaMensalController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RotinaSemanalController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/RotinaUsuariosController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/TagController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/TagExercicioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/TreinoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Controller/UsuarioController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Alimento/AlimentoCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Alimento/AlimentoExibitionDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Alimento/AlimentoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Alimento/AlimentoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoExibitionDto$AlimentoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoExibitionDto$MetricaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoExibitionDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoExibitionDto$RefeicaoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/AlimentoPorRefeicao/AlimentoPorRefeicaoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Assinatura/AssinaturaCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Assinatura/AssinaturaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Assinatura/AssinaturaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Cartao/CartaoCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Cartao/CartaoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Cartao/CartaoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Contrato/ContratoCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Contrato/ContratoEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Contrato/ContratoExibitionDto$UsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Contrato/ContratoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Contrato/ContratoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Dieta/DietaCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Dieta/DietaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Dieta/DietaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Endereco/AcademiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Endereco/EnderecoCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Endereco/EnderecoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Endereco/EnderecoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Endereco/EnderecoProximosGoogleDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Especialidade/EspecialidadeExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Especialidade/EspecialidadeMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorMeta/EspecialidadePorMetaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorMeta/EspecialidadePorMetaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalExibitonDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/EspecialidadePorPersonal/EspecialidadePorPersonalMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition$MidiaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition$TagExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibition.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/ExercicioMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Exercicio/TagExercicioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Ficha/FichaCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Ficha/FichaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Ficha/FichaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Lembrete/LembreteMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Meta/MetaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Meta/MetaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Metrica/MetricaCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Metrica/MetricaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Metrica/MetricaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Midia/MidiaCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Midia/MidiaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Midia/MidiaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralExibitionDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralExibitionDto$UsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Mural/MuralMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition$AlimentoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition$AlimentoPorRefeicaoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibition.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionSemanalDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionSemanalDto$RotinaDiariaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionSemanalDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoDiaria/RefeicaoDiariaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoPorDieta/RefeicaoPorDietaCreateDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoPorDieta/RefeicaoPorDietaExibitionDto$DietaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoPorDieta/RefeicaoPorDietaExibitionDto$RefeicaoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoPorDieta/RefeicaoPorDietaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RefeicaoPorDieta/RefeicaoPorDietaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto$RefeicaoDiariaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaDiaria/RotinaDiariaMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaMensal/RotinaMensalExibitionDto$RotinaSemanalDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaMensal/RotinaMensalExibitionDto$RotinaUsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaMensal/RotinaMensalExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaMensal/RotinaMensalMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaSemanal/RotinaSemanalExibitionDto$RotinaDiariaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaSemanal/RotinaSemanalExibitionDto$RotinaMensalExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaSemanal/RotinaSemanalExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaSemanal/RotinaSemanalListExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaSemanal/RotinaSemanalMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaUsuario/RotinaTreinoCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaUsuario/RotinaUsuarioCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaUsuario/RotinaUsuarioExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/RotinaUsuario/RotinaUsuarioMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Tag/TagCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Tag/TagExercicioCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Tag/TagExercicioExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Tag/TagExibitionDto$TagExibitionDtoBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Tag/TagExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Tag/TagMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionSemanalDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionSemanalDto$RotinaDiariaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoExibitionSemanalDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Treino/TreinoRelatorioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/PersonalEspecialidadeDto$EspecialidadePorPersonalDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/PersonalEspecialidadeDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto$EnderecoDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto$MetaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto$MidiaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioFichaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/DTO/Usuario/UsuarioUpdateMidia.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/EmailSender/Controller/EmailController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/EmailSender/Model/EmailModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/EmailSender/Service/EmailService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/EmailSender/Service/EmailService$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/EmailSender/Service/EmailService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Alimento.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/AlimentoPorRefeicao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Assinatura.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Cartao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Contrato.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Dieta.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Endereco.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Especialidade.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/EspecialidadePorMeta.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/EspecialidadePorPersonal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Exercicio.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Ficha.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Lembrete.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Meta.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Metrica.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Midia.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Mural.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Refeicao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/RefeicaoDiaria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/RefeicaoPorDieta.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/RotinaDiaria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/RotinaMensal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/RotinaSemanal.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/RotinaUsuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Tag.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/TagExercicio.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Treino.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Usuario$TipoUsuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Entity/Usuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/ConflitoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/DuplicatedCartaoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/ErroClienteException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/ErroClienteTipoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/ForbiddenException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/NaoEncontradoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Exception/SemConteudoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/GooglePlaces/Service/AcademiasProximasService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Controller/PagamentoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/DTO/PagamentoCreateEditDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/DTO/PagamentoExibitionDto$AssinaturaDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/DTO/PagamentoExibitionDto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/DTO/PagamentoMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Entity/Pagamento$PagamentoBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Entity/Pagamento$TipoPagamento.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Entity/Pagamento.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Repository/PagamentoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Service/MercadoPagoService$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Service/MercadoPagoService$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Service/MercadoPagoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Pagamento/Service/PagamentoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/AlimentoPorRefeicaoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/AlimentoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/AssinaturaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/CartaoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/ContratoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/DietaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/EnderecoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/EspecialidadePorMetaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/EspecialidadePorPersonalRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/EspecialidadeRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/ExercicioRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/FichaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/LembreteRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/MetaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/MetricaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/MidiaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/MuralRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RefeicaoDiariaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RefeicaoPorDietaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RefeicaoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RotinaDiariaRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RotinaMensalRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RotinaSemanalRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/RotinaUsuarioRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/TagExercicioRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/TagRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/TreinoRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Repository/UsuarioRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/AlimentoPorRefeicaoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/AlimentoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/AssinaturaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/CartaoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/ContratoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/CsvService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/DietaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/EnderecoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/EspecialidadePorMetaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/EspecialidadePorPersonalService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/EspecialidadeService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/ExercicioService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/FichaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/LembreteService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/MetaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/MidiaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/MuralService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RefeicaoDiariaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RefeicaoPorDietaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RefeicaoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RotinaDiariaService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RotinaMensalService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RotinaSemanalService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/RotinaUsuarioService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/TagExercicioService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/TagService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/TreinoService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/Service/UsuarioService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/API/nhyira/apivitalis/utils/ListaUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DATABASE/vitalisDB - Inserts - MySql v.2.1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DATABASE/vitalisDB - Modelagem - MySql v.2.1.mwb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DATABASE/vitalisDB - Modelagem PNG - MySql v.2.1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/DATABASE/vitalisDB - MySql v.2.1.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/API/nhyira/apivitalis/ApiVitalisApplicationTests.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/API/nhyira/apivitalis/Utils/ErrorMessageHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RotinaUsuariosController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RotinaUsuariosController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RotinaUsuarioService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RotinaUsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -339,6 +39,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "LuigiVicchietti"
+  }
+}]]></component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="5" />
     <option name="recentBranches">
@@ -365,6 +71,12 @@
       </RecentBranches>
     </option>
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/nhyira-group5/Back-End.git",
+    "accountId": "616abbbc-86fe-4a78-a6e2-8eb67bcac5ce"
+  }
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/resources/application.properties" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -398,7 +110,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Developer",
     "kotlin-language-version-configured": "true",
     "last.edited.regexp": "Sample Text",
     "last_opened_file_path": "C:/Users/Will Dantas/OneDrive - SPTech School/Documents/Back-End",
