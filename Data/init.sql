@@ -1,805 +1,9 @@
--- ---------------------------------------------------------------------------
--- TRIGGERS & PROCEDURES
--- ---------------------------------------------------------------------------
-DELIMITER //
 
--- ROTINA PADRÂO PÓS CRIAÇÂO DO PERFIL
-CREATE TRIGGER cria_rotina
-AFTER INSERT ON rotina_usuario
-FOR EACH ROW
-BEGIN
-    DECLARE rotina_mensal_id INT;
-    DECLARE rotina_semanal_id INT;
-    DECLARE rotina_diaria_id INT;
-    DECLARE num_semana INT;
-    DECLARE dia INT;
-    DECLARE padrao INT DEFAULT 1;
-
-	-- Cria a rotina mensal do usuário
-    INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
-    VALUES 
-    (NEW.id_rotina_usuario, MONTH(CURDATE()), YEAR(CURDATE()), 0);
-
-    SET rotina_mensal_id = LAST_INSERT_ID();
-
-	-- Cria as rotinas semanais do usuário para a rotina mensal
-    SET num_semana = 1;
-    WHILE num_semana <= 5 DO
-        INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
-        VALUES 
-        (rotina_mensal_id, num_semana, 0);
-
-        SET rotina_semanal_id = LAST_INSERT_ID();
-        
-        -- Para cada semana, criar sua rotina por dia
-        SET dia = 1;
-        WHILE dia <= 7 DO
-            INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
-            VALUES 
-            (rotina_semanal_id, dia, 0);
-
-            SET rotina_diaria_id = LAST_INSERT_ID();
-			
-            -- Caso a caso a meta seja X... Monte o treino para a rotina diária
-			CASE NEW.meta_id
-				WHEN 1 THEN
-					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
-					VALUES
-					(1, rotina_diaria_id, 0, 15, 3, '00:01:00'),
-					(2, rotina_diaria_id, 0, 12, 3, '00:02:00'),
-					(3, rotina_diaria_id, 0, 10, 3, '00:01:30'),
-					(4, rotina_diaria_id, 0, 20, 3, '00:01:00'),
-					(5, rotina_diaria_id, 0, 8, 3, '00:02:00'),
-					(6, rotina_diaria_id, 0, 15, 3, '00:01:30'),
-					(7, rotina_diaria_id, 0, 12, 3, '00:01:00');
-                WHEN 2 THEN
-					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
-					VALUES
-					(8, rotina_diaria_id, 0, 15, 3, '00:01:00'),
-					(9, rotina_diaria_id, 0, 12, 3, '00:02:00'),
-					(10, rotina_diaria_id, 0, 10, 3, '00:01:30'),
-					(11, rotina_diaria_id, 0, 20, 3, '00:01:00'),
-					(12, rotina_diaria_id, 0, 8, 3, '00:02:00'),
-					(13, rotina_diaria_id, 0, 15, 3, '00:01:30'),
-					(14, rotina_diaria_id, 0, 12, 3, '00:01:00');
-            END CASE;
-
-			-- Caso a caso a meta seja X... Monte as refeições para a rotina diária para cada dia
-            CASE NEW.meta_id
-				WHEN 1 THEN
-					CASE padrao
-						WHEN 1 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 1, 0),
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 3, 0);
-						WHEN 2 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 1, 0),
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 4, 0);
-						WHEN 3 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 1, 0),
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 5, 0);
-						WHEN 4 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 4, 0),
-							(rotina_diaria_id, 5, 0);
-						WHEN 5 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 5, 0),
-							(rotina_diaria_id, 4, 0),
-							(rotina_diaria_id, 3, 0);
-					END CASE;
-                WHEN 2 THEN
-					CASE padrao
-						WHEN 1 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 5, 0),
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 3, 0);
-						WHEN 2 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 3, 0),
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 4, 0);
-						WHEN 3 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 5, 0),
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 5, 0);
-						WHEN 4 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 2, 0),
-							(rotina_diaria_id, 4, 0),
-							(rotina_diaria_id, 5, 0);
-						WHEN 5 THEN
-							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-							(rotina_diaria_id, 5, 0),
-							(rotina_diaria_id, 4, 0),
-							(rotina_diaria_id, 3, 0);
-					END CASE;
-            END CASE;
-			
-            -- Padrão serve para variar as rotinas diárias
-            SET padrao = padrao + 1;
-            IF padrao > 3 THEN
-                SET padrao = 1;
-            END IF;
-            
-            -- Para cada repetição, aumenta o dia
-            SET dia = dia + 1;
-        END WHILE;
-		
-        -- Para cada repetição, aumenta a semana
-        SET num_semana = num_semana + 1;
-    END WHILE;
-
-END //
-
-DELIMITER ;
-
--- ----------------------------------------- --
-
-DELIMITER //
-
--- FINALIZADA
-	-- EMAGRECIMENTO -> 3/3 TREINOS, 3/3 REF 
-	-- GANHAR MASSA	 -> 3/3 TREINOS, 3/3 REF 
-CREATE PROCEDURE atualizar_rotinas_expiradas()
-BEGIN
-    DECLARE done INT DEFAULT 0;
-    DECLARE rotina_usuario_id INT;
-    DECLARE ultimo_mes INT;
-    DECLARE ultimo_ano INT;
-    DECLARE rotina_mensal_id INT;
-    DECLARE rotina_semanal_id INT;
-    DECLARE rotina_diaria_id INT;
-    DECLARE num_semana INT;
-    DECLARE dia INT;
-    DECLARE padrao INT DEFAULT 1;
-    DECLARE meta_id INT;
-    DECLARE treino_aleatorio INT;
-
-    -- Cursor para iterar sobre os usuários
-    DECLARE cursor_usuario CURSOR FOR
-    SELECT id_rotina_usuario FROM rotina_usuario;
-
-    -- Manipulador para o final do cursor
-    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
-
-    OPEN cursor_usuario;
-    read_loop: LOOP
-        FETCH cursor_usuario INTO rotina_usuario_id;
-        IF done THEN
-            LEAVE read_loop;
-        END IF;
-
-        -- Verifica a última rotina mensal do usuário
-        SELECT mes, ano 
-        INTO ultimo_mes, ultimo_ano
-        FROM rotina_mensal
-        WHERE rotina_usuario_id = rotina_usuario_id
-        ORDER BY ano DESC, mes DESC
-        LIMIT 1;
-
-        -- Se a última rotina mensal for anterior ao mês atual, criar nova rotina mensal
-        IF ultimo_mes < MONTH(CURDATE()) OR ultimo_ano < YEAR(CURDATE()) THEN
-
-            -- Cria a nova rotina mensal
-            INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
-            VALUES 
-            (rotina_usuario_id, MONTH(CURDATE()), YEAR(CURDATE()), 0);
-
-            SET rotina_mensal_id = LAST_INSERT_ID();
-
-            -- Cria as rotinas semanais para a nova rotina mensal
-            SET num_semana = 1;
-            WHILE num_semana <= 5 DO
-				-- Gera um número aleatório entre 1 e 3 para selecionar a rotina de treino
-				SET treino_aleatorio = FLOOR(1 + RAND() * 3);
-            
-                INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
-                VALUES 
-                (rotina_mensal_id, num_semana, 0);
-
-                SET rotina_semanal_id = LAST_INSERT_ID();
-
-                -- Cria as rotinas diárias para cada semana
-                SET dia = 1;
-                WHILE dia <= 6 DO
-                    INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
-                    VALUES 
-                    (rotina_semanal_id, dia, 0);
-
-                    SET rotina_diaria_id = LAST_INSERT_ID();
-
-                    -- Obtém a meta do usuário
-                    SELECT meta_id INTO meta_id FROM rotina_usuario WHERE id_rotina_usuario = rotina_usuario_id;
-
-                    -- Adiciona os treinos diários com base na meta do usuário e no número aleatório
-                    CASE meta_id
-                        WHEN 1 THEN -- EMAGRECIMENTO
-                            CASE treino_aleatorio
-								WHEN 1 THEN	-- ROTINA 1
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(21, rotina_diaria_id, 0, 10, 3, '00:03:30'), -- Burpees
-											(2, rotina_diaria_id, 0, 15, 4, '00:05:50'), -- Agachamento Livre
-											(1, rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Flexão de Braço
-											(9, rotina_diaria_id, 0, 1, 3, '00:04:30'), -- Prancha Abdominal
-											(32, rotina_diaria_id, 0, 20, 4, '00:06:30'); -- Mountain Climbers
-										WHEN 2 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(22, rotina_diaria_id, 0, 30, 3, '00:07:30'), -- Jumping Jacks
-											(23, rotina_diaria_id, 0, 12, 4, '00:05:50'), -- Afundo
-											(19, rotina_diaria_id, 0, 15, 3, '00:06:00'), -- Prancha Superman
-											(33, rotina_diaria_id, 0, 20, 3, '00:06:00'), -- Bicicleta Abdominal
-											(24, rotina_diaria_id, 0, 30, 3, '00:07:30'); -- Polichinelos
-										WHEN 3 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(25, rotina_diaria_id, 0, 50, 3, '00:05:00'), -- Pula Corda
-											(26, rotina_diaria_id, 0, 15, 3, '00:05:50'), -- Ponte (Glúteos)
-											(13, rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Tríceps Pulley
-											(34, rotina_diaria_id, 0, 15, 3, '00:05:30'), -- Abdominal Infra
-											(27, rotina_diaria_id, 0, 20, 5, '00:06:10'); -- Sprint
-										WHEN 4 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(28, rotina_diaria_id, 0, 30, 3, '00:07:00'), -- High Knees
-											(17, rotina_diaria_id, 0, 15, 3, '00:05:50'), -- Elevação Lateral
-											(14, rotina_diaria_id, 0, 30, 3, '00:06:15'), -- Prancha Lateral
-											(35, rotina_diaria_id, 0, 20, 4, '00:06:30'), -- Elevação de Panturrilha
-											(29, rotina_diaria_id, 0, 20, 4, '00:06:30'); -- Skaters
-										WHEN 5 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(36, rotina_diaria_id, 0, 1, 1, '00:25:00'), -- Corrida (Cardio)
-											(4, rotina_diaria_id, 0, 20, 3, '00:05:00'), -- Abdominal Crunch
-											(30, rotina_diaria_id, 0, 12, 3, '00:05:15'), -- Pullover
-											(11, rotina_diaria_id, 0, 10, 4, '00:06:30'), -- Leg Press
-											(37, rotina_diaria_id, 0, 15, 3, '00:05:30'); -- Prancha com Toque no Ombro
-										WHEN 6 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(21, rotina_diaria_id, 0, 10, 3, '00:03:30'), -- Burpees
-											(38, rotina_diaria_id, 0, 10, 3, '00:05:00'), -- Flexão com Abertura
-											(39, rotina_diaria_id, 0, 1, 3, '00:04:30'), -- Agachamento Isométrico
-											(22, rotina_diaria_id, 0, 15, 3, '00:05:30'), -- Jumping Jacks
-											(40, rotina_diaria_id, 0, 15, 3, '00:05:30'); -- Abdominal V-Sit
-									END CASE;
-                                WHEN 2 THEN -- ROTINA 2
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(1, rotina_diaria_id, 0, 12, 4, '00:06:15'),
-											(4, rotina_diaria_id, 0, 10, 3, '00:05:15'),
-											(21, rotina_diaria_id, 0, 12, 3, '00:05:15'),
-											(9, rotina_diaria_id, 0, 1, 4, '00:06:30');
-										WHEN 2 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(23, rotina_diaria_id, 0, 15, 4, '00:06:40'),
-											(42, rotina_diaria_id, 0, 12, 3, '00:05:30'),
-											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(14, rotina_diaria_id, 0, 12, 4, '00:06:30');
-										WHEN 3 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(1, rotina_diaria_id, 0, 12, 4, '00:06:15'),
-											(4, rotina_diaria_id, 0, 10, 3, '00:05:15'),
-											(21, rotina_diaria_id, 0, 12, 3, '00:05:15'),
-											(9, rotina_diaria_id, 0, 1, 4, '00:06:30');
-										WHEN 4 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(23, rotina_diaria_id, 0, 15, 4, '00:06:40'),
-											(42, rotina_diaria_id, 0, 12, 3, '00:05:30'),
-											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(14, rotina_diaria_id, 0, 12, 4, '00:06:30');
-										WHEN 5 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(1, rotina_diaria_id, 0, 12, 4, '00:06:15'),
-											(4, rotina_diaria_id, 0, 10, 3, '00:05:15'),
-											(21, rotina_diaria_id, 0, 12, 3, '00:05:15'),
-											(9, rotina_diaria_id, 0, 1, 4, '00:06:30');
-										WHEN 6 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(23, rotina_diaria_id, 0, 15, 4, '00:06:40'),
-											(42, rotina_diaria_id, 0, 12, 3, '00:05:30'),
-											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(14, rotina_diaria_id, 0, 12, 4, '00:06:30');
-                                    END CASE;
-                                WHEN 3 THEN -- ROTINA 3
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(1, rotina_diaria_id, 0, 15, 3, '00:05:40'),
-											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(4, rotina_diaria_id, 0, 1, 3, '00:03:00'),
-											(9, rotina_diaria_id, 0, 1, 3, '00:04:30');
-										WHEN 2 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 10, 3, '00:04:35'),
-											(21, rotina_diaria_id, 0, 15, 3, '00:05:40'),
-											(42, rotina_diaria_id, 0, 15, 3, '00:05:30'),
-											(14, rotina_diaria_id, 0, 1, 3, '00:04:00'),
-											(1, rotina_diaria_id, 0, 15, 4, '00:06:30');
-										WHEN 3 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, rotina_diaria_id, 0, 1, 3, '00:04:30'),
-											(1, rotina_diaria_id, 0, 15, 3, '00:05:40'),
-											(24, rotina_diaria_id, 0, 1, 3, '00:05:00'),
-											(4, rotina_diaria_id, 0, 1, 3, '00:03:00'),
-											(9, rotina_diaria_id, 0, 1, 3, '00:04:30');
-										WHEN 4 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(21, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- burpee
-											(1, rotina_diaria_id, 0, 15, 4, '00:06:30'), -- flexao de braço
-											(42, rotina_diaria_id, 0, 15, 3, '00:05:30'), -- elevação de quadril
-											(2, rotina_diaria_id, 0, 10, 3, '00:04:35'), -- prancha lateral
-											(14, rotina_diaria_id, 0, 1, 3, '00:04:00'); -- agachamento livre
-										WHEN 5 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 10, 3, '00:04:35'), -- agachamento livre 
-											(21, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- burpee
-											(42, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- elevação de quadril
-											(14, rotina_diaria_id, 0, 1, 3, '00:04:30'), -- prancha lateral
-											(1, rotina_diaria_id, 0, 15, 3, '00:05:40'); -- flexao de braço
-										WHEN 6 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(41, rotina_diaria_id, 0, 1, 3, '00:04:35'), -- corrida no lugar
-											(24, rotina_diaria_id, 0, 15, 3, '00:05:40'), -- polichinelo
-											(3, rotina_diaria_id, 0, 15, 3, '00:06:00'), -- abdominal crunch
-											(9, rotina_diaria_id, 0, 1, 3, '00:04:35'), -- prancha
-											(23, rotina_diaria_id, 0, 15, 3, '00:06:00'); -- afundo
-                                    END CASE;
-                            END CASE;
-                        WHEN 2 THEN		-- GANHAR MASSA
-                            CASE treino_aleatorio
-								WHEN 1 THEN
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(43, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(10, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(7, rotina_diaria_id, 0, 15, 4, '00:06:30'),
-											(13, rotina_diaria_id, 0, 15, 4, '00:06:30');
-										WHEN 2 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(11, rotina_diaria_id, 0, 15, 4, '00:06:45'),
-											(44, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(45, rotina_diaria_id, 0, 20, 4, '00:07:30'),
-											(34, rotina_diaria_id, 0, 20, 4, '00:07:30');
-										WHEN 3 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(46, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(16, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(5, rotina_diaria_id, 0, 8, 4, '00:04:15'),
-											(47, rotina_diaria_id, 0, 15, 4, '00:06:30'),
-											(48, rotina_diaria_id, 0, 20, 4, '00:07:30');
-										WHEN 4 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(49, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(17, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(50, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(51, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(9, rotina_diaria_id, 0, 1, 4, '00:06:15');
-										WHEN 5 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(52, rotina_diaria_id, 0, 12, 4, '00:05:45'),
-											(53, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(15, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(35, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(54, rotina_diaria_id, 0, 15, 4, '00:05:45');
-										WHEN 6 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(55, rotina_diaria_id, 0, 10, 6, '00:07:45'),
-											(56, rotina_diaria_id, 0, 12, 8, '00:09:45'),
-											(57, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(58, rotina_diaria_id, 0, 15, 4, '00:05:45'),
-											(59, rotina_diaria_id, 0, 15, 4, '00:05:15');
-                                    END CASE;
-                                WHEN 2 THEN
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Livre
-											(45, rotina_diaria_id, 0, 15, 4, '00:05:30'), -- Panturrilha no Smith
-											(43, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Supino Reto
-											(33, rotina_diaria_id, 0, 15, 4, '00:05:30'); -- Abdominal
-										WHEN 2 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(7, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Rosca Direta
-											(13, rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Tríceps Pulley
-											(44, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Stiff
-											(34, rotina_diaria_id, 0, 15, 4, '00:03:00'); -- Abdominal Infra
-										WHEN 3 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(46, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Remada Curvada
-											(16, rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Puxada Frontal
-											(47, rotina_diaria_id, 0, 15, 4, '00:02:30'), -- Encolhimento de Ombros
-											(48, rotina_diaria_id, 0, 15, 4, '00:02:30'); -- Abdominal Oblíquo
-										WHEN 4 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(49, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Supino Inclinado
-											(17, rotina_diaria_id, 0, 12, 4, '00:03:00'), -- Elevação Lateral
-											(50, rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Rosca Martelo
-											(51, rotina_diaria_id, 0, 12, 4, '00:03:00'); -- Tríceps Testa
-										WHEN 5 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(52, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Agachamento Hack
-											(53, rotina_diaria_id, 0, 12, 4, '00:03:00'), -- Extensão de Pernas
-											(54, rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Flexão de Pernas
-											(55, rotina_diaria_id, 0, 15, 4, '00:03:00'); -- Elevação de Panturrilha
-										WHEN 6 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(56, rotina_diaria_id, 0, 8, 4, '00:03:00'), -- Barra Fixa
-											(52, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Agachamento Hack
-											(57, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Levantamento Terra
-											(58, rotina_diaria_id, 0, 1, 4, '00:01:00'); -- Abdominal Prancha
-                                    END CASE;
-                                WHEN 3 THEN
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(49, rotina_diaria_id, 0, 10, 4, '00:05:45'), -- Supino Inclinado
-											(10, rotina_diaria_id, 0, 12, 4, '00:05:45'), -- Desenvolvimento de Ombros
-											(7, rotina_diaria_id, 0, 10, 4, '00:03:00'), -- Rosca Direta
-											(13, rotina_diaria_id, 0, 12, 4, '00:03:00'); -- Tríceps Pulley
-										WHEN 2 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(2, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Livre
-											(11, rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Leg Press
-											(44, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Stiff
-											(45, rotina_diaria_id, 0, 15, 4, '00:07:00'); -- Panturrilha no Smith
-										WHEN 3 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(46, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Remada Curvada
-											(16, rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Puxada Frontal
-											(5, rotina_diaria_id, 0, 10, 4, '00:11:00'), -- Levantamento Terra
-											(4, rotina_diaria_id, 0, 15, 4, '00:05:30'); -- Abdominal Crunch
-										WHEN 4 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(43, rotina_diaria_id, 0, 10, 4, '00:08:15'), -- Supino Reto
-											(17, rotina_diaria_id, 0, 12, 4, '00:08:15'), -- Elevação Lateral
-											(50, rotina_diaria_id, 0, 10, 4, '00:08:25'), -- Rosca Martelo
-											(13, rotina_diaria_id, 0, 12, 4, '00:08:25'); -- Tríceps Pulley
-										WHEN 5 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(52, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Agachamento Hack
-											(53, rotina_diaria_id, 0, 12, 4, '00:07:00'), -- Extensão de Pernas
-											(50, rotina_diaria_id, 0, 10, 4, '00:07:00'), -- Flexão de Pernas
-											(45, rotina_diaria_id, 0, 15, 4, '00:07:00'); -- Elevação de Panturrilha
-										WHEN 6 THEN
-											INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo) VALUES
-											(5, rotina_diaria_id, 0, 10, 4, '00:12:00'), -- Levantamento Terra
-											(54, rotina_diaria_id, 0, 15, 4, '00:05:45'), -- Abdominal Bicicleta (sexta-feira)
-											(53, rotina_diaria_id, 0, 12, 4, '00:08:15'), -- Extensão de Pernas (sábado)
-											(44, rotina_diaria_id, 0, 10, 4, '00:08:15'), -- Stiff
-											(58, rotina_diaria_id, 0, 15, 4, '00:05:45'); -- Abdominal Canivete
-									END CASE;
-                            END CASE;
-                    END CASE;
-
-                    -- Refeições diárias com base na meta do usuário
-                    CASE meta_id
-                        WHEN 1 THEN		-- EMAGRECIMENTO
-                            CASE treino_aleatorio
-								WHEN 1 THEN	-- ROTINA REFEICAO 1
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 6, 0),
-											(rotina_diaria_id, 3, 0),
-											(rotina_diaria_id, 7, 0);
-										WHEN 2 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 9, 0),
-											(rotina_diaria_id, 10, 0);
-                                        WHEN 3 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 12, 0),
-											(rotina_diaria_id, 13, 0);
-                                        WHEN 4 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 14, 0),
-											(rotina_diaria_id, 15, 0),
-											(rotina_diaria_id, 16, 0);
-                                        WHEN 5 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 17, 0),
-											(rotina_diaria_id, 7, 0),
-											(rotina_diaria_id, 18, 0);
-                                        WHEN 6 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 19, 0),
-											(rotina_diaria_id, 20, 0),
-											(rotina_diaria_id, 21, 0);
-                                    END CASE;
-                                WHEN 2 THEN	-- ROTINA REFEICAO 2
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 24, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 9, 0),
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 18, 0);
-										WHEN 2 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 25, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 2, 0),
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 13, 0);
-										WHEN 3 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 3, 0),
-											(rotina_diaria_id, 21, 0),
-											(rotina_diaria_id, 24, 0);
-										WHEN 4 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 14, 0),
-											(rotina_diaria_id, 23, 0),
-											(rotina_diaria_id, 13, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 22, 0);
-										WHEN 5 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 26, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 4, 0),
-											(rotina_diaria_id, 19, 0),
-											(rotina_diaria_id, 27, 0);
-										WHEN 6 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 25, 0),
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 28, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 18, 0);
-                                    END CASE;
-                                WHEN 3 THEN	-- ROTINA REFEICAO 3
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
-											(rotina_diaria_id, 24, 0), -- Omelete de Claras
-											(rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(rotina_diaria_id, 27, 0); -- Salada de Atum
-										WHEN 2 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
-											(rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
-											(rotina_diaria_id, 12, 0), -- Macarrão Integral com Molho de Tomate e Frango
-											(rotina_diaria_id, 19, 0), -- Overnight Oats com Frutas Vermelhas
-											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
-										WHEN 3 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 6, 0), -- Omelete de Legumes
-											(rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
-											(rotina_diaria_id, 17, 0), -- Pão Integral com Ovo Mexido e Abacate
-											(rotina_diaria_id, 28, 0), -- Salada com Quinoa
-											(rotina_diaria_id, 32, 0); -- Tilápia com Legumes
-										WHEN 4 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 1, 0), -- Virada Paulista
-											(rotina_diaria_id, 14, 0), -- Tapioca Recheada
-											(rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
-											(rotina_diaria_id, 26, 0), -- Panqueca de Banana
-											(rotina_diaria_id, 31, 0); -- Bife com Salada
-										WHEN 5 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
-											(rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
-											(rotina_diaria_id, 21, 0), -- Wraps de Frango com Salada
-											(rotina_diaria_id, 29, 0); -- Smoothie Protéico
-										WHEN 6 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
-											(rotina_diaria_id, 22, 0), -- Risoto de Abóbora com Frango Desfiado
-											(rotina_diaria_id, 23, 0), -- Salada Caprese com Pão Integral
-											(rotina_diaria_id, 24, 0), -- Omelete de Claras
-											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
-									END CASE;
-                            END CASE;
-                        WHEN 2 THEN		-- GANHO DE MASSA
-                            CASE treino_aleatorio
-								WHEN 1 THEN	-- ROTINA REFEICAO 1
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 6, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 9, 0),
-											(rotina_diaria_id, 27, 0),
-											(rotina_diaria_id, 3, 0);
-										WHEN 2 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 29, 0),
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 30, 0),
-											(rotina_diaria_id, 21, 0),
-											(rotina_diaria_id, 32, 0);
-                                        WHEN 3 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 11, 0),
-											(rotina_diaria_id, 29, 0),
-											(rotina_diaria_id, 4, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 31, 0);
-                                        WHEN 4 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 26, 0),
-											(rotina_diaria_id, 19, 0),
-											(rotina_diaria_id, 3, 0),
-											(rotina_diaria_id, 25, 0),
-											(rotina_diaria_id, 13, 0);
-                                        WHEN 5 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 6, 0),
-											(rotina_diaria_id, 21, 0),
-											(rotina_diaria_id, 4, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 16, 0);
-                                        WHEN 6 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 29, 0),
-											(rotina_diaria_id, 10, 0),
-											(rotina_diaria_id, 13, 0),
-											(rotina_diaria_id, 8, 0),
-											(rotina_diaria_id, 3, 0);
-                                    END CASE;
-                                WHEN 2 THEN -- ROTINA REFEICAO 2
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 3, 0), -- Salmão com Quinoa
-											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
-											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
-											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
-
-										WHEN 2 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
-											(rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
-											(rotina_diaria_id, 12, 0), -- Macarrão Integral com Molho de Tomate e Frango
-											(rotina_diaria_id, 22, 0), -- Risoto de Abóbora com Frango Desfiado
-											(rotina_diaria_id, 29, 0); -- Smoothie Protéico
-										WHEN 3 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 1, 0), -- Virada Paulista
-											(rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
-											(rotina_diaria_id, 14, 0), -- Tapioca Recheada
-											(rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(rotina_diaria_id, 31, 0); -- Bife com Salada
-										WHEN 4 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 2, 0), -- Salada de Frango Grelhado
-											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(rotina_diaria_id, 16, 0), -- Carne Magra com Purê de Batata Doce e Brócolis
-											(rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
-											(rotina_diaria_id, 32, 0); -- Tilápia com Legumes
-										WHEN 5 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 6, 0), -- Omelete de Legumes
-											(rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
-											(rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
-											(rotina_diaria_id, 23, 0), -- Salada Caprese com Pão Integral
-											(rotina_diaria_id, 29, 0); -- Smoothie Protéico
-										WHEN 6 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
-											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
-											(rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
-									END CASE;
-                                WHEN 3 THEN -- ROTINA REFEICAO 3
-									CASE dia
-										WHEN 1 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 3, 0), -- Salmão com Quinoa
-											(rotina_diaria_id, 12, 0), -- Macarrão Integral com Molho de Tomate e Frango
-											(rotina_diaria_id, 14, 0), -- Tapioca Recheada
-											(rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(rotina_diaria_id, 16, 0); -- Carne Magra com Purê de Batata Doce e Brócolis
-
-										WHEN 2 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 5, 0), -- Carne com Aveia de Flocos
-											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(rotina_diaria_id, 20, 0), -- Feijoada Light com Acompanhamentos
-											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
-											(rotina_diaria_id, 22, 0); -- Risoto de Abóbora com Frango Desfiado
-
-										WHEN 3 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 1, 0), -- Virada Paulista
-											(rotina_diaria_id, 7, 0), -- Frango com Legumes Salteados
-											(rotina_diaria_id, 11, 0), -- Aveia com Frutas e Castanhas
-											(rotina_diaria_id, 25, 0), -- Smoothie Verde
-											(rotina_diaria_id, 31, 0); -- Bife com Salada
-
-										WHEN 4 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 6, 0), -- Omelete de Legumes
-											(rotina_diaria_id, 13, 0), -- Peixe Assado com Batatas Assadas e Espinafre
-											(rotina_diaria_id, 18, 0), -- Lentilhas com Legumes e Arroz Integral
-											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
-											(rotina_diaria_id, 30, 0); -- Carne Moída com Batata Doce
-
-										WHEN 5 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 2, 0), -- Salada de Frango Grelhado
-											(rotina_diaria_id, 8, 0), -- Iogurte Grego com Frutas e Granola
-											(rotina_diaria_id, 15, 0), -- Strogonoff de Frango com Legumes e Macarrão Integral
-											(rotina_diaria_id, 22, 0), -- Risoto de Abóbora com Frango Desfiado
-											(rotina_diaria_id, 32, 0); -- Tilápia com Legumes
-
-										WHEN 6 THEN
-											INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
-											(rotina_diaria_id, 4, 0), -- Frango e Batata Doce
-											(rotina_diaria_id, 9, 0), -- Frango com Arroz Integral e Salada
-											(rotina_diaria_id, 19, 0), -- Overnight Oats com Frutas Vermelhas
-											(rotina_diaria_id, 29, 0), -- Smoothie Protéico
-											(rotina_diaria_id, 31, 0); -- Bife com Salada
-									END CASE;
-                            END CASE;
-                    END CASE;
-
-                    -- Incrementa o dia para a próxima rotina diária
-                    SET dia = dia + 1;
-                END WHILE;
-
-                -- Incrementa a semana para a próxima rotina semanal
-                SET num_semana = num_semana + 1;
-            END WHILE;
-        END IF;
-    END LOOP;
-
-    CLOSE cursor_usuario;
-END //
-
-DELIMITER ;
-
--- Evento para ocorrer a chamada da procedure da inserção de novas rotinas mensais
-DELIMITER //
-
-CREATE EVENT IF NOT EXISTS atualiza_rotinas_mensais
--- Rode o evento a cada 1 mês
-ON SCHEDULE EVERY 1 MONTH
-STARTS (TIMESTAMP(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY)))	-- Começa no primeiro dia do mês
-DO
-CALL atualizar_rotinas_expiradas();	-- Chama a procedure
-
-DELIMITER ;
-
--- ----------------------------------------- --
-
-
-CREATE DATABASE IF NOT EXISTS vitalisDB;
+CREATE database vitalisDB;
 USE vitalisDB;
 
 DROP TRIGGER IF EXISTS cria_rotina;
-
-DROP DATABASE IF EXISTS vitalisDB;
-CREATE DATABASE vitalisDB;
-USE vitalisDB;
+DROP procedure IF EXISTS atualizar_rotinas_expiradas;
 
 CREATE TABLE meta (
 	id_meta INT PRIMARY KEY AUTO_INCREMENT,
@@ -891,8 +95,8 @@ CREATE TABLE midia (
 
 CREATE TABLE usuario (
     id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-    -- tipo VARCHAR(45) CHECK (tipo IN ('USUARIO', 'PERSONAL', 'ADMIN')), 
-    tipo TINYINT NOT NULL, 
+    -- tipo VARCHAR(45) CHECK (tipo IN ('USUARIO', 'PERSONAL', 'ADMIN')),
+    tipo TINYINT NOT NULL,
     nickname VARCHAR(20) NOT NULL,
     cpf CHAR(11) NOT NULL,
     nome VARCHAR(200) NOT NULL,
@@ -958,6 +162,7 @@ CREATE TABLE rotina_usuario (
     id_rotina_usuario INT AUTO_INCREMENT,
     usuario_id INT,
     meta_id INT,
+    rotina_alternativa TINYINT NOT NULL,
     PRIMARY KEY (id_rotina_usuario, usuario_id, meta_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (meta_id) REFERENCES meta(id_meta) ON DELETE CASCADE ON UPDATE CASCADE
@@ -1051,7 +256,7 @@ CREATE TABLE pagamento (
     usuario_id INT,
     assinatura_id INT,
     data_pagamento DATE NOT NULL,
-    tipo VARCHAR(100) CHECK (tipo IN ('Cartão de débito', 'Cartão de crédito', 'PIX')) NOT NULL, 
+    tipo VARCHAR(100) CHECK (tipo IN ('Cartão de débito', 'Cartão de crédito', 'PIX')) NOT NULL,
     PRIMARY KEY (id_pagamento, usuario_id, assinatura_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id_usuario) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (assinatura_id) REFERENCES assinatura(id_assinatura) ON DELETE CASCADE ON UPDATE CASCADE
@@ -1116,6 +321,141 @@ CREATE TABLE mural (
     FOREIGN KEY (midia_id) REFERENCES midia(id_midia) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+
+-- ---------------------------------------------------------------------------
+-- TRIGGERS & PROCEDURES
+-- ---------------------------------------------------------------------------
+DELIMITER //
+-- ROTINA PADRÂO PÓS CRIAÇÂO DO PERFIL
+CREATE TRIGGER cria_rotina
+AFTER INSERT ON rotina_usuario
+FOR EACH ROW
+BEGIN
+    DECLARE rotina_mensal_id INT;
+    DECLARE rotina_semanal_id INT;
+    DECLARE rotina_diaria_id INT;
+    DECLARE num_semana INT;
+    DECLARE dia INT;
+    DECLARE padrao INT DEFAULT 1;
+	-- Cria a rotina mensal do usuário
+    INSERT INTO rotina_mensal (rotina_usuario_id, mes, ano, concluido)
+    VALUES
+    (NEW.id_rotina_usuario, MONTH(CURDATE()), YEAR(CURDATE()), 0);
+    SET rotina_mensal_id = LAST_INSERT_ID();
+	-- Cria as rotinas semanais do usuário para a rotina mensal
+    SET num_semana = 1;
+    WHILE num_semana <= 5 DO
+        INSERT INTO rotina_semanal (rotina_mensal_id, num_semana, concluido)
+        VALUES
+        (rotina_mensal_id, num_semana, 0);
+        SET rotina_semanal_id = LAST_INSERT_ID();
+        -- Para cada semana, criar sua rotina por dia
+        SET dia = 1;
+        WHILE dia <= 7 DO
+            INSERT INTO rotina_diaria (rotina_semanal_id, dia, concluido)
+            VALUES
+            (rotina_semanal_id, dia, 0);
+            SET rotina_diaria_id = LAST_INSERT_ID();
+
+            -- Caso a caso a meta seja X... Monte o treino para a rotina diária
+			CASE NEW.meta_id
+				WHEN 1 THEN
+					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+					VALUES
+					(1, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+					(2, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+					(3, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+					(4, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+					(5, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+					(6, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+					(7, rotina_diaria_id, 0, 12, 3, '00:01:00');
+                WHEN 2 THEN
+					INSERT INTO treino (exercicio_id, rotina_diaria_id, concluido, repeticao, serie, tempo)
+					VALUES
+					(8, rotina_diaria_id, 0, 15, 3, '00:01:00'),
+					(9, rotina_diaria_id, 0, 12, 3, '00:02:00'),
+					(10, rotina_diaria_id, 0, 10, 3, '00:01:30'),
+					(11, rotina_diaria_id, 0, 20, 3, '00:01:00'),
+					(12, rotina_diaria_id, 0, 8, 3, '00:02:00'),
+					(13, rotina_diaria_id, 0, 15, 3, '00:01:30'),
+					(14, rotina_diaria_id, 0, 12, 3, '00:01:00');
+            END CASE;
+			-- Caso a caso a meta seja X... Monte as refeições para a rotina diária para cada dia
+            CASE NEW.meta_id
+				WHEN 1 THEN
+					CASE padrao
+						WHEN 1 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 3, 0);
+						WHEN 2 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0);
+						WHEN 3 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 1, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 4 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 5 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 3, 0);
+					END CASE;
+                WHEN 2 THEN
+					CASE padrao
+						WHEN 1 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 3, 0);
+						WHEN 2 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 3, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0);
+						WHEN 3 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 4 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 2, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 5, 0);
+						WHEN 5 THEN
+							INSERT INTO refeicao_diaria (rotina_diaria_id, refeicao_id, concluido) VALUES
+							(rotina_diaria_id, 5, 0),
+							(rotina_diaria_id, 4, 0),
+							(rotina_diaria_id, 3, 0);
+					END CASE;
+            END CASE;
+
+            -- Padrão serve para variar as rotinas diárias
+            SET padrao = padrao + 1;
+            IF padrao > 3 THEN
+                SET padrao = 1;
+            END IF;
+            -- Para cada repetição, aumenta o dia
+            SET dia = dia + 1;
+        END WHILE;
+
+        -- Para cada repetição, aumenta a semana
+        SET num_semana = num_semana + 1;
+    END WHILE;
+END //
+DELIMITER ;
+-- ----------------------------------------- --
 
 
 
@@ -1303,13 +643,13 @@ INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
 
 -- Omelete com Legumes
 INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
-('Brócolis', 31.5, 12.6, 1.8), -- 22	
+('Brócolis', 31.5, 12.6, 1.8), -- 22
 ('Queijo Branco', 3.2, 17.4, 15.2), -- 23
 ('Espinafre', 3.6, 2.9, 0.4); -- 24
 
 -- Iogurte Grego com Frutas e Granola
 INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
-('Iogurte Grego', 3.6, 8.7, 10.0), -- 25	
+('Iogurte Grego', 3.6, 8.7, 10.0), -- 25
 ('Frutas Vermelhas', 10.0, 1.0, 0.3), -- 26
 ('Granola', 64.0, 10.0, 10.0); -- 27
 
@@ -1319,7 +659,7 @@ INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
 
 -- Lentilha com Legumes e Pão Integral
 INSERT INTO alimento (nome, carboidrato, proteina, gordura) VALUES
-('Lentilha', 20.0, 9.0, 0.4), -- 29	
+('Lentilha', 20.0, 9.0, 0.4), -- 29
 ('Pão Integral', 43.0, 8.0, 4.0); -- 30
 
 -- Aveia com Frutas e Castanhas
@@ -1674,7 +1014,7 @@ INSERT INTO tag (nome) VALUES
 ('Romboides'), -- 19
 ('Antebraços'), -- 20
 ('Flexores do Quadril'); -- 21
-    
+
 INSERT INTO exercicio (nome, descricao) VALUES
 ('Flexão de Braço', 'A flexão de braço é um exercício de peso corporal que fortalece o peitoral, deltoides e tríceps. Com as mãos no chão e corpo alinhado, você se abaixa até quase tocar o peito no chão e retorna. Melhora a força do core e a estabilidade dos ombros.'), -- 1
 ('Agachamento Livre', 'O agachamento livre fortalece pernas e glúteos. Com os pés na largura dos ombros, você desce como se fosse sentar, mantendo a coluna ereta. É excelente para quadríceps, isquiotibiais e glúteos, além de melhorar a mobilidade dos quadris e joelhos.'), -- 2
@@ -1945,7 +1285,7 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 44 (Stiff)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(13, 44), -- Isquiotibiais 
+(13, 44), -- Isquiotibiais
 (14, 44), -- lombar
 (7, 44); -- gluteos
 
@@ -1955,18 +1295,18 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 46 (Remada Curvada)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(3, 46), -- costas 
+(3, 46), -- costas
 (14, 46), -- lombar
 (10, 46); -- biceps
 
 -- Associações para o exercício 47 (Encolhimento de Ombros)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(8, 47), -- trapezio 
+(8, 47), -- trapezio
 (19, 47); -- romboides
 
 -- Associações para o exercício 48 (Abdominal Oblíquo)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(15, 48), -- obliquo 
+(15, 48), -- obliquo
 (6, 48); -- abdomen
 
 -- Associações para o exercício 49 (Supino Inclinado)
@@ -1985,35 +1325,35 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 52 (agachamento no hack)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(13, 52), -- isquitobiais 
-(7, 52), -- gluteos 
+(13, 52), -- isquitobiais
+(7, 52), -- gluteos
 (12, 52); -- quadriceps
 
 -- Associações para o exercício 53 (Extensão de Perna)
-INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES 
+INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 (12, 53); -- quadriceps
 
 -- Associações para o exercício 54 (abdominal bicicleta)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(6, 54), -- abdomen 
+(6, 54), -- abdomen
 (15, 54); -- obliquos
 
 -- Associações para o exercício 55 (barra fixa)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(3, 55), -- costa 
-(10, 55), -- biceps 
+(3, 55), -- costa
+(10, 55), -- biceps
 (20, 55); -- antibraco
 
 -- Associações para o exercício 56 (remana unilateral)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(3, 56), -- costas 
+(3, 56), -- costas
 (14, 56), -- lombar
 (10, 56); -- biceps
 
 -- Associações para o exercício 57 (crucifixo invertido)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(4, 57), -- ombro 
-(8, 57), -- trapezio 
+(4, 57), -- ombro
+(8, 57), -- trapezio
 (19, 57); -- romboides
 
 -- Associações para o exercício 58 (Rosca Concentrada)
@@ -2022,7 +1362,7 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 
 -- Associações para o exercício 59 (abdominal canivete)
 INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
-(6, 59), -- abdomen 
+(6, 59), -- abdomen
 (21, 59); -- Flexores do quadril
 
 INSERT INTO assinatura (nome, valor) VALUES
@@ -2035,32 +1375,32 @@ VALUES
 ('Rua Alzira Gomes Queiros', 6, 'Jardim Eldorado', 'Ourinhos', 'SP', null, 19914550);
 
 -- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos) 
-VALUES 
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos)
+VALUES
 (0, 'ylu1Gi@@', '56438153036', 'Luigi Vicchietti', '2005-01-17', 'M', 'luigi@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null, 0),
 (1, 'marC@SSilV4', '92865867013', 'Marcos Silva Oliveira Pinto Santos', '1980-12-05', 'M', 'marcos@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 1, 0);
 
-INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade)
 VALUES
 (1, 58.60, 1.85, 0, 0, 0, 0, 0, 0);
 
-INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
-(1, 2);
+INSERT INTO rotina_usuario (usuario_id, meta_id, rotina_alternativa) VALUES
+(1, 2, 0);
 
 -- SENHA -> Daniel@23133 (todos)
-INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos) 
-VALUES 
+INSERT INTO usuario (tipo, nickname, cpf, nome, dt_nasc, sexo, email, email_recuperacao, senha, personal_id, endereco_id, pontos)
+VALUES
 (0, 'w1llSal4d@', '95931984070', 'Will Dantas', '2004-03-31', 'M', 'will@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', 2, null, 0),
 (1, 'roberTT4F@', '63515811095', 'Roberta Ferreira', '1985-08-25', 'F', 'roberta@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 2, 0),
 (1, 'pedR0G@', '47767654036', 'Pedro Gomes', '1978-06-17', 'M', 'pedro@gmail.com', null, '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, 3, 0);
 -- (2, 'admin1Nhyir@', '29896637032', 'Poliana Micheline Milit�o', '1999-07-18', 'F', 'admin@gmail.com', 'padrao@gmail', '$2a$10$Ix.qCm5U71fFzjkd2/z3T.gKtgr9NzUzpqVOqAXU8uAcvv3ftooWS', null, null);
 
-INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade) 
+INSERT INTO ficha (usuario_id, peso, altura, problema_cardiaco, dor_peito_atividade, dor_peito_ultimo_mes, problema_osseo_articular, medicamento_pressao_coracao, impedimento_atividade)
 VALUES
 (3, 88.30, 1.81, 0, 0, 0, 1, 0, 1);
 
-INSERT INTO rotina_usuario (usuario_id, meta_id) VALUES
-(3, 1);
+INSERT INTO rotina_usuario (usuario_id, meta_id, rotina_alternativa) VALUES
+(3, 1, 0);
 
 -- Inserção de contrato para o usuário com id_usuario 3 e personal_id 2
 INSERT INTO contrato (usuario_id, personal_id, afiliacao, inicio_contrato, fim_contrato) VALUES
@@ -2198,25 +1538,25 @@ VALUES
 -- Imagens dos EX PT.2
     -- Inserir
 ('Burpees', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725841225/exercicios/jpsbnmfjp4ieev8pfqlo.jpg', 'JPG', 'Imagem', 21, null, null), -- 94
-('Jumping Jacks', '', '', 'Imagem', 22, null, null), -- 95
+('Jumping Jacks', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159492/exercicios/tmbr1yheuadfvut3dfjx.jpg', 'JPG', 'Imagem', 22, null, null), -- 95
 ('Afundo', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725841922/exercicios/pax33hmoelym2q9ewxuv.jpg', 'JPG', 'Imagem', 23, null, null), -- 96
 ('Polichinelos', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725840453/exercicios/ivrgnutd7z6dc2k2ul7e.jpg', 'JPG', 'Imagem', 24, null, null), -- 97
-('Pular Corda', '', '', 'Imagem', 25, null, null), -- 98
-('Ponte (Gluteos)', '', '', 'Imagem', 26, null, null), -- 99
-('Sprint', '', '', 'Imagem', 27, null, null), -- 100
-('High Knees', '', '', 'Imagem', 28, null, null), -- 101
-('Skaters', '', '', 'Imagem', 29, null, null), -- 102
-('Pullover', '', '', 'Imagem', 30, null, null), -- 103
-('Pulldown', '', '', 'Imagem', 31, null, null), -- 104
-('Mountain Climbers', '', '', 'Imagem', 32, null, null), -- 105
-('Bicicleta Abdominal', '', '', 'Imagem', 33, null, null), -- 106
+('Pular Corda', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159663/exercicios/zbfdpkxvpkbanb8zteww.jpg', 'JPG', 'Imagem', 25, null, null), -- 98
+('Ponte (Gluteos)', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159591/exercicios/gyqp0o1thx5axvhdjump.jpg', 'JPG', 'Imagem', 26, null, null), -- 99
+('Sprint', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159237/exercicios/epfedxltpuknfue6vhzj.jpg', 'JPG', 'Imagem', 27, null, null), -- 100
+('High Knees', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159452/exercicios/oedasaxawgmet75nhtsm.jpg', 'JPG', 'Imagem', 28, null, null), -- 101
+('Skaters', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159192/exercicios/ltzmdfqymrnfnxyjtniu.jpg', 'JPG', 'Imagem', 29, null, null), -- 102
+('Pullover', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159127/exercicios/ehxkqmshhzkk15qkqegu.jpg', 'JPG', 'Imagem', 30, null, null), -- 103
+('Pulldown', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159703/exercicios/kpiiu1r3djpdpshd5zo4.jpg', 'JPG', 'Imagem', 31, null, null), -- 104
+('Mountain Climbers', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159535/exercicios/yxb3qg7xwewazrbdcxo7.jpg', 'JPG', 'Imagem', 32, null, null), -- 105
+('Bicicleta Abdominal', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159313/exercicios/mdn4yxhepbrymckf07tv.jpg', 'JPG', 'Imagem', 33, null, null), -- 106
 ('Abdominal Infra', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725841833/exercicios/sacfobeb48ym3akjlyyb.jpg', 'JPG', 'Imagem', 34, null, null), -- 107
-('Elevação de Panturrilha', '', '', 'Imagem', 35, null, null), -- 108
+('Elevação de Panturrilha', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159367/exercicios/a9lydtfrgu0nvlls5hcs.jpg', 'JPG', 'Imagem', 35, null, null), -- 108
 ('Corrida (Cardio)', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725841416/exercicios/phkc74yrknwycpxtugam.jpg', 'JPG', 'Imagem', 36, null, null), -- 109
-('Prancha com Toque no Ombro', '', '', 'Imagem', 37, null, null), -- 110
-('Flexão com Abertura', '', '', 'Imagem', 38, null, null), -- 111
-('Agachamento Isométrico', '', '', 'Imagem', 39, null, null), -- 112
-('Abdominal V-Sit', '', '', 'Imagem', 40, null, null), -- 113
+('Prancha com Toque no Ombro', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159623/exercicios/idsxgr9yzkcfcxgsufkf.jpg', 'JPG', 'Imagem', 37, null, null), -- 110
+('Flexão com Abertura', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159411/exercicios/rl3qnixzhqinlkhzr4k6.jpg', 'JPG', 'Imagem', 38, null, null), -- 111
+('Agachamento Isométrico', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159824/exercicios/delhrtedjvoirkuhh2zr.jpg', 'JPG', 'Imagem', 39, null, null), -- 112
+('Abdominal V-Sit', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159744/exercicios/dbdk1emcpbrawezjucsw.jpg', 'JPG', 'Imagem', 40, null, null), -- 113
 ('Corrida no Lugar', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725841377/exercicios/wlmlabnkalb8irlwefxa.jpg', 'JPG', 'Imagem', 41, null, null), -- 114
 ('Elevação de Quadril', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725841659/exercicios/rj7gp0iwk3bqk9fulwry.jpg', 'JPG', 'Imagem', 42, null, null), -- 115
 
@@ -2225,51 +1565,51 @@ VALUES
 ('Frango com Legumes Salteados', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725844366/alimentos-refeicoes/auvjnesqbzey3naowvnz.jpg', 'JPG', 'Imagem', null, null, 7), -- 117
 ('Iogurte Grego com Frutas e Granolas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843068/alimentos-refeicoes/bkdlxotd3hfxoxgweayc.jpg', 'JPG', 'Imagem', null, null, 8), -- 118
 ('Frango com Arroz Integral e Salada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843906/alimentos-refeicoes/xuduwuadjfq1qld3pbjx.jpg', 'JPG', 'Imagem', null, null, 9), -- 119
-('Lentilha com Legumes e Pão Integral', '', '', 'Imagem', null, null, 10), -- 120
-('Aveia com Frutas e Castanhas', '', '', 'Imagem', null, null, 11), -- 121
+('Lentilha com Legumes e Pão Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728162184/alimentos-refeicoes/i8grd1ezdhpxmhhmzfa7.png', 'PNG', 'Imagem', null, null, 10), -- 120
+('Aveia com Frutas e Castanhas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160226/alimentos-refeicoes/xjejw2ig5ejjrxwbjdq6.jpg', 'JPG', 'Imagem', null, null, 11), -- 121
 ('Macarrão Integral com Molho de Tomate e Frango', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843343/alimentos-refeicoes/l4o6jwuvzsadweut0xob.jpg', 'JPG', 'Imagem', null, null, 12), -- 122
-('Peixe Assado com Batatas Assadas e Espinafre', '', '', 'Imagem', null, null, 13), -- 123
+('Peixe Assado com Batatas Assadas e Espinafre', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728162280/alimentos-refeicoes/bckmrkbiimhhxfovixav.png', 'PNG', 'Imagem', null, null, 13), -- 123
 ('Tapioca Recheada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725842457/alimentos-refeicoes/wu2kdyfxrmvwwjkiras5.jpg', 'JPG', 'Imagem', null, null, 14), -- 124
-('Strogonoff de Frango com Legumes e Macarrão Integral', '', '', 'Imagem', null, null, 15), -- 125
-('Carne Magra com Purê de Batata Doce e Brocolis', '', '', 'Imagem', null, null, 16), -- 126
+('Strogonoff de Frango com Legumes e Macarrão Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160579/alimentos-refeicoes/jegfg51hfv2c8il6ixix.jpg', 'JPG', 'Imagem', null, null, 15), -- 125
+('Carne Magra com Purê de Batata Doce e Brocolis', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160682/alimentos-refeicoes/y2btwxa0ycgts0afkubq.jpg', 'JPG', 'Imagem', null, null, 16), -- 126
 ('Pão Integral com Ovo Mexido e Abacate', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725842938/alimentos-refeicoes/ljlqoktzhphzwjrcdbds.jpg', 'JPG', 'Imagem', null, null, 17), -- 127
-('Lentilhas com Legumes e Arroz Integral', '', '', 'Imagem', null, null, 18), -- 128
-('Overnight Oats com Frutas Vermelhas', '', '', 'Imagem', null, null, 19), -- 129
-('Feijoada Light com Acompanhamentos', '', '', 'Imagem', null, null, 20), -- 130
-('Wraps de Frango com Salada', '', '', 'Imagem', null, null, 21), -- 131
-('Risoto de Abobora com Frango Desfiado', '', '', 'Imagem', null, null, 22), -- 132
-('Salada Caprese com Pão Integral', '', '', 'Imagem', null, null, 23), -- 133
+('Lentilhas com Legumes e Arroz Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161062/alimentos-refeicoes/re2spzh7tc7rgb1f7wjn.jpg', 'JPG', 'Imagem', null, null, 18), -- 128
+('Overnight Oats com Frutas Vermelhas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161306/alimentos-refeicoes/yg2f0pauw2iykuye1xnz.jpg', 'JPG', 'Imagem', null, null, 19), -- 129
+('Feijoada Light com Acompanhamentos', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160847/alimentos-refeicoes/wku4u3cqtio8st4g3s7f.jpg', 'JPG', 'Imagem', null, null, 20), -- 130
+('Wraps de Frango com Salada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160138/alimentos-refeicoes/hol64pqirtxoa5huyxl3.jpg', 'JPG', 'Imagem', null, null, 21), -- 131
+('Risoto de Abobora com Frango Desfiado', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160398/alimentos-refeicoes/acqolj0aamlc9zsj5yre.jpg', 'JPG', 'Imagem', null, null, 22), -- 132
+('Salada Caprese com Pão Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160459/alimentos-refeicoes/u5yz3cglam32pbrsmqu2.jpg', 'JPG', 'Imagem', null, null, 23), -- 133
 ('Omelete de Claras', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843427/alimentos-refeicoes/crktkxbinghbnsxz2g8k.jpg', 'JPG', 'Imagem', null, null, 24), -- 134
 ('Smoothie Verde', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725842385/alimentos-refeicoes/vuwfupklremsgm4ehjf0.jpg', 'JPG', 'Imagem', null, null, 25), -- 135
 ('Panqueca de Banana', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843634/alimentos-refeicoes/e7opb5pkkmq6vyobc6sk.jpg', 'JPG', 'Imagem', null, null, 26), -- 136
 ('Salada de Atum', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843848/alimentos-refeicoes/vgfpaht8slaub12vybjh.jpg', 'JPG', 'Imagem', null, null, 27), -- 137
-('Salada com Quinoa', '', '', 'Imagem', null, null, 28), -- 138
+('Salada com Quinoa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160500/alimentos-refeicoes/uirtcy3vi2lcu0aclxzp.jpg', 'JPG', 'Imagem', null, null, 28), -- 138
 
-('Brocolis', '', '', 'Imagem', null, 22, null), -- 139
-('Queijo Branco', '', '', 'Imagem', null, 23, null), -- 140
-('Espinafre', '', '', 'Imagem', null, 24, null), -- 141
-('Iogurte Grego', '', '', 'Imagem', null, 25, null), -- 142
-('Frutas Vermelhas', '', '', 'Imagem', null, 26, null), -- 143
-('Granola', '', '', 'Imagem', null, 27, null), -- 144
-('Arroz Integral', '', '', 'Imagem', null, 28, null), -- 145
-('Lentilha', '', '', 'Imagem', null, 29, null), -- 146
-('Pão Integral', '', '', 'Imagem', null, 30, null), -- 147
-('Frutas', '', '', 'Imagem', null, 31, null), -- 148
-('Castanha', '', '', 'Imagem', null, 32, null), -- 149
-('Macarrão Integral', '', '', 'Imagem', null, 33, null), -- 150
-('Mollho de Tomate', '', '', 'Imagem', null, 34, null), -- 151
-('Queijo Cottage', '', '', 'Imagem', null, 35, null), -- 152
-('Peito de Peru', '', '', 'Imagem', null, 36, null), -- 153
-('Semente de Chia', '', '', 'Imagem', null, 37, null), -- 154
-('Laranja', '', '', 'Imagem', null, 38, null), -- 155
-('Tortilha de Trigo Integral', '', '', 'Imagem', null, 39, null), -- 156
-('Abobora', '', '', 'Imagem', null, 40, null), -- 157
-('Tomate', '', '', 'Imagem', null, 41, null), -- 158
-('Manjericão', '', '', 'Imagem', null, 42, null), -- 159
-('Queijo Mussarela', '', '', 'Imagem', null, 43, null), -- 160
-('Tapioca', '', '', 'Imagem', null, 44, null), -- 161
+('Brocolis', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160276/alimentos-refeicoes/p2kuhkf0lkutw8bslycw.jpg', 'JPG', 'Imagem', null, 22, null), -- 139
+('Queijo Branco', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160317/alimentos-refeicoes/cvgbwmhxs8gjai2knhsa.jpg', 'JPG', 'Imagem', null, 23, null), -- 140
+('Espinafre', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160802/alimentos-refeicoes/uaptmowfdrvnli4y6zhf.jpg', 'JPG', 'Imagem', null, 24, null), -- 141
+('Iogurte Grego', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160989/alimentos-refeicoes/g5f6qmqv79dzu1fkftdr.jpg', 'JPG', 'Imagem', null, 25, null), -- 142
+('Frutas Vermelhas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160883/alimentos-refeicoes/nv8enrkzfvnjrjnv3xhz.jpg', 'JPG', 'Imagem', null, 26, null), -- 143
+('Granola', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160951/alimentos-refeicoes/ipetakx9vgp2bmfcuxek.jpg', 'JPG', 'Imagem', null, 27, null), -- 144
+('Arroz Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160189/alimentos-refeicoes/zsww38lkhlgwnuaenyl6.jpg', 'JPG', 'Imagem', null, 28, null), -- 145
+('Lentilha', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161126/alimentos-refeicoes/prqdqtf5vhh2kty8mpcb.jpg', 'JPG', 'Imagem', null, 29, null), -- 146
+('Pão Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161449/alimentos-refeicoes/hb4jm6u3zd1zeg6aftop.jpg', 'JPG', 'Imagem', null, 30, null), -- 147
+('Frutas', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160921/alimentos-refeicoes/gygq6ed0vy0vx4svn9xv.jpg', 'JPG', 'Imagem', null, 31, null), -- 148
+('Castanha', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160723/alimentos-refeicoes/xtx0ayu1yoyyp80kyizb.jpg', 'JPG', 'Imagem', null, 32, null), -- 149
+('Macarrão Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161179/alimentos-refeicoes/afjscrciyzx4ramqx5nr.jpg', 'JPG', 'Imagem', null, 33, null), -- 150
+('Mollho de Tomate', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161244/alimentos-refeicoes/ysobarj6ukmovf5bzglp.jpg', 'JPG', 'Imagem', null, 34, null), -- 151
+('Queijo Cottage', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160359/alimentos-refeicoes/kosith5a1vb5ls037em2.jpg', 'JPG', 'Imagem', null, 35, null), -- 152
+('Peito de Peru', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161518/alimentos-refeicoes/re14das44alc78myofbc.jpg', 'JPG', 'Imagem', null, 36, null), -- 153
+('Semente de Chia', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160542/alimentos-refeicoes/quqjjhaddymtxp19zhwf.jpg', 'JPG', 'Imagem', null, 37, null), -- 154
+('Laranja', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161024/alimentos-refeicoes/otra7ukhcn33viptly4v.jpg', 'JPG', 'Imagem', null, 38, null), -- 155
+('Tortilha de Trigo Integral', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160051/alimentos-refeicoes/fqz2wacez61hrbbuma7p.jpg', 'JPG', 'Imagem', null, 39, null), -- 156
+('Abobora', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161611/alimentos-refeicoes/se2xzijzlepyiif1twtm.jpg', 'JPG', 'Imagem', null, 40, null), -- 157
+('Tomate', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160007/alimentos-refeicoes/bszj6acnaj4zemr8fjmw.jpg', 'JPG', 'Imagem', null, 41, null), -- 158
+('Manjericão', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161214/alimentos-refeicoes/kpsdf48hxcoizxvocluj.jpg', 'JPG', 'Imagem', null, 42, null), -- 159
+('Queijo Mussarela', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161275/alimentos-refeicoes/sanzwh9lyjiywfzggnjd.jpg', 'JPG', 'Imagem', null, 43, null), -- 160
+('Tapioca', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160635/alimentos-refeicoes/gyodp7da9rz7k8occzxp.jpg', 'JPG', 'Imagem', null, 44, null), -- 161
 ('Banana', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725843980/alimentos-refeicoes/bibriiq0qbbtwlfmxrzm.jpg', 'JPG', 'Imagem', null, 45, null), -- 162
-('Água de Coco', '', '', 'Imagem', null, 46, null), -- 163
+('Água de Coco', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161647/alimentos-refeicoes/sjz3z65evwjjvsa5wyfz.jpg', 'JPG', 'Imagem', null, 46, null), -- 163
 
 -- Imagens dos EX PT.3
     -- Inserir
@@ -2317,11 +1657,11 @@ VALUES
 ('Bife com Salada', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725844046/alimentos-refeicoes/aydhgtgtlhxdq0xin9yg.jpg', 'JPG', 'Imagem', null, null, 31), -- 200
 ('Tilápia com Legumes', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725842546/alimentos-refeicoes/besnhfx6pxfujkam3r7r.jpg', 'JPG', 'Imagem', null, null, 32), -- 201
 
-('Tilápia', '', '', 'Imagem', null, 47, null), -- 202
-('Whey', '', '', 'Imagem', null, 48, null), -- 203
+('Tilápia', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159964/alimentos-refeicoes/ehvjvfkuqvrmloxwkmaz.jpg', 'JPG', 'Imagem', null, 47, null), -- 202
+('Whey', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728159903/alimentos-refeicoes/wsa6ichylsdntqyaxds1.jpg', 'JPG', 'Imagem', null, 48, null), -- 203
 ('Cenoura', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725844227/alimentos-refeicoes/ccrollgp73bnbnzq7khm.jpg', 'JPG', 'Imagem', null, 49, null), -- 204
-('Cebola Roxa', '', '', 'Imagem', null, 50, null), -- 205
-('Pepino', '', '', 'Imagem', null, 51, null), -- 206
+('Cebola Roxa', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728160759/alimentos-refeicoes/zfobvztgcj3yykv8ytlq.jpg', 'JPG', 'Imagem', null, 50, null), -- 205
+('Pepino', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1728161552/alimentos-refeicoes/ihcawasbs3wwq01kwwoy.jpg', 'JPG', 'Imagem', null, 51, null), -- 206
 
 ('Luigi Vicchietti (ylu1Gi@@)', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725825401/foto-perfil/y55dehzw8onaa7gdhf5x.jpg', 'JPG', 'Imagem', null, null, null), -- 207
 ('Marcos Silva Oliveira Pinto Santos (marC@SSilV4)', 'https://res.cloudinary.com/dpzjmq6x5/image/upload/v1725826712/foto-perfil/kybkqcdagiwkrzm4g2ht.jpg', 'JPG', 'Imagem', null, null, null), -- 208
