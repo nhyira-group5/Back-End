@@ -1,9 +1,7 @@
 
-CREATE database vitalisDB;
-USE vitalisDB;
+CREATE DATABASE IF NOT EXISTS vitalisDB;
 
-DROP TRIGGER IF EXISTS cria_rotina;
-DROP procedure IF EXISTS atualizar_rotinas_expiradas;
+USE vitalisDB;
 
 CREATE TABLE meta (
 	id_meta INT PRIMARY KEY AUTO_INCREMENT,

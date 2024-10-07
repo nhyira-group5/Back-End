@@ -17,18 +17,18 @@ resource "aws_instance" "public_ec2_backend_1" {
 
   key_name                    = "shh_key"
   subnet_id                   = var.subnet_id
-  associate_public_ip_address = false
+  associate_public_ip_address = true # Mude para true, pois esta instância vai associar o EIP
   vpc_security_group_ids      = [var.sg_id]
 
   tags = {
-    Name = "private-ec2-01"
+    Name = "public-ec2-01"
   }
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
 
     # Cria a pasta aws
-    sudo mkdir -p /home/ubuntu/aws 
+    sudo mkdir -p /home/ubuntu/aws
 
     # Clonar ou atualizar o repositório
     if [ ! -d "/home/ubuntu/aws/.git" ]; then
@@ -80,7 +80,7 @@ resource "aws_instance" "private_ec2_backend_2" {
 
   key_name                    = "shh_key"
   subnet_id                   = var.subnet_id # Subnet privada
-  associate_public_ip_address = false
+  associate_public_ip_address = true # Mudança para true, para associar o EIP
   vpc_security_group_ids      = [var.sg_id]
 
   tags = {
@@ -91,7 +91,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     #!/bin/bash
 
     # Cria a pasta aws
-    sudo mkdir -p /home/ubuntu/aws 
+    sudo mkdir -p /home/ubuntu/aws
 
     # Clonar ou atualizar o repositório
     if [ ! -d "/home/ubuntu/aws/.git" ]; then
@@ -129,7 +129,24 @@ EOF
   )
 }
 
-resource "aws_eip_association" "eip_assoc_01" {
-  instance_id  = aws_instance.public_ec2_backend_1.id
-  allocation_id = "eipalloc-04c103f2c5910a4cb" # ID de alocação do EIP
+# Elastic IP para instância pública
+resource "aws_eip" "eip_public_1" {
+  vpc = true
+}
+
+# Elastic IP para instância privada
+resource "aws_eip" "eip_private_2" {
+  vpc = true
+}
+
+# Associação do Elastic IP à instância pública
+resource "aws_eip_association" "eip_assoc_public_1" {
+  instance_id   = aws_instance.public_ec2_backend_1.id
+  allocation_id = aws_eip.eip_public_1.id
+}
+
+# Associação do Elastic IP à instância privada
+resource "aws_eip_association" "eip_assoc_private_2" {
+  instance_id   = aws_instance.private_ec2_backend_2.id
+  allocation_id = aws_eip.eip_private_2.id
 }
