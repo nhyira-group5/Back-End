@@ -1,3 +1,4 @@
+variables.tf  do back end novo com instancia quase sem créditos
 variable "az" {
   description = "Availability Zone"
   type        = string
@@ -13,7 +14,7 @@ variable "key_pair_name" {
 variable "ami" {
   description = "AMI ID"
   type        = string
-  default     = "ami-08c6a39626fa63ad7"  # O ID da AMI 
+  default     = "ami-048c8cb78e7408897"  # O ID da AMI 
 
 }
 
@@ -27,13 +28,13 @@ variable "inst_type" {
 variable "subnet_id" {
   description = "Subnet ID"
   type        = string
-  default     = "subnet-03538fa6c1081c33b"
+  default     = "subnet-09424067824895155"
 }
 
 variable "sg_id" {
   description = "Security Group ID"
   type        = string
-  default     = "sg-041d7ba94beddfa4e"
+  default     = "sg-08a6c790338e94c72"
 }
 
 variable "dockerhub_username" {
@@ -44,5 +45,5 @@ variable "dockerhub_username" {
 variable "snapshot_id" {
   default = "snap-0d20b4350b63ed2ee"
   description = "Snapshot ID Backend"
-  type        = string
+  type        = string
 }
