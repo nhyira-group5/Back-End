@@ -1,4 +1,3 @@
-variables.tf  do back end novo com instancia quase sem créditos
 variable "az" {
   description = "Availability Zone"
   type        = string
