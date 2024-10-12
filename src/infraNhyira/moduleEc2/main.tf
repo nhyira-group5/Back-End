@@ -15,7 +15,7 @@ resource "aws_instance" "public_ec2_backend_1" {
     volume_type = "gp3"
   }
 
-  key_name                    = "shh_key"
+  key_name                    = "ti_key"
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
   vpc_security_group_ids      = [var.sg_id]
@@ -78,7 +78,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     volume_type = "gp3"
   }
 
-  key_name                    = "shh_key"
+  key_name                    = "ti_key"
   subnet_id                   = var.subnet_id # Subnet privada
   associate_public_ip_address = true
   vpc_security_group_ids      = [var.sg_id]
@@ -131,7 +131,7 @@ EOF
 
 resource "aws_eip_association" "eip_assoc_01" {
   instance_id  = aws_instance.public_ec2_backend_1.id
-  allocation_id = "eipalloc-04c103f2c5910a4cb" # ID de alocação
+  allocation_id = "eipalloc-0c3825a07f6c5ab48" # ID de alocação
 }
 
 
