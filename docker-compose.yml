@@ -31,16 +31,15 @@ services:
     networks:
       - nhyira
 
-  mysql:
+    mysql:
     image: mysql:8.0.37 # latest  Imagem do MySQL
     environment:
       MYSQL_ROOT_PASSWORD: nhyira@123  # Senha do MySQL
       MYSQL_DATABASE: vitalisDB  # Nome do banco de dados
     ports:
       - "3306:3306"  # Porta do MySQL
-#    volumes:
-    #  - mysql_data:/var/lib/mysql  # Persistência dos dados do MySQL
-#   - ./Data:/docker-entrypoint-initdb.d   Script SQL de inicialização (opcional)
+    volumes:
+      - ./Data:/docker-entrypoint-initdb.d  # Mapeia a pasta Data para executar scripts SQL de inicialização
     networks:
       - nhyira
 
