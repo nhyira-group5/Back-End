@@ -39,33 +39,32 @@ resource "aws_instance" "public_ec2_backend_1" {
       sudo git pull origin main  # Atualiza o repositório
     fi
 
-     # Instala mysql
+    # Instala o MySQL
     sudo apt update
-    sudo apt install mysql-server
+    sudo apt install -y mysql-server
 
-
-  # Instala Docker Compose
+    # Instala Docker e Docker Compose
     sudo apt update
-    sudo apt install docker-compose
+    sudo apt install -y docker.io 
+
+    # Instala Docker Compose
+    sudo apt update
+    sudo apt install -y docker-compose
+    
     # Baixar a versão mais recente do Docker Compose
-   DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^\"]+')
-   sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^\"]+')
+    sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
     # Atualiza pacotes e instala Java
-    sudo apt-get update -y
     sudo apt-get install -y default-jdk
 
-    # Instala Docker
-    sudo apt-get install -y docker.io
+    # Dar permissão de execução ao binário
+    sudo chmod +x /usr/local/bin/docker-compose
 
+    # Verifique se a instalação foi bem-sucedida
+    docker-compose --version
 
-# Dar permissão de execução ao binário
-sudo chmod +x /usr/local/bin/docker-compose
-
-# Verifique se a instalação foi bem-sucedida
-docker-compose --version
-
-    # Inicia e habilita Docker
+    # Inicia e habilita o Docker
     sudo systemctl start docker
     sudo systemctl enable docker
 
@@ -117,26 +116,26 @@ resource "aws_instance" "private_ec2_backend_2" {
       sudo git pull origin main  # Atualiza o repositório
     fi
 
-    # Instala mysql
+    # Instala o MySQL
     sudo apt update
-    sudo apt install mysql-server
-    
-   # Instala Docker Compose
-    sudo apt update
-    sudo apt install docker-compose
-    # Baixar a versão mais recente do Docker Compose
-   DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^\"]+')
-   sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo apt install -y mysql-server
 
+    # Instala Docker e Docker Compose
+    sudo apt update
+    sudo apt install -y docker.io 
+
+    # Instala Docker Compose
+    sudo apt update
+    sudo apt install -y docker-compose
+
+    # Baixar a versão mais recente do Docker Compose
+    DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^\"]+')
+    sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
     # Atualiza pacotes e instala Java
-    sudo apt-get update -y
     sudo apt-get install -y default-jdk
 
-    # Instala Docker
-    sudo apt-get install -y docker.io
-
-    # Inicia e habilita Docker
+    # Inicia e habilita o Docker
     sudo systemctl start docker
     sudo systemctl enable docker
 
@@ -156,6 +155,3 @@ resource "aws_eip_association" "eip_assoc_01" {
   instance_id  = aws_instance.public_ec2_backend_1.id
   allocation_id = "eipalloc-0c3825a07f6c5ab48" # ID de alocação
 }
-
-
-
