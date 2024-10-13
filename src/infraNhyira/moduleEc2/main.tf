@@ -39,9 +39,9 @@ resource "aws_instance" "public_ec2_backend_1" {
       sudo git pull origin main  # Atualiza o repositório
     fi
 
- # Instala mysql
-  sudo apt update
-  sudo apt install mysql-client-core-8.0
+     # Instala mysql
+    sudo apt update
+    sudo apt install mysql-server
 
 
   # Instala Docker Compose
@@ -117,9 +117,9 @@ resource "aws_instance" "private_ec2_backend_2" {
       sudo git pull origin main  # Atualiza o repositório
     fi
 
-  # Instala mysql
-  sudo apt update
-  sudo apt install mysql-client-core-8.0
+    # Instala mysql
+    sudo apt update
+    sudo apt install mysql-server
     
    # Instala Docker Compose
     sudo apt update
