@@ -17,21 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/treinos")
 @RequiredArgsConstructor
+@RequestMapping("/treinos")
 public class TreinoController {
     private final TreinoService treinoService;
-
     private final RotinaSemanalService rsSrv;
     private final RotinaDiariaService rdSrv;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<List<TreinoExibitionDto>> show(@PathVariable int id) {
-        if (id <= 0)
-            throw new ErroClienteException("ID");
-        List<Treino> treino = treinoService.showPorDiaria(id);
-        if (treino.isEmpty())
-            return ResponseEntity.noContent().build();
+    @GetMapping("/{idRotinaDiaria}")
+    public ResponseEntity<List<TreinoExibitionDto>> show(@PathVariable int idRotinaDiaria) {
+        if (idRotinaDiaria <= 0) throw new ErroClienteException("ID");
+        List<Treino> treino = treinoService.showPorDiaria(idRotinaDiaria);
+        if (treino.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(TreinoMapper.toDto(treino));
     }
 

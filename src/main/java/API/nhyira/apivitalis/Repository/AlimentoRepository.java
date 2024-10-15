@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface AlimentoRepository extends JpaRepository<Alimento, Integer> {
-
 }

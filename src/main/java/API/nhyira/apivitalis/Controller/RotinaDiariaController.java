@@ -13,10 +13,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rotinaDiarias")
 @RequiredArgsConstructor
+@RequestMapping("/rotinaDiarias")
 public class RotinaDiariaController {
     private final RotinaDiariaService rotinaDiariaService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RotinaDiariaExibitionDto> showPorIdDiario(@PathVariable int id) {
+        if (id <= 0)
+            throw new ErroClienteException("ID");
+        RotinaDiaria rotinaDiaria = rotinaDiariaService.show(id);
+        Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rotinaDiaria);
+        Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rotinaDiaria);
+        return ResponseEntity.ok().body(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
+    }
+
+    @GetMapping("/diaria-atual/{idRotinaSemanal}")
+    public ResponseEntity<RotinaDiariaExibitionDto> showCurrentDailyRoutine(@PathVariable int idRotinaSemanal) {
+        if (idRotinaSemanal <= 0) throw new ErroClienteException("ID");
+        RotinaDiaria rd = rotinaDiariaService.showCurrentDailyRoutine(idRotinaSemanal);
+        Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rd);
+        Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rd);
+        return ResponseEntity.ok(RotinaDiariaMapper.toDto(rd, totalExercicios, totalExerciciosFeitos));
+    }
 
     @GetMapping("/por-semana/{id}")
     public ResponseEntity<List<RotinaDiariaExibitionDto>> showPorIdSemanal(@PathVariable int id) {
@@ -34,18 +53,8 @@ public class RotinaDiariaController {
         return ResponseEntity.ok(dtosList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RotinaDiariaExibitionDto> showPorIdDiario(@PathVariable int id) {
-        if (id <= 0)
-            throw new ErroClienteException("ID");
-        RotinaDiaria rotinaDiaria = rotinaDiariaService.show(id);
-        Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rotinaDiaria);
-        Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rotinaDiaria);
-        return ResponseEntity.ok().body(RotinaDiariaMapper.toDto(rotinaDiaria, totalExercicios, totalExerciciosFeitos));
-    }
-
     @GetMapping("/por-usuario/{id}")
-    public ResponseEntity<RotinaDiariaExibitionDto> rotinaPorUsuario(@PathVariable int id){
+    public ResponseEntity<RotinaDiariaExibitionDto> rotinaPorUsuario(@PathVariable int id) {
         RotinaDiaria rotinaDiaria = rotinaDiariaService.rotinaPorUsuario(id);
         Integer totalExercicios = rotinaDiariaService.showQtdExercicios(rotinaDiaria);
         Integer totalExerciciosFeitos = rotinaDiariaService.showQtdExerciciosFeitos(rotinaDiaria);

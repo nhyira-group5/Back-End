@@ -9,6 +9,7 @@ import java.util.List;
 public class RotinaSemanalMapper {
     public static RotinaSemanalExibitionDto toDto(RotinaSemanal rotinaSemanal) {
         if (rotinaSemanal == null) return null;
+
         RotinaSemanalExibitionDto rotinaSemanalExibitionDto = new RotinaSemanalExibitionDto();
         rotinaSemanalExibitionDto.setId(rotinaSemanal.getIdRotinaSemanal());
         rotinaSemanalExibitionDto.setNumSemana(rotinaSemanal.getNumSemana());
@@ -16,6 +17,9 @@ public class RotinaSemanalMapper {
         rotinaSemanalExibitionDto.setRotinaMensalId(rotinaMensalDto(rotinaSemanal.getRotinaMensalId()));
         rotinaSemanalExibitionDto.setRotinaDiariaDtos(rotinaDiariaDto(rotinaSemanal.getRotinaDiariaId()));
         return rotinaSemanalExibitionDto;
+    }
+    public static List<RotinaSemanalExibitionDto> toDto(List<RotinaSemanal> rotinaSemanals) {
+        return rotinaSemanals.stream().map(RotinaSemanalMapper::toDto).toList();
     }
 
     public static RotinaSemanalListExibitionDto toDtoList(RotinaSemanal rotinaSemanal) {
@@ -27,7 +31,6 @@ public class RotinaSemanalMapper {
         rotinaSemanalExibitionDto.setRotinaMensalId(rotinaMensalDto(rotinaSemanal.getRotinaMensalId()));
         return rotinaSemanalExibitionDto;
     }
-
     public static List<RotinaSemanalListExibitionDto> toDtos(List<RotinaSemanal> rotinaSemanals) {
         return rotinaSemanals.stream().map(RotinaSemanalMapper::toDtoList).toList();
     }

@@ -15,7 +15,7 @@ public class RotinaMensalMapper {
         exibitionDto.setMes(rotinaMensal.getMes());
         exibitionDto.setConcluido(rotinaMensal.getConcluido());
         exibitionDto.setRotinaUsuarioId(rotinaUsuarioDto(rotinaMensal.getRotinaUsuarioId()));
-        exibitionDto.setAno(rotinaMensal.getIdRotinaMensal());
+        exibitionDto.setAno(rotinaMensal.getAno());
         exibitionDto.setRotinaSemanalDtos(rotinaSemanalDto(rotinaMensal.getRotinaSemanals()));
         return exibitionDto;
     }
