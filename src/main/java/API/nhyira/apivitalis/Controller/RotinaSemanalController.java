@@ -31,6 +31,21 @@ public class RotinaSemanalController {
         return ResponseEntity.ok(RotinaSemanalMapper.toDto(rotinaSemanal));
     }
 
+    @GetMapping("por-usuario/{idUsuario}")
+    public ResponseEntity<List<RotinaSemanalExibitionDto>> showByUserId(@PathVariable int idUsuario) {
+        if (idUsuario <= 0) throw new ErroClienteException("ID Usuario");
+        List<RotinaSemanal> rotinaSemanal = semanalService.showPorUsuario(idUsuario);
+        return ResponseEntity.ok(RotinaSemanalMapper.toDto(rotinaSemanal));
+    }
+
+    @GetMapping("semana-atual/{idUsuario}")
+    public ResponseEntity<RotinaSemanalExibitionDto> showCurrentWeekRoutineByUserId(@PathVariable int idUsuario) {
+        if (idUsuario <= 0) throw new ErroClienteException("ID Usuario");
+        RotinaSemanal rotinaSemanal = semanalService.showCurrentWeekRoutine(idUsuario);
+        return ResponseEntity.ok(RotinaSemanalMapper.toDto(rotinaSemanal));
+    }
+
+    // DTO alternativo
     @GetMapping("buscarUsuario/{id}")
     public ResponseEntity<List<RotinaSemanalListExibitionDto>> buscarPorId(@PathVariable int id) {
         if (id <= 0) throw new ErroClienteException("ID");

@@ -10,7 +10,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73baf44e-4006-475a-83b6-cf07651307cc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Controller/RefeicaoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionSemanalDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/DTO/Refeicao/RefeicaoExibitionSemanalDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Repository/RefeicaoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RefeicaoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/API/nhyira/apivitalis/Service/RefeicaoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +110,7 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "full.screen.before.presentation.mode": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "dev",
     "kotlin-language-version-configured": "true",
     "last.edited.regexp": "Sample Text",
     "last_opened_file_path": "C:/Users/Will Dantas/OneDrive - SPTech School/Documents/Back-End",

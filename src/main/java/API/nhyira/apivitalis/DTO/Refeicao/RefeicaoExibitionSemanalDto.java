@@ -29,6 +29,4 @@ public class RefeicaoExibitionSemanalDto {
         private Integer idRotinaDiaria;
         private Integer dia;
     }
-
-
 }

@@ -9,7 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface EspecialidadePorMetaRepository extends JpaRepository<EspecialidadePorMeta, Integer> {
-
     Optional<EspecialidadePorMeta> findByEspecialidadeId(Especialidade especialidade);
-
 }

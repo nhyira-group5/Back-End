@@ -10,6 +10,8 @@ import API.nhyira.apivitalis.Repository.TreinoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +24,15 @@ public class RotinaDiariaService {
     private final TreinoRepository tRep;
 
     public RotinaDiaria show(int id) {
-        Optional<RotinaDiaria> rotinaDiaria = diarioRepository.findById(id);
-        rotinaDiaria.orElseThrow(() -> new NaoEncontradoException("Rotina Diaria"));
-        return rotinaDiaria.get();
+        RotinaDiaria rotinaDiaria = diarioRepository.findById(id).orElseThrow(() -> new NaoEncontradoException("Rotina Diaria"));
+        return rotinaDiaria;
+    }
+
+    public RotinaDiaria showCurrentDailyRoutine(int idRotinaUsuario) {
+        RotinaSemanal rs = semanalService.show(idRotinaUsuario);
+        int diaSemana = LocalDate.now().getDayOfWeek().getValue();
+        diaSemana = (diaSemana % 7) + 1;    // Ajustando para começar no domingo
+        return diarioRepository.showCurrentDailyRoutine(rs.getIdRotinaSemanal(), diaSemana);
     }
 
     public List<RotinaDiaria> showPorSemanal(int id) {

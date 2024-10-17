@@ -25,4 +25,14 @@ public interface RotinaDiariaRepository extends JpaRepository<RotinaDiaria, Inte
 
     List<RotinaDiaria> findByRotinaSemanalIdIs(RotinaSemanal rotinaSemanal);
 
+    @Query("""
+            SELECT rd FROM RotinaDiaria rd
+                        JOIN rd.rotinaSemanalId rs
+                        WHERE rs.idRotinaSemanal = :idRotinaSemanal
+                        AND rd.dia = :dia
+            """)
+    RotinaDiaria showCurrentDailyRoutine(
+            Integer idRotinaSemanal,
+            int dia
+    );
 }
