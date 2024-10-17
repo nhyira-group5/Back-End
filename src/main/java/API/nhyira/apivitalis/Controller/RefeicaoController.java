@@ -69,6 +69,15 @@ public class RefeicaoController {
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
 
+    @GetMapping("/por-refeicao-diaria/{idRefeicaoDiaria}")
+    public ResponseEntity<RefeicaoExibition> showByRefeicaoDiariaId(
+            @PathVariable int idRefeicaoDiaria
+    ) {
+        if (idRefeicaoDiaria <= 0) throw new ErroClienteException("ID");
+        RefeicaoExibition ref = RefeicaoMapper.toDTO(refSrv.showByRefeicaoDiaria(idRefeicaoDiaria));
+        return ResponseEntity.ok(ref);
+    }
+
     @GetMapping("/filtro/nome")
     public ResponseEntity<List<RefeicaoExibition>> showByNome(
             @RequestParam String nome

@@ -2,6 +2,7 @@ package API.nhyira.apivitalis.Service;
 
 import API.nhyira.apivitalis.Entity.*;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
+import API.nhyira.apivitalis.Repository.RefeicaoDiariaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoPorDietaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ public class RefeicaoService {
     private final RefeicaoRepository refRep;
 //    private final DietaRepository diRep;
     private final RefeicaoPorDietaRepository rpdRep;
+    private final RefeicaoDiariaRepository refdRep;
 //    private final RotinaSemanalRepository rsRep;
 
     public List<Refeicao> getAllRefeicoes() {
@@ -31,6 +33,12 @@ public class RefeicaoService {
         if (rpdList.isEmpty()) throw new NaoEncontradoException("Refeição por Dieta com a dieta " + dieta.getNome());
         List<Refeicao> refeicoes = rpdList.stream().map(rpd -> refRep.findById(rpd.getRefeicaoId().getIdRefeicao()).get()).toList();
         return refeicoes;
+    }
+
+    public Refeicao showByRefeicaoDiaria(int idRefeicaoDiaria) {
+        RefeicaoDiaria refd = refdRep.findById(idRefeicaoDiaria).orElseThrow(() -> new NaoEncontradoException("Refeição Diária"));
+        Refeicao ref = refRep.searchMealsByDailyMeal(refd.getIdRefeicaoDiaria());
+        return ref;
     }
 
     public List<Refeicao> showRefeicoesByNome(String nome) {
