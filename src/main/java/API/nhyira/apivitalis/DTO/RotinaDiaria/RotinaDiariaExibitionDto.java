@@ -18,7 +18,7 @@ public class RotinaDiariaExibitionDto {
 
     @Data
     public static class RefeicaoDiariaDto{
-        private Integer idRotinaDiaria;
+        private Integer idRefeicaoDiaria;
         private Integer concluido;
     }
 }
