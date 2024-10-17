@@ -45,7 +45,7 @@ public class RotinaDiariaMapper {
         return refeicaoDiarias.stream().map(rd -> {
             RotinaDiariaExibitionDto.RefeicaoDiariaDto refeicaoDiariaDto = new RotinaDiariaExibitionDto.RefeicaoDiariaDto();
             refeicaoDiariaDto.setConcluido(rd.getConcluido());
-            refeicaoDiariaDto.setIdRotinaDiaria(rd.getIdRefeicaoDiaria());
+            refeicaoDiariaDto.setIdRefeicaoDiaria(rd.getIdRefeicaoDiaria());
             return refeicaoDiariaDto;
         }).toList();
     }
