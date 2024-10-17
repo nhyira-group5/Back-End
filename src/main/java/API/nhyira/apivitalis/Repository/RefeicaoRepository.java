@@ -21,4 +21,11 @@ public interface RefeicaoRepository extends JpaRepository<Refeicao, Integer> {
                 WHERE rd.idRefeicaoDiaria = :idRefd
             """)
     Refeicao searchMealsByDailyMeal(Integer idRefd);
+
+    @Query("""
+            SELECT r FROM Refeicao r
+                    JOIN RefeicaoDiaria rd ON r.idRefeicao = rd.refeicaoId.idRefeicao
+                    WHERE rd.rotinaDiariaId.idRotinaDiaria = :idRd
+            """)
+    List<Refeicao> searchMealsByDailyRoutine(Integer idRd);
 }

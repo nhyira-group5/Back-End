@@ -90,7 +90,7 @@ public class RefeicaoController {
     public ResponseEntity<List<RefeicaoExibitionSemanalDto>> buscarRefeiçõesPorSemana(
             @PathVariable int idRotinaSemanal
     ) {
-        if (idRotinaSemanal <= 0) throw new ErroClienteException("ID");
+        if (idRotinaSemanal <= 0) throw new ErroClienteException("ID Rotina Semanal");
         RotinaSemanal rs = rsSrv.show(idRotinaSemanal);
         List<RotinaDiaria> rotinasDiariasPelaSemana = rdSrv.showPorSemanal(rs.getIdRotinaSemanal());
 
@@ -104,5 +104,15 @@ public class RefeicaoController {
             }
         }
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
+    }
+
+    @GetMapping("/por-dia/{idRotinaDiaria}")
+    public ResponseEntity<List<RefeicaoExibition>> showByDailyRoutine(
+            @PathVariable int idRotinaDiaria
+    ) {
+        if (idRotinaDiaria <= 0) throw new ErroClienteException("ID Rotina Diária");
+        RotinaDiaria rd = rdSrv.show(idRotinaDiaria);
+        List<Refeicao> refs = refSrv.showByRotinaDiaria(rd.getIdRotinaDiaria());
+        return refs.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(RefeicaoMapper.toDTO(refs));
     }
 }

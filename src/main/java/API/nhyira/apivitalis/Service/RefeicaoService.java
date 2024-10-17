@@ -5,6 +5,7 @@ import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Repository.RefeicaoDiariaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoPorDietaRepository;
 import API.nhyira.apivitalis.Repository.RefeicaoRepository;
+import API.nhyira.apivitalis.Repository.RotinaDiariaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class RefeicaoService {
 //    private final DietaRepository diRep;
     private final RefeicaoPorDietaRepository rpdRep;
     private final RefeicaoDiariaRepository refdRep;
+    private final RotinaDiariaRepository rdRep;
 //    private final RotinaSemanalRepository rsRep;
 
     public List<Refeicao> getAllRefeicoes() {
@@ -38,6 +40,12 @@ public class RefeicaoService {
     public Refeicao showByRefeicaoDiaria(int idRefeicaoDiaria) {
         RefeicaoDiaria refd = refdRep.findById(idRefeicaoDiaria).orElseThrow(() -> new NaoEncontradoException("Refeição Diária"));
         Refeicao ref = refRep.searchMealsByDailyMeal(refd.getIdRefeicaoDiaria());
+        return ref;
+    }
+
+    public List<Refeicao> showByRotinaDiaria(int idRotinaDiaria) {
+        RotinaDiaria rd = rdRep.findById(idRotinaDiaria).orElseThrow(() -> new NaoEncontradoException("Rotina Diária"));
+        List<Refeicao> ref = refRep.searchMealsByDailyRoutine(rd.getIdRotinaDiaria());
         return ref;
     }
 
