@@ -7,7 +7,7 @@ variable "az" {
 variable "key_pair_name" {
   description = "Key Pair Name"
   type        = string
-  default     = "tf_key"
+  default     = "ti_key"
 }
 
 variable "ami" {
