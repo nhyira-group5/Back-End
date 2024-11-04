@@ -152,10 +152,10 @@ EOF
 
 resource "aws_eip_association" "eip_assoc_01" {
   instance_id  = aws_instance.public_ec2_backend_1.id
-  allocation_id = "eipalloc-05e0ad948c5b56541" # ID de alocação
+  allocation_id = "eipalloc-0acf2f0ec8a2d7a08" # ID de alocação
 }
 
 resource "aws_eip_association" "eip_assoc_02" {
   instance_id   = aws_instance.private_ec2_backend_2.id
-  allocation_id = "eipalloc-042a32f12eb8c5c62"  # id de alocação
+  allocation_id = "eipalloc-0b9a802e2513935de"  # id de alocação
 }
