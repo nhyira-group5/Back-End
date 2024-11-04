@@ -26,7 +26,7 @@ variable "inst_type" {
 variable "subnet_id" {
   description = "Subnet ID"
   type        = string
-  default     = "subnet-0e2701ab99c4d1b94"
+  default     = "subnet-056440a960646b252"
 }
 
 variable "sg_id" {
