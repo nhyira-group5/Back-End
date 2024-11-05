@@ -24,48 +24,46 @@ resource "aws_instance" "public_ec2_backend_1" {
     Name = "private-ec2-01"
   }
 
-  user_data = base64encode(<<-EOF
+ user_data = base64encode(<<-EOF
     #!/bin/bash
 
     # Cria a pasta aws
     sudo mkdir -p /home/ubuntu/aws
 
-    # Clonar ou atualizar o repositório
+    # Clona ou atualiza o repositório
     if [ ! -d "/home/ubuntu/aws/.git" ]; then
       sudo git clone https://PERSONAL_ACCESS_TOKEN@github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
-      sudo git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
     else
       cd /home/ubuntu/aws
       sudo git pull origin main  # Atualiza o repositório
     fi
 
-    # Instala o MySQL
+    # Atualiza o sistema e instala MySQL
     sudo apt update
     sudo apt install -y mysql-server
 
-    # Instala Docker e Docker Compose
-    sudo apt update
+    # Instala Docker
     sudo apt install -y docker.io 
 
-    # Instala Docker Compose
-    sudo apt update
+    # Habilita e inicia o serviço Docker
+    sudo systemctl start docker
+    sudo systemctl enable docker
+
+    # Instala o Docker Compose
     sudo apt install -y docker-compose
     
     # Baixar a versão mais recente do Docker Compose
     DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^\"]+')
+    sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-    # Atualiza pacotes e instala Java
-    sudo apt-get install -y default-jdk
-
-    # Dar permissão de execução ao binário
+    # Dar permissão de execução ao binário do Docker Compose
     sudo chmod +x /usr/local/bin/docker-compose
 
     # Verifique se a instalação foi bem-sucedida
     docker-compose --version
 
-    # Inicia e habilita o Docker
-    sudo systemctl start docker
-    sudo systemctl enable docker
+    # Atualiza pacotes e instala Java
+    sudo apt-get install -y default-jdk
 
     # Navega até o diretório do projeto
     cd /home/ubuntu/aws
@@ -74,7 +72,7 @@ resource "aws_instance" "public_ec2_backend_1" {
     sudo docker build -t nhyira-api .
 
     # Executa o Docker Compose para iniciar os serviços
-    sudo docker-compose up --build
+    sudo docker-compose up --build -d
 EOF
   )
 }
@@ -100,43 +98,46 @@ resource "aws_instance" "private_ec2_backend_2" {
     Name = "private-ec2-02"
   }
 
-  user_data = base64encode(<<-EOF
+ user_data = base64encode(<<-EOF
     #!/bin/bash
 
     # Cria a pasta aws
     sudo mkdir -p /home/ubuntu/aws
 
-    # Clonar ou atualizar o repositório
+    # Clona ou atualiza o repositório
     if [ ! -d "/home/ubuntu/aws/.git" ]; then
       sudo git clone https://PERSONAL_ACCESS_TOKEN@github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
-      sudo git clone https://github.com/nhyira-group5/Back-End.git /home/ubuntu/aws
     else
       cd /home/ubuntu/aws
       sudo git pull origin main  # Atualiza o repositório
     fi
 
-    # Instala o MySQL
+    # Atualiza o sistema e instala MySQL
     sudo apt update
     sudo apt install -y mysql-server
 
-    # Instala Docker e Docker Compose
-    sudo apt update
+    # Instala Docker
     sudo apt install -y docker.io 
 
-    # Instala Docker Compose
-    sudo apt update
-    sudo apt install -y docker-compose
+    # Habilita e inicia o serviço Docker
+    sudo systemctl start docker
+    sudo systemctl enable docker
 
+    # Instala o Docker Compose
+    sudo apt install -y docker-compose
+    
     # Baixar a versão mais recente do Docker Compose
     DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -oP '"tag_name": "\K[^\"]+')
-  
+    sudo curl -L "https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+    # Dar permissão de execução ao binário do Docker Compose
+    sudo chmod +x /usr/local/bin/docker-compose
+
+    # Verifique se a instalação foi bem-sucedida
+    docker-compose --version
 
     # Atualiza pacotes e instala Java
     sudo apt-get install -y default-jdk
-
-    # Inicia e habilita o Docker
-    sudo systemctl start docker
-    sudo systemctl enable docker
 
     # Navega até o diretório do projeto
     cd /home/ubuntu/aws
@@ -145,7 +146,7 @@ resource "aws_instance" "private_ec2_backend_2" {
     sudo docker build -t nhyira-api .
 
     # Executa o Docker Compose para iniciar os serviços
-    sudo docker-compose up --build
+    sudo docker-compose up --build -d
 EOF
   )
 }
