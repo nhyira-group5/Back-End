@@ -1,45 +1,45 @@
 services:
   nhyira-backend:
-    build: .  # Usará o Dockerfile para construir a imagem
+    build: . 
     ports:
-      - "5225:8080"  # Mapeamento da porta 
+      - "5225:8080"   
     environment:
       SPRING_APPLICATION_NAME: api-vitalis
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/vitalisDB
-      SPRING_DATASOURCE_USERNAME: root  # Usuário do MySQL
-      SPRING_DATASOURCE_PASSWORD: nhyira@123  # Senha do MySQL
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver  # Driver do MySQL
-      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"  # Valor booleano como string
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect  # Dialeto do MySQL
-      SPRING_JPA_SHOW_SQL: "true"  # Valor booleano como string
+      SPRING_DATASOURCE_USERNAME: root  
+      SPRING_DATASOURCE_PASSWORD: nhyira@123 
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver 
+      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: "true"  
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect  
+      SPRING_JPA_SHOW_SQL: "true" 
       SPRING_MAIL_USERNAME: contato.nhyira@gmail.com
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: "true"  # Valor booleano como string
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_REQUIRED: "true"  
       SPRING_MAIL_HOST: smtp.gmail.com
-      SPRING_MAIL_PORT: "587"  # Porta como string
+      SPRING_MAIL_PORT: "587" 
       SPRING_MAIL_PASSWORD: disfbjxxqtxffujb
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"  # Valor booleano como string
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"  
       SPRING_MAIL_PROPERTIES_MAIL_TRANSPORT_PROTOCOL: smtp
-      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"  # Valor booleano como string
-      JWT_EXPIRATION: "3600000"  # Tempo de expiração como string
+      SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"  
+      JWT_EXPIRATION: "3600000"  
       JWT_SECRET: RXhpc3RlIHVtYSB0ZW9yaWEgcXVlIGRpeiBxdWUsIHNlIHVtIGRpYSBhbGd16W0gZGVzY29icmlyIGV4YXRhbWVudGUgcGFyYSBxdWUgc2VydmUgbyBVbml2ZXJzbyBlIHBvciBxdWUgZWxlIGVzdOEgYXF1aSwgZWxlIGRlc2FwYXJlY2Vy4SBpbnN0YW
       MERCADO_PAGO_ACCESS_TOKEN: APP_USR-824007135770533-052015-ba3b308de0439bc6e6ad15c2c6152ca6-1722687388
       CLOUDINARY_CLOUD_NAME: vitalis
       CLOUDINARY_API_KEY: 679425973318895
       CLOUDINARY_API_SECRET: R-uaJBcdZUfUGu5TuYmiHodqBl4
-      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: "200MB"  # Tamanho máximo do arquivo como string
-      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "200MB"  # Tamanho máximo da requisição como string
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: "200MB"  
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: "200MB"  
     networks:
       - nhyira
 
   mysql:
-    image: mysql:8.0.37  # Imagem do MySQL
+    image: mysql:8.0.37  
     environment:
-      MYSQL_ROOT_PASSWORD: nhyira@123  # Senha do MySQL
-      MYSQL_DATABASE: vitalisDB  # Nome do banco de dados
+      MYSQL_ROOT_PASSWORD: nhyira@123 
+      MYSQL_DATABASE: vitalisDB  
     ports:
-      - "3306:3306"  # Porta do MySQL
+      - "3306:3306"  
     volumes:
-      - ./Data:/docker-entrypoint-initdb.d  # Mapeia a pasta Data para executar scripts SQL de inicialização
+      - ./Data:/docker-entrypoint-initdb.d  
     networks:
       - nhyira
 
@@ -48,4 +48,4 @@ networks:
     driver: bridge
 
 volumes:
-  mysql_data:  # Cria um volume nomeado para o MySQL
+  mysql_data:  
