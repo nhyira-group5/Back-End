@@ -25,4 +25,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     List<Usuario> findByPersonalIdIs(Usuario usuario);
 
+    @Query("""
+            SELECT u
+                    FROM Usuario u
+                    JOIN EspecialidadePorPersonal epp ON u.idUsuario = epp.personalId.idUsuario
+                    JOIN EspecialidadePorMeta epm ON epp.especialidadeId.idEspecialidade = epm.especialidadeId.idEspecialidade
+                    WHERE u.tipo = 1 AND epm.metaId.idMeta = :idMeta
+            """)
+    List<Usuario> searchTrainersByMeta(int idMeta);
 }
