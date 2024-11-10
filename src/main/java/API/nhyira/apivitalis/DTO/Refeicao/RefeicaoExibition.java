@@ -21,7 +21,6 @@ public class RefeicaoExibition {
         private int qtdAlimento;
         private AlimentoDto alimento;
         private Metrica metrica;
-
     }
 
     @Data
@@ -33,7 +32,6 @@ public class RefeicaoExibition {
         private Double gordura;
         private List<MidiaDto> midia;
     }
-
 
     @Data
     public static class MidiaDto {
