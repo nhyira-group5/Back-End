@@ -1366,6 +1366,9 @@ INSERT INTO tag_exercicio (tag_id, exercicio_id) VALUES
 INSERT INTO assinatura (nome, valor) VALUES
 ('Viva Vitalis', 49.99);
 
+INSERT INTO assinatura (nome, valor) VALUES
+('Viva Vitalis', 0.10);
+
 INSERT INTO endereco (logradouro, numero, bairro, cidade, estado, complemento, cep)
 VALUES
 ('Avenida Wilson Carvalho', 10, 'Zerão', 'Macapá', 'AP', null, 68903025),
