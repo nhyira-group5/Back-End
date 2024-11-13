@@ -68,6 +68,11 @@ resource "aws_instance" "public_ec2_backend_1" {
     # Navega até o diretório do projeto
     cd /home/ubuntu/aws
 
+    #atualize o Docker:
+    sudo apt-get update
+    sudo apt-get install docker-ce
+
+
     # Constrói a imagem Docker usando o Dockerfile
     sudo docker build -t nhyira-api .
 
