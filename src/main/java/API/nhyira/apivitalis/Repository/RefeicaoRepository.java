@@ -28,4 +28,14 @@ public interface RefeicaoRepository extends JpaRepository<Refeicao, Integer> {
                     WHERE rd.rotinaDiariaId.idRotinaDiaria = :idRd
             """)
     List<Refeicao> searchMealsByDailyRoutine(Integer idRd);
+
+    @Query("""
+                SELECT ref
+                    FROM Refeicao ref
+                    JOIN RefeicaoPorDieta rd ON rd.refeicaoId.idRefeicao = ref.idRefeicao
+                    JOIN Dieta dieta ON dieta.idDieta = rd.dietaId.idDieta
+                    WHERE dieta.metaId.idMeta = :idMeta
+                    AND ref.nome ilike %:name%
+            """)
+    List<Refeicao> searchByMetaAndName(Integer idMeta, String name);
 }

@@ -11,7 +11,5 @@ public class Meta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMeta;
-
     private String nome;
-
 }

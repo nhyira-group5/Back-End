@@ -4,6 +4,7 @@ import API.nhyira.apivitalis.DTO.Midia.MidiaExibitionDto;
 import API.nhyira.apivitalis.DTO.Midia.MidiaMapper;
 import API.nhyira.apivitalis.DTO.Usuario.*;
 import API.nhyira.apivitalis.Entity.*;
+import API.nhyira.apivitalis.Exception.ErroClienteException;
 import API.nhyira.apivitalis.Exception.NaoEncontradoException;
 import API.nhyira.apivitalis.Pagamento.Service.PagamentoService;
 import API.nhyira.apivitalis.Service.CsvService;
@@ -79,6 +80,20 @@ public class UsuarioController {
     public ResponseEntity<List<PersonalEspecialidadeDto>> showAllPersonal() {
         List<PersonalEspecialidadeDto> dtos = new ArrayList<>(0);
         List<Usuario> users = uService.showAllUsersPersonal();
+        for (Usuario u : users) {
+            List<EspecialidadePorPersonal> personal = uService.buscarEspecialidade(u);
+            dtos.add(UsuarioMapper.toDtoPersonal(u, personal));
+        }
+        return dtos.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(dtos);
+    }
+
+    @GetMapping("/personais-por-meta/{idMeta}")
+    public ResponseEntity<List<PersonalEspecialidadeDto>> showTrainersByMeta(
+            @PathVariable int idMeta
+    ) {
+        if (idMeta <= 0) throw new ErroClienteException("ID Meta");
+        List<PersonalEspecialidadeDto> dtos = new ArrayList<>(0);
+        List<Usuario> users = uService.showTrainersByMeta(idMeta);
         for (Usuario u : users) {
             List<EspecialidadePorPersonal> personal = uService.buscarEspecialidade(u);
             dtos.add(UsuarioMapper.toDtoPersonal(u, personal));

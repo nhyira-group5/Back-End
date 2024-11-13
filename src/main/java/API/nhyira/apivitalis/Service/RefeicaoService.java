@@ -52,4 +52,6 @@ public class RefeicaoService {
     public List<Refeicao> showRefeicoesByNome(String nome) {
         return refRep.buscarFiltroPorNome(nome);
     }
+
+    public List<Refeicao> showMealsByMetaAndNome(int idMeta, String nome) { return refRep.searchByMetaAndName(idMeta, nome); }
 }

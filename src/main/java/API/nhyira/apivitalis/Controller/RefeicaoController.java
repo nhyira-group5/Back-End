@@ -53,10 +53,12 @@ public class RefeicaoController {
         Meta meta = mSrv.show(idMeta);
         List<Dieta> dietas = dSrv.showByMeta(meta);
         if (dietas.isEmpty()) return ResponseEntity.noContent().build();
+
         List<RefeicaoExibition> refeicoes = new ArrayList<>(0);
         for (Dieta d : dietas) {
             refeicoes.addAll(RefeicaoMapper.toDTO(refSrv.showRefeicaoByDieta(d)));
         }
+
         return refeicoes.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(refeicoes);
     }
 
@@ -83,6 +85,15 @@ public class RefeicaoController {
             @RequestParam String nome
     ) {
         List<RefeicaoExibition> dtoList = RefeicaoMapper.toDTO(refSrv.showRefeicoesByNome(nome));
+        return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
+    }
+
+    @GetMapping("/por-meta/{idMeta}/filtro/nome")
+    public ResponseEntity<List<RefeicaoExibition>> showByMetaAndName(
+            @PathVariable int idMeta,
+            @RequestParam String nome
+    ) {
+        List<RefeicaoExibition> dtoList = RefeicaoMapper.toDTO(refSrv.showMealsByMetaAndNome(idMeta, nome));
         return dtoList.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(dtoList);
     }
 

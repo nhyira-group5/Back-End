@@ -126,11 +126,15 @@ public class UsuarioService {
     }
 
     public List<Usuario> showAllUsersPersonal() {
-        List<Usuario> allUsers = uRep.buscarPersonal();
-        if (allUsers.isEmpty()){
-            throw new SemConteudoException("Personais");
-        }
-        return allUsers;
+        List<Usuario> trainers = uRep.buscarPersonal();
+        if (trainers.isEmpty()) throw new SemConteudoException("Personais");
+        return trainers;
+    }
+
+    public List<Usuario> showTrainersByMeta(int idMeta) {
+        List<Usuario> trainers = uRep.searchTrainersByMeta(idMeta);
+        if (trainers.isEmpty()) throw new SemConteudoException("Personais por meta");
+        return trainers;
     }
 
     public Usuario showUserById(int id) {
