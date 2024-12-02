@@ -16,7 +16,7 @@ import java.util.*;
 @Service
 public class AcademiasProximasService {
 
-    private final String API_KEY = "AIzaSyBphGlydquijmtQMo5u8VTCI-pM45XUwpE";
+    private final String API_KEY = "AIzaSyDjShZAnlDFZiEw-AYGIj12Gohui3N7fAw";
 
     public ResponseEntity<List<AcademiaDto>> buscarAcademiasProximas(String logradouro, String bairro, String cidade, String estado, String cep) {
         try {
